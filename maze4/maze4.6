@@ -1,0 +1,115 @@
+.TH MAZE4 6 "April 2025" "Version 1.0" "User Commands"
+.SH NAME
+maze4 \- A thrilling autonomous maze race between Fruitbots and dastardly vegetables in the Maze of Munch
+.SH SYNOPSIS
+.B maze4
+.RI [ options ]
+.SH DESCRIPTION
+In a high-tech corner of Nourishvale, where wires meet wilderness, the Fruitbots were engineered by rival fruit factions, each vying for the ultimate prize: to be crowned champion of the Maze of Munch.
+
+Designed with unique strengths and strategies, Rapid Raspberry, Bussin' Blueberry, Lightning Lemon, and Kwick Kiwi must race, strategize, and battle their way through a treacherous labyrinth. 
+
+.PP
+But beware — this is no leisurely stroll through the garden.
+
+Lurking within the maze are dastardly Veggie Monsters — like Abyssal Artichoke, Creeping Carrot, and Brutal Broccoli — programmed to ambush and stall the racers. Each encounter is a high-stakes gamble. Lose three battles, and a bot's system will overload, forcing them to forfeit the race. Some battles happen at critical junctions — lose there, and the bot may be permanently trapped. It's bot against bot, bot against monster, and even monster against monster! No mercy!
+
+The maze is randomly generated each round, filled with dead ends, teleporters, and crucial intersections. Only one bot will emerge victorious, claiming the title of “Supreme Produce” and a place in Nourishvale history.
+
+This is a fully autonomous simulation. No player input is required to run the game. Just sit back and enjoy the chaos.
+
+That said, you can control the simulation speed and flow using the following keys during gameplay:
+
+.TP
+.B SPC
+Pause / unpause the game
+
+.TP
+.B q
+Quit the game
+
+.TP
+.B \- / +
+Slow down / speed up game speed
+
+.TP
+.B ↑ / ↓ (while paused)
+Scroll through recent battle history results.
+
+.SH OPTIONS
+.TP
+.B \-t N
+Set the number of teleporter pairs.  
+(Default: auto-calculated based on maze size.)
+
+.TP
+.B \-m N
+Set the number of monsters.  
+(Default: auto-calculated.)
+
+.TP
+.B \-s N
+Set the maximum monster strength (range: 1–15).  
+(Default: 10.)
+
+.TP
+.B \-g N
+Set game speed (1–100). Lower is faster.  
+(Default: 50.)
+
+.TP
+.B \-k
+Wait for key press before continuing at key moments.  
+(Default: disabled.)
+
+.TP
+.B \-w
+Show battle windows when encounters occur.  
+(Default: disabled.)
+
+.TP
+.B \-h
+Display this help message and exit.
+
+.SH INSPIRATION
+This project draws inspiration from the classic
+.B X11 Maze
+screensaver and the chaotic drama of
+.BR Jelle's Marble Runs.
+It combines the hypnotic visual patterns of procedural maze-solving with the unscripted excitement of autonomous agents battling for glory.
+
+All game logic, bot behavior, monster encounters — and yes, even this manpage — were generated or assisted by large language models using AI.
+
+.SH EXAMPLES
+.TP
+.B maze4 \-t 5 \-m 10 \-s 12 \-g 75 \-w
+Start a game with 5 teleporter pairs, 10 monsters, max monster strength 12, game speed 75, and show battle windows.
+
+.TP
+.B maze4 \-k
+Run the game and wait for a key press at key moments (before round start, after battles, end of round).
+
+.SH EXIT STATUS
+.TP
+.B 0
+The program ran successfully.
+
+.TP
+.B 1
+An error occurred (e.g., invalid option or internal failure).
+
+.SH SEE ALSO
+.BR ncurses (3),
+.BR maze(6x)
+
+.SH AUTHORS
+maze4 was created by Chris Pollitt, with creative and technical assistance from AI.
+
+.SH BUGS
+Send bug reports, feature suggestions, or produce-based puns to:  
+<chris.pollitt@gmail.com>
+
+.SH COPYRIGHT
+Copyright (C) 2025 Chris Pollitt.  
+This is free software; see the source for copying conditions.  
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
