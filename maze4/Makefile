@@ -1,7 +1,5 @@
 # Makefile for maze race game
 
-SRCDIR = /mnt/d/cygwin/home/chris/src/games/maze/cc
-
 # Run arguments
 RUN_ARGS ?= -g100 -r2 -m2 -t2
 
@@ -71,22 +69,6 @@ trace.o: trace.c
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) $(INSTRUMENT_FLAGS) -c $< -o $@
-
-# copy files from Cygwin if they've changed
-ifneq ($(findstring CYGWIN, $(OS)), CYGWIN)
-%.cc: $(SRCDIR)/%.cc
-	cp $< $@
-%.c: $(SRCDIR)/%.c
-	cp $< $@
-%.6: $(SRCDIR)/%.6
-	cp $< $@
-%.py: $(SRCDIR)/%.py
-	cp $< $@
-Makefile: $(SRCDIR)/Makefile
-	cp $< $@
-	@echo "Makefile changed, restarting make"
-	@exec $(MAKE) -f $(MAKEFILE_LIST) $(MAKECMDGOALS)
-endif
 
 # Clean rule
 clean:
