@@ -51,7 +51,7 @@ _Above: Kwick Kiwi about to get tenderized by Brutal Broccoli._
 
 ### 🔧 Build from source
 
-  git clone https://github.com/chrispollitt/xxx/maze4.git
+  git clone https://github.com/chrispollitt/Games.git
   cd maze4
   make
 
