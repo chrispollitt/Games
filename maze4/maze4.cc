@@ -227,57 +227,52 @@ int in_mysleep = 0;
 Maze *maze;
 
 // FUNCTION PROTOTYPES ///////////////////////////////////////////////////////
-
+void animate_bullseye(int y, int x, int max_radius, int delay_ms, int direction);
+int  battle_bot_monster(int monster_index, int player_id);
+int  battle_bots(int player1_id, int player2_id);
+int  battle_monsters(int monster1_idx, int monster2_idx);
+int  battle_unified(int combatant1_idx, int combatant2_idx, int type);
+void calc_game_speed();
+int  calculate_score(int moves, int width, int height);
+int  check_monster(int x, int y);
+int  check_teleporter(int x, int y, int *newX, int *newY);
+void clear_stack(Node **stack);
 void create_maze(int rows, int cols);
+void delay_with_polling(long total_delay_ms);
+void display_high_scores_window(int count, HighScore best_scores[], HighScore worst_scores[]);
+void display_player_alert(int p_idx, int rank);
+void display_player_stats();
+void ensure_path_between_corners();
+void exit_game(const char *format, ...);
 void free_maze();
 void generate_maze();
-void solve_maze_multi();
+char get_player_solution_char(int player_id);
+char get_player_visited_char(int player_id);
+void initialize_players(int stage);
+void insert_high_score(HighScore scores[], int *count, HighScore new_score, int is_best);
+int  is_dead_end(int x, int y);
+int  is_empty(Node *stack);
+int  is_player_position(int x, int y, Position *current_pos);
+void logMessage(const char *format, ...);
+void mysleep(long total_delay_ms);
+void pauseForUser();
+void pauseGame();
+void place_monsters();
+void place_teleporters();
+Position pop_stack(Node **stack, int *player_id);
 void print_maze();
 void push_stack(Node **stack, Position pos, int player_id);
-Position pop_stack(Node **stack, int *player_id);
-int is_empty(Node *stack);
-void clear_stack(Node **stack);
-void place_teleporters();
-void place_monsters();
-void update_monsters();
-int check_teleporter(int x, int y, int *newX, int *newY);
-int check_monster(int x, int y);
-void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
-                     int right_idx);
-int battle_unified(int combatant1_idx, int combatant2_idx, int type);
-int battle_monster(int monster_index, int player_id);
-int battle_players(int player1_id, int player2_id);
-int battle_monsters(int monster1_idx, int monster2_idx);
-void shuffle_directions_for_player(int player_id);
-void handle_resize(int sig);
-void display_player_stats();
-void display_player_alert(int p_idx, int rank);
-int is_dead_end(int x, int y);
-void initialize_players(int stage);
-void ensure_path_between_corners();
-int is_player_position(int x, int y, Position *current_pos);
-char get_player_visited_char(int player_id);
-char get_player_solution_char(int player_id);
-void animate_collapsing_bullseye(int y, int x, int max_radius, int delay_ms,
-                                 int direction);
-int read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
-void save_high_scores(HighScore best_scores[], HighScore worst_scores[],
-                      int count);
-void insert_high_score(HighScore scores[], int *count, HighScore new_score,
-                       int is_best);
-void update_high_scores(int rows, int cols);
-void display_high_scores_window(int count, HighScore best_scores[],
-                                HighScore worst_scores[]);
-int calculate_score(int moves, int width, int height);
-void pauseForUser();
-void run_round();
-void calc_game_speed();
-void exit_game(const char *format, ...);
-void update_status_line(const char *format, ...);
+int  read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
 void read_keyboard();
-void pauseGame();
-void logMessage(const char *format, ...);
-void mysleep(long time);
+void run_round();
+void save_high_scores(HighScore best_scores[], HighScore worst_scores[], int count);
+void show_battle_art(int aart, int leftside, int type, int player, int left_idx, int right_idx);
+void shuffle_directions_for_player(int idx);
+void sleep_millis(long ms);
+void solve_maze_multi();
+void update_high_scores(int rows, int cols);
+void update_monsters();
+void update_status_line(const char *format, ...);
 
 // FUNCTION DEFS /////////////////////////////////////////////////////////////
 
@@ -1095,8 +1090,7 @@ int check_monster(int x, int y) {
 //                              winner         battle
 //                 art/figlet, left/right,      type, player/monster  left-index
 //                 right-index
-void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
-                     int right_idx) {
+void show_battle_art(int aart, int leftside, int type, int player, int left_idx, int right_idx) {
   // Set the recovery time (in turns) for both winner and loser
   const int WINNER_RECOVERY_TURNS = 3;
   const int LOSER_RECOVERY_TURNS  = 6;
@@ -1141,8 +1135,8 @@ void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
     // update stats for winner and loser /////////////////////////////////////
   } else {
     int widx, lidx;
-    int winner_is_player = ((type == 0 && leftside) || (type == 1));
-    int loser_is_player = ((type == 0 && !leftside) || (type == 1));
+    int winner_is_player = ((type == 0 && leftside)  || (type == 1));
+    int loser_is_player  = ((type == 0 && !leftside) || (type == 1));
     if (leftside) {
       widx = left_idx;
       lidx = right_idx;
@@ -1238,7 +1232,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
   // show battle spot
   int be_x = (type != 2) ? players[p1_idx].current.x : monsters[m1_idx].x;
   int be_y = (type != 2) ? players[p1_idx].current.y : monsters[m1_idx].y;
-  animate_collapsing_bullseye(be_y, be_x, 5, 100, 0);
+  animate_bullseye(be_y, be_x, 5, 100, 0);
 
   if (ShowWindows != 0) {
     // Save current window and create a larger battle screen
@@ -1355,10 +1349,11 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
   // In case of tie, first combatant wins (arbitrary rule)
   else {
     left_wins =
-        (roll1 > roll2 ||
-         (roll1 == roll2 && (type == 1 ? combatant1_idx > combatant2_idx
-                                       : monsters[m1_idx].strength >=
-                                             monsters[m2_idx].strength)));
+      (roll1 > roll2 ||
+      (roll1 == roll2 && 
+			(type == 1 ? combatant1_idx > combatant2_idx
+      : monsters[m1_idx].strength >=
+      monsters[m2_idx].strength)));
   }
 
   // Display result and update stats based on battle type
@@ -1414,13 +1409,13 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
 }
 
 // Convenience wrapper for player vs monster battles
-int battle_monster(int monster_index, int player_id) {
+int battle_bot_monster(int monster_index, int player_id) {
   // For player vs monster, combatant1 is player, combatant2 is monster
   return battle_unified(player_id, monster_index, 0);
 }
 
 // Convenience wrapper for player vs player battles
-int battle_players(int player1_id, int player2_id) {
+int battle_bots(int player1_id, int player2_id) {
   return battle_unified(player1_id, player2_id, 1);
 }
 
@@ -1782,7 +1777,7 @@ void solve_maze_multi() {
             players[p].current.y == players[other_p].current.y) {
 
           // Initiate player vs player battle
-          int winner_id = battle_players(player_id, other_p + 1);
+          int winner_id = battle_bots(player_id, other_p + 1);
 
           // Loser must retreat to previous position
           if (winner_id == player_id) {
@@ -1886,7 +1881,7 @@ void solve_maze_multi() {
       int monster_idx = check_monster(current.x, current.y);
       if (monster_idx > 0) {
         monster_idx--; // Adjust index (monster_idx was returned +1)
-        int battle_result = battle_monster(monster_idx, player_id);
+        int battle_result = battle_bot_monster(monster_idx, player_id);
 
         if (battle_result == 0) {
           // Player lost battle, mark position as visited in player's array
@@ -2225,8 +2220,7 @@ void clear_stack(Node **stack) {
  * @param delay_ms The delay in milliseconds between animation frames
  * @param direction The direction of the animation (0 = collapse, 1 = expand)
  */
-void animate_collapsing_bullseye(int y, int x, int max_radius, int delay_ms,
-                                 int direction) {
+void animate_bullseye(int y, int x, int max_radius, int delay_ms, int direction) {
   // UTF-8 characters for different rings of the bullseye
   const wchar_t *ring_chars[] = {
       L"●", // Filled circle
@@ -2312,8 +2306,6 @@ void animate_collapsing_bullseye(int y, int x, int max_radius, int delay_ms,
   attron(COLOR_PAIR(old_pair));
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
 // Read high scores from file
 int read_high_scores(HighScore best_scores[], HighScore worst_scores[]) {
   FILE *file = fopen(HIGH_SCORE_FILENAME, "rb");
@@ -2341,8 +2333,7 @@ int read_high_scores(HighScore best_scores[], HighScore worst_scores[]) {
 }
 
 // Save high scores to file
-void save_high_scores(HighScore best_scores[], HighScore worst_scores[],
-                      int count) {
+void save_high_scores(HighScore best_scores[], HighScore worst_scores[], int count) {
   FILE *file = fopen(HIGH_SCORE_FILENAME, "wb");
   if (!file) {
     // Can't print to stderr in ncurses mode, so just return
@@ -2368,8 +2359,7 @@ void save_high_scores(HighScore best_scores[], HighScore worst_scores[],
 }
 
 // Insert a score into the high score lists
-void insert_high_score(HighScore scores[], int *count, HighScore new_score,
-                       int is_best) {
+void insert_high_score(HighScore scores[], int *count, HighScore new_score, int is_best) {
   int i, pos = -1;
 
   // Determine the position to insert based on whether it's best or worst list
@@ -2474,8 +2464,7 @@ void update_high_scores(int rows, int cols) {
 }
 
 // Display high scores in a ncurses window
-void display_high_scores_window(int count, HighScore best_scores[],
-                                HighScore worst_scores[]) {
+void display_high_scores_window(int count, HighScore best_scores[], HighScore worst_scores[]) {
   if (count == 0 || ShowWindows == 0) {
     // No high scores yet
     pauseForUser();
@@ -2663,7 +2652,7 @@ void calc_game_speed() {
 }
 
 void exit_game(const char *format, ...) {
-	tcflush(STDIN_FILENO, TCIFLUSH);
+  tcflush(STDIN_FILENO, TCIFLUSH);
   endwin();
   va_list args;
   va_start(args, format);
@@ -2893,34 +2882,34 @@ void sleep_millis(long ms) {
 __attribute__((no_instrument_function))
 void delay_with_polling(long total_delay_ms) {
     struct timespec start, end;
-		long read_duration_ms;
-		long sleep_time_ms;
-		long remaining_time_ms = total_delay_ms;
+    long read_duration_ms;
+    long sleep_time_ms;
+    long remaining_time_ms = total_delay_ms;
 
     do {
         if(remaining_time_ms > POLL_INTERVAL_MS) {
-  				// do read keyboard
+          // do read keyboard
           clock_gettime(CLOCK_MONOTONIC, &start);
           read_keyboard();
           clock_gettime(CLOCK_MONOTONIC, &end);
-  				// calc how long that took
+          // calc how long that took
           read_duration_ms =
               (end.tv_sec - start.tv_sec) * 1000 +
               (end.tv_nsec - start.tv_nsec) / 1000000;
-  				// calc time to next poll
+          // calc time to next poll
           sleep_time_ms = POLL_INTERVAL_MS - read_duration_ms;
-  				// don't overshoot remaining time
+          // don't overshoot remaining time
           if (sleep_time_ms > remaining_time_ms) {
               sleep_time_ms = remaining_time_ms;
           }
         } else {
           sleep_time_ms = remaining_time_ms;
-				}
-				// do the sleep
+        }
+        // do the sleep
         if (sleep_time_ms > 0) {
             sleep_millis(sleep_time_ms);
         }
-			  // calc remaining sleep time
+        // calc remaining sleep time
         remaining_time_ms -= sleep_time_ms;
     } while (remaining_time_ms > 0);
 }
