@@ -15,7 +15,9 @@ def build_timed_hierarchy(logfile):
     root = None
 
     with open(logfile, 'r') as f:
-        for line in f:
+        lines = f.readlines()
+        
+        for line_index, line in enumerate(lines):
             if line.startswith('#'):
                 continue
             parts = line.strip().split(',')
@@ -33,12 +35,28 @@ def build_timed_hierarchy(logfile):
                     root = func
                 stack.append((func, ts))
             elif event == "EXIT" and stack:
-                start_func, _ = stack.pop()
+                start_func, start_ts = stack.pop()
                 if start_func == func:
                     # Use the duration field from the CSV directly
                     timing_data[func].setdefault('time', 0)
                     timing_data[func]['time'] += dur
                     timing_data[func]['calls'] = timing_data[func].get('calls', 0) + 1
+        
+        # Handle any remaining functions in the stack (including main)
+        if stack and line_index == len(lines) - 1:
+            # Get timestamp from the last line for calculating remaining durations
+            last_ts = ts
+            
+            # Process remaining stack in reverse order (innermost to outermost)
+            while stack:
+                func, start_ts = stack.pop()
+                # Calculate duration from start to last timestamp
+                duration = last_ts - start_ts
+                
+                # Update timing data
+                timing_data[func].setdefault('time', 0)
+                timing_data[func]['time'] += duration
+                timing_data[func]['calls'] = timing_data[func].get('calls', 0) + 1
 
     return root, call_dict, timing_data
 
@@ -48,7 +66,15 @@ def print_timed_tree(node, call_dict, timing_data, prefix="", is_last=True):
     
     # Format timing info
     time_info = timing_data.get(node, {'time': 0, 'calls': 0})
-    time_str = f" [{time_info['time']/1000:.1f}ms total, {time_info['calls']} calls]"
+    total_time = time_info['time']
+    calls = time_info['calls']
+    
+    # Calculate per-call time
+    per_call_time = 0
+    if calls > 0:
+        per_call_time = total_time / calls
+    
+    time_str = f" [{total_time/1000:.1f}ms total, {per_call_time/1000:.2f}ms per call, {calls} calls]"
 
     branch = TREE_LAST if is_last else TREE_MID
     print(f"{prefix}{branch}{node}{time_str}")

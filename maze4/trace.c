@@ -85,6 +85,7 @@ static void add_trace_entry(const char* type, void* func_address) {
 
 // Function called upon entering a function
 void __cyg_profile_func_enter(void *func_address, void *call_site) {
+    call_site = call_site;
     if (trace_buffer_index == 0) {
         init_trace();  // Initialize on first use
     }
@@ -101,6 +102,7 @@ void __cyg_profile_func_enter(void *func_address, void *call_site) {
 
 // Function called upon exiting a function
 void __cyg_profile_func_exit(void *func_address, void *call_site) {
+    call_site = call_site;
     if (logging_active) {
         return;
     }

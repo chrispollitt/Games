@@ -134,19 +134,6 @@ def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_n
             f_out.write(out_line)
             out_count += 1
     
-    # Generate summary statistics
-    summary_path = f"{os.path.splitext(resolved_path)[0]}_summary.perf"
-    with open(summary_path, 'w') as f_sum:
-        f_sum.write("Function Timing Summary (μs):\n")
-        f_sum.write("---------------------------------\n")
-        for func, times in sorted(timing_data.items(), 
-                                key=lambda x: sum(x[1])/len(x[1]), 
-                                reverse=True):
-            avg = sum(times) / len(times)
-            total = sum(times)
-            count = len(times)
-            f_sum.write(f"{func}: calls={count} avg={avg:.1f} total={total}\n")
-    
     return in_count, out_count
 
 def main():
@@ -189,7 +176,6 @@ def main():
     
     print("\nTrace processing complete.", file=sys.stderr)
     print(f"Resolved trace saved to {resolved_log}", file=sys.stderr)
-    print(f"Function timing summary saved to {resolved_log.replace('.perf', '_summary.perf')}", file=sys.stderr)
     print(f"Processed {in_lines} lines, wrote {out_lines} lines", file=sys.stderr)
 
 if __name__ == "__main__":

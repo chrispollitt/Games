@@ -1887,14 +1887,14 @@ void solve_maze_multi() {
         for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
             mvprintw(newY, newX, TELEPORTER_CHAR);             // Print character normally
             mvprintw(current.y, current.x, TELEPORTER_CHAR);   // Print character normally
-            refresh();
+            wrefresh(stdscr);
             usleep(50000);           // Short delay (50ms)
         
             attron(A_REVERSE);
             mvprintw(newY, newX, TELEPORTER_CHAR);            // Print character with inverted colors
             mvprintw(current.y, current.x, TELEPORTER_CHAR);  // Print character normally
             attroff(A_REVERSE);
-            refresh();
+            wrefresh(stdscr);
             usleep(50000);            // Another delay
         }				
         continue;
