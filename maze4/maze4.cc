@@ -70,6 +70,8 @@
 // mins, maxes, etc.
 #define MIN_ROWS 25
 #define MIN_COLS 40
+#define MAX_ROWS 1024
+#define MAX_COLS 1024
 #define DEF_GAME_SPEED 50
 #define MAX_GAME_DELAY 50
 #define DEF_TELEPORTER_DENSITY 1000
@@ -93,6 +95,10 @@
 #define PAUSE_MSG "↑ Paused, press any key to continue..."
 
 // TYPEDEFS //////////////////////////////////////////////////////////////////
+
+typedef struct {
+  int x, y;
+} Coord;
 
 typedef struct {
   char name[32];   // Player name
@@ -157,7 +163,6 @@ typedef struct {
 
 typedef struct Node {
   Position pos;
-  int player_id; // Which player this move belongs to
   struct Node *next;
 } Node;
 
@@ -203,6 +208,7 @@ int Max_monster_strength = -1;
 
 // Array of players
 Player players[NUM_PLAYERS];
+Coord  parent_map[NUM_PLAYERS][MAX_ROWS][MAX_COLS];
 
 // Game state
 int Players_finished = 0;
@@ -248,6 +254,7 @@ void free_maze();
 void generate_maze();
 char get_player_solution_char(int player_id);
 char get_player_visited_char(int player_id);
+void highlight_player_solution_path(int p);
 void initialize_players(int stage);
 void insert_high_score(HighScore scores[], int *count, HighScore new_score, int is_best);
 int  is_dead_end(int x, int y);
@@ -259,9 +266,9 @@ void pauseForUser();
 void pauseGame();
 void place_monsters();
 void place_teleporters();
-Position pop_stack(Node **stack, int *player_id);
+Position pop_stack(Node **stack);
 void print_maze();
-void push_stack(Node **stack, Position pos, int player_id);
+void push_stack(Node **stack, Position pos);
 int  read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
 void read_keyboard();
 void run_round();
@@ -396,7 +403,7 @@ int main(int argc, char *argv[]) {
     old_rows = size.ws_row ; old_cols = size.ws_col;      
   }
 
-  // end
+  // leave game
   exit_game("Game over\n");
 }
 
@@ -440,6 +447,10 @@ void run_round() {
   // Ensure minimum maze size
   if (rows < MIN_ROWS || cols < MIN_COLS) {
     exit_game("Screen too small, min %d rows, %d cols\n", MIN_ROWS, MIN_COLS);
+  }
+  // Ensure maximum maze size
+  if (rows > MAX_ROWS || cols > MAX_COLS) {
+    exit_game("Screen too big, max %d rows, %d cols\n", MAX_ROWS, MAX_COLS);
   }
   // Adjust for maze walls and borders
   rows = (rows - 6) / 2 * 2 - 1; // Reserve space for messages and player stats
@@ -497,6 +508,7 @@ void initialize_players(int stage) {
     memset(monsters, 0, sizeof(monsters));
     Liv_monsters = 0;
     memset(players, 0, sizeof(players));
+		memset(parent_map, 0, sizeof(parent_map));
     Players_finished = 0;
     Game_finished = 0;
     Game_moves = 0;
@@ -787,7 +799,10 @@ void display_player_stats() {
 // Display player alert with variable parameters
 //                     player_index  -2=abandoned, -1=out of moves, >0 is rank
 void display_player_alert(int p_idx, int rank) {
-  if (ShowWindows == 0) return;
+  if (ShowWindows == 0) {
+		pauseForUser();
+		return;
+	}
   // Save current window and create a larger battle screen
   // Calculate window dimensions
   int height = MIN_ROWS -2;
@@ -1351,7 +1366,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
     left_wins =
       (roll1 > roll2 ||
       (roll1 == roll2 && 
-			(type == 1 ? combatant1_idx > combatant2_idx
+      (type == 1 ? combatant1_idx > combatant2_idx
       : monsters[m1_idx].strength >=
       monsters[m2_idx].strength)));
   }
@@ -1572,14 +1587,13 @@ void ensure_path_between_corners() {
 
       // Use BFS to find a path from corner i to corner j
       Node *queue = NULL;
-      push_stack(&queue, corners[i], 0);
+      push_stack(&queue, corners[i]);
       visited[corners[i].y][corners[i].x] = 1;
 
       int path_found = 0;
 
       while (!is_empty(queue) && !path_found) {
-        int dummy_id;
-        Position current = pop_stack(&queue, &dummy_id);
+        Position current = pop_stack(&queue);
 
         // Check if we've reached the destination corner
         if (current.x == corners[j].x && current.y == corners[j].y) {
@@ -1599,7 +1613,7 @@ void ensure_path_between_corners() {
 
             visited[newY][newX] = 1;
             Position newPos = {newX, newY, current.x, current.y};
-            push_stack(&queue, newPos, 0);
+            push_stack(&queue, newPos);
           }
         }
       }
@@ -1645,13 +1659,12 @@ void generate_maze() {
   // Initialize stack for DFS
   Node *stack = NULL;
   Position start = {1, 1, -1, -1};
-  push_stack(&stack, start, 0); // Player ID doesn't matter for generation
+  push_stack(&stack, start); 
 
   maze->grid[start.y][start.x] = PATH;
 
   while (!is_empty(stack)) {
-    int player_id; // We don't use this during generation
-    Position current = pop_stack(&stack, &player_id);
+    Position current = pop_stack(&stack);
 
     // Get unvisited neighbors
     int unvisited[4] = {0};
@@ -1669,7 +1682,7 @@ void generate_maze() {
 
     if (count > 0) {
       // Push current cell back onto stack
-      push_stack(&stack, current, 0);
+      push_stack(&stack, current);
 
       // Choose random unvisited neighbor
       int randDir = unvisited[rand() % count];
@@ -1685,7 +1698,7 @@ void generate_maze() {
 
       // Push chosen cell onto stack
       Position newPos = {newX, newY, -1, -1};
-      push_stack(&stack, newPos, 0);
+      push_stack(&stack, newPos);
     }
   }
 
@@ -1693,6 +1706,7 @@ void generate_maze() {
   clear_stack(&stack);
 }
 
+//////////////////////////////////////////////////////
 // function to use player-specific direction arrays
 void solve_maze_multi() {
   // Create separate stacks for each player to ensure fairness
@@ -1708,12 +1722,13 @@ void solve_maze_multi() {
 
   // Push each player's starting position onto their stack
   for (int p = 0; p < NUM_PLAYERS; p++) {
-    push_stack(&stacks[p], players[p].start, p + 1); // Player IDs are 1-based
+    push_stack(&stacks[p], players[p].start);
     // Mark start position as visited
     maze->visited[p][players[p].start.y][players[p].start.x] = 1;
   }
 
-  // Main solve loop - continue until all players finish or all stacks are empty
+  //////////////////////////////////////////////////
+  // Start Main solve loop - continue until all players finish or all stacks are empty
   while (Players_finished < NUM_PLAYERS) {
     // Check if all stacks are empty (no more moves for any player)
     int all_empty = 1;
@@ -1731,13 +1746,15 @@ void solve_maze_multi() {
       for (int p = 0; p < NUM_PLAYERS; p++) {
         if (!players[p].reached_goal && !players[p].abandoned_race) {
           players[p].abandoned_race = 1;
+          highlight_player_solution_path(p);
           display_player_alert(p + 1, -1);
         }
       }
       break;
     }
 
-    // Rotate through players, giving each a turn to move one step
+    /////////////////////////////////////////
+    // Start Rotate through players, giving each a turn to move one step
     for (int p = 0; p < NUM_PLAYERS; p++) {
       // Skip players who have already reached their goal or abandoned
       if (players[p].reached_goal || players[p].abandoned_race)
@@ -1749,6 +1766,7 @@ void solve_maze_multi() {
         // reached their goal
         if (!players[p].abandoned_race && !players[p].reached_goal) {
           players[p].abandoned_race = 1;
+          highlight_player_solution_path(p);
           display_player_alert(p + 1, -1);
 
           // Update player stats display to show the new status
@@ -1758,10 +1776,9 @@ void solve_maze_multi() {
       }
 
       int player_id = p + 1;
-      int dummy_id; // We already know the player ID
-      Position current = pop_stack(&stacks[p], &dummy_id);
+      Position current = pop_stack(&stacks[p]);
 
-      // Update current position and move count
+      // Update current position
       players[p].current = current;
 
       // Check for player vs player collision
@@ -1788,6 +1805,7 @@ void solve_maze_multi() {
             // Check if player has lost too many battles
             if (players[other_p].battles_lost >= 3) {
               players[other_p].abandoned_race = 2;
+              highlight_player_solution_path(other_p);
               display_player_alert(other_p + 1, -2);
 
               // Clear the stack to stop the player's exploration
@@ -1811,6 +1829,7 @@ void solve_maze_multi() {
             // Check if player has lost too many battles
             if (players[p].battles_lost >= 3) {
               players[p].abandoned_race = 2;
+              highlight_player_solution_path(p);
               display_player_alert(player_id, -2);
 
               // Clear the stack to stop the player's exploration
@@ -1838,6 +1857,7 @@ void solve_maze_multi() {
         players[p].finished_rank = Players_finished;
 
         // Mark as finished in UI
+        highlight_player_solution_path(p);
         display_player_alert(player_id, players[p].finished_rank);
 
         continue;
@@ -1866,12 +1886,14 @@ void solve_maze_multi() {
         players[p].justTeleported = Game_moves + 1;
 
         Position teleported = {newX, newY, current.x, current.y};
-        push_stack(&stacks[p], teleported, player_id);
+        push_stack(&stacks[p], teleported);
+        parent_map[p][newY][newX].x = current.x;
+        parent_map[p][newY][newX].y = current.y;
 
         // Mark destination as visited
         maze->visited[p][newY][newX] = 1;
 
-        // Visualize teleportation
+        // Visualize teleportation TODO
         //   FLICKER current.x, current.y, 
         //   FLICKER newX, newY
         continue;
@@ -1901,6 +1923,7 @@ void solve_maze_multi() {
           // Check if player has lost too many battles
           if (players[p].battles_lost >= 3) {
             players[p].abandoned_race = 2;
+            highlight_player_solution_path(p);
             display_player_alert(player_id, -2);
 
             // Clear the stack to stop the player's exploration
@@ -1929,7 +1952,7 @@ void solve_maze_multi() {
         maze->grid[current.y][current.x] = visited_char;
       }
 
-      // Try all possible directions using player-specific direction arrays
+      // start Try all possible directions using player-specific direction arrays
       for (int i = 0; i < 4; i++) {
         int dir_idx = i;
         int nextX = current.x + players[p].dx[dir_idx];
@@ -1950,27 +1973,31 @@ void solve_maze_multi() {
                 1; // Mark as visited for this player
 
             Position nextPos = {nextX, nextY, current.x, current.y};
-            push_stack(&stacks[p], nextPos, player_id);
+            push_stack(&stacks[p], nextPos);
+            parent_map[p][nextY][nextX].x = current.x;
+            parent_map[p][nextY][nextX].y = current.y;
           }
         }
       }
-
-      // Visualize exploration after each player's move
-      print_maze();
-      display_player_stats();
-      // read user key presses for commands
-      read_keyboard();
-      if (LastSLupdate && LastSLupdate+25 < Game_moves) {
-        move(maze->rows + 5, 0);
-        wclrtoeol(stdscr);
-      }
-      mysleep(Game_delay);
+      // end Try all possible directions
     }
+    // end Rotate through players
+    //////////////////////////////////////////
 
     // Update monsters occasionally
     if (Game_moves % 5 == 0) {
       update_monsters();
     }
+
+    // Visualize exploration after each player's move
+    print_maze();
+    display_player_stats();
+    read_keyboard();
+    if (LastSLupdate && LastSLupdate+25 < Game_moves) {
+      move(maze->rows + 5, 0);
+      wclrtoeol(stdscr);
+    }
+    mysleep(Game_delay);    
 
     // Update game moves
     Game_moves++;
@@ -2004,6 +2031,8 @@ void solve_maze_multi() {
       }
     }
   }
+  // end Main solve loop
+  //////////////////////////////////////////////////
 
   // Free stacks
   for (int p = 0; p < NUM_PLAYERS; p++) {
@@ -2013,6 +2042,8 @@ void solve_maze_multi() {
   // Show final results
   if(!Screen_reduced) display_player_stats();
 }
+// end solve_maze_multi
+//////////////////////////////////////////////////////
 
 // print_maze to display all players, teleporters, and monsters
 void print_maze() {
@@ -2171,21 +2202,19 @@ void print_maze() {
 
 // Stack operations
 __attribute__((no_instrument_function))
-void push_stack(Node **stack, Position pos, int player_id) {
+void push_stack(Node **stack, Position pos) {
   Node *node = (Node *)malloc(sizeof(Node));
   if (!node)
     return; // Handle memory allocation failure
 
   node->pos = pos;
-  node->player_id = player_id;
   node->next = *stack;
   *stack = node;
 }
 
 __attribute__((no_instrument_function))
-Position pop_stack(Node **stack, int *player_id) {
+Position pop_stack(Node **stack) {
   if (*stack == NULL) {
-    *player_id = 0;
     Position empty = {-1, -1, -1, -1};
     return empty;
   }
@@ -2193,7 +2222,6 @@ Position pop_stack(Node **stack, int *player_id) {
   Node *temp = *stack;
   *stack = (*stack)->next;
   Position pos = temp->pos;
-  *player_id = temp->player_id;
   free(temp);
   return pos;
 }
@@ -2205,9 +2233,8 @@ int is_empty(Node *stack) {
 
 // Clear the entire stack and free memory
 void clear_stack(Node **stack) {
-  int dummy_id;
   while (!is_empty(*stack)) {
-    pop_stack(stack, &dummy_id);
+    pop_stack(stack);
   }
 }
 
@@ -2860,6 +2887,8 @@ void logMessage(const char *format, ...) {
   } else {
     fprintf(stderr, "Error: Could not open log file: %s\n", LOG_FILENAME);
   }
+#else
+  format = format;
 #endif
 }
 
@@ -2924,4 +2953,31 @@ void mysleep(long total_delay_ms) {
       delay_with_polling(total_delay_ms);
   }
   in_mysleep = 0;
+}
+
+// function to mark the solution path for a player
+void highlight_player_solution_path(int p) {
+  // Now mark each position in the path with solution char
+  char solution_char = get_player_solution_char(p+1);
+	Position end = players[p].current;
+  int x = end.x, y = end.y;
+
+  while (!(x == players[p].start.x && y == players[p].start.y)) {
+    // Only overwrite certain cells (don't overwrite special cells)
+    if (maze->grid[y][x] != END1 &&
+        maze->grid[y][x] != END2 &&
+        maze->grid[y][x] != END3 &&
+        maze->grid[y][x] != END4 &&
+        maze->grid[y][x] != TELEPORTER &&
+        maze->grid[y][x] != MONSTER &&
+        maze->grid[y][x] != DEFEATED_MONSTER
+    ) {
+      maze->grid[y][x] = solution_char;
+    }    int px = parent_map[p][y][x].x;
+    int py = parent_map[p][y][x].y;
+    x = px;
+    y = py;
+  }
+  print_maze();
+	wrefresh(stdscr);
 }

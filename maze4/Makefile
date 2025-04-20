@@ -12,12 +12,13 @@ CATLOG = catlog.py
 OS := $(shell uname -s)
 
 # Compiler flags
-#CFLAGS = -Wall -Wextra -g -Werror -pedantic -std=c++17 -Wshadow -Wconversion -Wunused -Wformat=2 
-CFLAGS   = -g -Wall
+CFLAGS = -Wall -Wextra -g -Werror -pedantic -std=c++17 -Wshadow -Wconversion -Wunused -Wformat=2 
+#CFLAGS = -g -Wall
 ifeq ($(PROFILE),1)
 CXXFLAGS = -pg -O0
 else
-CXXFLAGS = -g -Wall
+CXXFLAGS = -Wall -Wextra -g -Werror -pedantic -std=c++17 -Wshadow -Wconversion -Wunused -Wformat=2 
+#CXXFLAGS = -g -Wall
 endif
 ifeq ($(DEBUG),1)
 CXXFLAGS += -DDEBUG=1
