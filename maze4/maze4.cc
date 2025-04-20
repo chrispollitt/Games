@@ -508,7 +508,7 @@ void initialize_players(int stage) {
     memset(monsters, 0, sizeof(monsters));
     Liv_monsters = 0;
     memset(players, 0, sizeof(players));
-		memset(parent_map, 0, sizeof(parent_map));
+    memset(parent_map, 0, sizeof(parent_map));
     Players_finished = 0;
     Game_finished = 0;
     Game_moves = 0;
@@ -800,9 +800,9 @@ void display_player_stats() {
 //                     player_index  -2=abandoned, -1=out of moves, >0 is rank
 void display_player_alert(int p_idx, int rank) {
   if (ShowWindows == 0) {
-		pauseForUser();
-		return;
-	}
+    pauseForUser();
+    return;
+  }
   // Save current window and create a larger battle screen
   // Calculate window dimensions
   int height = MIN_ROWS -2;
@@ -2959,7 +2959,7 @@ void mysleep(long total_delay_ms) {
 void highlight_player_solution_path(int p) {
   // Now mark each position in the path with solution char
   char solution_char = get_player_solution_char(p+1);
-	Position end = players[p].current;
+  Position end = players[p].current;
   int x = end.x, y = end.y;
 
   while (!(x == players[p].start.x && y == players[p].start.y)) {
@@ -2979,5 +2979,5 @@ void highlight_player_solution_path(int p) {
     y = py;
   }
   print_maze();
-	display_player_stats();
+  display_player_stats();
 }
