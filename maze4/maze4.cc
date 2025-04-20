@@ -73,7 +73,7 @@
 #define MAX_ROWS 1024
 #define MAX_COLS 1024
 #define DEF_GAME_SPEED 50
-#define MAX_GAME_DELAY 50
+#define MAX_GAME_DELAY 200
 #define DEF_TELEPORTER_DENSITY 1000
 #define MAX_TELEPORTERS 10
 #define DEF_MONSTER_DENSITY 500
@@ -2979,5 +2979,5 @@ void highlight_player_solution_path(int p) {
     y = py;
   }
   print_maze();
-	wrefresh(stdscr);
+	display_player_stats();
 }
