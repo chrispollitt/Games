@@ -1768,17 +1768,13 @@ void solve_maze_multi() {
           players[p].abandoned_race = 1;
           highlight_player_solution_path(p);
           display_player_alert(p + 1, -1);
-
-          // Update player stats display to show the new status
-          display_player_stats();
         }
         continue;
       }
 
+      // update current position
       int player_id = p + 1;
       Position current = pop_stack(&stacks[p]);
-
-      // Update current position
       players[p].current = current;
 
       // Check for player vs player collision
@@ -1847,7 +1843,6 @@ void solve_maze_multi() {
       // Store current position for potential retreat
       previous_positions[p].x = players[p].current.x;
       previous_positions[p].y = players[p].current.y;
-
       players[p].moves++;
 
       // Check if reached the end
@@ -1859,15 +1854,12 @@ void solve_maze_multi() {
         // Mark as finished in UI
         highlight_player_solution_path(p);
         display_player_alert(player_id, players[p].finished_rank);
-
         continue;
       }
 
       // Check for teleporter
       int newX, newY;
       int teleporter_idx = -1;
-
-      // Find teleporter index if on one
       for (int i = 0; i < Num_teleporters; i++) {
         if ((teleporters[i].x1 == current.x &&
              teleporters[i].y1 == current.y) ||
@@ -1877,13 +1869,11 @@ void solve_maze_multi() {
           break;
         }
       }
-
-      // Handle teleportation
       if (!players[p].justTeleported && teleporter_idx >= 0 &&
           check_teleporter(current.x, current.y, &newX, &newY)) {
 
         // Record teleportation
-        players[p].justTeleported = Game_moves + 1;
+        players[p].justTeleported = Game_moves + 2;
 
         Position teleported = {newX, newY, current.x, current.y};
         push_stack(&stacks[p], teleported);
@@ -1893,9 +1883,20 @@ void solve_maze_multi() {
         // Mark destination as visited
         maze->visited[p][newY][newX] = 1;
 
-        // Visualize teleportation TODO
-        //   FLICKER current.x, current.y, 
-        //   FLICKER newX, newY
+        // Visualize teleportation
+        for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
+            mvprintw(newY, newX, TELEPORTER_CHAR);             // Print character normally
+            mvprintw(current.y, current.x, TELEPORTER_CHAR);   // Print character normally
+            refresh();
+            usleep(50000);           // Short delay (50ms)
+        
+            attron(A_REVERSE);
+            mvprintw(newY, newX, TELEPORTER_CHAR);            // Print character with inverted colors
+            mvprintw(current.y, current.x, TELEPORTER_CHAR);  // Print character normally
+            attroff(A_REVERSE);
+            refresh();
+            usleep(50000);            // Another delay
+        }				
         continue;
       }
 
