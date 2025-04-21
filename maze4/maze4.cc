@@ -793,7 +793,7 @@ void display_player_stats() {
 
     attroff(COLOR_PAIR(players[i].color_pair) | A_BOLD);
   }
-  wrefresh(stdscr);
+  wnoutrefresh(stdscr);
 }
 
 // Display player alert with variable parameters
@@ -850,7 +850,7 @@ void display_player_alert(int p_idx, int rank) {
   }
   show_battle_art(1, 1, 1, 1, p_idx - 1, -1);
   wattroff(battle_win, COLOR_PAIR(players[p_idx - 1].color_pair) | A_BOLD);
-  wrefresh(battle_win);
+  wnoutrefresh(battle_win);
   pauseForUser(); 
 
   // Clean up battle window
@@ -1306,7 +1306,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
     mvwprintw(battle_win, 15, 5, "║         ║        ║         ║");
     mvwprintw(battle_win, 16, 5, "╚═════════╝        ╚═════════╝");
     
-    wrefresh(battle_win);
+    wnoutrefresh(battle_win);
   }
   
   // Calculate battle rolls based on combatant types
@@ -1350,7 +1350,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
       wattroff(battle_win, COLOR_PAIR(8) | A_BOLD);
     }
     
-    wrefresh(battle_win);
+    wnoutrefresh(battle_win);
   }
   
   // Determine winner and loser
@@ -1399,7 +1399,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
   }
 
   if (ShowWindows != 0) {
-    wrefresh(battle_win);
+    wnoutrefresh(battle_win);
     pauseForUser(); 
     
     // Clean up battle window
@@ -1887,15 +1887,15 @@ void solve_maze_multi() {
         for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
             mvprintw(newY, newX, TELEPORTER_CHAR);             // Print character normally
             mvprintw(current.y, current.x, TELEPORTER_CHAR);   // Print character normally
-            wrefresh(stdscr);
-            usleep(50000);           // Short delay (50ms)
+            wnoutrefresh(stdscr);
+            mysleep(50);           // Short delay (50ms)
         
             attron(A_REVERSE);
             mvprintw(newY, newX, TELEPORTER_CHAR);            // Print character with inverted colors
             mvprintw(current.y, current.x, TELEPORTER_CHAR);  // Print character normally
             attroff(A_REVERSE);
-            wrefresh(stdscr);
-            usleep(50000);            // Another delay
+            wnoutrefresh(stdscr);
+            mysleep(50);            // Another delay
         }				
         continue;
       }
@@ -2031,6 +2031,7 @@ void solve_maze_multi() {
         old_rows = size.ws_row ; old_cols = size.ws_col;      
       }
     }
+		doupdate();
   }
   // end Main solve loop
   //////////////////////////////////////////////////
@@ -2042,6 +2043,7 @@ void solve_maze_multi() {
 
   // Show final results
   if(!Screen_reduced) display_player_stats();
+  doupdate();
 }
 // end solve_maze_multi
 //////////////////////////////////////////////////////
@@ -2270,7 +2272,7 @@ void animate_bullseye(int y, int x, int max_radius, int delay_ms, int direction)
 
   // Clear any previous content
   // clear();
-  wrefresh(stdscr);
+  wnoutrefresh(stdscr);
 
   int start, end, inc;
   if (direction) {
@@ -2324,7 +2326,7 @@ void animate_bullseye(int y, int x, int max_radius, int delay_ms, int direction)
     }
 
     // Refresh the screen
-    wrefresh(stdscr);
+    wnoutrefresh(stdscr);
 
     // Delay between frames
     mysleep(delay_ms);
@@ -2599,7 +2601,7 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
   }
 
   // Refresh and show the window
-  wrefresh(high_score_win);
+  wnoutrefresh(high_score_win);
 
   // Wait for user input
   pauseForUser();
@@ -2609,7 +2611,7 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
   curs_set(old_curs); // Restore cursor state
 
   // Refresh the screen to remove the window
-  wrefresh(stdscr);
+  wnoutrefresh(stdscr);
 }
 
 #define OPTIMAL_PATH_FACTOR 1.5f
@@ -2762,7 +2764,7 @@ void update_status_line(const char *format, ...) {
   }
   wclrtoeol(stdscr);
   attroff(COLOR_PAIR(11) | A_BOLD);
-  wrefresh(stdscr);  
+  wnoutrefresh(stdscr);  
 }
 
 __attribute__((no_instrument_function))
@@ -2837,6 +2839,7 @@ void pauseGame() {
     
     // Enter pause mode loop
     while (paused) {
+			doupdate();
       ch = getch();
       
       // Handle arrow keys for status history browsing
@@ -2948,6 +2951,7 @@ __attribute__((no_instrument_function))
 void mysleep(long total_delay_ms) {
   if(in_mysleep) return;
   in_mysleep = 1;  
+  doupdate();
   if (total_delay_ms <= POLL_INTERVAL_MS) {
       sleep_millis(total_delay_ms);
   } else {

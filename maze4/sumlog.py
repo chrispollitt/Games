@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 import sys
+import re
 from collections import defaultdict
 
 # UTF-8 tree symbols
-TREE_LAST = "└── "
-TREE_MID  = "├── "
-TREE_VERT = "│   "
-TREE_SPACE = "    "
+TREE_LAST  = "└─"
+TREE_MID   = "├─"
+TREE_VERT  = "│ "
+TREE_SPACE = "  "
+# Define width constants
+FUNC_WIDTH  = 40  # Space for function name including tree branches
+TOTAL_WIDTH = 10  # Width for total time column
+AVG_WIDTH   = 10  # Width for average time column
+CALLS_WIDTH =  6  # Width for calls column
 
 def build_timed_hierarchy(logfile):
     stack = []
@@ -74,59 +80,19 @@ def print_timed_tree(node, call_dict, timing_data, prefix="", is_last=True):
     if calls > 0:
         per_call_time = total_time / calls
     
-    time_str = f" [{total_time/1000:.1f}ms total, {per_call_time/1000:.2f}ms per call, {calls} calls]"
+    time_str = f" {total_time/1000:.1f}, {per_call_time/1000:.2f}, {calls}"
 
     branch = TREE_LAST if is_last else TREE_MID
-    print(f"{prefix}{branch}{node}{time_str}")
-
+    if not re.search(r"^_", node):
+      nodet = re.sub(r"\(.*$", "", node)
+      func_column = f"{prefix}{branch}{nodet}"
+      time_str = f"{total_time/1000:{TOTAL_WIDTH}.1f}{per_call_time/1000:{AVG_WIDTH}.2f}{calls:{CALLS_WIDTH}d}"
+      print(f"{func_column:{FUNC_WIDTH}}{time_str}")
     new_prefix = prefix + (TREE_SPACE if is_last else TREE_VERT)
     children = call_dict.get(node, [])
     
     for i, child in enumerate(children):
         print_timed_tree(child, call_dict, timing_data, new_prefix, i == len(children) - 1)
-
-def build_call_hierarchy(logfile):
-    stack = []
-    call_dict = defaultdict(list)
-    root = None
-
-    with open(logfile, 'r') as f:
-        for line in f:
-            if line.startswith('#'):
-                continue
-            parts = line.strip().split(',')
-            if len(parts) < 5:
-                continue
-            _, event, depth, _, func = parts[:5]
-            depth = int(depth)
-
-            if event == "ENTER":
-                if stack:
-                    parent = stack[-1]
-                    if func not in call_dict[parent]:  # Avoid duplicates
-                        call_dict[parent].append(func)
-                else:
-                    root = func
-                stack.append(func)
-            elif event == "EXIT" and stack:
-                stack.pop()
-
-    return root, call_dict
-
-def print_tree(node, call_dict, prefix="", is_last=True):
-    if not node:
-        return
-    
-    # Current node line
-    branch = TREE_LAST if is_last else TREE_MID
-    print(f"{prefix}{branch}{node}")
-
-    # Children handling
-    new_prefix = prefix + (TREE_SPACE if is_last else TREE_VERT)
-    children = call_dict.get(node, [])
-    
-    for i, child in enumerate(children):
-        print_tree(child, call_dict, new_prefix, i == len(children) - 1)
 
 def main():
     if len(sys.argv) < 2:
@@ -136,14 +102,9 @@ def main():
     # timed tree
     root, call_dict, timing_data = build_timed_hierarchy(sys.argv[1])
     print("🌳 Timed Call Tree (Hierarchical View)")
-    print("═" * 50)
+    print("═" * 66)
+    print(f"{'FUNCTION':<{FUNC_WIDTH}}{'TOTAL':>{TOTAL_WIDTH}}{'AVG/CALL':>{AVG_WIDTH}}{'CALLS':>{CALLS_WIDTH}}")
     print_timed_tree(root, call_dict, timing_data)
     
-    # bare tree
-#    root, call_dict = build_call_hierarchy(sys.argv[1])
-#    print("🌳 Bare Call Tree (Hierarchical View)")
-#    print("═" * 50)
-#    print_tree(root, call_dict)
-
 if __name__ == "__main__":
     main()

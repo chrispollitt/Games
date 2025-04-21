@@ -7,6 +7,9 @@ RUN_ARGS ?= -g100 -r2 -m2 -t2
 CXX    = g++
 CC     = gcc
 CATLOG = catlog.py
+SUMLOG = sumlog.py
+TRACEPREFIX = trace
+TRACESUFFIX = .perf
 
 # operating system
 OS := $(shell uname -s)
@@ -73,14 +76,14 @@ trace.o: trace.c
 
 # Clean rule
 clean:
-	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *.perf *.err
+	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *$(TRACESUFFIX) *.err
 
 # Run the program
 run: $(TARGET) $(CATLOG)
 ifeq ($(TRACE),1)
 	-rm -f catlog.log
 	@echo "Running with TRACE=1: starting $(CATLOG) in background..."
-	@./$(CATLOG) $(TARGET) trace.perf 2> catlog.log &
+	@./$(CATLOG) $(TARGET) $(TRACEPREFIX)$(TRACESUFFIX) 2> catlog.log &
 endif
 ifeq ($(PROFILE),1)
 	time ./$(TARGET) $(RUN_ARGS)
@@ -97,9 +100,8 @@ ifeq ($(TRACE),1)
 		done; \
 		sleep 0.5; \
 		echo "Log processing complete."
-	@DATE=`date +%s`; \
-	read -sN1 -p ">>> press key to cont <<<"; \
-	head -30 trace_resolved_summary.txt
+	./$(SUMLOG) $(TRACEPREFIX)_resolved$(TRACESUFFIX) > $(TRACEPREFIX)_calltree$(TRACESUFFIX)
+	less -iS $(TRACEPREFIX)_calltree$(TRACESUFFIX)
 endif
 
 profile: run
