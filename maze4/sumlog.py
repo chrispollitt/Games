@@ -83,7 +83,7 @@ def print_timed_tree(node, call_dict, timing_data, prefix="", is_last=True):
     time_str = f" {total_time/1000:.1f}, {per_call_time/1000:.2f}, {calls}"
 
     branch = TREE_LAST if is_last else TREE_MID
-    if not re.search(r"^_", node):
+    if not re.search(r"^(_|0x)", node):
       nodet = re.sub(r"\(.*$", "", node)
       func_column = f"{prefix}{branch}{nodet}"
       time_str = f"{total_time/1000:{TOTAL_WIDTH}.1f}{per_call_time/1000:{AVG_WIDTH}.2f}{calls:{CALLS_WIDTH}d}"
