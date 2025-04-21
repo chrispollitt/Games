@@ -22,8 +22,10 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 // UTF-8 characters for maze elements
-#define WALL_CHAR "▒"
-#define PATH_CHAR " "
+#define CURRENT_CHAR1 "①"
+#define CURRENT_CHAR2 "②"
+#define CURRENT_CHAR3 "③"
+#define CURRENT_CHAR4 "④"
 #define VISITED_CHAR1 "◇" // RED
 #define VISITED_CHAR2 "◇" // CYAN
 #define VISITED_CHAR3 "◇" // YELLOW
@@ -32,40 +34,38 @@
 #define SOLUTION_CHAR2 "◆"
 #define SOLUTION_CHAR3 "◆"
 #define SOLUTION_CHAR4 "◆"
-#define START_CHAR1 "A"
-#define START_CHAR2 "B"
-#define START_CHAR3 "C"
-#define START_CHAR4 "D"
-#define END_CHAR1 "1"
-#define END_CHAR2 "2"
-#define END_CHAR3 "3"
-#define END_CHAR4 "4"
-#define CURRENT_CHAR1 "①"
-#define CURRENT_CHAR2 "②"
-#define CURRENT_CHAR3 "③"
-#define CURRENT_CHAR4 "④"
+#define END_CHAR1 "R" // raspberry
+#define END_CHAR2 "B" // blueberry
+#define END_CHAR3 "L" // lemon
+#define END_CHAR4 "K" // kiwi
 #define TELEPORTER_CHAR "◎"
 #define MONSTER_CHAR "☠"
 #define DEFEATED_MONSTER_CHAR "†"
+#define WALL_CHAR "▒"
+#define PATH_CHAR " "
 
 // Internal representations
-#define WALL '#'
-#define PATH ' '
-#define VISITED1 '1'
-#define VISITED2 '2'
-#define VISITED3 '3'
-#define VISITED4 '4'
-#define SOLUTION1 'a'
-#define SOLUTION2 'b'
-#define SOLUTION3 'c'
-#define SOLUTION4 'd'
-#define END1 'W'
-#define END2 'X'
-#define END3 'Y'
-#define END4 'Z'
+#define CURRENT1  'a'
+#define CURRENT2  'b'
+#define CURRENT3  'c'
+#define CURRENT4  'd'
+#define VISITED1  'e'
+#define VISITED2  'f'
+#define VISITED3  'g'
+#define VISITED4  'h'
+#define SOLUTION1 'i'
+#define SOLUTION2 'j'
+#define SOLUTION3 'k'
+#define SOLUTION4 'l'
+#define END1 '1'
+#define END2 '2'
+#define END3 '3'
+#define END4 '4'
 #define TELEPORTER 'T'
 #define MONSTER 'M'
 #define DEFEATED_MONSTER 'N'
+#define WALL '#'
+#define PATH ' '
 
 // mins, maxes, etc.
 #define MIN_ROWS 25
@@ -254,6 +254,7 @@ void free_maze();
 void generate_maze();
 char get_player_solution_char(int player_id);
 char get_player_visited_char(int player_id);
+char get_player_current_char(int player_id);
 void highlight_player_solution_path(int p);
 void initialize_players(int stage);
 void insert_high_score(HighScore scores[], int *count, HighScore new_score, int is_best);
@@ -267,6 +268,7 @@ void pauseGame();
 void place_monsters();
 void place_teleporters();
 Position pop_stack(Node **stack);
+void print_char(int i, int j, char ichar);
 void print_maze();
 void push_stack(Node **stack, Position pos);
 int  read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
@@ -680,6 +682,22 @@ void shuffle_directions_for_player(int idx) {
     temp = players[idx].dy[i];
     players[idx].dy[i] = players[idx].dy[j];
     players[idx].dy[j] = temp;
+  }
+}
+
+// Helper function to get the current character for a player
+char get_player_current_char(int player_id) {
+  switch (player_id) {
+  case 1:
+    return CURRENT1;
+  case 2:
+    return CURRENT2;
+  case 3:
+    return CURRENT3;
+  case 4:
+    return CURRENT4;
+  default:
+    return '!';
   }
 }
 
@@ -1885,14 +1903,14 @@ void solve_maze_multi() {
 
         // Visualize teleportation
         for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
-            mvprintw(newY, newX, TELEPORTER_CHAR);             // Print character normally
-            mvprintw(current.y, current.x, TELEPORTER_CHAR);   // Print character normally
+            mvprintw(newY, newX, TELEPORTER_CHAR);             
+            mvprintw(current.y, current.x, TELEPORTER_CHAR);   
             wnoutrefresh(stdscr);
             mysleep(50);           // Short delay (50ms)
         
             attron(A_REVERSE);
-            mvprintw(newY, newX, TELEPORTER_CHAR);            // Print character with inverted colors
-            mvprintw(current.y, current.x, TELEPORTER_CHAR);  // Print character normally
+            mvprintw(newY, newX, TELEPORTER_CHAR);            
+            mvprintw(current.y, current.x, TELEPORTER_CHAR);  
             attroff(A_REVERSE);
             wnoutrefresh(stdscr);
             mysleep(50);            // Another delay
@@ -2048,6 +2066,131 @@ void solve_maze_multi() {
 // end solve_maze_multi
 //////////////////////////////////////////////////////
 
+void print_char(int i, int j, char ichar) {
+  move(i, j);
+  // Otherwise, display the appropriate cell character
+  switch (ichar) {
+  case WALL:
+    addstr(WALL_CHAR);
+    break;
+  case PATH:
+    attron(COLOR_PAIR(1));
+    addstr(PATH_CHAR);
+    attroff(COLOR_PAIR(1));
+    break;
+  
+  // Player 1 cells
+	case CURRENT1:
+    attron(COLOR_PAIR(2) | A_BOLD);
+    addstr(CURRENT_CHAR1);
+    attroff(COLOR_PAIR(2) | A_BOLD);
+	  break;
+  case VISITED1:
+    attron(COLOR_PAIR(2));
+    addstr(VISITED_CHAR1);
+    attroff(COLOR_PAIR(2));
+    break;
+  case SOLUTION1:
+    attron(COLOR_PAIR(2) | A_BOLD);
+    addstr(SOLUTION_CHAR1);
+    attroff(COLOR_PAIR(2) | A_BOLD);
+    break;
+  case END1:
+    attron(COLOR_PAIR(2) | A_BOLD);
+    addstr(END_CHAR1);
+    attroff(COLOR_PAIR(2) | A_BOLD);
+    break;
+  
+  // Player 2 cells
+	case CURRENT2:
+    attron(COLOR_PAIR(3) | A_BOLD);
+    addstr(CURRENT_CHAR2);
+    attroff(COLOR_PAIR(3) | A_BOLD);
+	  break;
+  case VISITED2:
+    attron(COLOR_PAIR(3));
+    addstr(VISITED_CHAR2);
+    attroff(COLOR_PAIR(3));
+    break;
+  case SOLUTION2:
+    attron(COLOR_PAIR(3) | A_BOLD);
+    addstr(SOLUTION_CHAR2);
+    attroff(COLOR_PAIR(3) | A_BOLD);
+    break;
+  case END2:
+    attron(COLOR_PAIR(3) | A_BOLD);
+    addstr(END_CHAR2);
+    attroff(COLOR_PAIR(3) | A_BOLD);
+    break;
+  
+  // Player 3 cells
+	case CURRENT3:
+    attron(COLOR_PAIR(4) | A_BOLD);
+    addstr(CURRENT_CHAR3);
+    attroff(COLOR_PAIR(4) | A_BOLD);
+	  break;
+  case VISITED3:
+    attron(COLOR_PAIR(4));
+    addstr(VISITED_CHAR3);
+    attroff(COLOR_PAIR(4));
+    break;
+  case SOLUTION3:
+    attron(COLOR_PAIR(4) | A_BOLD);
+    addstr(SOLUTION_CHAR3);
+    attroff(COLOR_PAIR(4) | A_BOLD);
+    break;
+  case END3:
+    attron(COLOR_PAIR(4) | A_BOLD);
+    addstr(END_CHAR3);
+    attroff(COLOR_PAIR(4) | A_BOLD);
+    break;
+  
+  // Player 4 cells
+	case CURRENT4:
+    attron(COLOR_PAIR(5) | A_BOLD);
+    addstr(CURRENT_CHAR4);
+    attroff(COLOR_PAIR(5) | A_BOLD);
+	  break;
+  case VISITED4:
+    attron(COLOR_PAIR(5));
+    addstr(VISITED_CHAR4);
+    attroff(COLOR_PAIR(5));
+    break;
+  case SOLUTION4:
+    attron(COLOR_PAIR(5) | A_BOLD);
+    addstr(SOLUTION_CHAR4);
+    attroff(COLOR_PAIR(5) | A_BOLD);
+    break;
+  case END4:
+    attron(COLOR_PAIR(5) | A_BOLD);
+    addstr(END_CHAR4);
+    attroff(COLOR_PAIR(5) | A_BOLD);
+    break;
+  
+  // Special cells
+  case TELEPORTER:
+    attron(COLOR_PAIR(7) | A_BOLD);
+    addstr(TELEPORTER_CHAR);
+    attroff(COLOR_PAIR(7) | A_BOLD);
+    break;
+  case MONSTER:
+    attron(COLOR_PAIR(8) | A_BOLD);
+    addstr(MONSTER_CHAR);
+    attroff(COLOR_PAIR(8) | A_BOLD);
+    break;
+  case DEFEATED_MONSTER:
+    attron(COLOR_PAIR(9) | A_BOLD);
+    addstr(DEFEATED_MONSTER_CHAR);
+    attroff(COLOR_PAIR(9) | A_BOLD);
+    break;
+  default:
+    attron(COLOR_PAIR(8));
+    addstr("!");
+    attroff(COLOR_PAIR(8));
+    break;
+  }
+}
+
 // print_maze to display all players, teleporters, and monsters
 void print_maze() {
   // Get current terminal dimensions
@@ -2065,133 +2208,14 @@ void print_maze() {
 
   for (int i = 0; i < visible_rows; i++) {
     for (int j = 0; j < visible_cols; j++) {
-      move(i, j);
-
-      // Check if this is a player's current position
-      int player = is_player_position(j, i, current_positions);
-
-      if (player > 0) {
-        // Show player marker
-        attron(COLOR_PAIR(players[player - 1].color_pair) | A_BOLD);
-        switch (player) {
-        case 1:
-          addstr(CURRENT_CHAR1);
-          break;
-        case 2:
-          addstr(CURRENT_CHAR2);
-          break;
-        case 3:
-          addstr(CURRENT_CHAR3);
-          break;
-        case 4:
-          addstr(CURRENT_CHAR4);
-          break;
-        }
-        attroff(COLOR_PAIR(players[player - 1].color_pair) | A_BOLD);
-        continue;
-      }
-
-      // Otherwise, display the appropriate cell character
-      switch (maze->grid[i][j]) {
-      case WALL:
-        addstr(WALL_CHAR);
-        break;
-      case PATH:
-        attron(COLOR_PAIR(1));
-        addstr(PATH_CHAR);
-        attroff(COLOR_PAIR(1));
-        break;
-
-      // Player 1 cells
-      case VISITED1:
-        attron(COLOR_PAIR(2));
-        addstr(VISITED_CHAR1);
-        attroff(COLOR_PAIR(2));
-        break;
-      case SOLUTION1:
-        attron(COLOR_PAIR(2) | A_BOLD);
-        addstr(SOLUTION_CHAR1);
-        attroff(COLOR_PAIR(2) | A_BOLD);
-        break;
-      case END1:
-        attron(COLOR_PAIR(2) | A_BOLD);
-        addstr(END_CHAR1);
-        attroff(COLOR_PAIR(2) | A_BOLD);
-        break;
-
-      // Player 2 cells
-      case VISITED2:
-        attron(COLOR_PAIR(3));
-        addstr(VISITED_CHAR2);
-        attroff(COLOR_PAIR(3));
-        break;
-      case SOLUTION2:
-        attron(COLOR_PAIR(3) | A_BOLD);
-        addstr(SOLUTION_CHAR2);
-        attroff(COLOR_PAIR(3) | A_BOLD);
-        break;
-      case END2:
-        attron(COLOR_PAIR(3) | A_BOLD);
-        addstr(END_CHAR2);
-        attroff(COLOR_PAIR(3) | A_BOLD);
-        break;
-
-      // Player 3 cells
-      case VISITED3:
-        attron(COLOR_PAIR(4));
-        addstr(VISITED_CHAR3);
-        attroff(COLOR_PAIR(4));
-        break;
-      case SOLUTION3:
-        attron(COLOR_PAIR(4) | A_BOLD);
-        addstr(SOLUTION_CHAR3);
-        attroff(COLOR_PAIR(4) | A_BOLD);
-        break;
-      case END3:
-        attron(COLOR_PAIR(4) | A_BOLD);
-        addstr(END_CHAR3);
-        attroff(COLOR_PAIR(4) | A_BOLD);
-        break;
-
-      // Player 4 cells
-      case VISITED4:
-        attron(COLOR_PAIR(5));
-        addstr(VISITED_CHAR4);
-        attroff(COLOR_PAIR(5));
-        break;
-      case SOLUTION4:
-        attron(COLOR_PAIR(5) | A_BOLD);
-        addstr(SOLUTION_CHAR4);
-        attroff(COLOR_PAIR(5) | A_BOLD);
-        break;
-      case END4:
-        attron(COLOR_PAIR(5) | A_BOLD);
-        addstr(END_CHAR4);
-        attroff(COLOR_PAIR(5) | A_BOLD);
-        break;
-
-      // Special cells
-      case TELEPORTER:
-        attron(COLOR_PAIR(7) | A_BOLD);
-        addstr(TELEPORTER_CHAR);
-        attroff(COLOR_PAIR(7) | A_BOLD);
-        break;
-      case MONSTER:
-        attron(COLOR_PAIR(8) | A_BOLD);
-        addstr(MONSTER_CHAR);
-        attroff(COLOR_PAIR(8) | A_BOLD);
-        break;
-      case DEFEATED_MONSTER:
-        attron(COLOR_PAIR(9) | A_BOLD);
-        addstr(DEFEATED_MONSTER_CHAR);
-        attroff(COLOR_PAIR(9) | A_BOLD);
-        break;
-      default:
-        attron(COLOR_PAIR(8));
-        addstr("!");
-        attroff(COLOR_PAIR(8));
-        break;
-      }
+			char ichar;
+			int player = is_player_position(j, i, current_positions);
+			if (player > 0 ) {
+			  ichar = get_player_current_char(player);
+			} else {
+        ichar = maze->grid[i][j];
+			}
+			print_char(i, j, ichar);
     }
   }
   // print game info
@@ -2832,40 +2856,40 @@ void pauseGame() {
   int paused;
   int ch;
 
-    current_status_index = 0; // Reset to current message when pausing
-    update_status_line(PAUSE_MSG);
-    tcflush(STDIN_FILENO, TCIFLUSH);
-    paused = 1;
+  current_status_index = 0; // Reset to current message when pausing
+  update_status_line(PAUSE_MSG);
+  tcflush(STDIN_FILENO, TCIFLUSH);
+  paused = 1;
+  
+  // Enter pause mode loop
+  while (paused) {
+  	doupdate();
+    ch = getch();
     
-    // Enter pause mode loop
-    while (paused) {
-			doupdate();
-      ch = getch();
-      
-      // Handle arrow keys for status history browsing
-      if (ch == KEY_UP || ch == 259) {
-        // Move to older message
-        sprintf(key, "%d", KEY_UP);
-        update_status_line(key);
-      } 
-      else if (ch == KEY_DOWN || ch == 258) {
-        // Move to newer message
-        sprintf(key, "%d", KEY_DOWN);
-        update_status_line(key);
-      }
-      // Exit game early
-      else if(ch == 113 || ch == 81 || ch == 27) {
-        exit_game("User ended game early\n");
-      }
-      // Leave pause mode on any other key press (that's printable)
-      else if (ch >= 32 && ch <= 126) {
-        paused = 0;
-      }
+    // Handle arrow keys for status history browsing
+    if (ch == KEY_UP || ch == 259) {
+      // Move to older message
+      sprintf(key, "%d", KEY_UP);
+      update_status_line(key);
+    } 
+    else if (ch == KEY_DOWN || ch == 258) {
+      // Move to newer message
+      sprintf(key, "%d", KEY_DOWN);
+      update_status_line(key);
     }
-    // Reset to current message when unpausing
-    current_status_index = 0;
-    update_status_line("Continuing...");
-    tcflush(STDIN_FILENO, TCIFLUSH);
+    // Exit game early
+    else if(ch == 113 || ch == 81 || ch == 27) {
+      exit_game("User ended game early\n");
+    }
+    // Leave pause mode on any other key press (that's printable)
+    else if (ch >= 32 && ch <= 126) {
+      paused = 0;
+    }
+  }
+  // Reset to current message when unpausing
+  current_status_index = 0;
+  update_status_line("Continuing...");
+  tcflush(STDIN_FILENO, TCIFLUSH);
 }
 
 // for debugging
@@ -2964,6 +2988,7 @@ void mysleep(long total_delay_ms) {
 void highlight_player_solution_path(int p) {
   // Now mark each position in the path with solution char
   char solution_char = get_player_solution_char(p+1);
+  char current_char  = get_player_current_char(p+1);
   Position end = players[p].current;
   int x = end.x, y = end.y;
 
@@ -2978,11 +3003,24 @@ void highlight_player_solution_path(int p) {
         maze->grid[y][x] != DEFEATED_MONSTER
     ) {
       maze->grid[y][x] = solution_char;
-    }    int px = parent_map[p][y][x].x;
+    }    
+		int px = parent_map[p][y][x].x;
     int py = parent_map[p][y][x].y;
     x = px;
     y = py;
   }
   print_maze();
   display_player_stats();
+  // Visualize end point
+  for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
+      print_char(end.y, end.x, current_char);			
+      wnoutrefresh(stdscr);
+      mysleep(50);           // Short delay (50ms)
+  
+      attron(A_REVERSE);
+      print_char(end.y, end.x, current_char);			
+      attroff(A_REVERSE);
+      wnoutrefresh(stdscr);
+      mysleep(50);            // Another delay
+  }				
 }
