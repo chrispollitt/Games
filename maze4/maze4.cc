@@ -268,7 +268,7 @@ void pauseGame();
 void place_monsters();
 void place_teleporters();
 Position pop_stack(Node **stack);
-void print_char(int i, int j, char ichar);
+static inline void print_char(int i, int j, char ichar);
 void print_maze();
 void push_stack(Node **stack, Position pos);
 int  read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
@@ -2066,19 +2066,11 @@ void solve_maze_multi() {
 // end solve_maze_multi
 //////////////////////////////////////////////////////
 
-void print_char(int i, int j, char ichar) {
+__attribute__((no_instrument_function))
+static inline void print_char(int i, int j, char ichar) {
   move(i, j);
   // Otherwise, display the appropriate cell character
-  switch (ichar) {
-  case WALL:
-    addstr(WALL_CHAR);
-    break;
-  case PATH:
-    attron(COLOR_PAIR(1));
-    addstr(PATH_CHAR);
-    attroff(COLOR_PAIR(1));
-    break;
-  
+  switch (ichar) {  
   // Player 1 cells
 	case CURRENT1:
     attron(COLOR_PAIR(2) | A_BOLD);
@@ -2168,6 +2160,14 @@ void print_char(int i, int j, char ichar) {
     break;
   
   // Special cells
+  case WALL:
+    addstr(WALL_CHAR);
+    break;
+  case PATH:
+    attron(COLOR_PAIR(1));
+    addstr(PATH_CHAR);
+    attroff(COLOR_PAIR(1));
+    break;
   case TELEPORTER:
     attron(COLOR_PAIR(7) | A_BOLD);
     addstr(TELEPORTER_CHAR);
