@@ -2066,8 +2066,8 @@ void solve_maze_multi() {
 // end solve_maze_multi
 //////////////////////////////////////////////////////
 
-__attribute__((no_instrument_function))
-static inline void print_char(int i, int j, char ichar) {
+__attribute__((no_instrument_function)) static inline 
+void print_char(int i, int j, char ichar) {
   move(i, j);
   // Otherwise, display the appropriate cell character
   switch (ichar) {  
@@ -2678,10 +2678,10 @@ int calculate_score(int moves, int width, int height) {
 void pauseForUser() {
   read_keyboard();
   if (WaitForKey) {
-    pauseGame();
+    pauseGame();  // calls doupdate()
   } else {
     update_status_line(DELAY_MSG);
-    mysleep(2000);
+    mysleep(2000); // calls doupdate()
   }
   move(maze->rows + 5, 0);
   wclrtoeol(stdscr);

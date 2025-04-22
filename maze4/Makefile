@@ -76,7 +76,7 @@ trace.o: trace.c
 
 # Clean rule
 clean:
-	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *$(TRACESUFFIX) *.err
+	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *$(TRACESUFFIX) *.err *.log
 
 # Run the program
 run: $(TARGET) $(CATLOG).py
