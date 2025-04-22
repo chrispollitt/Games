@@ -22,14 +22,16 @@ def build_timed_hierarchy(logfile):
 
     with open(logfile, 'r') as f:
         lines = f.readlines()
+        lines_len = len(lines) - 1
+        print(f"Debug: lines = {lines_len}", file=sys.stderr)
         
         for line_index, line in enumerate(lines):
             if line.startswith('#'):
-                print(f"Debug: skipping comment", file=sys.stderr)
+                print(f"Debug: skipping comment {line}", end="", file=sys.stderr)
                 continue
             parts = line.strip().split(',')
             if len(parts) < 5:
-                print(f"Debug: skipping non-5 part line", file=sys.stderr)
+                print(f"Debug: skipping non-5 part line {line}", file=sys.stderr)
                 continue
             ts, event, depth, dur, func = parts[:5]
             ts, depth, dur = int(ts), int(depth), int(dur)
@@ -51,7 +53,7 @@ def build_timed_hierarchy(logfile):
                     timing_data[func]['calls'] = timing_data[func].get('calls', 0) + 1
         
         # Handle any remaining functions in the stack (including main)
-        if stack and line_index == len(lines) - 1:
+        if stack and line_index == lines_len:
             # Get timestamp from the last line for calculating remaining durations
             last_ts = ts
             
@@ -90,6 +92,8 @@ def print_timed_tree(node, call_dict, timing_data, prefix="", is_last=True):
       func_column = f"{prefix}{branch}{nodet}"
       time_str = f"{total_time/1000:{TOTAL_WIDTH}.1f}{per_call_time/1000:{AVG_WIDTH}.2f}{calls:{CALLS_WIDTH}d}"
       print(f"{func_column:{FUNC_WIDTH}}{time_str}")
+    else:
+      print(f"Debug: skipping non-starndarad func {node}", file=sys.stderr)
     new_prefix = prefix + (TREE_SPACE if is_last else TREE_VERT)
     children = call_dict.get(node, [])
     
