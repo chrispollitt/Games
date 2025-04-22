@@ -228,6 +228,7 @@ int old_rows = 0;
 int old_cols = 0;
 int in_read_keyboard  = 0;
 int in_mysleep = 0;
+int in_pausegame = 0;
 
 // maze state
 Maze *maze;
@@ -272,7 +273,7 @@ static inline void print_char(int i, int j, char ichar);
 void print_maze();
 void push_stack(Node **stack, Position pos);
 int  read_high_scores(HighScore best_scores[], HighScore worst_scores[]);
-void read_keyboard();
+int  read_keyboard();
 void run_round();
 void save_high_scores(HighScore best_scores[], HighScore worst_scores[], int count);
 void show_battle_art(int aart, int leftside, int type, int player, int left_idx, int right_idx);
@@ -817,8 +818,10 @@ void display_player_stats() {
 // Display player alert with variable parameters
 //                     player_index  -2=abandoned, -1=out of moves, >0 is rank
 void display_player_alert(int p_idx, int rank) {
+	Game_finished++;
   if (ShowWindows == 0) {
-    pauseForUser();
+		if(Game_finished != NUM_PLAYERS)
+       pauseForUser();
     return;
   }
   // Save current window and create a larger battle screen
@@ -2686,6 +2689,7 @@ void pauseForUser() {
   move(maze->rows + 5, 0);
   wclrtoeol(stdscr);
   read_keyboard();
+	doupdate();
 }
 
 void calc_game_speed() {
@@ -2706,6 +2710,7 @@ void calc_game_speed() {
 }
 
 void exit_game(const char *format, ...) {
+	doupdate();
   tcflush(STDIN_FILENO, TCIFLUSH);
   endwin();
   va_list args;
@@ -2792,10 +2797,11 @@ void update_status_line(const char *format, ...) {
 }
 
 __attribute__((no_instrument_function))
-void read_keyboard() {
+int read_keyboard() {
   int ch;
+	int was_paused = 0;
   
-  if(in_read_keyboard) return;
+  if(in_read_keyboard) return 0;
   in_read_keyboard =1;
   nodelay(stdscr, TRUE);
   ch = getch();
@@ -2804,6 +2810,7 @@ void read_keyboard() {
   // PAUSE with SPACE
   case 32:
     pauseGame();
+		was_paused = 1;
     break;
   // SLOW DOWN with MINUS
   case 95:
@@ -2849,13 +2856,17 @@ void read_keyboard() {
     update_status_line("Unrecognized key %d", ch);
   }
   in_read_keyboard =0;
+	return was_paused;
 }
 
 void pauseGame() {
   char key[5];
   int paused;
   int ch;
-
+	
+  if(in_pausegame) return;
+  in_pausegame = 1;
+ 
   current_status_index = 0; // Reset to current message when pausing
   update_status_line(PAUSE_MSG);
   tcflush(STDIN_FILENO, TCIFLUSH);
@@ -2890,6 +2901,8 @@ void pauseGame() {
   current_status_index = 0;
   update_status_line("Continuing...");
   tcflush(STDIN_FILENO, TCIFLUSH);
+	doupdate();
+  in_pausegame = 0;
 }
 
 // for debugging
@@ -2926,14 +2939,7 @@ void sleep_millis(long ms) {
     req.tv_sec = ms / 1000;
     req.tv_nsec = (ms % 1000) * 1000000L;
 
-    while (nanosleep(&req, &rem) == -1) {
-        if (errno == EINTR) {
-            req = rem;
-        } else {
-            perror("nanosleep");
-            break;
-        }
-    }
+    nanosleep(&req, &rem);
 }
 
 __attribute__((no_instrument_function))
@@ -2947,7 +2953,7 @@ void delay_with_polling(long total_delay_ms) {
         if(remaining_time_ms > POLL_INTERVAL_MS) {
           // do read keyboard
           clock_gettime(CLOCK_MONOTONIC, &start);
-          read_keyboard();
+          if( read_keyboard() ) break;
           clock_gettime(CLOCK_MONOTONIC, &end);
           // calc how long that took
           read_duration_ms =
