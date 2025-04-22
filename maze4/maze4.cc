@@ -90,9 +90,9 @@
 #define STATUS_LINE_MAX 80
 
 // messages
-#define DELAY_MSG "Delaying for you to read..."
+#define DELAY_MSG "** Delaying for you to read **"
 #define LOST_MSG  "LOST the battle"
-#define PAUSE_MSG "↑ Paused, press any key to continue..."
+#define PAUSE_MSG "↑ ** Paused, press any key to continue **"
 
 // TYPEDEFS //////////////////////////////////////////////////////////////////
 
