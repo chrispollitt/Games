@@ -6,8 +6,8 @@ RUN_ARGS ?= -g100 -r2 -m2 -t2
 # Compiler to use
 CXX    = g++
 CC     = gcc
-CATLOG = catlog.py
-SUMLOG = sumlog.py
+CATLOG = catlog
+SUMLOG = sumlog
 TRACEPREFIX = trace
 TRACESUFFIX = .perf
 
@@ -81,9 +81,9 @@ clean:
 # Run the program
 run: $(TARGET) $(CATLOG)
 ifeq ($(TRACE),1)
-	-rm -f catlog.log
+	-rm -f $(CATLOG).log $(TRACEPREFIX)_resolved$(TRACESUFFIX)
 	@echo "Running with TRACE=1: starting $(CATLOG) in background..."
-	@./$(CATLOG) $(TARGET) $(TRACEPREFIX)$(TRACESUFFIX) 2> catlog.log &
+	@./$(CATLOG).py $(TARGET) $(TRACEPREFIX)$(TRACESUFFIX) 2> $(CATLOG).log &
 endif
 ifeq ($(PROFILE),1)
 	time ./$(TARGET) $(RUN_ARGS)
@@ -95,12 +95,13 @@ endif
 trace: run
 ifeq ($(TRACE),1)
 	@echo "Waiting for $(CATLOG) to finish processing..."; \
-		while pgrep -f "catlog.[p]y $(TARGET)" > /dev/null; do \
+		while pgrep -f "$(CATLOG).[p]y $(TARGET)" > /dev/null; do \
 			sleep 0.5; \
 		done; \
 		sleep 0.5; \
 		echo "Log processing complete."
-	./$(SUMLOG) $(TRACEPREFIX)_resolved$(TRACESUFFIX) > $(TRACEPREFIX)_calltree$(TRACESUFFIX)
+	-rm -f $(SUMLOG).log
+	./$(SUMLOG).py $(TRACEPREFIX)_resolved$(TRACESUFFIX) > $(TRACEPREFIX)_calltree$(TRACESUFFIX) 2> $(SUMLOG).log
 	less -iS $(TRACEPREFIX)_calltree$(TRACESUFFIX)
 endif
 
