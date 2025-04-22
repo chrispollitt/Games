@@ -79,7 +79,7 @@ clean:
 	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *$(TRACESUFFIX) *.err
 
 # Run the program
-run: $(TARGET) $(CATLOG)
+run: $(TARGET) $(CATLOG).py
 ifeq ($(TRACE),1)
 	-rm -f $(CATLOG).log $(TRACEPREFIX)_resolved$(TRACESUFFIX)
 	@echo "Running with TRACE=1: starting $(CATLOG) in background..."
@@ -92,7 +92,7 @@ else
 endif
 
 # show trace
-trace: run
+trace: run $(SUMLOG).py
 ifeq ($(TRACE),1)
 	@echo "Waiting for $(CATLOG) to finish processing..."; \
 		while pgrep -f "$(CATLOG).[p]y $(TARGET)" > /dev/null; do \
@@ -136,4 +136,4 @@ uninstall:
 
 # Phony targets
 .PHONY: all clean run trace lint install uninstall
-.PRECIOUS: %.o %.cc
+.PRECIOUS: %.o %.cc %.i %.ii
