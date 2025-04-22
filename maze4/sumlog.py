@@ -35,8 +35,9 @@ def build_timed_hierarchy(logfile):
                 continue
             ts, event, depth, dur, func = parts[:5]
             ts, depth, dur = int(ts), int(depth), int(dur)
-
+            
             if event == "ENTER":
+#                print(f"Debug: in ENTER {func}", file=sys.stderr)
                 if stack:
                     parent = stack[-1][0]  # Get function name from stack tuple
                     if func not in call_dict[parent]:  # Avoid duplicates
@@ -45,8 +46,10 @@ def build_timed_hierarchy(logfile):
                     root = func
                 stack.append((func, ts))
             elif event == "EXIT" and stack:
+#                print(f"Debug: in EXIT {func}", file=sys.stderr)
                 start_func, start_ts = stack.pop()
                 if start_func == func:
+#                    print(f"Debug: match EXIT {func}", file=sys.stderr)
                     # Use the duration field from the CSV directly
                     timing_data[func].setdefault('time', 0)
                     timing_data[func]['time'] += dur
@@ -72,6 +75,7 @@ def build_timed_hierarchy(logfile):
 
 def print_timed_tree(node, call_dict, timing_data, prefix="", is_last=True):
     if not node:
+        print(f"Debug: node is empty", file=sys.stderr)
         return
     
     # Format timing info

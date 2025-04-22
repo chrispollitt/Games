@@ -1914,7 +1914,7 @@ void solve_maze_multi() {
             attroff(A_REVERSE);
             wnoutrefresh(stdscr);
             mysleep(50);            // Another delay
-        }				
+        }        
         continue;
       }
 
@@ -2049,7 +2049,7 @@ void solve_maze_multi() {
         old_rows = size.ws_row ; old_cols = size.ws_col;      
       }
     }
-		doupdate();
+    doupdate();
   }
   // end Main solve loop
   //////////////////////////////////////////////////
@@ -2072,11 +2072,11 @@ static inline void print_char(int i, int j, char ichar) {
   // Otherwise, display the appropriate cell character
   switch (ichar) {  
   // Player 1 cells
-	case CURRENT1:
+  case CURRENT1:
     attron(COLOR_PAIR(2) | A_BOLD);
     addstr(CURRENT_CHAR1);
     attroff(COLOR_PAIR(2) | A_BOLD);
-	  break;
+    break;
   case VISITED1:
     attron(COLOR_PAIR(2));
     addstr(VISITED_CHAR1);
@@ -2094,11 +2094,11 @@ static inline void print_char(int i, int j, char ichar) {
     break;
   
   // Player 2 cells
-	case CURRENT2:
+  case CURRENT2:
     attron(COLOR_PAIR(3) | A_BOLD);
     addstr(CURRENT_CHAR2);
     attroff(COLOR_PAIR(3) | A_BOLD);
-	  break;
+    break;
   case VISITED2:
     attron(COLOR_PAIR(3));
     addstr(VISITED_CHAR2);
@@ -2116,11 +2116,11 @@ static inline void print_char(int i, int j, char ichar) {
     break;
   
   // Player 3 cells
-	case CURRENT3:
+  case CURRENT3:
     attron(COLOR_PAIR(4) | A_BOLD);
     addstr(CURRENT_CHAR3);
     attroff(COLOR_PAIR(4) | A_BOLD);
-	  break;
+    break;
   case VISITED3:
     attron(COLOR_PAIR(4));
     addstr(VISITED_CHAR3);
@@ -2138,11 +2138,11 @@ static inline void print_char(int i, int j, char ichar) {
     break;
   
   // Player 4 cells
-	case CURRENT4:
+  case CURRENT4:
     attron(COLOR_PAIR(5) | A_BOLD);
     addstr(CURRENT_CHAR4);
     attroff(COLOR_PAIR(5) | A_BOLD);
-	  break;
+    break;
   case VISITED4:
     attron(COLOR_PAIR(5));
     addstr(VISITED_CHAR4);
@@ -2208,14 +2208,14 @@ void print_maze() {
 
   for (int i = 0; i < visible_rows; i++) {
     for (int j = 0; j < visible_cols; j++) {
-			char ichar;
-			int player = is_player_position(j, i, current_positions);
-			if (player > 0 ) {
-			  ichar = get_player_current_char(player);
-			} else {
+      char ichar;
+      int player = is_player_position(j, i, current_positions);
+      if (player > 0 ) {
+        ichar = get_player_current_char(player);
+      } else {
         ichar = maze->grid[i][j];
-			}
-			print_char(i, j, ichar);
+      }
+      print_char(i, j, ichar);
     }
   }
   // print game info
@@ -2863,7 +2863,7 @@ void pauseGame() {
   
   // Enter pause mode loop
   while (paused) {
-  	doupdate();
+    doupdate();
     ch = getch();
     
     // Handle arrow keys for status history browsing
@@ -3004,7 +3004,7 @@ void highlight_player_solution_path(int p) {
     ) {
       maze->grid[y][x] = solution_char;
     }    
-		int px = parent_map[p][y][x].x;
+    int px = parent_map[p][y][x].x;
     int py = parent_map[p][y][x].y;
     x = px;
     y = py;
@@ -3013,14 +3013,14 @@ void highlight_player_solution_path(int p) {
   display_player_stats();
   // Visualize end point
   for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
-      print_char(end.y, end.x, current_char);			
+      print_char(end.y, end.x, current_char);      
       wnoutrefresh(stdscr);
       mysleep(50);           // Short delay (50ms)
   
       attron(A_REVERSE);
-      print_char(end.y, end.x, current_char);			
+      print_char(end.y, end.x, current_char);      
       attroff(A_REVERSE);
       wnoutrefresh(stdscr);
       mysleep(50);            // Another delay
-  }				
+  }        
 }
