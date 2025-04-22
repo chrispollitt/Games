@@ -25,9 +25,11 @@ def build_timed_hierarchy(logfile):
         
         for line_index, line in enumerate(lines):
             if line.startswith('#'):
+                print(f"Debug: skipping comment", file=sys.stderr)
                 continue
             parts = line.strip().split(',')
             if len(parts) < 5:
+                print(f"Debug: skipping non-5 part line", file=sys.stderr)
                 continue
             ts, event, depth, dur, func = parts[:5]
             ts, depth, dur = int(ts), int(depth), int(dur)
