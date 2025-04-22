@@ -100,11 +100,15 @@ def main():
         sys.exit(1)
 
     # timed tree
-    root, call_dict, timing_data = build_timed_hierarchy(sys.argv[1])
-    print("🌳 Timed Call Tree (Hierarchical View)")
-    print("═" * 66)
-    print(f"{'FUNCTION':<{FUNC_WIDTH}}{'TOTAL':>{TOTAL_WIDTH}}{'AVG/CALL':>{AVG_WIDTH}}{'CALLS':>{CALLS_WIDTH}}")
-    print_timed_tree(root, call_dict, timing_data)
+    try:
+        root, call_dict, timing_data = build_timed_hierarchy(sys.argv[1])
+        print("🌳 Timed Call Tree (Hierarchical View)")
+        print("═" * 66)
+        print(f"{'FUNCTION':<{FUNC_WIDTH}}{'TOTAL':>{TOTAL_WIDTH}}{'AVG/CALL':>{AVG_WIDTH}}{'CALLS':>{CALLS_WIDTH}}")
+        print_timed_tree(root, call_dict, timing_data)
+    except Exception as e:
+        print(f"❌ Fatal error: {e}", file=sys.stderr)
+        sys.exit(1)
     
 if __name__ == "__main__":
     main()
