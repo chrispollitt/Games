@@ -14,7 +14,6 @@
 #include <time.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <cerrno>
 
 // DEFINES ///////////////////////////////////////////////////////////////////
 
