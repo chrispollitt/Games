@@ -2,5 +2,3 @@ git clone https://github.com/chrispollitt/Games.git
 
 make TRACE=1 RUN_ARGS='-g100 -r2 -m2 -t2 -w' clean trace
 
-./sumlog.py trace_resolved.perf|tail -n +4|perl -lne 's/^\W+//;s/ +/,/g; print $_'|sort -u > trace_resolved.csv
-

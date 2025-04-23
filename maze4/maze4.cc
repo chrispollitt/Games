@@ -228,6 +228,7 @@ int old_cols = 0;
 int in_read_keyboard  = 0;
 int in_mysleep = 0;
 int in_pausegame = 0;
+int pauseTime = -1;
 
 // maze state
 Maze *maze;
@@ -291,7 +292,7 @@ int main(int argc, char *argv[]) {
   struct winsize size;
 
   // Process command line arguments
-  while ((opt = getopt(argc, argv, "t:m:s:g:r:kwh")) != -1) {
+  while ((opt = getopt(argc, argv, "t:m:s:g:r:p:kwh")) != -1) {
     switch (opt) {
     case 't':
       Num_teleporters = atoi(optarg);
@@ -314,6 +315,9 @@ int main(int argc, char *argv[]) {
     case 'w':
       ShowWindows = 1;
       break;
+    case 'p':
+      pauseTime = (int) (atof(optarg) * 1000.0);
+			break;
     case 'h':
       printf("Usage: %s [options]\n", argv[0]);
       printf("Options:\n");
@@ -323,6 +327,7 @@ int main(int argc, char *argv[]) {
       printf("  -s N    Set maximum monster strength (1-%d, default: %d)\n",
              MAX_MONSTER_STRENGTH, DEF_MONSTER_STRENGTH);
       printf("  -g N    Set game speed (1-100, default: %d)\n", DEF_GAME_SPEED);
+      printf("  -p N    Set user pause seconds (default: %d)\n", 2);
       printf("  -k      Wait for key-press to continue (default: No)\n");
       printf("  -w      Show battle windows (default: No)\n");
       printf("  -h      Display this help message\n");
@@ -383,6 +388,9 @@ int main(int argc, char *argv[]) {
   }
   if (ShowWindows < 0) {
     ShowWindows = 0;
+  }
+  if (pauseTime < 0) {
+    pauseTime = 2 * 1000;
   }
 
   // make sceen match reported size
@@ -1267,7 +1275,7 @@ int battle_unified(int combatant1_idx, int combatant2_idx, int type) {
   // show battle spot
   int be_x = (type != 2) ? players[p1_idx].current.x : monsters[m1_idx].x;
   int be_y = (type != 2) ? players[p1_idx].current.y : monsters[m1_idx].y;
-  animate_bullseye(be_y, be_x, 5, 100, 0);
+  animate_bullseye(be_y, be_x, 5, (int) (pauseTime/40), 0);
 
   if (ShowWindows != 0) {
     // Save current window and create a larger battle screen
@@ -1908,14 +1916,14 @@ void solve_maze_multi() {
             mvprintw(newY, newX, TELEPORTER_CHAR);             
             mvprintw(current.y, current.x, TELEPORTER_CHAR);   
             wnoutrefresh(stdscr);
-            mysleep(50);           // Short delay (50ms)
+            mysleep((int) (pauseTime/40));           // Short delay (50ms)
         
             attron(A_REVERSE);
             mvprintw(newY, newX, TELEPORTER_CHAR);            
             mvprintw(current.y, current.x, TELEPORTER_CHAR);  
             attroff(A_REVERSE);
             wnoutrefresh(stdscr);
-            mysleep(50);            // Another delay
+            mysleep((int) (pauseTime/40));            // Another delay
         }        
         continue;
       }
@@ -2683,7 +2691,7 @@ void pauseForUser() {
     pauseGame();  // calls doupdate()
   } else {
     update_status_line(DELAY_MSG);
-    mysleep(2000); // calls doupdate()
+    mysleep(pauseTime); // calls doupdate()
   }
   move(maze->rows + 5, 0);
   wclrtoeol(stdscr);
@@ -3020,12 +3028,12 @@ void highlight_player_solution_path(int p) {
   for (int i = 0; i < 5; i++) { // Flicker for 3 cycles
       print_char(end.y, end.x, current_char);      
       wnoutrefresh(stdscr);
-      mysleep(50);           // Short delay (50ms)
+      mysleep((int) (pauseTime/40));           // Short delay (50ms)
   
       attron(A_REVERSE);
       print_char(end.y, end.x, current_char);      
       attroff(A_REVERSE);
       wnoutrefresh(stdscr);
-      mysleep(50);            // Another delay
+      mysleep((int) (pauseTime/40));            // Another delay
   }        
 }

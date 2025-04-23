@@ -1,7 +1,7 @@
 # Makefile for maze race game
 
 # Run arguments
-RUN_ARGS ?= -g100 -r2 -m2 -t2
+RUN_ARGS ?= -g100 -r2 -m4 -t2 -p0
 
 # Compiler to use
 CXX    = g++
