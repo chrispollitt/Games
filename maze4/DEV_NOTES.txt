@@ -4,21 +4,3 @@ make TRACE=1 RUN_ARGS='-g100 -r2 -m2 -t2 -w' clean trace
 
 ./sumlog.py trace_resolved.perf|tail -n +4|perl -lne 's/^\W+//;s/ +/,/g; print $_'|sort -u > trace_resolved.csv
 
-=======ISSUES
-
-* missing a doupdate() after the main loop is done
-* sumlog.py not working on trace_resolved.perf-BROKEN
-  - -1 lines
-	- non-5-part lines
-	- unresolved lines (don't really care)
-
-EVNT = event
-C    = call count
-DU   = duration
-
-              TIMESTAMP EVNT C DU FUNCTION
--1 dur				5955,     EXIT,3,-1,get_player_visited_char(int)
--1 dur				102805121,EXIT,2,-1,solve_maze_multi()
-unresolved    2375,     ENTER,2,0,0x1cee8 (unresolved)
-unresolved    2426,     EXIT,2,51,0x1cee8 (unresolved)
-non-5 part		104813086,EXIT,1,0x12fd4
