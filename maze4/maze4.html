@@ -12,6 +12,11 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            text-rendering: geometricPrecision; /* Add this */
+            transform-style: preserve-3d; /* Forces GPU rendering */
+            backface-visibility: hidden; /* May help with some rendering issues */
+            -webkit-font-smoothing: none;
+						font-smooth: never;
         }
         #screen {
             position: relative;
@@ -24,6 +29,8 @@
             position: absolute;
             background-color: #000;
             overflow: hidden;
+            display: grid; /* Add this */
+            grid-gap: 0; /* Add this to eliminate grid gaps */
         }
         #stdscr {
             top: 0;
@@ -42,22 +49,26 @@
             position: relative;
         }
         .wide-char {
-            font-size: 0.8em;
+            font-size: 0.9em;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: auto;
         }
-        .color-pair-1 { color: #000; }
-        .color-pair-2 { color: #f00; }
-        .color-pair-3 { color: #0ff; }
-        .color-pair-4 { color: #ff0; }
-        .color-pair-5 { color: #0f0; }
-        .color-pair-6 { color: #f0f; }
-        .color-pair-7 { color: #0ff; background-color: #00f; }
-        .color-pair-8 { color: #fff; background-color: #f0f; }
-        .color-pair-9 { color: #f0f; background-color: #000; }
+        .tall-char {
+            position: relative;
+            top: -0.2em;
+        }
+        .color-pair-1  { color: #000; background-color: #000; }
+        .color-pair-2  { color: #f00; background-color: #000; }
+        .color-pair-3  { color: #0ff; background-color: #000; }
+        .color-pair-4  { color: #ff0; background-color: #000; }
+        .color-pair-5  { color: #0f0; background-color: #000; }
+        .color-pair-6  { color: #f0f; background-color: #000; }
+        .color-pair-7  { color: #0ff; background-color: #00f; }
+        .color-pair-8  { color: #fff; background-color: #f0f; }
+        .color-pair-9  { color: #f0f; background-color: #000; }
         .color-pair-10 { color: #000; background-color: #fff; }
         .color-pair-11 { color: #000; background-color: #ff0; }
         .color-pair-12 { color: #f00; background-color: #000; }
@@ -71,532 +82,561 @@
     </style>
 </head>
 <body>
+<dialog id="errorDialog">
+  <p id="errorMessage"></p>
+  <button id="closeButton">Close</button>
+</dialog>
     <div id="screen">
         <div id="stdscr" class="window"></div>
     </div>
-    <script>
+<script>
 /*
-ncurses.js SHIM - ENHANCED
+ncurses.js SHIM - ENHANCED & OPTIMIZED FOR DOM PERFORMANCE
 
-Usage Example:
-
-    initscr();
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    attron(COLOR_PAIR(1) | A_BOLD);
-    mvprintw(2, 5, "Hello, World!");
-    attroff(A_BOLD);
-    wnoutrefresh(stdscr);
-    doupdate(); // or just refresh();
-
-API:
-    initscr, start_color, init_pair, attron, attroff, wattron, wattroff,
-    mvwaddch, mvwprintw, addch, mvaddch, addstr, mvaddwstr,
-    wnoutrefresh, doupdate, refresh, clear, box, move, getyx,
-    getmaxyx, getch, nodelay, curs_set, endwin, etc.
+- Only dirty cells are updated.
+- DOM updates are batched.
+- CSS classes are used for styling.
 */
 
-    // --- Constants ---
-    const COLOR_BLACK = 0;
-    const COLOR_RED = 1;
-    const COLOR_GREEN = 2;
-    const COLOR_YELLOW = 3;
-    const COLOR_BLUE = 4;
-    const COLOR_MAGENTA = 5;
-    const COLOR_CYAN = 6;
-    const COLOR_WHITE = 7;
+const COLOR_BLACK = 0;
+const COLOR_RED = 1;
+const COLOR_GREEN = 2;
+const COLOR_YELLOW = 3;
+const COLOR_BLUE = 4;
+const COLOR_MAGENTA = 5;
+const COLOR_CYAN = 6;
+const COLOR_WHITE = 7;
 
-    const A_BOLD = 1 << 8;
-    const A_REVERSE = 1 << 9;
-    const A_UNDERLINE = 1 << 10;
+const A_BOLD = 1 << 8;
+const A_REVERSE = 1 << 9;
+const A_UNDERLINE = 1 << 10;
 
-    const KEY_UP = 259;
-    const KEY_DOWN = 258;
-    const KEY_LEFT = 260;
-    const KEY_RIGHT = 261;
-    const KEY_RESIZE = 410;
-    const KEY_MOUSE = 409;
-    const ERR = -1;
-    const STDIN_FILENO = 0;
-    const TCIFLUSH = 0;
-    const ALL_MOUSE_EVENTS = (1 << 2) - 1;
-    const REPORT_MOUSE_POSITION = 1 << 5;
+const KEY_UP = 259;
+const KEY_DOWN = 258;
+const KEY_LEFT = 260;
+const KEY_RIGHT = 261;
+const KEY_RESIZE = 410;
+const KEY_MOUSE = 409;
+const ERR = -1;
+const STDIN_FILENO = 0;
+const TCIFLUSH = 0;
+const ALL_MOUSE_EVENTS = (1 << 2) - 1;
+const REPORT_MOUSE_POSITION = 1 << 5;
 
-    const WIDE_CHARS = [
-        '☠', '†', '◎', '◇', '◆', '①', '②', '③', '④', '▒'
-    ];
+const WIDE_CHARS = [
+    '☠', '†', '◎', '◇', '◆', '①', '②', '③', '④', '▒'
+];
+const TALL_CHARS = [
+    '_'
+];
 
-    let LINES = 25;
-    let COLS = 80;
-    let current_attr = 0;
-    let color_pairs = {};
-    let windows = {};
-    let current_y = 0;
-    let current_x = 0;
-    let nodelay_mode = false;
-    let keypress_callback = null;
-    let resize_callback = null;
-    let keyBuffer = [];
-    let dirtyWindows = new Set();
+let LINES = 25;
+let COLS = 80;
+let current_attr = 0;
+let color_pairs = {};
+let windows = {};
+let current_y = 0;
+let current_x = 0;
+let nodelay_mode = false;
+let keypress_callback = null;
+let resize_callback = null;
+let keyBuffer = [];
+let dirtyWindows = new Set();
 
-    // Get the standard screen window
-    const stdscr = document.getElementById('stdscr');
-    windows.stdscr = stdscr;
+const stdscr = document.getElementById('stdscr');
+windows.stdscr = stdscr;
 
-    // --- Buffer helpers ---
-    function createBuffer(lines, cols) {
-        const buf = [];
-        for (let y = 0; y < lines; y++) {
-            const row = [];
-            for (let x = 0; x < cols; x++) {
-                row.push({ ch: ' ', attr: 0 });
-            }
-            buf.push(row);
+// --- Buffer helpers ---
+function createBuffer(lines, cols) {
+    const buf = [];
+    for (let y = 0; y < lines; y++) {
+        const row = [];
+        for (let x = 0; x < cols; x++) {
+            row.push({ ch: ' ', attr: 0 });
         }
-        return buf;
+        buf.push(row);
     }
+    return buf;
+}
 
-    function copyBuffer(oldBuf, newBuf) {
-        const minLines = Math.min(oldBuf.length, newBuf.length);
-        const minCols = Math.min(oldBuf[0].length, newBuf[0].length);
-        for (let y = 0; y < minLines; y++) {
-            for (let x = 0; x < minCols; x++) {
-                newBuf[y][x] = { ...oldBuf[y][x] };
-            }
+function copyBuffer(oldBuf, newBuf) {
+    const minLines = Math.min(oldBuf.length, newBuf.length);
+    const minCols = Math.min(oldBuf[0].length, newBuf[0].length);
+    for (let y = 0; y < minLines; y++) {
+        for (let x = 0; x < minCols; x++) {
+            newBuf[y][x] = { ...oldBuf[y][x] };
         }
     }
+}
 
-    // --- Window creation and resizing ---
-    function initscr() {
+// --- Window creation and resizing ---
+function initscr() {
+    updateTerminalSize();
+    window.addEventListener('resize', () => {
         updateTerminalSize();
-        window.addEventListener('resize', () => {
-            updateTerminalSize();
-            keyBuffer.push(KEY_RESIZE);
-            if (resize_callback) resize_callback();
-        });
-        document.addEventListener('keydown', handleKeypress);
-
-        // Only initialize color pair 0 by default
-        color_pairs[0] = { fg: '#fff', bg: '#000' };
-
-        return stdscr;
-    }
-
-    function COLOR_PAIR(n) { return n; }
-
-    function updateTerminalSize() {
-        const testChar = document.createElement('span');
-        testChar.textContent = 'X';
-        stdscr.appendChild(testChar);
-        const charWidth = testChar.getBoundingClientRect().width;
-        const charHeight = testChar.getBoundingClientRect().height;
-        stdscr.removeChild(testChar);
-
-        const newCols = Math.floor(window.innerWidth / charWidth);
-        const newLines = Math.floor(window.innerHeight / charHeight);
-
-        resizeWindow(stdscr, newLines, newCols, preserve=true);
-
-        COLS = newCols;
-        LINES = newLines;
-    }
-
-    function fillWindow(win, lines, cols) {
-        win.innerHTML = '';
-        win.style.display = 'grid';
-        win.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-        win.style.gridTemplateRows = `repeat(${lines}, 1fr)`;
-        win.style.height = `${lines}em`;
-        win.style.width = `${cols}ch`;
-
-        win._lines = lines;
-        win._cols = cols;
-        win._buffer = createBuffer(lines, cols);
-
-        win._cells = [];
-        for (let y = 0; y < lines; y++) {
-            win._cells[y] = [];
-            for (let x = 0; x < cols; x++) {
-                const cell = document.createElement('span');
-                cell.textContent = ' ';
-                cell.dataset.y = y;
-                cell.dataset.x = x;
-                cell.style.gridColumn = x + 1;
-                cell.style.gridRow = y + 1;
-                win.appendChild(cell);
-                win._cells[y][x] = cell;
-            }
-        }
-        markForRefresh(win);
-    }
-
-    function resizeWindow(win, lines, cols, preserve=false) {
-        let oldBuf = win._buffer;
-        fillWindow(win, lines, cols);
-        if (preserve && oldBuf) {
-            copyBuffer(oldBuf, win._buffer);
-        }
-    }
-
-    function getCell(win, y, x) {
-        if (win._cells && win._cells[y] && win._cells[y][x]) return win._cells[y][x];
-        return null;
-    }
-
-    function markForRefresh(win) {
-        dirtyWindows.add(win);
-    }
-
-    // --- Rendering ---
-    function applyAllUpdates() {
-        dirtyWindows.forEach(win => {
-            const lines = win._lines;
-            const cols = win._cols;
-            for (let y = 0; y < lines; y++) {
-                for (let x = 0; x < cols; x++) {
-                    const cell = getCell(win, y, x);
-                    const bufCell = win._buffer[y][x];
-                    if (cell) {
-                        cell.innerHTML = '';
-                        if (WIDE_CHARS.includes(bufCell.ch)) {
-                            const wideSpan = document.createElement('span');
-                            wideSpan.className = 'wide-char';
-                            wideSpan.textContent = bufCell.ch;
-                            cell.appendChild(wideSpan);
-                        } else {
-                            cell.textContent = bufCell.ch;
-                        }
-                        applyAttributes(cell, bufCell.attr);
-                    }
-                }
-            }
-        });
-        dirtyWindows.clear();
-    }
-
-    function doupdate() {
-        applyAllUpdates();
-        return 0;
-    }
-    function refresh() { return doupdate(); }
-    function wnoutrefresh(win) { markForRefresh(win); }
-
-    // --- Attribute Handling ---
-    function getattrs(win) {
-        return parseInt(win.dataset.attr || '0');
-    }
-
-    function attron(attr) {
-        current_attr |= attr;
-    }
-    function attroff(attr) {
-        current_attr &= ~attr;
-    }
-    function wattron(win, attr) {
-        win.dataset.attr = (getattrs(win) | attr).toString();
-    }
-    function wattroff(win, attr) {
-        win.dataset.attr = (getattrs(win) & ~attr).toString();
-    }
-
-    function applyAttributes(cell, attr) {
-        cell.className = '';
-        const wideChar = cell.querySelector('.wide-char');
-        if (wideChar) cell.className = '';
-
-        const pairNum = PAIR_NUMBER(attr);
-        if (pairNum > 0) {
-            cell.classList.add(`color-pair-${pairNum}`);
-            if (color_pairs[pairNum]) {
-                cell.style.color = color_pairs[pairNum].fg;
-                cell.style.backgroundColor = color_pairs[pairNum].bg;
-                if (wideChar) {
-                    wideChar.style.color = color_pairs[pairNum].fg;
-                }
-            }
-        } else {
-            cell.style.color = '';
-            cell.style.backgroundColor = '';
-        }
-
-        if (attr & A_BOLD) cell.classList.add('attr-bold');
-        if (attr & A_REVERSE) cell.classList.add('attr-reverse');
-        if (attr & A_UNDERLINE) cell.classList.add('attr-underline');
-
-        if (wideChar) {
-            if (attr & A_BOLD) wideChar.classList.add('attr-bold');
-            if (attr & A_REVERSE) wideChar.classList.add('attr-reverse');
-            if (attr & A_UNDERLINE) wideChar.classList.add('attr-underline');
-        }
-    }
-
-    function PAIR_NUMBER(attr) {
-        return attr & 0xFF;
-    }
-
-    // --- Colors ---
-    function start_color() {}
-    function use_default_colors() {}
-
-    function init_pair(pair, fg, bg) {
-        color_pairs[pair] = {
-            fg: getColorCode(fg),
-            bg: getColorCode(bg)
-        };
-    }
-
-    function getColorCode(colorNum) {
-        switch(colorNum) {
-            case COLOR_BLACK: return '#000';
-            case COLOR_RED: return '#f00';
-            case COLOR_GREEN: return '#0f0';
-            case COLOR_YELLOW: return '#ff0';
-            case COLOR_BLUE: return '#00f';
-            case COLOR_MAGENTA: return '#f0f';
-            case COLOR_CYAN: return '#0ff';
-            case COLOR_WHITE: return '#fff';
-            case -1: return '';
-            default: return '#000';
-        }
-    }
-
-    function has_colors() { return true; }
-
-    // --- Drawing functions ---
-    function mvwaddch(win, y, x, ch) {
-        if (!win._buffer || y < 0 || y >= win._lines || x < 0 || x >= win._cols) return;
-        const winAttr = getattrs(win);
-        win._buffer[y][x] = { ch: ch, attr: current_attr | winAttr };
-        markForRefresh(win);
-    }
-
-    function box(win, verch, horch) {
-        const width = win._cols;
-        const height = win._lines;
-        for (let x = 0; x < width; x++) {
-            mvwaddch(win, 0, x, '-');
-            mvwaddch(win, height - 1, x, '-');
-        }
-        for (let y = 0; y < height; y++) {
-            mvwaddch(win, y, 0, '|');
-            mvwaddch(win, y, width - 1, '|');
-        }
-        mvwaddch(win, 0, 0, '+');
-        mvwaddch(win, 0, width - 1, '+');
-        mvwaddch(win, height - 1, 0, '+');
-        mvwaddch(win, height - 1, width - 1, '+');
-        markForRefresh(win);
-    }
-
-    function wbkgd(win, ch) {
-        const pairNum = PAIR_NUMBER(ch);
-        if (color_pairs[pairNum]) {
-            win.style.backgroundColor = color_pairs[pairNum].bg;
-            win.style.color = color_pairs[pairNum].fg;
-            markForRefresh(win);
-        }
-    }
-
-    function wclrtoeol(win) {
-        const width = win._cols;
-        for (let x = current_x; x < width; x++) {
-            const winAttr = getattrs(win);
-            win._buffer[current_y][x] = { ch: ' ', attr: current_attr | winAttr };
-        }
-        markForRefresh(win);
-    }
-
-    function clear() {
-        const lines = stdscr._lines;
-        const cols = stdscr._cols;
-        for (let y = 0; y < lines; y++) {
-            for (let x = 0; x < cols; x++) {
-                stdscr._buffer[y][x] = { ch: ' ', attr: 0 };
-            }
-        }
-        current_y = 0;
-        current_x = 0;
-        markForRefresh(stdscr);
-    }
-
-    // --- Print functions ---
-    function mvwprintw(win, y, x, text, ...args) {
-        let formattedText = text;
-        if (args.length > 0) {
-            let argIndex = 0;
-            formattedText = text.replace(/%[sdif]/g, () => args[argIndex++]);
-        }
-        let curX = x;
-        let curY = y;
-        const winAttr = getattrs(win);
-        for (let i = 0; i < formattedText.length; i++) {
-            const char = formattedText[i];
-            if (char === '\n') {
-                curY++;
-                curX = x;
-                continue;
-            }
-            if (curY >= win._lines || curX >= win._cols) break;
-            win._buffer[curY][curX] = { ch: char, attr: current_attr | winAttr };
-            curX++;
-        }
-        markForRefresh(win);
-        if (win === stdscr) {
-            current_y = curY;
-            current_x = curX;
-        }
-    }
-
-    function wprintw(win, text, ...args) {
-        mvwprintw(win, current_y, current_x, text, ...args);
-    }
-
-    function mvprintw(y, x, text, ...args) {
-        mvwprintw(stdscr, y, x, text, ...args);
-    }
-
-    function addstr(str) {
-        mvwprintw(stdscr, current_y, current_x, str);
-    }
-
-    function mvaddwstr(y, x, str) {
-        mvwprintw(stdscr, y, x, str);
-    }
-
-    // --- addch/mvaddch ---
-    function addch(ch) {
-        mvwaddch(stdscr, current_y, current_x, ch);
-        current_x++;
-        if (current_x >= stdscr._cols) {
-            current_x = 0;
-            current_y++;
-        }
-        markForRefresh(stdscr);
-    }
-    function mvaddch(y, x, ch) {
-        move(y, x);
-        addch(ch);
-    }
-
-    // --- Cursor movement and query ---
-    function move(y, x) {
-        current_y = y;
-        current_x = x;
-    }
-    function getyx(win) {
-        // Only stdscr supported, or you could make per-window cursors.
-        return { y: current_y, x: current_x };
-    }
-    function getmaxyx(win) {
-        return { rows: win._lines, cols: win._cols };
-    }
-
-    // --- Window management ---
-    function newwin(height, width, y, x) {
-        const win = document.createElement('div');
-        win.className = 'window';
-        win.style.top = `${y}em`;
-        win.style.left = `${x}ch`;
-        win.style.height = `${height}em`;
-        win.style.width = `${width}ch`;
-        win.style.zIndex = 10;
-        document.getElementById('screen').appendChild(win);
-
-        fillWindow(win, height, width);
-
-        const winId = 'win' + Math.random().toString(36).substr(2, 9);
-        windows[winId] = win;
-
-        markForRefresh(win);
-        return win;
-    }
-    function delwin(win) {
-        if (win && win.parentNode) {
-            win.parentNode.removeChild(win);
-        }
-    }
-    function resizeterm(lines, cols) {
-        LINES = lines;
-        COLS = cols;
-        resizeWindow(stdscr, LINES, COLS, preserve=true);
-    }
-
-    // --- Keyboard and mouse ---
-    function handleKeypress(event) {
-        let key = event.keyCode;
-        if (event.key === 'ArrowUp') key = KEY_UP;
-        else if (event.key === 'ArrowDown') key = KEY_DOWN;
-        else if (event.key === 'ArrowLeft') key = KEY_LEFT;
-        else if (event.key === 'ArrowRight') key = KEY_RIGHT;
-        else if (event.key === 'Escape') key = 27;
-        keyBuffer.push(key);
-        if (keypress_callback) {
-            const callback = keypress_callback;
-            keypress_callback = null;
-            callback(key);
-        }
-        event.preventDefault();
-    }
-
-    function getch() {
-        if (keyBuffer.length > 0) {
-            return keyBuffer.shift();
-        }
-        if (nodelay_mode) {
-            return ERR;
-        }
-        return new Promise(resolve => {
-            keypress_callback = (key) => {
-                resolve(key);
-            };
-        });
-    }
-    function nodelay(win, bf) {
-        nodelay_mode = bf;
-    }
-    function tcflush(fd, queue_selector) {
-        keyBuffer = [];
-    }
-
-    function mousemask(mask, oldmask) {
-        if (mask & ALL_MOUSE_EVENTS) {
-            stdscr.addEventListener('click', handleMouseClick);
-            if (mask & REPORT_MOUSE_POSITION) {
-                stdscr.addEventListener('mousemove', handleMouseMove);
-            }
-        }
-    }
-    function handleMouseClick(event) {
-        keyBuffer.push(KEY_MOUSE);
-    }
-    function handleMouseMove(event) {}
-
-    // --- Misc ---
-    function curs_set(visibility) {
-        document.body.style.cursor = (visibility === 0) ? 'none' : 'default';
-        return 0;
-    }
-    function endwin() {
-        document.removeEventListener('keydown', handleKeypress);
-        stdscr.removeEventListener('click', handleMouseClick);
-        stdscr.removeEventListener('mousemove', handleMouseMove);
-    }
-    function get_terminal_size() {
-        return { rows: LINES, cols: COLS };
-    }
-    Math.seedrandom = function(seed) {
-        let state = seed || Date.now();
-        return function() {
-            state = (state * 9301 + 49297) % 233280;
-            return state / 233280;
-        };
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const scriptElement = document.createElement('script');
-        scriptElement.src = 'maze4.js';
-        document.body.appendChild(scriptElement);
+        keyBuffer.push(KEY_RESIZE);
+        if (resize_callback) resize_callback();
     });
-    </script>
+    document.addEventListener('keydown', handleKeypress);
+
+    color_pairs[0] = { fg: '#fff', bg: '#000' };
+
+    return stdscr;
+}
+
+function COLOR_PAIR(n) { return n; }
+
+function updateTerminalSize() {
+    const testChar = document.createElement('span');
+    testChar.textContent = 'X';
+    stdscr.appendChild(testChar);
+    const charWidth = testChar.getBoundingClientRect().width;
+    const charHeight = testChar.getBoundingClientRect().height;
+    stdscr.removeChild(testChar);
+
+    const newCols = Math.floor(window.innerWidth / charWidth);
+    const newLines = Math.floor(window.innerHeight / charHeight);
+
+    resizeWindow(stdscr, newLines, newCols, true);
+
+    COLS = newCols;
+    LINES = newLines;
+}
+
+function fillWindow(win, lines, cols) {
+    win.innerHTML = '';
+    win.style.display = 'grid';
+    win.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    win.style.gridTemplateRows = `repeat(${lines}, 1fr)`;
+    win.style.height = `${lines}em`;
+    win.style.width = `${cols}ch`;
+
+    win._lines = lines;
+    win._cols = cols;
+    win._buffer = createBuffer(lines, cols);
+
+    win._cells = [];
+    for (let y = 0; y < lines; y++) {
+        win._cells[y] = [];
+        for (let x = 0; x < cols; x++) {
+            const cell = document.createElement('span');
+            cell.textContent = ' ';
+            cell.dataset.y = y;
+            cell.dataset.x = x;
+            cell.style.gridColumn = x + 1;
+            cell.style.gridRow = y + 1;
+            win.appendChild(cell);
+            win._cells[y][x] = cell;
+        }
+    }
+    // Mark all cells dirty
+    win._dirtyCells = [];
+    for (let y = 0; y < lines; y++) {
+        for (let x = 0; x < cols; x++) {
+            win._dirtyCells.push([y, x]);
+        }
+    }
+    markForRefresh(win);
+}
+
+function resizeWindow(win, lines, cols, preserve=false) {
+    let oldBuf = win._buffer;
+    fillWindow(win, lines, cols);
+    if (preserve && oldBuf) {
+        copyBuffer(oldBuf, win._buffer);
+    }
+    // Mark all cells dirty after resize
+    win._dirtyCells = [];
+    for (let y = 0; y < lines; y++) {
+        for (let x = 0; x < cols; x++) {
+            win._dirtyCells.push([y, x]);
+        }
+    }
+    markForRefresh(win);
+}
+
+function getCell(win, y, x) {
+    if (win._cells && win._cells[y] && win._cells[y][x]) return win._cells[y][x];
+    return null;
+}
+
+function markForRefresh(win) {
+    dirtyWindows.add(win);
+}
+
+// --- Rendering ---
+function applyAllUpdates() {
+    dirtyWindows.forEach(win => {
+        if (!win._dirtyCells || win._dirtyCells.length === 0) {
+            // Fallback: full refresh if no dirty tracking
+            win._dirtyCells = [];
+            for (let y = 0; y < win._lines; y++) {
+                for (let x = 0; x < win._cols; x++) {
+                    win._dirtyCells.push([y, x]);
+                }
+            }
+        }
+        win._dirtyCells.forEach(([y, x]) => {
+            updateCell(win, y, x);
+        });
+        win._dirtyCells = [];
+    });
+    dirtyWindows.clear();
+}
+
+function updateCell(win, y, x) {
+    const cell = getCell(win, y, x);
+    const bufCell = win._buffer[y][x];
+    if (!cell) return;
+
+    // Only update if changed (skip if already correct)
+    if (cell.textContent === bufCell.ch && cell.dataset.attr == bufCell.attr) return;
+
+    cell.innerHTML = '';
+    if (WIDE_CHARS.includes(bufCell.ch)) {
+        const wideSpan = document.createElement('span');
+        wideSpan.className = 'wide-char';
+        wideSpan.textContent = bufCell.ch;
+        cell.appendChild(wideSpan);
+    } else if (TALL_CHARS.includes(bufCell.ch)) {
+        const tallSpan = document.createElement('span');
+        tallSpan.className = 'tall-char';
+        tallSpan.textContent = bufCell.ch;
+        cell.appendChild(tallSpan);
+    } else {
+        cell.textContent = bufCell.ch;
+    }
+    cell.dataset.attr = bufCell.attr;
+    applyAttributes(cell, bufCell.attr);
+}
+
+function doupdate() {
+    applyAllUpdates();
+    return 0;
+}
+function refresh() { return doupdate(); }
+function wnoutrefresh(win) { markForRefresh(win); }
+
+// --- Attribute Handling ---
+function getattrs(win) {
+    return parseInt(win.dataset.attr || '0');
+}
+
+function attron(attr) {
+    current_attr |= attr;
+}
+function attroff(attr) {
+    current_attr &= ~attr;
+}
+function wattron(win, attr) {
+    win.dataset.attr = (getattrs(win) | attr).toString();
+}
+function wattroff(win, attr) {
+    win.dataset.attr = (getattrs(win) & ~attr).toString();
+}
+
+function applyAttributes(cell, attr) {
+    cell.className = '';
+    const pairNum = PAIR_NUMBER(attr);
+    if (pairNum > 0) cell.classList.add(`color-pair-${pairNum}`);
+    if (attr & A_BOLD) cell.classList.add('attr-bold');
+    if (attr & A_REVERSE) cell.classList.add('attr-reverse');
+    if (attr & A_UNDERLINE) cell.classList.add('attr-underline');
+}
+
+function PAIR_NUMBER(attr) {
+    return attr & 0xFF;
+}
+
+// --- Colors ---
+function start_color() {}
+function use_default_colors() {}
+
+function init_pair(pair, fg, bg) {
+    color_pairs[pair] = {
+        fg: getColorCode(fg),
+        bg: getColorCode(bg)
+    };
+}
+
+function getColorCode(colorNum) {
+    switch(colorNum) {
+        case COLOR_BLACK: return '#000';
+        case COLOR_RED: return '#f00';
+        case COLOR_GREEN: return '#0f0';
+        case COLOR_YELLOW: return '#ff0';
+        case COLOR_BLUE: return '#00f';
+        case COLOR_MAGENTA: return '#f0f';
+        case COLOR_CYAN: return '#0ff';
+        case COLOR_WHITE: return '#fff';
+        case -1: return '';
+        default: return '#000';
+    }
+}
+
+function has_colors() { return true; }
+
+// --- Drawing functions ---
+function mvwaddch(win, y, x, ch) {
+    if (!win._buffer || y < 0 || y >= win._lines || x < 0 || x >= win._cols) return;
+    const winAttr = getattrs(win);
+    win._buffer[y][x] = { ch: ch, attr: current_attr | winAttr };
+    if (!win._dirtyCells) win._dirtyCells = [];
+    win._dirtyCells.push([y, x]);
+    markForRefresh(win);
+}
+
+function box(win, verch, horch) {
+    const width = win._cols;
+    const height = win._lines;
+    for (let x = 0; x < width; x++) {
+        mvwaddch(win, 0, x, '-');
+        mvwaddch(win, height - 1, x, '-');
+    }
+    for (let y = 0; y < height; y++) {
+        mvwaddch(win, y, 0, '|');
+        mvwaddch(win, y, width - 1, '|');
+    }
+    mvwaddch(win, 0, 0, '+');
+    mvwaddch(win, 0, width - 1, '+');
+    mvwaddch(win, height - 1, 0, '+');
+    mvwaddch(win, height - 1, width - 1, '+');
+    markForRefresh(win);
+}
+
+function wbkgd(win, ch) {
+    const pairNum = PAIR_NUMBER(ch);
+    if (color_pairs[pairNum]) {
+        win.style.backgroundColor = color_pairs[pairNum].bg;
+        win.style.color = color_pairs[pairNum].fg;
+        markForRefresh(win);
+    }
+}
+
+function wclrtoeol(win) {
+    const width = win._cols;
+    for (let x = current_x; x < width; x++) {
+        const winAttr = getattrs(win);
+        win._buffer[current_y][x] = { ch: ' ', attr: current_attr | winAttr };
+        if (!win._dirtyCells) win._dirtyCells = [];
+        win._dirtyCells.push([current_y, x]);
+    }
+    markForRefresh(win);
+}
+
+function clear() {
+    const lines = stdscr._lines;
+    const cols = stdscr._cols;
+    for (let y = 0; y < lines; y++) {
+        for (let x = 0; x < cols; x++) {
+            stdscr._buffer[y][x] = { ch: ' ', attr: 0 };
+            if (!stdscr._dirtyCells) stdscr._dirtyCells = [];
+            stdscr._dirtyCells.push([y, x]);
+        }
+    }
+    current_y = 0;
+    current_x = 0;
+    markForRefresh(stdscr);
+}
+
+// --- Print functions ---
+function mvwprintw(win, y, x, text, ...args) {
+    let formattedText = text;
+    if (args.length > 0) {
+        let argIndex = 0;
+        formattedText = text.replace(/%[sdif]/g, () => args[argIndex++]);
+    }
+    let curX = x;
+    let curY = y;
+    const winAttr = getattrs(win);
+    for (let i = 0; i < formattedText.length; i++) {
+        const char = formattedText[i];
+        if (char === '\n') {
+            curY++;
+            curX = x;
+            continue;
+        }
+        if (curY >= win._lines || curX >= win._cols) break;
+        win._buffer[curY][curX] = { ch: char, attr: current_attr | winAttr };
+        if (!win._dirtyCells) win._dirtyCells = [];
+        win._dirtyCells.push([curY, curX]);
+        curX++;
+    }
+    markForRefresh(win);
+    if (win === stdscr) {
+        current_y = curY;
+        current_x = curX;
+    }
+}
+
+function wprintw(win, text, ...args) {
+    mvwprintw(win, current_y, current_x, text, ...args);
+}
+
+function mvprintw(y, x, text, ...args) {
+    mvwprintw(stdscr, y, x, text, ...args);
+}
+
+function addstr(str) {
+    mvwprintw(stdscr, current_y, current_x, str);
+}
+
+function mvaddwstr(y, x, str) {
+    mvwprintw(stdscr, y, x, str);
+}
+
+// --- addch/mvaddch ---
+function addch(ch) {
+    mvwaddch(stdscr, current_y, current_x, ch);
+    current_x++;
+    if (current_x >= stdscr._cols) {
+        current_x = 0;
+        current_y++;
+    }
+    markForRefresh(stdscr);
+}
+function mvaddch(y, x, ch) {
+    move(y, x);
+    addch(ch);
+}
+
+// --- Cursor movement and query ---
+function move(y, x) {
+    current_y = y;
+    current_x = x;
+}
+function getyx(win) {
+    return { y: current_y, x: current_x };
+}
+function getmaxyx(win) {
+    return { rows: win._lines, cols: win._cols };
+}
+
+// --- Window management ---
+function newwin(height, width, y, x) {
+    const win = document.createElement('div');
+    win.className = 'window';
+    win.style.top = `${y}em`;
+    win.style.left = `${x}ch`;
+    win.style.height = `${height}em`;
+    win.style.width = `${width}ch`;
+    win.style.zIndex = 10;
+    document.getElementById('screen').appendChild(win);
+
+    fillWindow(win, height, width);
+
+    const winId = 'win' + Math.random().toString(36).substr(2, 9);
+    windows[winId] = win;
+
+    markForRefresh(win);
+    return win;
+}
+function delwin(win) {
+    if (win && win.parentNode) {
+        win.parentNode.removeChild(win);
+    }
+}
+function resizeterm(lines, cols) {
+    LINES = lines;
+    COLS = cols;
+    resizeWindow(stdscr, LINES, COLS, true);
+}
+
+// --- Keyboard and mouse ---
+function handleKeypress(event) {
+    let key = event.keyCode;
+    if (event.key === 'ArrowUp') key = KEY_UP;
+    else if (event.key === 'ArrowDown') key = KEY_DOWN;
+    else if (event.key === 'ArrowLeft') key = KEY_LEFT;
+    else if (event.key === 'ArrowRight') key = KEY_RIGHT;
+    else if (event.key === 'Escape') key = 27;
+		else key = event.key.charCodeAt(0); // Set to ASCII int value of key pressed
+    keyBuffer.push(key);
+    if (keypress_callback) {
+        const callback = keypress_callback;
+        keypress_callback = null;
+        callback(key);
+    }
+    event.preventDefault();
+}
+
+async function getch() {
+    if (keyBuffer.length > 0) {
+        return keyBuffer.shift();
+    }
+		if (nodelay_mode) return ERR;
+		while(keyBuffer.length <= 0) { 
+		  await new Promise((resolve) => setTimeout(resolve, 10)); // Non-blocking sleep
+		}
+		return keyBuffer.shift();
+}
+function nodelay(win, bf) {
+    nodelay_mode = bf;
+}
+function tcflush(fd, queue_selector) {
+    keyBuffer = [];
+}
+
+function mousemask(mask, oldmask) {
+    if (mask & ALL_MOUSE_EVENTS) {
+        stdscr.addEventListener('click', handleMouseClick);
+        if (mask & REPORT_MOUSE_POSITION) {
+            stdscr.addEventListener('mousemove', handleMouseMove);
+        }
+    }
+}
+function handleMouseClick(event) {
+    keyBuffer.push(KEY_MOUSE);
+}
+function handleMouseMove(event) {}
+
+// --- Misc ---
+function curs_set(visibility) {
+    document.body.style.cursor = (visibility === 0) ? 'none' : 'default';
+    return 0;
+}
+function endwin() {
+    document.removeEventListener('keydown', handleKeypress);
+    stdscr.removeEventListener('click', handleMouseClick);
+    stdscr.removeEventListener('mousemove', handleMouseMove);
+}
+function get_terminal_size() {
+    return { rows: LINES, cols: COLS };
+}
+Math.seedrandom = function(seed) {
+    let state = seed || Date.now();
+    return function() {
+        state = (state * 9301 + 49297) % 233280;
+        return state / 233280;
+    };
+};
+
+document.addEventListener('DOMContentLoaded', async function() {
+    const scriptElement = document.createElement('script');
+    scriptElement.src = 'maze4.js';
+    document.body.appendChild(scriptElement);
+
+    scriptElement.onload = async function() {
+        // Run the async main function with error handling
+        try {
+            await main(); // Await the async function defined in maze4.js
+        } catch (error) {
+            if (error.message === "Exiting the program") {
+                // Silently ignore this specific error
+            } else {
+                // Notify the user via dialog
+                const dialog = document.getElementById("errorDialog");
+                const errorMessage = document.getElementById("errorMessage");
+                errorMessage.textContent = `An error occurred: ${error.message}`;
+                dialog.showModal();
+
+                const closeButton = document.getElementById("closeButton");
+                closeButton.onclick = () => dialog.close();
+            }
+        }
+    };
+});
+</script>		
+
 </body>
 </html>

@@ -51,7 +51,7 @@ const MIN_ROWS = 25;
 const MIN_COLS = 40;
 const MAX_ROWS = 1024;
 const MAX_COLS = 1024;
-const DEF_GAME_SPEED = 50;
+const DEF_GAME_SPEED = 70;
 const MAX_GAME_DELAY = 200;
 const DEF_TELEPORTER_DENSITY = 1000;
 const MAX_TELEPORTERS = 10;
@@ -133,6 +133,7 @@ let in_read_keyboard = 0;
 let in_mysleep = 0;
 let in_pausegame = 0;
 let pauseTime = -1;
+let Maze_rows = 0;
 
 // maze state
 let maze = null;
@@ -272,12 +273,12 @@ async function init() {
     mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, null);
     
     // Define color pairs
-    init_pair(1, COLOR_BLACK, -1);            // Path
-    init_pair(2, COLOR_RED, -1);              // Player 1
-    init_pair(3, COLOR_CYAN, -1);             // Player 2
-    init_pair(4, COLOR_YELLOW, -1);           // Player 3
-    init_pair(5, COLOR_GREEN, -1);            // Player 4
-    init_pair(6, COLOR_MAGENTA, -1);          // Current position
+    init_pair(1, COLOR_BLACK, COLOR_BLACK);            // Path
+    init_pair(2, COLOR_RED, COLOR_BLACK);              // Player 1
+    init_pair(3, COLOR_CYAN, COLOR_BLACK);             // Player 2
+    init_pair(4, COLOR_YELLOW, COLOR_BLACK);           // Player 3
+    init_pair(5, COLOR_GREEN, COLOR_BLACK);            // Player 4
+    init_pair(6, COLOR_MAGENTA, COLOR_BLACK);          // Current position
     init_pair(7, COLOR_CYAN, COLOR_BLUE);     // Teleporter
     init_pair(8, COLOR_WHITE, COLOR_MAGENTA); // Monster
     init_pair(9, COLOR_MAGENTA, COLOR_BLACK); // Defeated monster
@@ -293,14 +294,14 @@ async function init() {
     await calc_game_speed();
     
     if (Game_rounds < 0) {
-        Game_rounds = 1;
+        Game_rounds = 10;
     }
     Game_roundsB = Game_rounds;
     if (WaitForKey < 0) {
         WaitForKey = 0;
     }
     if (ShowWindows < 0) {
-        ShowWindows = 0;
+        ShowWindows = 1;
     }
     if (pauseTime < 0) {
         pauseTime = 2 * 1000;
@@ -805,7 +806,7 @@ async function display_player_alert(p_idx, rank) {
         mvwprintw(battle_win, 16, 1, String.raw`        RANK = ${rank}!                    `);
         mvwprintw(battle_win, 17, 1, String.raw` _____ _       _     _              _ `);
         mvwprintw(battle_win, 18, 1, String.raw`|  ___(_)_ __ (_)___| |__   ___  __| |`);
-        mvwprintw(battle_win, 19, 1, String.raw`| |_  | | '_ \| / __| '_ \ / _ \/ _\` |`);
+        mvwprintw(battle_win, 19, 1, String.raw`| |_  | | '_ \| / __| '_ \ / _ \/ _\ |`);
         mvwprintw(battle_win, 20, 1, String.raw`|  _| | | | | | \__ \ | | |  __/ (_| |`);
         mvwprintw(battle_win, 21, 1, String.raw`|_|   |_|_| |_|_|___/_| |_|\___|\__,_|`);
     } else if (rank === -1) {
@@ -813,7 +814,7 @@ async function display_player_alert(p_idx, rank) {
         // figlet abandoned
         mvwprintw(battle_win, 16, 1, String.raw` _____  OUT OF MOVES!               _ `);
         mvwprintw(battle_win, 17, 1, String.raw`|_   _| __ __ _ _ __ _ __   ___  __| |`);
-        mvwprintw(battle_win, 18, 1, String.raw`  | || '__/ _\` | '_ | '_ \ / _ \/ _\` |`);
+        mvwprintw(battle_win, 18, 1, String.raw`  | || '__/ _\ | '_ | '_ \ / _ \/ _\ |`);
         mvwprintw(battle_win, 19, 1, String.raw`  | || | | (_| | |_)| |_) |  __/ (_| |`);
         mvwprintw(battle_win, 20, 1, String.raw`  |_||_|  \__,_| .__| .__/ \___|\__,_|`);
         mvwprintw(battle_win, 21, 1, String.raw`               |_|  |_|               `);
@@ -825,7 +826,7 @@ async function display_player_alert(p_idx, rank) {
         mvwprintw(battle_win, 18, 1, String.raw`| |   / _ \/ ___|| ____|  _ \| |`);
         mvwprintw(battle_win, 19, 1, String.raw`| |  | | | \___ \|  _| | |_) | |`);
         mvwprintw(battle_win, 20, 1, String.raw`| |__| |_| |___) | |___|  _ <|_|`);
-        mvwprintw(battle_win, 21, 1, String.raw`|_____|\___/|____/|_____|_| \_(_)`);
+        mvwprintw(battle_win, 21, 1, String.raw`|____|\___/|____/|_____|_| \_(_)`);
     }
     
     await show_battle_art(1, 1, 1, 1, p_idx - 1, -1);
@@ -1109,7 +1110,7 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
             mvwprintw(battle_win,  8, col, String.raw`  |  O  O  |   `);
             mvwprintw(battle_win,  9, col, String.raw`  | .vvvv. |   `);
             mvwprintw(battle_win, 10, col, String.raw`  / |    | \   `);
-            mvwprintw(battle_win, 11, col, String.raw` /  \`^^^^\`  \  `);
+            mvwprintw(battle_win, 11, col, String.raw` /   ^^^^ \ \  `);
             mvwprintw(battle_win, 12, col, String.raw`/  /|     |\ \.`);
             mvwprintw(battle_win, 13, col, String.raw`\_/ .~~~~~. \_/`);
             wattroff(battle_win, COLOR_PAIR(8) | A_BOLD);
@@ -1403,6 +1404,7 @@ async function battle_monsters(monster1_idx, monster2_idx) {
 }
 
 async function create_maze(rows, cols) {
+	  Maze_rows = rows;
     maze = new Maze(rows, cols);
     
     // Initialize with walls
@@ -1833,7 +1835,7 @@ async function solve_maze_multi() {
         await display_player_stats();
         await read_keyboard();
         if (LastSLupdate && LastSLupdate + 25 < Game_moves) {
-            move(maze.rows + 5, 0);
+            move(Maze_rows + 5, 0);
             wclrtoeol(stdscr);
         }
         await mysleep(Game_delay);
@@ -2142,23 +2144,95 @@ async function animate_bullseye(y, x, max_radius, delay_ms, direction) {
     attron(COLOR_PAIR(old_pair));
 }
 
-// Read high scores from file - simplified version for JavaScript
+// Read high scores from localStorage
 async function read_high_scores(best_scores, worst_scores) {
-    // In a real implementation, this would use localStorage or IndexedDB
-    // For this direct translation, we'll simulate with a dummy count
-    return 0; // No scores yet
+    try {
+        // Attempt to retrieve scores from localStorage
+        const bestScoresData = localStorage.getItem('bestScores');
+        const worstScoresData = localStorage.getItem('worstScores');
+        const countData = localStorage.getItem('scoresCount');
+        
+        // Parse count or default to 0
+        let count = parseInt(countData) || 0;
+        
+        if (bestScoresData) {
+            // Parse and populate best_scores array
+            const bestScoresArray = JSON.parse(bestScoresData);
+            bestScoresArray.forEach((scoreData, index) => {
+                best_scores[index] = new HighScore(
+                    scoreData.name,
+                    scoreData.player_id,
+                    scoreData.score,
+                    scoreData.battles_won,
+                    scoreData.strength,
+                    scoreData.this_run,
+                    scoreData.date
+                );
+            });
+        }
+        
+        if (worstScoresData) {
+            // Parse and populate worst_scores array
+            const worstScoresArray = JSON.parse(worstScoresData);
+            worstScoresArray.forEach((scoreData, index) => {
+                worst_scores[index] = new HighScore(
+                    scoreData.name,
+                    scoreData.player_id,
+                    scoreData.score,
+                    scoreData.battles_won,
+                    scoreData.strength,
+                    scoreData.this_run,
+                    scoreData.date
+                );
+            });
+        }
+        
+        return count;
+    } catch (error) {
+        console.error("Error reading high scores:", error);
+        return 0; // Return 0 on error
+    }
 }
 
-// Save high scores to file - simplified for JavaScript
+// Save high scores to localStorage
 async function save_high_scores(best_scores, worst_scores, count) {
-    // In a real implementation, this would use localStorage or IndexedDB
-    // For this direct translation, we'll just log
-    console.log("Would save high scores:", best_scores, worst_scores);
+    try {
+        // Convert best_scores array to plain objects for storage
+        const bestScoresArray = best_scores.map(score => ({
+            name: score.name,
+            player_id: score.player_id,
+            score: score.score,
+            battles_won: score.battles_won,
+            strength: score.strength,
+            this_run: 0,
+            date: score.date
+        }));
+        
+        // Convert worst_scores array to plain objects for storage
+        const worstScoresArray = worst_scores.map(score => ({
+            name: score.name,
+            player_id: score.player_id,
+            score: score.score,
+            battles_won: score.battles_won,
+            strength: score.strength,
+            this_run: 0,
+            date: score.date
+        }));
+        
+        // Store in localStorage
+        localStorage.setItem('bestScores', JSON.stringify(bestScoresArray));
+        localStorage.setItem('worstScores', JSON.stringify(worstScoresArray));
+        localStorage.setItem('scoresCount', count.toString());
+        
+        return true; // Indicate successful save
+    } catch (error) {
+        console.error("Error saving high scores:", error);
+        return false; // Indicate failed save
+    }
 }
 
 // Insert a score into the high score lists
-async function insert_high_score(scores, count_ref, new_score, is_best) {
-    let count = count_ref.count;
+async function insert_high_score(scores, count, new_score, is_best) {
     let i, pos = -1;
     
     // Determine the position to insert based on whether it's best or worst list
@@ -2197,7 +2271,7 @@ async function insert_high_score(scores, count_ref, new_score, is_best) {
         scores[pos] = new_score;
     }
     
-    count_ref.count = count;
+    return count;
 }
 
 // Update high scores at the end of the game
@@ -2207,14 +2281,14 @@ async function update_high_scores(rows, cols) {
     let worst_scores = [];
     
     for (let i = 0; i < MAX_HIGH_SCORES; i++) {
-        best_scores.push(new HighScore("                               ", 0, 0, 0, 0, 0, 0));
-        worst_scores.push(new HighScore("                               ", 0, 0, 0, 0, 0, 0));
+        best_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
+        worst_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
     }
     
-    let count_obj = { count: 0 };
+    let count = 0 ;
     
     // Read existing high scores
-    count_obj.count = await read_high_scores(best_scores, worst_scores);
+    count = await read_high_scores(best_scores, worst_scores);
     
     // Get the current date/time
     let current_time = Math.floor(Date.now() / 1000);
@@ -2241,19 +2315,19 @@ async function update_high_scores(rows, cols) {
             new_score.date = current_time;
             
             // Try to insert into best scores
-            await insert_high_score(best_scores, count_obj, new_score, 1);
+            count = await insert_high_score(best_scores, count, new_score, 1);
             
             // Also track the worst scores for fun
             // (only if they actually finished though)
-            await insert_high_score(worst_scores, count_obj, new_score, 0);
+            count = await insert_high_score(worst_scores, count, new_score, 0);
         }
     }
     
     // Display the high score window
-    await display_high_scores_window(count_obj.count, best_scores, worst_scores);
+    await display_high_scores_window(count, best_scores, worst_scores);
     
     // Save updated high scores
-    await save_high_scores(best_scores, worst_scores, count_obj.count > 0 ? count_obj.count : 0);
+    await save_high_scores(best_scores, worst_scores, count > 0 ? count : 0);
 }
 
 // Display high scores in a ncurses window
@@ -2409,7 +2483,7 @@ async function pauseForUser() {
         await update_status_line(DELAY_MSG);
         await mysleep(pauseTime); // calls doupdate()
     }
-    move(maze.rows + 5, 0);
+    move(Maze_rows + 5, 0);
     wclrtoeol(stdscr);
     await read_keyboard();
     doupdate();
@@ -2431,10 +2505,19 @@ async function calc_game_speed() {
 }
 
 function exit_game(format, ...args) {
-    doupdate();
-    tcflush(STDIN_FILENO, TCIFLUSH);
-    endwin();
-    console.log(format, ...args);
+	  try {
+      attron(COLOR_PAIR(11) | A_BOLD);
+  	  mvwprintw(stdscr, Maze_rows + 5, 0, "*** GAME OVER! ***");
+      wclrtoeol(stdscr);
+      attroff(COLOR_PAIR(11) | A_BOLD);
+      wnoutrefresh(stdscr);
+      doupdate();
+      tcflush(STDIN_FILENO, TCIFLUSH);
+      endwin();
+      console.log(format, ...args);
+		} catch (error) {
+			1;
+		}
     throw new Error("Exiting the program");
 }
 
@@ -2500,9 +2583,9 @@ async function update_status_line(format, ...args) {
         // Current message - display normally
         if (direction === 0) {
             LastSLupdate = Game_moves;
-            mvwprintw(stdscr, maze.rows + 5, 0, buffer);
+            mvwprintw(stdscr, Maze_rows + 5, 0, buffer);
         } else {
-            mvwprintw(stdscr, maze.rows + 5, 0, PAUSE_MSG);
+            mvwprintw(stdscr, Maze_rows + 5, 0, PAUSE_MSG);
         }
     } else {
         // Past message - show indicator
@@ -2512,7 +2595,7 @@ async function update_status_line(format, ...args) {
         ) {
             upchar = "↑";
         }
-        mvwprintw(stdscr, maze.rows + 5, 0, `${upchar}↓[${status_lines[current_status_index].move}] ${status_lines[current_status_index].msg}`);
+        mvwprintw(stdscr, Maze_rows + 5, 0, `${upchar}↓[${status_lines[current_status_index].move}] ${status_lines[current_status_index].msg}`);
     }
     wclrtoeol(stdscr);
     attroff(COLOR_PAIR(11) | A_BOLD);
@@ -2526,7 +2609,7 @@ async function read_keyboard() {
     if (in_read_keyboard) return 0;
     in_read_keyboard = 1;
     nodelay(stdscr, true);
-    ch = getch();
+    ch = await getch();
     nodelay(stdscr, false);
     
     switch (ch) {
@@ -2584,7 +2667,7 @@ async function pauseGame() {
     // Enter pause mode loop
     while (paused) {
         doupdate();
-        ch = getch();
+        ch = await getch();
         
         // Handle arrow keys for status history browsing
         if (ch === KEY_UP || ch === 259) {
@@ -2719,6 +2802,3 @@ async function highlight_player_solution_path(p) {
         await mysleep(parseInt(pauseTime / 40));            // Another delay
     }
 }
-
-// Run the program
-main();
