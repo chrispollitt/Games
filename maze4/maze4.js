@@ -263,9 +263,9 @@ async function init() {
     
     // Initialize ncurses (simulated)
     initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
+//    cbreak();
+//    noecho();
+//    keypad(stdscr, true);
     curs_set(0);
     start_color();
     use_default_colors();
@@ -368,7 +368,7 @@ async function main(args) {
     }
     
     // Leave game
-    await exit_game("Game over\n");
+    exit_game("Game over\n");
 }
 
 // Run a round of the game
@@ -404,12 +404,12 @@ async function run_round() {
     
     // Ensure minimum maze size
     if (rows < MIN_ROWS || cols < MIN_COLS) {
-        await exit_game(`Screen too small, min ${MIN_ROWS} rows, ${MIN_COLS} cols\n`);
+        exit_game(`Screen too small, min ${MIN_ROWS} rows, ${MIN_COLS} cols\n`);
     }
     
     // Ensure maximum maze size
     if (rows > MAX_ROWS || cols > MAX_COLS) {
-        await exit_game(`Screen too big, max ${MAX_ROWS} rows, ${MAX_COLS} cols\n`);
+        exit_game(`Screen too big, max ${MAX_ROWS} rows, ${MAX_COLS} cols\n`);
     }
     
     // Adjust for maze walls and borders
@@ -423,7 +423,7 @@ async function run_round() {
     // Create and initialize maze
     await create_maze(rows, cols);
     if (!maze) {
-        await exit_game("Failed to allocate memory for maze\n");
+        exit_game("Failed to allocate memory for maze\n");
     }
     
     // Generate maze using enhanced DFS for paths between corners
@@ -1836,7 +1836,7 @@ async function solve_maze_multi() {
             move(maze.rows + 5, 0);
             wclrtoeol(stdscr);
         }
-        //await mysleep(Game_delay);
+        await mysleep(Game_delay);
         
         // Update game moves
         Game_moves++;
@@ -2231,7 +2231,7 @@ async function update_high_scores(rows, cols) {
                 new_score.name = BOT_NAMES[name_index + 1];
             } else {
                 // invalid ID
-                await exit_game(`invalid name_index ${name_index}\n`);
+                exit_game(`invalid name_index ${name_index}\n`);
             }
             
             new_score.player_id = players[i].id;
@@ -2430,12 +2430,12 @@ async function calc_game_speed() {
     Game_delay = Math.round((1.0 - normalized_speed) * MAX_GAME_DELAY);
 }
 
-async function exit_game(format, ...args) {
+function exit_game(format, ...args) {
     doupdate();
     tcflush(STDIN_FILENO, TCIFLUSH);
     endwin();
     console.log(format, ...args);
-    process.exit(0);
+    throw new Error("Exiting the program");
 }
 
 async function update_status_line(format, ...args) {
@@ -2492,7 +2492,7 @@ async function update_status_line(format, ...args) {
             current_status_index--;
         }
     } else {
-        await exit_game(`Illegal value for direction ${direction}\n`);
+        exit_game(`Illegal value for direction ${direction}\n`);
     }
     
     attron(COLOR_PAIR(11) | A_BOLD);
@@ -2553,7 +2553,7 @@ async function read_keyboard() {
         case 113:
         case 81:
         case 27:
-            await exit_game("User ended game early\n");
+            exit_game("User ended game early\n");
             break;
         case KEY_RESIZE:
             break;
@@ -2597,7 +2597,7 @@ async function pauseGame() {
         }
         // Exit game early
         else if (ch === 113 || ch === 81 || ch === 27) {
-            await exit_game("User ended game early\n");
+            exit_game("User ended game early\n");
         }
         // Leave pause mode on any other key press (that's printable)
         else if (ch >= 32 && ch <= 126) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze Game</title>
+    <title>Maze Game (ncurses Shim Enhanced)</title>
     <style>
         body {
             background-color: #000;
@@ -13,7 +13,6 @@
             padding: 0;
             overflow: hidden;
         }
-        
         #screen {
             position: relative;
             width: 100vw;
@@ -21,13 +20,11 @@
             overflow: hidden;
             cursor: default;
         }
-        
         .window {
             position: absolute;
             background-color: #000;
             overflow: hidden;
         }
-        
         #stdscr {
             top: 0;
             left: 0;
@@ -35,29 +32,23 @@
             height: 100%;
             z-index: 0;
         }
-        
-        /* Make all cells the same width and center content */
         .window span {
             display: inline-block;
             width: 1ch;
             height: 1em;
             text-align: center;
             vertical-align: middle;
-            overflow: visible; /* Allow wider characters to overflow */
-            position: relative; /* Enable proper positioning */
+            overflow: visible;
+            position: relative;
         }
-        
-        /* Handle wide characters by scaling them down */
         .wide-char {
-            font-size: 0.8em; /* Scale down slightly */
+            font-size: 0.8em;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Center the character */
-            width: auto; /* Allow natural width */
+            transform: translate(-50%, -50%);
+            width: auto;
         }
-        
-        /* Color pairs */
         .color-pair-1 { color: #000; }
         .color-pair-2 { color: #f00; }
         .color-pair-3 { color: #0ff; }
@@ -74,8 +65,6 @@
         .color-pair-14 { color: #ff0; background-color: #000; }
         .color-pair-15 { color: #00f; background-color: #000; }
         .color-pair-16 { color: #0ff; background-color: #000; }
-        
-        /* Attributes */
         .attr-bold { font-weight: bold; }
         .attr-reverse { filter: invert(100%); }
         .attr-underline { text-decoration: underline; }
@@ -85,11 +74,29 @@
     <div id="screen">
         <div id="stdscr" class="window"></div>
     </div>
-    
     <script>
-    // NCURSES SHIM IMPLEMENTATION ///////////////////////////////////////////////
+/*
+ncurses.js SHIM - ENHANCED
 
-    // Constants
+Usage Example:
+
+    initscr();
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    attron(COLOR_PAIR(1) | A_BOLD);
+    mvprintw(2, 5, "Hello, World!");
+    attroff(A_BOLD);
+    wnoutrefresh(stdscr);
+    doupdate(); // or just refresh();
+
+API:
+    initscr, start_color, init_pair, attron, attroff, wattron, wattroff,
+    mvwaddch, mvwprintw, addch, mvaddch, addstr, mvaddwstr,
+    wnoutrefresh, doupdate, refresh, clear, box, move, getyx,
+    getmaxyx, getch, nodelay, curs_set, endwin, etc.
+*/
+
+    // --- Constants ---
     const COLOR_BLACK = 0;
     const COLOR_RED = 1;
     const COLOR_GREEN = 2;
@@ -98,11 +105,11 @@
     const COLOR_MAGENTA = 5;
     const COLOR_CYAN = 6;
     const COLOR_WHITE = 7;
-    
+
     const A_BOLD = 1 << 8;
     const A_REVERSE = 1 << 9;
     const A_UNDERLINE = 1 << 10;
-    
+
     const KEY_UP = 259;
     const KEY_DOWN = 258;
     const KEY_LEFT = 260;
@@ -114,14 +121,11 @@
     const TCIFLUSH = 0;
     const ALL_MOUSE_EVENTS = (1 << 2) - 1;
     const REPORT_MOUSE_POSITION = 1 << 5;
-    
-    // List of wide Unicode characters that need special handling
+
     const WIDE_CHARS = [
-        '☠', '†', '◎', '◇', '◆', '①', '②', '③', '④', '▒',
-        // Add more wide characters as needed
+        '☠', '†', '◎', '◇', '◆', '①', '②', '③', '④', '▒'
     ];
-    
-    // Global state
+
     let LINES = 25;
     let COLS = 80;
     let current_attr = 0;
@@ -133,100 +137,85 @@
     let keypress_callback = null;
     let resize_callback = null;
     let keyBuffer = [];
-    
-    // Refresh tracking
-    let pendingRefresh = false;
     let dirtyWindows = new Set();
-    let animationFrameId = null;
-    
+
     // Get the standard screen window
     const stdscr = document.getElementById('stdscr');
     windows.stdscr = stdscr;
-    
-    // Initialize the screen with empty characters
+
+    // --- Buffer helpers ---
+    function createBuffer(lines, cols) {
+        const buf = [];
+        for (let y = 0; y < lines; y++) {
+            const row = [];
+            for (let x = 0; x < cols; x++) {
+                row.push({ ch: ' ', attr: 0 });
+            }
+            buf.push(row);
+        }
+        return buf;
+    }
+
+    function copyBuffer(oldBuf, newBuf) {
+        const minLines = Math.min(oldBuf.length, newBuf.length);
+        const minCols = Math.min(oldBuf[0].length, newBuf[0].length);
+        for (let y = 0; y < minLines; y++) {
+            for (let x = 0; x < minCols; x++) {
+                newBuf[y][x] = { ...oldBuf[y][x] };
+            }
+        }
+    }
+
+    // --- Window creation and resizing ---
     function initscr() {
-        // Set up the base terminal dimensions
         updateTerminalSize();
-        
-        // Listen for window resize events
         window.addEventListener('resize', () => {
             updateTerminalSize();
             keyBuffer.push(KEY_RESIZE);
             if (resize_callback) resize_callback();
         });
-        
-        // Listen for key events
         document.addEventListener('keydown', handleKeypress);
-        
-        // Initialize terminal with spaces
-        fillWindow(stdscr, LINES, COLS);
-        
-        // Set up color pairs with defaults
-        for (let i = 0; i <= 16; i++) {
-            color_pairs[i] = { fg: '#fff', bg: '#000' };
-        }
-        
-        // Start the animation frame for updates
-        startRenderLoop();
-        
+
+        // Only initialize color pair 0 by default
+        color_pairs[0] = { fg: '#fff', bg: '#000' };
+
         return stdscr;
     }
-    
-    // Start a render loop to handle screen updates
-    function startRenderLoop() {
-        if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-        }
-        
-        function renderLoop() {
-            // Process any pending updates
-            if (pendingRefresh) {
-                applyAllUpdates();
-                pendingRefresh = false;
-            }
-            
-            animationFrameId = requestAnimationFrame(renderLoop);
-        }
-        
-        animationFrameId = requestAnimationFrame(renderLoop);
-    }
-    
-    // Add the missing COLOR_PAIR function
-    function COLOR_PAIR(n) {
-        return n; // In ncurses, this maps to the attribute value
-    }
-    
+
+    function COLOR_PAIR(n) { return n; }
+
     function updateTerminalSize() {
-        // Calculate rows and columns based on element size and character dimensions
         const testChar = document.createElement('span');
         testChar.textContent = 'X';
         stdscr.appendChild(testChar);
         const charWidth = testChar.getBoundingClientRect().width;
         const charHeight = testChar.getBoundingClientRect().height;
         stdscr.removeChild(testChar);
-        
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-        
-        COLS = Math.floor(screenWidth / charWidth);
-        LINES = Math.floor(screenHeight / charHeight);
-        
-        // Update size
-        fillWindow(stdscr, LINES, COLS);
+
+        const newCols = Math.floor(window.innerWidth / charWidth);
+        const newLines = Math.floor(window.innerHeight / charHeight);
+
+        resizeWindow(stdscr, newLines, newCols, preserve=true);
+
+        COLS = newCols;
+        LINES = newLines;
     }
-    
+
     function fillWindow(win, lines, cols) {
         win.innerHTML = '';
-        
-        // Create a grid of cells for more efficient updates
         win.style.display = 'grid';
         win.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
         win.style.gridTemplateRows = `repeat(${lines}, 1fr)`;
         win.style.height = `${lines}em`;
         win.style.width = `${cols}ch`;
-        
-        // Create individual cells
+
+        win._lines = lines;
+        win._cols = cols;
+        win._buffer = createBuffer(lines, cols);
+
+        win._cells = [];
         for (let y = 0; y < lines; y++) {
+            win._cells[y] = [];
             for (let x = 0; x < cols; x++) {
                 const cell = document.createElement('span');
                 cell.textContent = ' ';
@@ -235,274 +224,127 @@
                 cell.style.gridColumn = x + 1;
                 cell.style.gridRow = y + 1;
                 win.appendChild(cell);
+                win._cells[y][x] = cell;
             }
         }
-        
-        // Mark window as needing refresh
         markForRefresh(win);
     }
-    
-    function getCell(win, y, x) {
-        return win.querySelector(`[data-y="${y}"][data-x="${x}"]`);
+
+    function resizeWindow(win, lines, cols, preserve=false) {
+        let oldBuf = win._buffer;
+        fillWindow(win, lines, cols);
+        if (preserve && oldBuf) {
+            copyBuffer(oldBuf, win._buffer);
+        }
     }
-    
+
+    function getCell(win, y, x) {
+        if (win._cells && win._cells[y] && win._cells[y][x]) return win._cells[y][x];
+        return null;
+    }
+
     function markForRefresh(win) {
         dirtyWindows.add(win);
-        pendingRefresh = true;
     }
-    
+
+    // --- Rendering ---
     function applyAllUpdates() {
-        // Process all dirty windows
         dirtyWindows.forEach(win => {
-            // Apply any window-specific updates here
-            // For our implementation, most updates happen directly to the DOM
+            const lines = win._lines;
+            const cols = win._cols;
+            for (let y = 0; y < lines; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const cell = getCell(win, y, x);
+                    const bufCell = win._buffer[y][x];
+                    if (cell) {
+                        cell.innerHTML = '';
+                        if (WIDE_CHARS.includes(bufCell.ch)) {
+                            const wideSpan = document.createElement('span');
+                            wideSpan.className = 'wide-char';
+                            wideSpan.textContent = bufCell.ch;
+                            cell.appendChild(wideSpan);
+                        } else {
+                            cell.textContent = bufCell.ch;
+                        }
+                        applyAttributes(cell, bufCell.attr);
+                    }
+                }
+            }
         });
-        
-        // Clear the dirty windows set
         dirtyWindows.clear();
     }
-    
-    function cbreak() {
-        // Browser already handles this
-    }
-    
-    function noecho() {
-        // Browser already handles this
-    }
-    
-    function keypad(win, bf) {
-        // Enable special keys - browser already handles this
-    }
-    
-    function curs_set(visibility) {
-        if (visibility === 0) {
-            document.body.style.cursor = 'none';
-        } else {
-            document.body.style.cursor = 'default';
-        }
+
+    function doupdate() {
+        applyAllUpdates();
         return 0;
     }
-    
-    function start_color() {
-        // Initialize color support - already in CSS
+    function refresh() { return doupdate(); }
+    function wnoutrefresh(win) { markForRefresh(win); }
+
+    // --- Attribute Handling ---
+    function getattrs(win) {
+        return parseInt(win.dataset.attr || '0');
     }
-    
-    function use_default_colors() {
-        // Use terminal's default colors
+
+    function attron(attr) {
+        current_attr |= attr;
     }
-    
-    function mousemask(mask, oldmask) {
-        // Set mouse events to capture
-        if (mask & ALL_MOUSE_EVENTS) {
-            stdscr.addEventListener('click', handleMouseClick);
-            if (mask & REPORT_MOUSE_POSITION) {
-                stdscr.addEventListener('mousemove', handleMouseMove);
-            }
-        }
+    function attroff(attr) {
+        current_attr &= ~attr;
     }
-    
-    function handleMouseClick(event) {
-        // Add to key buffer
-        keyBuffer.push(KEY_MOUSE);
+    function wattron(win, attr) {
+        win.dataset.attr = (getattrs(win) | attr).toString();
     }
-    
-    function handleMouseMove(event) {
-        // Not implemented in this shim
+    function wattroff(win, attr) {
+        win.dataset.attr = (getattrs(win) & ~attr).toString();
     }
-    
-    function newwin(height, width, y, x) {
-        const win = document.createElement('div');
-        win.className = 'window';
-        win.style.top = `${y}em`;
-        win.style.left = `${x}ch`;
-        win.style.height = `${height}em`;
-        win.style.width = `${width}ch`;
-        win.style.zIndex = 10;
-        document.getElementById('screen').appendChild(win);
-        
-        fillWindow(win, height, width);
-        
-        const winId = 'win' + Math.random().toString(36).substr(2, 9);
-        windows[winId] = win;
-        
-        markForRefresh(win);
-        return win;
-    }
-    
-    function box(win, verch, horch) {
-        const width = Math.floor(parseFloat(win.style.width));
-        const height = Math.floor(parseFloat(win.style.height));
-        
-        // Top and bottom borders
-        for (let x = 0; x < width; x++) {
-            mvwaddch(win, 0, x, '-');
-            mvwaddch(win, height - 1, x, '-');
-        }
-        
-        // Left and right borders
-        for (let y = 0; y < height; y++) {
-            mvwaddch(win, y, 0, '|');
-            mvwaddch(win, y, width - 1, '|');
-        }
-        
-        // Corners
-        mvwaddch(win, 0, 0, '+');
-        mvwaddch(win, 0, width - 1, '+');
-        mvwaddch(win, height - 1, 0, '+');
-        mvwaddch(win, height - 1, width - 1, '+');
-        
-        markForRefresh(win);
-    }
-    
-    function mvwaddch(win, y, x, ch) {
-        const cell = getCell(win, y, x);
-        if (cell) {
-            // Clear any existing content
-            cell.innerHTML = '';
-            
-            // Check if this is a wide character
-            if (WIDE_CHARS.includes(ch)) {
-                // Create a special container for wide character
-                const wideSpan = document.createElement('span');
-                wideSpan.className = 'wide-char';
-                wideSpan.textContent = ch;
-                cell.appendChild(wideSpan);
-            } else {
-                cell.textContent = ch;
-            }
-            
-            // Apply current attributes
-            applyAttributes(cell, current_attr);
-            
-            // Mark window for refresh
-            markForRefresh(win);
-        }
-    }
-    
+
     function applyAttributes(cell, attr) {
-        // Reset all classes
+        cell.className = '';
         const wideChar = cell.querySelector('.wide-char');
-        
-        // Keep the wide-char class if it exists
-        if (wideChar) {
-            cell.className = '';
-        } else {
-            cell.className = '';
-        }
-        
-        // Apply color pair
+        if (wideChar) cell.className = '';
+
         const pairNum = PAIR_NUMBER(attr);
         if (pairNum > 0) {
             cell.classList.add(`color-pair-${pairNum}`);
-            
-            // Apply custom colors if defined
             if (color_pairs[pairNum]) {
                 cell.style.color = color_pairs[pairNum].fg;
                 cell.style.backgroundColor = color_pairs[pairNum].bg;
-                
-                // Also apply to wide character if present
                 if (wideChar) {
                     wideChar.style.color = color_pairs[pairNum].fg;
                 }
             }
+        } else {
+            cell.style.color = '';
+            cell.style.backgroundColor = '';
         }
-        
-        // Apply attributes
+
         if (attr & A_BOLD) cell.classList.add('attr-bold');
         if (attr & A_REVERSE) cell.classList.add('attr-reverse');
         if (attr & A_UNDERLINE) cell.classList.add('attr-underline');
-        
-        // Apply attributes to wide character if present
+
         if (wideChar) {
             if (attr & A_BOLD) wideChar.classList.add('attr-bold');
             if (attr & A_REVERSE) wideChar.classList.add('attr-reverse');
             if (attr & A_UNDERLINE) wideChar.classList.add('attr-underline');
         }
     }
-    
-    function wbkgd(win, ch) {
-        const pairNum = PAIR_NUMBER(ch);
-        if (color_pairs[pairNum]) {
-            win.style.backgroundColor = color_pairs[pairNum].bg;
-            win.style.color = color_pairs[pairNum].fg;
-            markForRefresh(win);
-        }
+
+    function PAIR_NUMBER(attr) {
+        return attr & 0xFF;
     }
-    
-    function delwin(win) {
-        if (win && win.parentNode) {
-            win.parentNode.removeChild(win);
-        }
-    }
-    
-    function wclrtoeol(win) {
-        const width = Math.floor(parseFloat(win.style.width));
-        for (let x = current_x; x < width; x++) {
-            const cell = getCell(win, current_y, x);
-            if (cell) {
-                cell.innerHTML = ' ';
-                // Maintain current attributes
-                applyAttributes(cell, current_attr);
-            }
-        }
-        markForRefresh(win);
-    }
-    
-    function wnoutrefresh(win) {
-        // Mark for refresh in our implementation
-        markForRefresh(win);
-    }
-    
-    function doupdate() {
-        // Force an immediate update of all pending changes
-        if (pendingRefresh) {
-            applyAllUpdates();
-            pendingRefresh = false;
-        }
-        
-        // In ncurses, this would block until the update is complete
-        // For our implementation, changes are already visible in the DOM
-        return 0;
-    }
-    
-    function clear() {
-        const cells = stdscr.querySelectorAll('span');
-        cells.forEach(cell => {
-            cell.innerHTML = ' ';
-            cell.className = '';
-            cell.style.color = '';
-            cell.style.backgroundColor = '';
-        });
-        
-        current_y = 0;
-        current_x = 0;
-        markForRefresh(stdscr);
-    }
-    
-    function attron(attr) {
-        current_attr |= attr;
-    }
-    
-    function attroff(attr) {
-        current_attr &= ~attr;
-    }
-    
-    function wattron(win, attr) {
-        win.dataset.attr = (parseInt(win.dataset.attr || '0') | attr).toString();
-        // For windows, we store the attribute but don't apply globally
-    }
-    
-    function wattroff(win, attr) {
-        win.dataset.attr = (parseInt(win.dataset.attr || '0') & ~attr).toString();
-    }
-    
+
+    // --- Colors ---
+    function start_color() {}
+    function use_default_colors() {}
+
     function init_pair(pair, fg, bg) {
         color_pairs[pair] = {
             fg: getColorCode(fg),
             bg: getColorCode(bg)
         };
     }
-    
+
     function getColorCode(colorNum) {
         switch(colorNum) {
             case COLOR_BLACK: return '#000';
@@ -513,192 +355,243 @@
             case COLOR_MAGENTA: return '#f0f';
             case COLOR_CYAN: return '#0ff';
             case COLOR_WHITE: return '#fff';
-            case -1: return ''; // Default color
+            case -1: return '';
             default: return '#000';
         }
     }
-    
-    function PAIR_NUMBER(attr) {
-        return attr & 0xFF; // Extract the color pair number
+
+    function has_colors() { return true; }
+
+    // --- Drawing functions ---
+    function mvwaddch(win, y, x, ch) {
+        if (!win._buffer || y < 0 || y >= win._lines || x < 0 || x >= win._cols) return;
+        const winAttr = getattrs(win);
+        win._buffer[y][x] = { ch: ch, attr: current_attr | winAttr };
+        markForRefresh(win);
     }
-    
-    function getattrs(win) {
-        return parseInt(win.dataset.attr || '0');
+
+    function box(win, verch, horch) {
+        const width = win._cols;
+        const height = win._lines;
+        for (let x = 0; x < width; x++) {
+            mvwaddch(win, 0, x, '-');
+            mvwaddch(win, height - 1, x, '-');
+        }
+        for (let y = 0; y < height; y++) {
+            mvwaddch(win, y, 0, '|');
+            mvwaddch(win, y, width - 1, '|');
+        }
+        mvwaddch(win, 0, 0, '+');
+        mvwaddch(win, 0, width - 1, '+');
+        mvwaddch(win, height - 1, 0, '+');
+        mvwaddch(win, height - 1, width - 1, '+');
+        markForRefresh(win);
     }
-    
-    function has_colors() {
-        return true;
+
+    function wbkgd(win, ch) {
+        const pairNum = PAIR_NUMBER(ch);
+        if (color_pairs[pairNum]) {
+            win.style.backgroundColor = color_pairs[pairNum].bg;
+            win.style.color = color_pairs[pairNum].fg;
+            markForRefresh(win);
+        }
     }
-    
+
+    function wclrtoeol(win) {
+        const width = win._cols;
+        for (let x = current_x; x < width; x++) {
+            const winAttr = getattrs(win);
+            win._buffer[current_y][x] = { ch: ' ', attr: current_attr | winAttr };
+        }
+        markForRefresh(win);
+    }
+
+    function clear() {
+        const lines = stdscr._lines;
+        const cols = stdscr._cols;
+        for (let y = 0; y < lines; y++) {
+            for (let x = 0; x < cols; x++) {
+                stdscr._buffer[y][x] = { ch: ' ', attr: 0 };
+            }
+        }
+        current_y = 0;
+        current_x = 0;
+        markForRefresh(stdscr);
+    }
+
+    // --- Print functions ---
     function mvwprintw(win, y, x, text, ...args) {
-        // Format the text with arguments (simplified)
         let formattedText = text;
         if (args.length > 0) {
             let argIndex = 0;
             formattedText = text.replace(/%[sdif]/g, () => args[argIndex++]);
         }
-        
-        // Insert the text character by character
         let curX = x;
+        let curY = y;
+        const winAttr = getattrs(win);
         for (let i = 0; i < formattedText.length; i++) {
             const char = formattedText[i];
-            
             if (char === '\n') {
-                y++;
+                curY++;
                 curX = x;
                 continue;
             }
-            
-            const cell = getCell(win, y, curX);
-            if (cell) {
-                // Use mvwaddch to handle wide characters properly
-                // But skip the refresh marking to avoid multiple refreshes
-                const skipRefresh = true;
-                
-                // Clear any existing content
-                cell.innerHTML = '';
-                
-                // Check if this is a wide character
-                if (WIDE_CHARS.includes(char)) {
-                    // Create a special container for wide character
-                    const wideSpan = document.createElement('span');
-                    wideSpan.className = 'wide-char';
-                    wideSpan.textContent = char;
-                    cell.appendChild(wideSpan);
-                } else {
-                    cell.textContent = char;
-                }
-                
-                // Apply current attributes
-                applyAttributes(cell, current_attr);
-                
-                curX++;
-            }
+            if (curY >= win._lines || curX >= win._cols) break;
+            win._buffer[curY][curX] = { ch: char, attr: current_attr | winAttr };
+            curX++;
         }
-        
-        // Mark for refresh (once for the whole string)
         markForRefresh(win);
-        
-        // Update current position
         if (win === stdscr) {
-            current_y = y;
+            current_y = curY;
             current_x = curX;
         }
     }
-    
+
     function wprintw(win, text, ...args) {
         mvwprintw(win, current_y, current_x, text, ...args);
     }
-    
+
     function mvprintw(y, x, text, ...args) {
         mvwprintw(stdscr, y, x, text, ...args);
     }
-    
+
     function addstr(str) {
         mvwprintw(stdscr, current_y, current_x, str);
     }
-    
+
     function mvaddwstr(y, x, str) {
         mvwprintw(stdscr, y, x, str);
     }
-    
+
+    // --- addch/mvaddch ---
+    function addch(ch) {
+        mvwaddch(stdscr, current_y, current_x, ch);
+        current_x++;
+        if (current_x >= stdscr._cols) {
+            current_x = 0;
+            current_y++;
+        }
+        markForRefresh(stdscr);
+    }
+    function mvaddch(y, x, ch) {
+        move(y, x);
+        addch(ch);
+    }
+
+    // --- Cursor movement and query ---
     function move(y, x) {
         current_y = y;
         current_x = x;
     }
-    
+    function getyx(win) {
+        // Only stdscr supported, or you could make per-window cursors.
+        return { y: current_y, x: current_x };
+    }
+    function getmaxyx(win) {
+        return { rows: win._lines, cols: win._cols };
+    }
+
+    // --- Window management ---
+    function newwin(height, width, y, x) {
+        const win = document.createElement('div');
+        win.className = 'window';
+        win.style.top = `${y}em`;
+        win.style.left = `${x}ch`;
+        win.style.height = `${height}em`;
+        win.style.width = `${width}ch`;
+        win.style.zIndex = 10;
+        document.getElementById('screen').appendChild(win);
+
+        fillWindow(win, height, width);
+
+        const winId = 'win' + Math.random().toString(36).substr(2, 9);
+        windows[winId] = win;
+
+        markForRefresh(win);
+        return win;
+    }
+    function delwin(win) {
+        if (win && win.parentNode) {
+            win.parentNode.removeChild(win);
+        }
+    }
+    function resizeterm(lines, cols) {
+        LINES = lines;
+        COLS = cols;
+        resizeWindow(stdscr, LINES, COLS, preserve=true);
+    }
+
+    // --- Keyboard and mouse ---
     function handleKeypress(event) {
         let key = event.keyCode;
-        
-        // Map common keys
         if (event.key === 'ArrowUp') key = KEY_UP;
         else if (event.key === 'ArrowDown') key = KEY_DOWN;
         else if (event.key === 'ArrowLeft') key = KEY_LEFT;
         else if (event.key === 'ArrowRight') key = KEY_RIGHT;
         else if (event.key === 'Escape') key = 27;
-        
-        // Add to key buffer
         keyBuffer.push(key);
-        
-        // If we're waiting for a key, call the callback
         if (keypress_callback) {
             const callback = keypress_callback;
             keypress_callback = null;
             callback(key);
         }
-        
         event.preventDefault();
     }
-    
+
     function getch() {
-        // If nodelay mode is on or we have keys in buffer
         if (keyBuffer.length > 0) {
             return keyBuffer.shift();
         }
-        
         if (nodelay_mode) {
-            return ERR; // No key waiting
+            return ERR;
         }
-        
-        // Wait for a key
         return new Promise(resolve => {
             keypress_callback = (key) => {
                 resolve(key);
             };
         });
     }
-    
     function nodelay(win, bf) {
         nodelay_mode = bf;
     }
-    
-    function getmaxyx(win) {
-        const width = Math.floor(parseFloat(win.style.width || COLS));
-        const height = Math.floor(parseFloat(win.style.height || LINES));
-        return { rows: height, cols: width };
-    }
-    
     function tcflush(fd, queue_selector) {
-        // Clear key buffer
         keyBuffer = [];
     }
-    
-    function resizeterm(lines, cols) {
-        // Resize the terminal - in browser, window resizes are handled automatically
-        // But we can force a specific size
-        LINES = lines;
-        COLS = cols;
-        fillWindow(stdscr, LINES, COLS);
+
+    function mousemask(mask, oldmask) {
+        if (mask & ALL_MOUSE_EVENTS) {
+            stdscr.addEventListener('click', handleMouseClick);
+            if (mask & REPORT_MOUSE_POSITION) {
+                stdscr.addEventListener('mousemove', handleMouseMove);
+            }
+        }
     }
-    
+    function handleMouseClick(event) {
+        keyBuffer.push(KEY_MOUSE);
+    }
+    function handleMouseMove(event) {}
+
+    // --- Misc ---
+    function curs_set(visibility) {
+        document.body.style.cursor = (visibility === 0) ? 'none' : 'default';
+        return 0;
+    }
     function endwin() {
-        // Cleanup
         document.removeEventListener('keydown', handleKeypress);
         stdscr.removeEventListener('click', handleMouseClick);
         stdscr.removeEventListener('mousemove', handleMouseMove);
-        
-        // Stop the render loop
-        if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-        }
     }
-    
     function get_terminal_size() {
         return { rows: LINES, cols: COLS };
     }
-
-    // Add this to allow Math.seedrandom() to work
     Math.seedrandom = function(seed) {
-        // Simple seeded random implementation
         let state = seed || Date.now();
         return function() {
             state = (state * 9301 + 49297) % 233280;
             return state / 233280;
         };
     };
-    
-    // Wait for the main maze game code to be loaded
+
     document.addEventListener('DOMContentLoaded', function() {
         const scriptElement = document.createElement('script');
         scriptElement.src = 'maze4.js';
