@@ -240,7 +240,7 @@ class Status {
 // FUNCTION IMPLEMENTATIONS ///////////////////////////////////////////////
 
 // Initialize objects and setup
-function init() {
+async function init() {
     // Initialize status_lines
     for (let i = 0; i < STATUS_LINE_HISTORY; i++) {
         status_lines[i] = new Status();
@@ -290,7 +290,7 @@ function init() {
     init_pair(15, COLOR_BLUE, COLOR_BLACK);
     init_pair(16, COLOR_CYAN, COLOR_BLACK);
     
-    calc_game_speed();
+    await calc_game_speed();
     
     if (Game_rounds < 0) {
         Game_rounds = 1;
@@ -311,11 +311,11 @@ function init() {
     resizeterm(size.rows, size.cols);
     old_rows = size.rows;
     old_cols = size.cols;
-    logMessage(`Init term size is ${size.rows}, ${size.cols}`);
+    await logMessage(`Init term size is ${size.rows}, ${size.cols}`);
 }
 
 // Main function
-function main(args) {
+async function main(args) {
     // Process command line arguments (simplified)
     if (args) {
         for (let i = 0; i < args.length; i++) {
@@ -349,12 +349,12 @@ function main(args) {
     Math.seedrandom(Date.now());
     
     // Initialize ncurses and settings
-    init();
+    await init();
     
     // Run game rounds
     for (; Game_rounds > 0; Game_rounds--) {
-        logMessage(`Starting round ${Game_rounds}`);
-        run_round();
+        await logMessage(`Starting round ${Game_rounds}`);
+        await run_round();
         if (Screen_reduced) {
             Screen_reduced = 0;
             Game_rounds++;
@@ -368,15 +368,15 @@ function main(args) {
     }
     
     // Leave game
-    exit_game("Game over\n");
+    await exit_game("Game over\n");
 }
 
 // Run a round of the game
-function run_round() {
+async function run_round() {
     let rows, cols, maze_area;
     
     // Initialize players
-    initialize_players(0);
+    await initialize_players(0);
     
     // Get terminal dimensions
     let termSize = getmaxyx(stdscr);
@@ -404,12 +404,12 @@ function run_round() {
     
     // Ensure minimum maze size
     if (rows < MIN_ROWS || cols < MIN_COLS) {
-        exit_game(`Screen too small, min ${MIN_ROWS} rows, ${MIN_COLS} cols\n`);
+        await exit_game(`Screen too small, min ${MIN_ROWS} rows, ${MIN_COLS} cols\n`);
     }
     
     // Ensure maximum maze size
     if (rows > MAX_ROWS || cols > MAX_COLS) {
-        exit_game(`Screen too big, max ${MAX_ROWS} rows, ${MAX_COLS} cols\n`);
+        await exit_game(`Screen too big, max ${MAX_ROWS} rows, ${MAX_COLS} cols\n`);
     }
     
     // Adjust for maze walls and borders
@@ -421,44 +421,44 @@ function run_round() {
     if (cols % 2 === 0) cols--;
     
     // Create and initialize maze
-    create_maze(rows, cols);
+    await create_maze(rows, cols);
     if (!maze) {
-        exit_game("Failed to allocate memory for maze\n");
+        await exit_game("Failed to allocate memory for maze\n");
     }
     
     // Generate maze using enhanced DFS for paths between corners
-    generate_maze();
+    await generate_maze();
     
     // Implement and call ensure_path_between_corners
-    ensure_path_between_corners();
+    await ensure_path_between_corners();
     
     // Place teleporters and monsters
-    place_teleporters();
-    place_monsters();
+    await place_teleporters();
+    await place_monsters();
     Liv_monsters = Num_monsters;
     
     // Finish initializing players
-    initialize_players(1);
+    await initialize_players(1);
     
     // Print initial maze
     clear();
-    print_maze();
-    display_player_stats();
-    pauseForUser();
-    update_status_line("The race is ON!");
+    await print_maze();
+    await display_player_stats();
+    await pauseForUser();
+    await update_status_line("The race is ON!");
     LastSLupdate = 1;
     
     // Solve maze concurrently for all players
-    solve_maze_multi();
+    await solve_maze_multi();
     
     // highscore
-    if (!Screen_reduced) update_high_scores(rows, cols);
+    if (!Screen_reduced) await update_high_scores(rows, cols);
     
     // Clean up
-    free_maze();
+    await free_maze();
 }
 
-function initialize_players(stage) {
+async function initialize_players(stage) {
     // Stage 0
     if (stage === 0) {
         // Global vars
@@ -601,7 +601,7 @@ function initialize_players(stage) {
         
         // Now randomize each player's directions slightly for variety
         for (let i = 0; i < NUM_PLAYERS; i++) {
-            shuffle_directions_for_player(i);
+            await shuffle_directions_for_player(i);
         }
     } 
     // Stage 1
@@ -639,7 +639,7 @@ function initialize_players(stage) {
 }
 
 // Shuffle the directions for a specific player
-function shuffle_directions_for_player(idx) {
+async function shuffle_directions_for_player(idx) {
     // Apply a Fisher-Yates shuffle but only to the last 2 directions
     // This preserves the main direction preference but adds some randomness
     for (let i = 3; i >= 2; i--) {
@@ -658,7 +658,7 @@ function shuffle_directions_for_player(idx) {
 }
 
 // Helper function to get the current character for a player
-function get_player_current_char(player_id) {
+async function get_player_current_char(player_id) {
     switch (player_id) {
         case 1: return CURRENT1;
         case 2: return CURRENT2;
@@ -669,7 +669,7 @@ function get_player_current_char(player_id) {
 }
 
 // Helper function to get the visited character for a player
-function get_player_visited_char(player_id) {
+async function get_player_visited_char(player_id) {
     switch (player_id) {
         case 1: return VISITED1;
         case 2: return VISITED2;
@@ -680,7 +680,7 @@ function get_player_visited_char(player_id) {
 }
 
 // Helper function to get the solution character for a player
-function get_player_solution_char(player_id) {
+async function get_player_solution_char(player_id) {
     switch (player_id) {
         case 1: return SOLUTION1;
         case 2: return SOLUTION2;
@@ -691,7 +691,7 @@ function get_player_solution_char(player_id) {
 }
 
 // Check if a position is a player's position
-function is_player_position(x, y, current_pos) {
+async function is_player_position(x, y, current_pos) {
     for (let i = 0; i < NUM_PLAYERS; i++) {
         if (current_pos[i].x === x && current_pos[i].y === y) {
             return i + 1; // Return player id (1-based)
@@ -701,7 +701,7 @@ function is_player_position(x, y, current_pos) {
 }
 
 // Check if a position is a dead end
-function is_dead_end(x, y) {
+async function is_dead_end(x, y) {
     // Don't consider special positions as dead ends
     if (
         maze.grid[y][x] === END1 ||
@@ -740,7 +740,7 @@ function is_dead_end(x, y) {
 }
 
 // Display player stats with combined battles column and status column
-function display_player_stats() {
+async function display_player_stats() {
     let base_row = maze.rows + 1;
     
     mvwprintw(stdscr, base_row - 1, 0, "  NAME | ST | BATS  | MOVES | STATUS");
@@ -771,11 +771,11 @@ function display_player_stats() {
 
 // Display player alert with variable parameters
 // player_index -2=abandoned, -1=out of moves, >0 is rank
-function display_player_alert(p_idx, rank) {
+async function display_player_alert(p_idx, rank) {
     Game_finished++;
     if (ShowWindows === 0) {
         if (Game_finished !== NUM_PLAYERS)
-            pauseForUser();
+            await pauseForUser();
         return;
     }
     
@@ -828,22 +828,22 @@ function display_player_alert(p_idx, rank) {
         mvwprintw(battle_win, 21, 1, String.raw`|_____|\___/|____/|_____|_| \_(_)`);
     }
     
-    show_battle_art(1, 1, 1, 1, p_idx - 1, -1);
+    await show_battle_art(1, 1, 1, 1, p_idx - 1, -1);
     wattroff(battle_win, COLOR_PAIR(players[p_idx - 1].color_pair) | A_BOLD);
     wnoutrefresh(battle_win);
-    pauseForUser();
+    await pauseForUser();
     
     // Clean up battle window
     delwin(battle_win);
     battle_win = null; // Good practice to avoid dangling pointers
     
     // Redraw the main screen
-    print_maze();
-    display_player_stats();
+    await print_maze();
+    await display_player_stats();
 }
 
 // Place teleporters at dead ends
-function place_teleporters() {
+async function place_teleporters() {
     // Arrays to store dead end positions
     let dead_ends_x = new Array(maze.rows * maze.cols);
     let dead_ends_y = new Array(maze.rows * maze.cols);
@@ -852,7 +852,7 @@ function place_teleporters() {
     // Find all dead ends
     for (let y = 1; y < maze.rows - 1; y++) {
         for (let x = 1; x < maze.cols - 1; x++) {
-            if (is_dead_end(x, y)) {
+            if (await is_dead_end(x, y)) {
                 dead_ends_x[dead_end_count] = x;
                 dead_ends_y[dead_end_count] = y;
                 dead_end_count++;
@@ -919,7 +919,7 @@ function place_teleporters() {
 }
 
 // Place monsters at random locations, avoiding teleporters and corners
-function place_monsters() {
+async function place_monsters() {
     for (let i = 0; i < Num_monsters; i++) {
         // Find a random empty space
         let x, y;
@@ -942,7 +942,7 @@ function place_monsters() {
                 (x >= maze.cols - 3 && y >= maze.rows - 3)) {
                 continue;
             }
-        } while (maze.grid[y][x] !== PATH || is_dead_end(x, y));
+        } while (maze.grid[y][x] !== PATH || await is_dead_end(x, y));
         
         // Place monster
         monsters[i].x = x;
@@ -971,7 +971,7 @@ function place_monsters() {
 }
 
 // Update monster positions
-function update_monsters() {
+async function update_monsters() {
     for (let i = 0; i < Num_monsters; i++) {
         // Skip defeated monsters
         if (monsters[i].defeated) {
@@ -1033,7 +1033,7 @@ function update_monsters() {
             // Check if monsters are in the same cell
             if (monsters[i].x === monsters[j].x && monsters[i].y === monsters[j].y) {
                 // Battle the monsters
-                battle_monsters(i, j);
+                await battle_monsters(i, j);
                 
                 // After battle, the winner stays at the position, loser is already
                 // marked as defeated so no additional position updates needed
@@ -1043,7 +1043,7 @@ function update_monsters() {
 }
 
 // Check if position is a teleporter and get destination
-function check_teleporter(x, y, newPos) {
+async function check_teleporter(x, y, newPos) {
     for (let i = 0; i < Num_teleporters; i++) {
         if (teleporters[i].x1 === x && teleporters[i].y1 === y) {
             newPos.x = teleporters[i].x2;
@@ -1059,7 +1059,7 @@ function check_teleporter(x, y, newPos) {
 }
 
 // Check if position has a monster and return its index
-function check_monster(x, y) {
+async function check_monster(x, y) {
     for (let i = 0; i < Num_monsters; i++) {
         if (monsters[i].x === x && monsters[i].y === y && !monsters[i].defeated) {
             return i + 1; // Return monster index + 1 (so 0 means no monster)
@@ -1072,7 +1072,7 @@ function check_monster(x, y) {
 //                              winner         battle
 //                 art/figlet, left/right,      type, player/monster  left-index
 //                 right-index
-function show_battle_art(aart, leftside, type, player, left_idx, right_idx) {
+async function show_battle_art(aart, leftside, type, player, left_idx, right_idx) {
     // Set the recovery time (in turns) for both winner and loser
     const WINNER_RECOVERY_TURNS = 3;
     const LOSER_RECOVERY_TURNS = 6;
@@ -1146,13 +1146,13 @@ function show_battle_art(aart, leftside, type, player, left_idx, right_idx) {
             // loser is player
             players[lidx].battles_lost += 1;
             players[lidx].recovery_turns = LOSER_RECOVERY_TURNS;
-            update_status_line(`${BOT_NAMES[lidx + 1]} ${LOST_MSG}!`);
+            await update_status_line(`${BOT_NAMES[lidx + 1]} ${LOST_MSG}!`);
         } else {
             // loser is monster
             Liv_monsters--;
             monsters[lidx].defeated = 1;
             maze.grid[monsters[lidx].y][monsters[lidx].x] = DEFEATED_MONSTER;
-            update_status_line(`${MONSTER_NAMES[lidx]} ${LOST_MSG}!`);
+            await update_status_line(`${MONSTER_NAMES[lidx]} ${LOST_MSG}!`);
         }
         
         if (ShowWindows !== 0) {
@@ -1179,7 +1179,7 @@ function show_battle_art(aart, leftside, type, player, left_idx, right_idx) {
 
 // Unified battle function that handles all battle scenarios
 // Type: 0 = player vs monster, 1 = player vs player, 2 = monster vs monster
-function battle_unified(combatant1_idx, combatant2_idx, type) {
+async function battle_unified(combatant1_idx, combatant2_idx, type) {
     // Get player indices if needed (for player vs monster or player vs player)
     let p1_idx = (type === 0 || type === 1) ? combatant1_idx - 1 : -1; // Adjust for 0-based indexing
     let p2_idx = (type === 1) ? combatant2_idx - 1 : -1; // Adjust for 0-based indexing
@@ -1214,7 +1214,7 @@ function battle_unified(combatant1_idx, combatant2_idx, type) {
     // show battle spot
     let be_x = (type !== 2) ? players[p1_idx].current.x : monsters[m1_idx].x;
     let be_y = (type !== 2) ? players[p1_idx].current.y : monsters[m1_idx].y;
-    animate_bullseye(be_y, be_x, 5, parseInt(pauseTime / 40), 0);
+    await animate_bullseye(be_y, be_x, 5, parseInt(pauseTime / 40), 0);
     
     if (ShowWindows !== 0) {
         // Save current window and create a larger battle screen
@@ -1251,16 +1251,16 @@ function battle_unified(combatant1_idx, combatant2_idx, type) {
         
         // ASCII art for left combatant
         if (type === 0 || type === 1) { // Player Bot
-            show_battle_art(1, 1, type, 1, p1_idx, type === 0 ? m1_idx : p2_idx);
+            await show_battle_art(1, 1, type, 1, p1_idx, type === 0 ? m1_idx : p2_idx);
         } else { // Monster
-            show_battle_art(1, 1, type, 0, m1_idx, m2_idx);
+            await show_battle_art(1, 1, type, 0, m1_idx, m2_idx);
         }
         
         // ASCII art for right combatant
         if (type === 1) { // Player Bot
-            show_battle_art(1, 0, type, 1, p1_idx, p2_idx);
+            await show_battle_art(1, 0, type, 1, p1_idx, p2_idx);
         } else { // Monster
-            show_battle_art(1, 0, type, 0, type === 0 ? p1_idx : m1_idx, type === 0 ? m1_idx : m2_idx);
+            await show_battle_art(1, 0, type, 0, type === 0 ? p1_idx : m1_idx, type === 0 ? m1_idx : m2_idx);
         }
         
         // Display vs text in the middle
@@ -1340,31 +1340,31 @@ function battle_unified(combatant1_idx, combatant2_idx, type) {
         // Left combatant wins
         if (type === 0) {
             // Player vs monster - player wins
-            show_battle_art(0, 1, type, 1, p1_idx, m1_idx);
+            await show_battle_art(0, 1, type, 1, p1_idx, m1_idx);
         } else if (type === 1) {
             // Player vs player - left player wins
-            show_battle_art(0, 1, type, 1, p1_idx, p2_idx);
+            await show_battle_art(0, 1, type, 1, p1_idx, p2_idx);
         } else {
             // Monster vs monster - left monster wins
-            show_battle_art(0, 1, type, 0, m1_idx, m2_idx);
+            await show_battle_art(0, 1, type, 0, m1_idx, m2_idx);
         }
     } else {
         // Right combatant wins
         if (type === 0) {
             // Player vs monster - monster wins
-            show_battle_art(0, 0, type, 0, p1_idx, m1_idx);
+            await show_battle_art(0, 0, type, 0, p1_idx, m1_idx);
         } else if (type === 1) {
             // Player vs player - right player wins
-            show_battle_art(0, 0, type, 1, p1_idx, p2_idx);
+            await show_battle_art(0, 0, type, 1, p1_idx, p2_idx);
         } else {
             // Monster vs monster - right monster wins
-            show_battle_art(0, 0, type, 0, m1_idx, m2_idx);
+            await show_battle_art(0, 0, type, 0, m1_idx, m2_idx);
         }
     }
     
     if (ShowWindows !== 0) {
         wnoutrefresh(battle_win);
-        pauseForUser();
+        await pauseForUser();
         
         // Clean up battle window
         delwin(battle_win);
@@ -1372,8 +1372,8 @@ function battle_unified(combatant1_idx, combatant2_idx, type) {
     }
     
     // Redraw the main screen
-    print_maze();
-    display_player_stats();
+    await print_maze();
+    await display_player_stats();
     
     // Return battle result
     if (type === 0) {
@@ -1386,23 +1386,23 @@ function battle_unified(combatant1_idx, combatant2_idx, type) {
 }
 
 // Convenience wrapper for player vs monster battles
-function battle_bot_monster(monster_index, player_id) {
+async function battle_bot_monster(monster_index, player_id) {
     // For player vs monster, combatant1 is player, combatant2 is monster
-    return battle_unified(player_id, monster_index, 0);
+    return await battle_unified(player_id, monster_index, 0);
 }
 
 // Convenience wrapper for player vs player battles
-function battle_bots(player1_id, player2_id) {
-    return battle_unified(player1_id, player2_id, 1);
+async function battle_bots(player1_id, player2_id) {
+    return await battle_unified(player1_id, player2_id, 1);
 }
 
 // Convenience wrapper for monster vs monster battles
-function battle_monsters(monster1_idx, monster2_idx) {
-    battle_unified(monster1_idx, monster2_idx, 2);
+async function battle_monsters(monster1_idx, monster2_idx) {
+    await battle_unified(monster1_idx, monster2_idx, 2);
     return 0; // Return value not used for monster vs monster
 }
 
-function create_maze(rows, cols) {
+async function create_maze(rows, cols) {
     maze = new Maze(rows, cols);
     
     // Initialize with walls
@@ -1420,12 +1420,12 @@ function create_maze(rows, cols) {
     return maze;
 }
 
-function free_maze() {
+async function free_maze() {
     maze = null;
 }
 
 // Implement ensure_path_between_corners to guarantee connectivity
-function ensure_path_between_corners() {
+async function ensure_path_between_corners() {
     // Define the four corners
     let corners = [
         new Position(1, 1),                 // Top-left
@@ -1502,7 +1502,7 @@ function ensure_path_between_corners() {
 }
 
 // generate_maze to ensure paths between all corners
-function generate_maze() {
+async function generate_maze() {
     // First, create a basic maze using DFS
     // Initialize stack for DFS
     let stack = [];
@@ -1550,7 +1550,7 @@ function generate_maze() {
 }
 
 // function to use player-specific direction arrays
-function solve_maze_multi() {
+async function solve_maze_multi() {
     // Create separate stacks for each player to ensure fairness
     let stacks = [[], [], [], []];
     
@@ -1587,8 +1587,8 @@ function solve_maze_multi() {
             for (let p = 0; p < NUM_PLAYERS; p++) {
                 if (!players[p].reached_goal && !players[p].abandoned_race) {
                     players[p].abandoned_race = 1;
-                    highlight_player_solution_path(p);
-                    display_player_alert(p + 1, -1);
+                    await highlight_player_solution_path(p);
+                    await display_player_alert(p + 1, -1);
                 }
             }
             break;
@@ -1606,8 +1606,8 @@ function solve_maze_multi() {
                 // Mark player as abandoned if their stack is empty and they haven't reached their goal
                 if (!players[p].abandoned_race && !players[p].reached_goal) {
                     players[p].abandoned_race = 1;
-                    highlight_player_solution_path(p);
-                    display_player_alert(p + 1, -1);
+                    await highlight_player_solution_path(p);
+                    await display_player_alert(p + 1, -1);
                 }
                 continue;
             }
@@ -1630,7 +1630,7 @@ function solve_maze_multi() {
                     players[p].current.y === players[other_p].current.y) {
                     
                     // Initiate player vs player battle
-                    let winner_id = battle_bots(player_id, other_p + 1);
+                    let winner_id = await battle_bots(player_id, other_p + 1);
                     
                     // Loser must retreat to previous position
                     if (winner_id === player_id) {
@@ -1641,8 +1641,8 @@ function solve_maze_multi() {
                         // Check if player has lost too many battles
                         if (players[other_p].battles_lost >= 3) {
                             players[other_p].abandoned_race = 2;
-                            highlight_player_solution_path(other_p);
-                            display_player_alert(other_p + 1, -2);
+                            await highlight_player_solution_path(other_p);
+                            await display_player_alert(other_p + 1, -2);
                             
                             // Clear the stack to stop the player's exploration
                             stacks[other_p] = [];
@@ -1664,8 +1664,8 @@ function solve_maze_multi() {
                         // Check if player has lost too many battles
                         if (players[p].battles_lost >= 3) {
                             players[p].abandoned_race = 2;
-                            highlight_player_solution_path(p);
-                            display_player_alert(player_id, -2);
+                            await highlight_player_solution_path(p);
+                            await display_player_alert(player_id, -2);
                             
                             // Clear the stack to stop the player's exploration
                             stacks[p] = [];
@@ -1674,8 +1674,8 @@ function solve_maze_multi() {
                     }
                     
                     // Update display after battle
-                    print_maze();
-                    display_player_stats();
+                    await print_maze();
+                    await display_player_stats();
                 }
             }
             
@@ -1691,8 +1691,8 @@ function solve_maze_multi() {
                 players[p].finished_rank = Players_finished;
                 
                 // Mark as finished in UI
-                highlight_player_solution_path(p);
-                display_player_alert(player_id, players[p].finished_rank);
+                await highlight_player_solution_path(p);
+                await display_player_alert(player_id, players[p].finished_rank);
                 continue;
             }
             
@@ -1710,7 +1710,7 @@ function solve_maze_multi() {
             }
             
             if (!players[p].justTeleported && teleporter_idx >= 0 &&
-                check_teleporter(current.x, current.y, newPos)) {
+                await check_teleporter(current.x, current.y, newPos)) {
                 
                 // Record teleportation
                 players[p].justTeleported = Game_moves + 2;
@@ -1728,30 +1728,30 @@ function solve_maze_multi() {
                     mvprintw(newPos.y, newPos.x, TELEPORTER_CHAR);
                     mvprintw(current.y, current.x, TELEPORTER_CHAR);
                     wnoutrefresh(stdscr);
-                    mysleep(parseInt(pauseTime / 40));           // Short delay
+                    await mysleep(parseInt(pauseTime / 40));           // Short delay
                     
                     attron(A_REVERSE);
                     mvprintw(newPos.y, newPos.x, TELEPORTER_CHAR);
                     mvprintw(current.y, current.x, TELEPORTER_CHAR);
                     attroff(A_REVERSE);
                     wnoutrefresh(stdscr);
-                    mysleep(parseInt(pauseTime / 40));            // Another delay
+                    await mysleep(parseInt(pauseTime / 40));            // Another delay
                 }
                 continue;
             }
             
             // Check for monster
-            let monster_idx = check_monster(current.x, current.y);
+            let monster_idx = await check_monster(current.x, current.y);
             if (monster_idx > 0) {
                 monster_idx--; // Adjust index (monster_idx was returned +1)
-                let battle_result = battle_bot_monster(monster_idx, player_id);
+                let battle_result = await battle_bot_monster(monster_idx, player_id);
                 
                 if (battle_result === 0) {
                     // Player lost battle, mark position as visited in player's array
                     maze.visited[p][current.y][current.x] = 1;
                     
                     // Also update the visualization
-                    let visited_char = get_player_visited_char(player_id);
+                    let visited_char = await get_player_visited_char(player_id);
                     if (
                         maze.grid[current.y][current.x] !== END1 &&
                         maze.grid[current.y][current.x] !== END2 &&
@@ -1764,8 +1764,8 @@ function solve_maze_multi() {
                     // Check if player has lost too many battles
                     if (players[p].battles_lost >= 3) {
                         players[p].abandoned_race = 2;
-                        highlight_player_solution_path(p);
-                        display_player_alert(player_id, -2);
+                        await highlight_player_solution_path(p);
+                        await display_player_alert(player_id, -2);
                         
                         // Clear the stack to stop the player's exploration
                         stacks[p] = [];
@@ -1781,7 +1781,7 @@ function solve_maze_multi() {
             maze.visited[p][current.y][current.x] = 1;
             
             // Also update the visualization in the shared grid
-            let visited_char = get_player_visited_char(player_id);
+            let visited_char = await get_player_visited_char(player_id);
             if (
                 maze.grid[current.y][current.x] !== END1 &&
                 maze.grid[current.y][current.x] !== END2 &&
@@ -1825,18 +1825,18 @@ function solve_maze_multi() {
         
         // Update monsters occasionally
         if (Game_moves % 5 === 0) {
-            update_monsters();
+            await update_monsters();
         }
         
         // Visualize exploration after each player's move
-        print_maze();
-        display_player_stats();
-        read_keyboard();
+        await print_maze();
+        await display_player_stats();
+        await read_keyboard();
         if (LastSLupdate && LastSLupdate + 25 < Game_moves) {
             move(maze.rows + 5, 0);
             wclrtoeol(stdscr);
         }
-        mysleep(Game_delay);
+        //await mysleep(Game_delay);
         
         // Update game moves
         Game_moves++;
@@ -1854,15 +1854,15 @@ function solve_maze_multi() {
             let size = get_terminal_size();
             
             if (old_rows !== size.rows || old_cols !== size.cols) {
-                update_status_line(`Caught term resize to ${size.rows}, ${size.cols}`);
-                logMessage(`Caught term resize to ${size.rows}, ${size.cols}`);
+                await update_status_line(`Caught term resize to ${size.rows}, ${size.cols}`);
+                await logMessage(`Caught term resize to ${size.rows}, ${size.cols}`);
                 if (old_rows > size.rows || old_cols > size.cols) {
                     // abort current solve as screen has reduced in size
                     Screen_reduced = 1;
                     old_rows = size.rows;
                     old_cols = size.cols;
                     // spin wheels in lieu of debounce
-                    mysleep(2000);
+                    await mysleep(2000);
                     // break
                     break;
                 }
@@ -1876,11 +1876,11 @@ function solve_maze_multi() {
     //////////////////////////////////////////////////
     
     // Show final results
-    if (!Screen_reduced) display_player_stats();
+    if (!Screen_reduced) await display_player_stats();
     doupdate();
 }
 
-function print_char(i, j, ichar) {
+async function print_char(i, j, ichar) {
     move(i, j);
     // Otherwise, display the appropriate cell character
     switch (ichar) {
@@ -2005,7 +2005,7 @@ function print_char(i, j, ichar) {
 }
 
 // print_maze to display all players, teleporters, and monsters
-function print_maze() {
+async function print_maze() {
     // Get current terminal dimensions
     let termSize = getmaxyx(stdscr);
     let term_rows = termSize.rows;
@@ -2023,13 +2023,13 @@ function print_maze() {
     for (let i = 0; i < visible_rows; i++) {
         for (let j = 0; j < visible_cols; j++) {
             let ichar;
-            let player = is_player_position(j, i, current_positions);
+            let player = await is_player_position(j, i, current_positions);
             if (player > 0) {
-                ichar = get_player_current_char(player);
+                ichar = await get_player_current_char(player);
             } else {
                 ichar = maze.grid[i][j];
             }
-            print_char(i, j, ichar);
+            await print_char(i, j, ichar);
         }
     }
     
@@ -2040,11 +2040,11 @@ function print_maze() {
     attroff(COLOR_PAIR(11) | A_BOLD);
 }
 
-function push_stack(stack, pos) {
+async function push_stack(stack, pos) {
     stack.push(pos);
 }
 
-function pop_stack(stack) {
+async function pop_stack(stack) {
     if (stack.length === 0) {
         return new Position(-1, -1, -1, -1);
     }
@@ -2052,15 +2052,15 @@ function pop_stack(stack) {
     return stack.pop();
 }
 
-function is_empty(stack) {
+async function is_empty(stack) {
     return stack.length === 0;
 }
 
-function clear_stack(stack) {
+async function clear_stack(stack) {
     stack.length = 0;
 }
 
-function animate_bullseye(y, x, max_radius, delay_ms, direction) {
+async function animate_bullseye(y, x, max_radius, delay_ms, direction) {
     // UTF-8 characters for different rings of the bullseye
     const ring_chars = [
         "●", // Filled circle
@@ -2135,7 +2135,7 @@ function animate_bullseye(y, x, max_radius, delay_ms, direction) {
         wnoutrefresh(stdscr);
         
         // Delay between frames
-        mysleep(delay_ms);
+        await mysleep(delay_ms);
     }
     
     // Restore original color pair
@@ -2143,21 +2143,21 @@ function animate_bullseye(y, x, max_radius, delay_ms, direction) {
 }
 
 // Read high scores from file - simplified version for JavaScript
-function read_high_scores(best_scores, worst_scores) {
+async function read_high_scores(best_scores, worst_scores) {
     // In a real implementation, this would use localStorage or IndexedDB
     // For this direct translation, we'll simulate with a dummy count
     return 0; // No scores yet
 }
 
 // Save high scores to file - simplified for JavaScript
-function save_high_scores(best_scores, worst_scores, count) {
+async function save_high_scores(best_scores, worst_scores, count) {
     // In a real implementation, this would use localStorage or IndexedDB
     // For this direct translation, we'll just log
     console.log("Would save high scores:", best_scores, worst_scores);
 }
 
 // Insert a score into the high score lists
-function insert_high_score(scores, count_ref, new_score, is_best) {
+async function insert_high_score(scores, count_ref, new_score, is_best) {
     let count = count_ref.count;
     let i, pos = -1;
     
@@ -2201,7 +2201,7 @@ function insert_high_score(scores, count_ref, new_score, is_best) {
 }
 
 // Update high scores at the end of the game
-function update_high_scores(rows, cols) {
+async function update_high_scores(rows, cols) {
     let num_players = NUM_PLAYERS;
     let best_scores = [];
     let worst_scores = [];
@@ -2214,7 +2214,7 @@ function update_high_scores(rows, cols) {
     let count_obj = { count: 0 };
     
     // Read existing high scores
-    count_obj.count = read_high_scores(best_scores, worst_scores);
+    count_obj.count = await read_high_scores(best_scores, worst_scores);
     
     // Get the current date/time
     let current_time = Math.floor(Date.now() / 1000);
@@ -2231,36 +2231,36 @@ function update_high_scores(rows, cols) {
                 new_score.name = BOT_NAMES[name_index + 1];
             } else {
                 // invalid ID
-                exit_game(`invalid name_index ${name_index}\n`);
+                await exit_game(`invalid name_index ${name_index}\n`);
             }
             
             new_score.player_id = players[i].id;
-            new_score.score = calculate_score(players[i].moves, cols, rows);
+            new_score.score = await calculate_score(players[i].moves, cols, rows);
             new_score.battles_won = players[i].battles_won;
             new_score.strength = players[i].strength;
             new_score.date = current_time;
             
             // Try to insert into best scores
-            insert_high_score(best_scores, count_obj, new_score, 1);
+            await insert_high_score(best_scores, count_obj, new_score, 1);
             
             // Also track the worst scores for fun
             // (only if they actually finished though)
-            insert_high_score(worst_scores, count_obj, new_score, 0);
+            await insert_high_score(worst_scores, count_obj, new_score, 0);
         }
     }
     
     // Display the high score window
-    display_high_scores_window(count_obj.count, best_scores, worst_scores);
+    await display_high_scores_window(count_obj.count, best_scores, worst_scores);
     
     // Save updated high scores
-    save_high_scores(best_scores, worst_scores, count_obj.count > 0 ? count_obj.count : 0);
+    await save_high_scores(best_scores, worst_scores, count_obj.count > 0 ? count_obj.count : 0);
 }
 
 // Display high scores in a ncurses window
-function display_high_scores_window(count, best_scores, worst_scores) {
+async function display_high_scores_window(count, best_scores, worst_scores) {
     if (count === 0 || ShowWindows === 0) {
         // No high scores yet
-        pauseForUser();
+        await pauseForUser();
         return;
     }
     
@@ -2357,7 +2357,7 @@ function display_high_scores_window(count, best_scores, worst_scores) {
     wnoutrefresh(high_score_win);
     
     // Wait for user input
-    pauseForUser();
+    await pauseForUser();
     
     // Clean up
     delwin(high_score_win);
@@ -2371,7 +2371,7 @@ const OPTIMAL_PATH_FACTOR = 1.5;
 const SCORE_MULTIPLIER = 100.0;
 const COMPLEXITY_ADJUSTMENT_FACTOR = 10.0;
 
-function calculate_score(moves, width, height) {
+async function calculate_score(moves, width, height) {
     if (moves <= 0 || width <= 0 || height <= 0) {
         return -1; // Error code for invalid input
     }
@@ -2401,21 +2401,21 @@ function calculate_score(moves, width, height) {
     return score > 0 ? score : 1;
 }
 
-function pauseForUser() {
-    read_keyboard();
+async function pauseForUser() {
+    await read_keyboard();
     if (WaitForKey) {
-        pauseGame();  // calls doupdate()
+        await pauseGame();  // calls doupdate()
     } else {
-        update_status_line(DELAY_MSG);
-        mysleep(pauseTime); // calls doupdate()
+        await update_status_line(DELAY_MSG);
+        await mysleep(pauseTime); // calls doupdate()
     }
     move(maze.rows + 5, 0);
     wclrtoeol(stdscr);
-    read_keyboard();
+    await read_keyboard();
     doupdate();
 }
 
-function calc_game_speed() {
+async function calc_game_speed() {
     let min_speed = 1.0;    // slowest
     let max_speed = 100.0;  // fastest
     if (Game_speed < min_speed) {
@@ -2430,7 +2430,7 @@ function calc_game_speed() {
     Game_delay = Math.round((1.0 - normalized_speed) * MAX_GAME_DELAY);
 }
 
-function exit_game(format, ...args) {
+async function exit_game(format, ...args) {
     doupdate();
     tcflush(STDIN_FILENO, TCIFLUSH);
     endwin();
@@ -2438,7 +2438,7 @@ function exit_game(format, ...args) {
     process.exit(0);
 }
 
-function update_status_line(format, ...args) {
+async function update_status_line(format, ...args) {
     let direction = 0;
     let buffer = "";
     let upchar = " ";
@@ -2492,7 +2492,7 @@ function update_status_line(format, ...args) {
             current_status_index--;
         }
     } else {
-        exit_game(`Illegal value for direction ${direction}\n`);
+        await exit_game(`Illegal value for direction ${direction}\n`);
     }
     
     attron(COLOR_PAIR(11) | A_BOLD);
@@ -2519,7 +2519,7 @@ function update_status_line(format, ...args) {
     wnoutrefresh(stdscr);
 }
 
-function read_keyboard() {
+async function read_keyboard() {
     let ch;
     let was_paused = 0;
     
@@ -2532,28 +2532,28 @@ function read_keyboard() {
     switch (ch) {
         // PAUSE with SPACE
         case 32:
-            pauseGame();
+            await pauseGame();
             was_paused = 1;
             break;
         // SLOW DOWN with MINUS
         case 95:
         case 45:
-            update_status_line("Slowing down...");
+            await update_status_line("Slowing down...");
             Game_speed--;
-            calc_game_speed();
+            await calc_game_speed();
             break;
         // SPEED UP with PLUS
         case 61:
         case 43:
-            update_status_line("Speeding up...");
+            await update_status_line("Speeding up...");
             Game_speed++;
-            calc_game_speed();
+            await calc_game_speed();
             break;
         // EXIT with ESCAPE or q/Q
         case 113:
         case 81:
         case 27:
-            exit_game("User ended game early\n");
+            await exit_game("User ended game early\n");
             break;
         case KEY_RESIZE:
             break;
@@ -2562,13 +2562,13 @@ function read_keyboard() {
         case KEY_MOUSE:
             break;
         default:
-            update_status_line(`Unrecognized key ${ch}`);
+            await update_status_line(`Unrecognized key ${ch}`);
     }
     in_read_keyboard = 0;
     return was_paused;
 }
 
-function pauseGame() {
+async function pauseGame() {
     let key = "";
     let paused;
     let ch;
@@ -2577,7 +2577,7 @@ function pauseGame() {
     in_pausegame = 1;
     
     current_status_index = 0; // Reset to current message when pausing
-    update_status_line(PAUSE_MSG);
+    await update_status_line(PAUSE_MSG);
     tcflush(STDIN_FILENO, TCIFLUSH);
     paused = 1;
     
@@ -2589,15 +2589,15 @@ function pauseGame() {
         // Handle arrow keys for status history browsing
         if (ch === KEY_UP || ch === 259) {
             // Move to older message
-            update_status_line(String(KEY_UP));
+            await update_status_line(String(KEY_UP));
         }
         else if (ch === KEY_DOWN || ch === 258) {
             // Move to newer message
-            update_status_line(String(KEY_DOWN));
+            await update_status_line(String(KEY_DOWN));
         }
         // Exit game early
         else if (ch === 113 || ch === 81 || ch === 27) {
-            exit_game("User ended game early\n");
+            await exit_game("User ended game early\n");
         }
         // Leave pause mode on any other key press (that's printable)
         else if (ch >= 32 && ch <= 126) {
@@ -2607,29 +2607,24 @@ function pauseGame() {
     
     // Reset to current message when unpausing
     current_status_index = 0;
-    update_status_line("Continuing...");
+    await update_status_line("Continuing...");
     tcflush(STDIN_FILENO, TCIFLUSH);
     doupdate();
     in_pausegame = 0;
 }
 
 // For debugging
-function logMessage(format, ...args) {
+async function logMessage(format, ...args) {
     // In a real implementation this would log to a file or console
     console.log(format, ...args);
 }
 
-function sleep_millis(ms) {
-    // In browser this would use setTimeout, but in direct translation we need a synchronous version
-    // This is a simplification
+async function sleep_millis(ms) {
+		await new Promise(resolve => setTimeout(resolve, ms));
 		return;
-    const start = Date.now();
-    while (Date.now() - start < ms) {
-        // Busy wait
-    }
 }
 
-function delay_with_polling(total_delay_ms) {
+async function delay_with_polling(total_delay_ms) {
     let start, end;
     let read_duration_ms;
     let sleep_time_ms;
@@ -2639,7 +2634,7 @@ function delay_with_polling(total_delay_ms) {
         if (remaining_time_ms > POLL_INTERVAL_MS) {
             // do read keyboard
             start = Date.now();
-            if (read_keyboard()) break;
+            if (await read_keyboard()) break;
             end = Date.now();
             
             // calc how long that took
@@ -2658,7 +2653,7 @@ function delay_with_polling(total_delay_ms) {
         
         // do the sleep
         if (sleep_time_ms > 0) {
-            sleep_millis(sleep_time_ms);
+            await sleep_millis(sleep_time_ms);
             remaining_time_ms -= sleep_time_ms;
         } else {
 					break;
@@ -2667,25 +2662,25 @@ function delay_with_polling(total_delay_ms) {
     } while (remaining_time_ms > 0);
 }
 
-function mysleep(total_delay_ms) {
+async function mysleep(total_delay_ms) {
     if (in_mysleep) return;
     in_mysleep = 1;
     doupdate();
     
     if (total_delay_ms <= POLL_INTERVAL_MS) {
-        sleep_millis(total_delay_ms);
+        await sleep_millis(total_delay_ms);
     } else {
-        delay_with_polling(total_delay_ms);
+        await delay_with_polling(total_delay_ms);
     }
     
     in_mysleep = 0;
 }
 
 // function to mark the solution path for a player
-function highlight_player_solution_path(p) {
+async function highlight_player_solution_path(p) {
     // Now mark each position in the path with solution char
-    let solution_char = get_player_solution_char(p + 1);
-    let current_char = get_player_current_char(p + 1);
+    let solution_char = await get_player_solution_char(p + 1);
+    let current_char = await get_player_current_char(p + 1);
     let end = players[p].current;
     let x = end.x, y = end.y;
     
@@ -2708,20 +2703,20 @@ function highlight_player_solution_path(p) {
         y = py;
     }
     
-    print_maze();
-    display_player_stats();
+    await print_maze();
+    await display_player_stats();
     
     // Visualize end point
     for (let i = 0; i < 5; i++) { // Flicker for 3 cycles
-        print_char(end.y, end.x, current_char);
+        await print_char(end.y, end.x, current_char);
         wnoutrefresh(stdscr);
-        mysleep(parseInt(pauseTime / 40));           // Short delay (50ms)
+        await mysleep(parseInt(pauseTime / 40));           // Short delay (50ms)
         
         attron(A_REVERSE);
-        print_char(end.y, end.x, current_char);
+        await print_char(end.y, end.x, current_char);
         attroff(A_REVERSE);
         wnoutrefresh(stdscr);
-        mysleep(parseInt(pauseTime / 40));            // Another delay
+        await mysleep(parseInt(pauseTime / 40));            // Another delay
     }
 }
 
