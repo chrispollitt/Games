@@ -2978,9 +2978,10 @@ void delay_with_polling(long total_delay_ms) {
         // do the sleep
         if (sleep_time_ms > 0) {
             sleep_millis(sleep_time_ms);
-        }
-        // calc remaining sleep time
-        remaining_time_ms -= sleep_time_ms;
+            remaining_time_ms -= sleep_time_ms;
+        } else {
+					break;
+				}
     } while (remaining_time_ms > 0);
 }
 

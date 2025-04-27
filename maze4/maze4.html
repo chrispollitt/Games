@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Game</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #ddd;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #screen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            white-space: pre;
+            font-size: 14px;
+            line-height: 1;
+            cursor: default;
+        }
+				
+				#screen span {
+            display: inline-block;
+            width: 1ch;
+            text-align: center;
+        }
+        
+        .window {
+            position: absolute;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        #stdscr {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        /* Color pairs */
+        .color-pair-1 { color: #000; }
+        .color-pair-2 { color: #f00; }
+        .color-pair-3 { color: #0ff; }
+        .color-pair-4 { color: #ff0; }
+        .color-pair-5 { color: #0f0; }
+        .color-pair-6 { color: #f0f; }
+        .color-pair-7 { color: #0ff; background-color: #00f; }
+        .color-pair-8 { color: #fff; background-color: #f0f; }
+        .color-pair-9 { color: #f0f; background-color: #000; }
+        .color-pair-10 { color: #000; background-color: #fff; }
+        .color-pair-11 { color: #000; background-color: #ff0; }
+        .color-pair-12 { color: #f00; background-color: #000; }
+        .color-pair-13 { color: #fff; background-color: #000; }
+        .color-pair-14 { color: #ff0; background-color: #000; }
+        .color-pair-15 { color: #00f; background-color: #000; }
+        .color-pair-16 { color: #0ff; background-color: #000; }
+        
+        /* Attributes */
+        .attr-bold { font-weight: bold; }
+        .attr-reverse { filter: invert(100%); }
+        .attr-underline { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div id="screen">
+        <div id="stdscr" class="window"></div>
+    </div>
+    
+    <script>
+    // NCURSES SHIM IMPLEMENTATION ///////////////////////////////////////////////
+
+    // Constants
+    const COLOR_BLACK = 0;
+    const COLOR_RED = 1;
+    const COLOR_GREEN = 2;
+    const COLOR_YELLOW = 3;
+    const COLOR_BLUE = 4;
+    const COLOR_MAGENTA = 5;
+    const COLOR_CYAN = 6;
+    const COLOR_WHITE = 7;
+    
+    const A_BOLD = 1 << 8;
+    const A_REVERSE = 1 << 9;
+    const A_UNDERLINE = 1 << 10;
+    
+    const KEY_UP = 259;
+    const KEY_DOWN = 258;
+    const KEY_LEFT = 260;
+    const KEY_RIGHT = 261;
+    const KEY_RESIZE = 410;
+    const KEY_MOUSE = 409;
+    const ERR = -1;
+    const STDIN_FILENO = 0;
+    const TCIFLUSH = 0;
+    const ALL_MOUSE_EVENTS = (1 << 2) - 1;
+    const REPORT_MOUSE_POSITION = 1 << 5;
+    
+    // Global state
+    let LINES = 25;
+    let COLS = 80;
+    let current_attr = 0;
+    let color_pairs = {};
+    let windows = {};
+    let current_y = 0;
+    let current_x = 0;
+    let nodelay_mode = false;
+    let keypress_callback = null;
+    let resize_callback = null;
+    let keyBuffer = [];
+    
+    // Get the standard screen window
+    const stdscr = document.getElementById('stdscr');
+    windows.stdscr = stdscr;
+    
+    // Initialize the screen with empty characters
+    function initscr() {
+        // Set up the base terminal dimensions
+        updateTerminalSize();
+        
+        // Listen for window resize events
+        window.addEventListener('resize', () => {
+            updateTerminalSize();
+            keyBuffer.push(KEY_RESIZE);
+            if (resize_callback) resize_callback();
+        });
+        
+        // Listen for key events
+        document.addEventListener('keydown', handleKeypress);
+        
+        // Initialize terminal with spaces
+        fillWindow(stdscr, LINES, COLS);
+        
+        // Set up color pairs with defaults
+        for (let i = 0; i <= 16; i++) {
+            color_pairs[i] = { fg: '#fff', bg: '#000' };
+        }
+        
+        return stdscr;
+    }
+    
+    // Add the missing COLOR_PAIR function
+    function COLOR_PAIR(n) {
+        return n; // In ncurses, this maps to the attribute value
+    }
+    
+    function updateTerminalSize() {
+        // Calculate rows and columns based on element size and character dimensions
+        const testChar = document.createElement('span');
+        testChar.textContent = 'X';
+        stdscr.appendChild(testChar);
+        const charWidth = testChar.getBoundingClientRect().width;
+        const charHeight = testChar.getBoundingClientRect().height;
+        stdscr.removeChild(testChar);
+        
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        
+        COLS = Math.floor(screenWidth / charWidth);
+        LINES = Math.floor(screenHeight / charHeight);
+        
+        // Update size
+        fillWindow(stdscr, LINES, COLS);
+    }
+    
+    function fillWindow(win, lines, cols) {
+        win.innerHTML = '';
+        
+        // Create a grid of cells for more efficient updates
+        win.style.display = 'grid';
+        win.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        win.style.gridTemplateRows = `repeat(${lines}, 1fr)`;
+        win.style.height = `${lines}em`;
+        win.style.width = `${cols}ch`;
+        
+        // Create individual cells
+        for (let y = 0; y < lines; y++) {
+            for (let x = 0; x < cols; x++) {
+                const cell = document.createElement('span');
+                cell.textContent = ' ';
+                cell.dataset.y = y;
+                cell.dataset.x = x;
+                cell.style.gridColumn = x + 1;
+                cell.style.gridRow = y + 1;
+                win.appendChild(cell);
+            }
+        }
+    }
+    
+    function getCell(win, y, x) {
+        return win.querySelector(`[data-y="${y}"][data-x="${x}"]`);
+    }
+    
+    function cbreak() {
+        // Browser already handles this
+    }
+    
+    function noecho() {
+        // Browser already handles this
+    }
+    
+    function keypad(win, bf) {
+        // Enable special keys - browser already handles this
+    }
+    
+    function curs_set(visibility) {
+        if (visibility === 0) {
+            document.body.style.cursor = 'none';
+        } else {
+            document.body.style.cursor = 'default';
+        }
+        return 0;
+    }
+    
+    function start_color() {
+        // Initialize color support - already in CSS
+    }
+    
+    function use_default_colors() {
+        // Use terminal's default colors
+    }
+    
+    function mousemask(mask, oldmask) {
+        // Set mouse events to capture
+        if (mask & ALL_MOUSE_EVENTS) {
+            stdscr.addEventListener('click', handleMouseClick);
+            if (mask & REPORT_MOUSE_POSITION) {
+                stdscr.addEventListener('mousemove', handleMouseMove);
+            }
+        }
+    }
+    
+    function handleMouseClick(event) {
+        // Add to key buffer
+        keyBuffer.push(KEY_MOUSE);
+    }
+    
+    function handleMouseMove(event) {
+        // Not implemented in this shim
+    }
+    
+    function newwin(height, width, y, x) {
+        const win = document.createElement('div');
+        win.className = 'window';
+        win.style.top = `${y}em`;
+        win.style.left = `${x}ch`;
+        win.style.height = `${height}em`;
+        win.style.width = `${width}ch`;
+        win.style.zIndex = 10;
+        document.getElementById('screen').appendChild(win);
+        
+        fillWindow(win, height, width);
+        
+        const winId = 'win' + Math.random().toString(36).substr(2, 9);
+        windows[winId] = win;
+        return win;
+    }
+    
+    function box(win, verch, horch) {
+        const width = Math.floor(parseFloat(win.style.width));
+        const height = Math.floor(parseFloat(win.style.height));
+        
+        // Top and bottom borders
+        for (let x = 0; x < width; x++) {
+            mvwaddch(win, 0, x, '-');
+            mvwaddch(win, height - 1, x, '-');
+        }
+        
+        // Left and right borders
+        for (let y = 0; y < height; y++) {
+            mvwaddch(win, y, 0, '|');
+            mvwaddch(win, y, width - 1, '|');
+        }
+        
+        // Corners
+        mvwaddch(win, 0, 0, '+');
+        mvwaddch(win, 0, width - 1, '+');
+        mvwaddch(win, height - 1, 0, '+');
+        mvwaddch(win, height - 1, width - 1, '+');
+    }
+    
+    function mvwaddch(win, y, x, ch) {
+        const cell = getCell(win, y, x);
+        if (cell) {
+            cell.textContent = ch;
+            
+            // Apply current attributes
+            applyAttributes(cell, current_attr);
+        }
+    }
+    
+    function applyAttributes(cell, attr) {
+        // Reset all classes
+        cell.className = '';
+        
+        // Apply color pair
+        const pairNum = PAIR_NUMBER(attr);
+        if (pairNum > 0) {
+            cell.classList.add(`color-pair-${pairNum}`);
+            
+            // Apply custom colors if defined
+            if (color_pairs[pairNum]) {
+                cell.style.color = color_pairs[pairNum].fg;
+                cell.style.backgroundColor = color_pairs[pairNum].bg;
+            }
+        }
+        
+        // Apply attributes
+        if (attr & A_BOLD) cell.classList.add('attr-bold');
+        if (attr & A_REVERSE) cell.classList.add('attr-reverse');
+        if (attr & A_UNDERLINE) cell.classList.add('attr-underline');
+    }
+    
+    function wbkgd(win, ch) {
+        const pairNum = PAIR_NUMBER(ch);
+        if (color_pairs[pairNum]) {
+            win.style.backgroundColor = color_pairs[pairNum].bg;
+            win.style.color = color_pairs[pairNum].fg;
+        }
+    }
+    
+    function delwin(win) {
+        if (win && win.parentNode) {
+            win.parentNode.removeChild(win);
+        }
+    }
+    
+    function wclrtoeol(win) {
+        const width = Math.floor(parseFloat(win.style.width));
+        for (let x = current_x; x < width; x++) {
+            const cell = getCell(win, current_y, x);
+            if (cell) {
+                cell.textContent = ' ';
+                // Maintain current attributes
+                applyAttributes(cell, current_attr);
+            }
+        }
+    }
+    
+    function wnoutrefresh(win) {
+        // Mark for refresh - nothing to do in this implementation
+    }
+    
+    function doupdate() {
+        // In a real implementation, this would apply all pending changes
+    }
+    
+    function clear() {
+        const cells = stdscr.querySelectorAll('span');
+        cells.forEach(cell => {
+            cell.textContent = ' ';
+            cell.className = '';
+            cell.style.color = '';
+            cell.style.backgroundColor = '';
+        });
+        
+        current_y = 0;
+        current_x = 0;
+    }
+    
+    function attron(attr) {
+        current_attr |= attr;
+    }
+    
+    function attroff(attr) {
+        current_attr &= ~attr;
+    }
+    
+    function wattron(win, attr) {
+        win.dataset.attr = (parseInt(win.dataset.attr || '0') | attr).toString();
+        // For windows, we store the attribute but don't apply globally
+    }
+    
+    function wattroff(win, attr) {
+        win.dataset.attr = (parseInt(win.dataset.attr || '0') & ~attr).toString();
+    }
+    
+    function init_pair(pair, fg, bg) {
+        color_pairs[pair] = {
+            fg: getColorCode(fg),
+            bg: getColorCode(bg)
+        };
+    }
+    
+    function getColorCode(colorNum) {
+        switch(colorNum) {
+            case COLOR_BLACK: return '#000';
+            case COLOR_RED: return '#f00';
+            case COLOR_GREEN: return '#0f0';
+            case COLOR_YELLOW: return '#ff0';
+            case COLOR_BLUE: return '#00f';
+            case COLOR_MAGENTA: return '#f0f';
+            case COLOR_CYAN: return '#0ff';
+            case COLOR_WHITE: return '#fff';
+            case -1: return ''; // Default color
+            default: return '#000';
+        }
+    }
+    
+    function PAIR_NUMBER(attr) {
+        return attr & 0xFF; // Extract the color pair number
+    }
+    
+    function getattrs(win) {
+        return parseInt(win.dataset.attr || '0');
+    }
+    
+    function has_colors() {
+        return true;
+    }
+    
+    function mvwprintw(win, y, x, text, ...args) {
+        // Format the text with arguments (simplified)
+        let formattedText = text;
+        if (args.length > 0) {
+            let argIndex = 0;
+            formattedText = text.replace(/%[sdif]/g, () => args[argIndex++]);
+        }
+        
+        // Insert the text character by character
+        let curX = x;
+        for (let i = 0; i < formattedText.length; i++) {
+            const char = formattedText[i];
+            
+            if (char === '\n') {
+                y++;
+                curX = x;
+                continue;
+            }
+            
+            const cell = getCell(win, y, curX);
+            if (cell) {
+                cell.textContent = char;
+                applyAttributes(cell, current_attr);
+                curX++;
+            }
+        }
+        
+        // Update current position
+        if (win === stdscr) {
+            current_y = y;
+            current_x = curX;
+        }
+    }
+    
+    function wprintw(win, text, ...args) {
+        mvwprintw(win, current_y, current_x, text, ...args);
+    }
+    
+    function mvprintw(y, x, text, ...args) {
+        mvwprintw(stdscr, y, x, text, ...args);
+    }
+    
+    function addstr(str) {
+        mvwprintw(stdscr, current_y, current_x, str);
+    }
+    
+    function mvaddwstr(y, x, str) {
+        mvwprintw(stdscr, y, x, str);
+    }
+    
+    function move(y, x) {
+        current_y = y;
+        current_x = x;
+    }
+    
+    function handleKeypress(event) {
+        let key = event.keyCode;
+        
+        // Map common keys
+        if (event.key === 'ArrowUp') key = KEY_UP;
+        else if (event.key === 'ArrowDown') key = KEY_DOWN;
+        else if (event.key === 'ArrowLeft') key = KEY_LEFT;
+        else if (event.key === 'ArrowRight') key = KEY_RIGHT;
+        else if (event.key === 'Escape') key = 27;
+        
+        // Add to key buffer
+        keyBuffer.push(key);
+        
+        // If we're waiting for a key, call the callback
+        if (keypress_callback) {
+            const callback = keypress_callback;
+            keypress_callback = null;
+            callback(key);
+        }
+        
+        event.preventDefault();
+    }
+    
+    function getch() {
+        // If nodelay mode is on or we have keys in buffer
+        if (keyBuffer.length > 0) {
+            return keyBuffer.shift();
+        }
+        
+        if (nodelay_mode) {
+            return ERR; // No key waiting
+        }
+        
+        // Wait for a key
+        return new Promise(resolve => {
+            keypress_callback = (key) => {
+                resolve(key);
+            };
+        });
+    }
+    
+    function nodelay(win, bf) {
+        nodelay_mode = bf;
+    }
+    
+    function getmaxyx(win) {
+        const width = Math.floor(parseFloat(win.style.width || COLS));
+        const height = Math.floor(parseFloat(win.style.height || LINES));
+        return { rows: height, cols: width };
+    }
+    
+    function tcflush(fd, queue_selector) {
+        // Clear key buffer
+        keyBuffer = [];
+    }
+    
+    function resizeterm(lines, cols) {
+        // Resize the terminal - in browser, window resizes are handled automatically
+        // But we can force a specific size
+        LINES = lines;
+        COLS = cols;
+        fillWindow(stdscr, LINES, COLS);
+    }
+    
+    function endwin() {
+        // Cleanup
+        document.removeEventListener('keydown', handleKeypress);
+        stdscr.removeEventListener('click', handleMouseClick);
+        stdscr.removeEventListener('mousemove', handleMouseMove);
+    }
+    
+    function get_terminal_size() {
+        return { rows: LINES, cols: COLS };
+    }
+
+    // Add this to allow Math.seedrandom() to work
+    Math.seedrandom = function(seed) {
+        // Simple seeded random implementation
+        let state = seed || Date.now();
+        return function() {
+            state = (state * 9301 + 49297) % 233280;
+            return state / 233280;
+        };
+    };
+    
+    // Add a log function that writes to a visual console
+    console.oldLog = console.log;
+    console.log = function(...args) {
+        console.oldLog(...args);
+        
+        // Create log area if it doesn't exist
+        let logArea = document.getElementById('logArea');
+        if (!logArea) {
+            logArea = document.createElement('div');
+            logArea.id = 'logArea';
+            logArea.style.position = 'fixed';
+            logArea.style.bottom = '0';
+            logArea.style.left = '0';
+            logArea.style.width = '100%';
+            logArea.style.maxHeight = '30%';
+            logArea.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            logArea.style.color = '#fff';
+            logArea.style.fontFamily = 'monospace';
+            logArea.style.padding = '5px';
+            logArea.style.overflow = 'auto';
+            logArea.style.display = 'none'; // Hidden by default
+            logArea.style.zIndex = '1000';
+            document.body.appendChild(logArea);
+            
+            // Add toggle button
+            const toggleBtn = document.createElement('button');
+            toggleBtn.textContent = 'Toggle Log';
+            toggleBtn.style.position = 'fixed';
+            toggleBtn.style.top = '5px';
+            toggleBtn.style.right = '5px';
+            toggleBtn.style.zIndex = '1000';
+            toggleBtn.onclick = function() {
+                logArea.style.display = logArea.style.display === 'none' ? 'block' : 'none';
+            };
+            document.body.appendChild(toggleBtn);
+        }
+        
+        const msg = document.createElement('div');
+        msg.textContent = args.join(' ');
+        logArea.appendChild(msg);
+        logArea.scrollTop = logArea.scrollHeight;
+    };
+
+    // Wait for the main maze game code to be loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = 'maze4.js';
+        document.body.appendChild(scriptElement);
+    });
+
+//    // Adapters for original code to work in browser environment
+//    function sleep_millis(ms) {
+//        return new Promise(resolve => setTimeout(resolve, ms));
+//    }
+
+//    // Make mysleep async-compatible to avoid blocking the browser
+//    async function asyncMysleep(delay_ms) {
+//        await sleep_millis(delay_ms);
+//    }
+    </script>
+</body>
+</html>
