@@ -257,6 +257,7 @@ char get_player_solution_char(int player_id);
 char get_player_visited_char(int player_id);
 char get_player_current_char(int player_id);
 void highlight_player_solution_path(int p);
+void init();
 void initialize_players(int stage);
 void insert_high_score(HighScore scores[], int *count, HighScore new_score, int is_best);
 int  is_dead_end(int x, int y);
@@ -286,60 +287,8 @@ void update_status_line(const char *format, ...);
 
 // FUNCTION DEFS /////////////////////////////////////////////////////////////
 
-// MAIN function
-int main(int argc, char *argv[]) {
-  int opt;
+void init() {
   struct winsize size;
-
-  // Process command line arguments
-  while ((opt = getopt(argc, argv, "t:m:s:g:r:p:kwh")) != -1) {
-    switch (opt) {
-    case 't':
-      Num_teleporters = atoi(optarg);
-      break;
-    case 'm':
-      Num_monsters = atoi(optarg);
-      break;
-    case 's':
-      Max_monster_strength = atoi(optarg);
-      break;
-    case 'g':
-      Game_speed = atoi(optarg);
-      break;
-    case 'r':
-      Game_rounds = atoi(optarg);
-      break;
-    case 'k':
-      WaitForKey = 1;
-      break;
-    case 'w':
-      ShowWindows = 1;
-      break;
-    case 'p':
-      pauseTime = (int) (atof(optarg) * 1000.0);
-			break;
-    case 'h':
-      printf("Usage: %s [options]\n", argv[0]);
-      printf("Options:\n");
-      printf("  -t N    Set number of teleporter pairs (default: "
-             "auto-calculated)\n");
-      printf("  -m N    Set number of monsters (default: auto-calculated)\n");
-      printf("  -s N    Set maximum monster strength (1-%d, default: %d)\n",
-             MAX_MONSTER_STRENGTH, DEF_MONSTER_STRENGTH);
-      printf("  -g N    Set game speed (1-100, default: %d)\n", DEF_GAME_SPEED);
-      printf("  -p N    Set user pause seconds (default: %d)\n", 2);
-      printf("  -k      Wait for key-press to continue (default: No)\n");
-      printf("  -w      Show battle windows (default: No)\n");
-      printf("  -h      Display this help message\n");
-      return 0;
-    default:
-      fprintf(stderr, "Try '%s -h' for more information.\n", argv[0]);
-      return 1;
-    }
-  }
-
-  // Set the random seed
-  srand(static_cast<unsigned int>(time(NULL)));
 
   // Set locale for UTF-8 support
   setlocale(LC_ALL, "");
@@ -398,6 +347,65 @@ int main(int argc, char *argv[]) {
   resizeterm(size.ws_row, size.ws_col);
   old_rows = size.ws_row ; old_cols = size.ws_col;
   logMessage("Init term size is %d, %d", size.ws_row, size.ws_col);
+}
+
+// MAIN function
+int main(int argc, char *argv[]) {
+  int opt;
+  struct winsize size;
+
+  // Process command line arguments
+  while ((opt = getopt(argc, argv, "t:m:s:g:r:p:kwh")) != -1) {
+    switch (opt) {
+    case 't':
+      Num_teleporters = atoi(optarg);
+      break;
+    case 'm':
+      Num_monsters = atoi(optarg);
+      break;
+    case 's':
+      Max_monster_strength = atoi(optarg);
+      break;
+    case 'g':
+      Game_speed = atoi(optarg);
+      break;
+    case 'r':
+      Game_rounds = atoi(optarg);
+      break;
+    case 'k':
+      WaitForKey = 1;
+      break;
+    case 'w':
+      ShowWindows = 1;
+      break;
+    case 'p':
+      pauseTime = (int) (atof(optarg) * 1000.0);
+      break;
+    case 'h':
+      printf("Usage: %s [options]\n", argv[0]);
+      printf("Options:\n");
+      printf("  -t N    Set number of teleporter pairs (default: "
+             "auto-calculated)\n");
+      printf("  -m N    Set number of monsters (default: auto-calculated)\n");
+      printf("  -s N    Set maximum monster strength (1-%d, default: %d)\n",
+             MAX_MONSTER_STRENGTH, DEF_MONSTER_STRENGTH);
+      printf("  -g N    Set game speed (1-100, default: %d)\n", DEF_GAME_SPEED);
+      printf("  -p N    Set user pause seconds (default: %d)\n", 2);
+      printf("  -k      Wait for key-press to continue (default: No)\n");
+      printf("  -w      Show battle windows (default: No)\n");
+      printf("  -h      Display this help message\n");
+      return 0;
+    default:
+      fprintf(stderr, "Try '%s -h' for more information.\n", argv[0]);
+      return 1;
+    }
+  }
+
+  // Set the random seed
+  srand(static_cast<unsigned int>(time(NULL)));
+
+  // init game  
+  init();
 
   // loop for the game rounds  
   for (; Game_rounds > 0; Game_rounds--) {
@@ -825,9 +833,9 @@ void display_player_stats() {
 // Display player alert with variable parameters
 //                     player_index  -2=abandoned, -1=out of moves, >0 is rank
 void display_player_alert(int p_idx, int rank) {
-	Game_finished++;
+  Game_finished++;
   if (ShowWindows == 0) {
-		if(Game_finished != NUM_PLAYERS)
+    if(Game_finished != NUM_PLAYERS)
        pauseForUser();
     return;
   }
@@ -2696,7 +2704,7 @@ void pauseForUser() {
   move(maze->rows + 5, 0);
   wclrtoeol(stdscr);
   read_keyboard();
-	doupdate();
+  doupdate();
 }
 
 void calc_game_speed() {
@@ -2717,7 +2725,7 @@ void calc_game_speed() {
 }
 
 void exit_game(const char *format, ...) {
-	doupdate();
+  doupdate();
   tcflush(STDIN_FILENO, TCIFLUSH);
   endwin();
   va_list args;
@@ -2806,7 +2814,7 @@ void update_status_line(const char *format, ...) {
 __attribute__((no_instrument_function))
 int read_keyboard() {
   int ch;
-	int was_paused = 0;
+  int was_paused = 0;
   
   if(in_read_keyboard) return 0;
   in_read_keyboard =1;
@@ -2817,7 +2825,19 @@ int read_keyboard() {
   // PAUSE with SPACE
   case 32:
     pauseGame();
-		was_paused = 1;
+    was_paused = 1;
+    break;
+  // Toggle WaitForKey with K
+  case 75:
+  case 107:
+    update_status_line("Toggled WaitForKey");
+    WaitForKey = 1 - WaitForKey;
+    break;
+  // Toggle ShowWindows with W
+  case 87:
+  case 119:
+    update_status_line("Toggled ShowWindows");
+    ShowWindows = 1 - ShowWindows;
     break;
   // SLOW DOWN with MINUS
   case 95:
@@ -2863,14 +2883,14 @@ int read_keyboard() {
     update_status_line("Unrecognized key %d", ch);
   }
   in_read_keyboard =0;
-	return was_paused;
+  return was_paused;
 }
 
 void pauseGame() {
   char key[5];
   int paused;
   int ch;
-	
+  
   if(in_pausegame) return;
   in_pausegame = 1;
  
@@ -2908,7 +2928,7 @@ void pauseGame() {
   current_status_index = 0;
   update_status_line("Continuing...");
   tcflush(STDIN_FILENO, TCIFLUSH);
-	doupdate();
+  doupdate();
   in_pausegame = 0;
 }
 
@@ -2980,8 +3000,8 @@ void delay_with_polling(long total_delay_ms) {
             sleep_millis(sleep_time_ms);
             remaining_time_ms -= sleep_time_ms;
         } else {
-					break;
-				}
+          break;
+        }
     } while (remaining_time_ms > 0);
 }
 

@@ -16,7 +16,7 @@
             transform-style: preserve-3d; /* Forces GPU rendering */
             backface-visibility: hidden; /* May help with some rendering issues */
             -webkit-font-smoothing: none;
-						font-smooth: never;
+            font-smooth: never;
         }
         #screen {
             position: relative;
@@ -550,7 +550,7 @@ function handleKeypress(event) {
     else if (event.key === 'ArrowLeft') key = KEY_LEFT;
     else if (event.key === 'ArrowRight') key = KEY_RIGHT;
     else if (event.key === 'Escape') key = 27;
-		else key = event.key.charCodeAt(0); // Set to ASCII int value of key pressed
+    else key = event.key.charCodeAt(0); // Set to ASCII int value of key pressed
     keyBuffer.push(key);
     if (keypress_callback) {
         const callback = keypress_callback;
@@ -564,11 +564,11 @@ async function getch() {
     if (keyBuffer.length > 0) {
         return keyBuffer.shift();
     }
-		if (nodelay_mode) return ERR;
-		while(keyBuffer.length <= 0) { 
-		  await new Promise((resolve) => setTimeout(resolve, 10)); // Non-blocking sleep
-		}
-		return keyBuffer.shift();
+    if (nodelay_mode) return ERR;
+    while(keyBuffer.length <= 0) { 
+      await new Promise((resolve) => setTimeout(resolve, 10)); // Non-blocking sleep
+    }
+    return keyBuffer.shift();
 }
 function nodelay(win, bf) {
     nodelay_mode = bf;
@@ -624,19 +624,35 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (error.message === "Exiting the program") {
                 // Silently ignore this specific error
             } else {
+                curs_set(1);
                 // Notify the user via dialog
                 const dialog = document.getElementById("errorDialog");
                 const errorMessage = document.getElementById("errorMessage");
-                errorMessage.textContent = `An error occurred: ${error.message}`;
+        
+                // Extract file and line number from the error stack
+                const stackTrace = error.stack || "";
+                const stackInfo = stackTrace.split("\n")[1] || ""; // Use the second line for file and line
+                const match = stackInfo.match(/(?:\()?(.+):(\d+):(\d+)/); // Regex to capture file, line, and column
+                let file = "unknown";
+                let line = "unknown";
+                let column = "unknown";
+                if (match) {
+                    file = match[1];
+                    line = match[2];
+                    column = match[3];
+                }
+        
+                // Display error message with file and line info
+                errorMessage.textContent = `An error occurred in ${file} at line ${line}, column ${column}: ${error.message}`;
                 dialog.showModal();
-
+        
                 const closeButton = document.getElementById("closeButton");
                 closeButton.onclick = () => dialog.close();
             }
         }
     };
 });
-</script>		
+</script>    
 
 </body>
 </html>

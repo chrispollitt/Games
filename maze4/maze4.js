@@ -1,4 +1,4 @@
-// GLOBAL VARIABLES AND CONSTANTS //////////////////////////////////////////
+// CONSTANTS /////////////////////////////////////////////////////
 
 // UTF-8 characters for maze elements
 const CURRENT_CHAR1 = "①";
@@ -72,72 +72,6 @@ const STATUS_LINE_MAX = 80;
 const DELAY_MSG = "** Delaying for you to read **";
 const LOST_MSG = "LOST the battle";
 const PAUSE_MSG = "↑ ** Paused, press any key to continue **";
-
-// Bot names
-const BOT_NAMES = [
-    "(n/a)",
-    "RapRas", // "Rapid Raspberry", 
-    "BusBlu", // "Bussin' Blueberry",
-    "LigLem", // "Lightening Lemon", 
-    "KwiKiw" // "Kwick Kiwi"
-];
-
-const MONSTER_NAMES = [
-    "Abyssal Artichoke", "Brutal Broccoli", "Creeping Carrot",
-    "Dreadful Daikon", "Eerie Eggplant", "Fiendish Fennel",
-    "Ghastly Garlic", "Horrid Horseradish", "Infernal Iceberg",
-    "Jagged Jicama", "Killer Kale", "Lurking Leek",
-    "Mean Mushroom", "Nightmare Nori", "Ominous Onion",
-    "Petrifying Potato", "Quagmire Quinoa", "Ravaging Radish",
-    "Sinister Spinach", "Terror Tomato", "Unholy Ube",
-    "Vile Vine Spinach", "Wicked Wasabi", "Xenophobic Xigua",
-    "Yawning Yam", "Zealous Zucchini"
-];
-
-// Misc globals
-let battle_win;
-let Base_dx = [0, 1, 0, -1]; // Up, Right, Down, Left
-let Base_dy = [-1, 0, 1, 0];
-
-// Global arrays for teleporters and monsters
-let teleporters = new Array(MAX_TELEPORTERS);
-let Num_teleporters = -1;
-let monsters = new Array(MAX_MONSTERS);
-let Num_monsters = -1;
-let Liv_monsters = 0;
-let Max_monster_strength = -1;
-
-// Array of players
-let players = new Array(NUM_PLAYERS);
-let parent_map = Array(NUM_PLAYERS).fill().map(() => 
-    Array(MAX_ROWS).fill().map(() => 
-        Array(MAX_COLS).fill().map(() => ({ x: 0, y: 0 }))));
-
-// Game state
-let Players_finished = 0;
-let Game_finished = 0;
-let Game_moves = 0;
-let Game_speed = -1;
-let Game_delay = 0;
-let Game_rounds = -1;
-let Game_roundsB = -1;
-let ShowWindows = -1;
-let WaitForKey = -1;
-let LastSLupdate = 0;
-let current_status_index = 0;
-let Screen_reduced = 0;
-let status_lines = new Array(STATUS_LINE_HISTORY);
-let old_rows = 0;
-let old_cols = 0;
-let in_read_keyboard = 0;
-let in_mysleep = 0;
-let in_pausegame = 0;
-let pauseTime = -1;
-let Maze_rows = 0;
-let Help_shown_this_session = 0;
-
-// maze state
-let maze = null;
 
 // CLASSES AND TYPE DEFINITIONS ////////////////////////////////////////////
 
@@ -239,6 +173,74 @@ class Status {
     }
 }
 
+// GLOBAL VARIABLES //////////////////////////////////////////////////
+
+// Bot names
+const BOT_NAMES = [
+    "(n/a)",
+    "RapRas", // "Rapid Raspberry", 
+    "BusBlu", // "Bussin' Blueberry",
+    "LigLem", // "Lightening Lemon", 
+    "KwiKiw" // "Kwick Kiwi"
+];
+
+const MONSTER_NAMES = [
+    "Abyssal Artichoke", "Brutal Broccoli", "Creeping Carrot",
+    "Dreadful Daikon", "Eerie Eggplant", "Fiendish Fennel",
+    "Ghastly Garlic", "Horrid Horseradish", "Infernal Iceberg",
+    "Jagged Jicama", "Killer Kale", "Lurking Leek",
+    "Mean Mushroom", "Nightmare Nori", "Ominous Onion",
+    "Petrifying Potato", "Quagmire Quinoa", "Ravaging Radish",
+    "Sinister Spinach", "Terror Tomato", "Unholy Ube",
+    "Vile Vine Spinach", "Wicked Wasabi", "Xenophobic Xigua",
+    "Yawning Yam", "Zealous Zucchini"
+];
+
+// Misc globals
+let battle_win;
+let Base_dx = [0, 1, 0, -1]; // Up, Right, Down, Left
+let Base_dy = [-1, 0, 1, 0];
+
+// Global arrays for teleporters and monsters
+let teleporters = new Array(MAX_TELEPORTERS);
+let Num_teleporters = -1;
+let monsters = new Array(MAX_MONSTERS);
+let Num_monsters = -1;
+let Liv_monsters = 0;
+let Max_monster_strength = -1;
+
+// Array of players
+let players = new Array(NUM_PLAYERS);
+let parent_map = Array(NUM_PLAYERS).fill().map(() => 
+    Array(MAX_ROWS).fill().map(() => 
+        Array(MAX_COLS).fill().map(() => ({ x: 0, y: 0 }))));
+
+// Game state
+let Players_finished = 0;
+let Game_finished = 0;
+let Game_moves = 0;
+let Game_speed = -1;
+let Game_delay = 0;
+let Game_rounds = -1;
+let Game_roundsB = -1;
+let ShowWindows = -1;
+let WaitForKey = -1;
+let LastSLupdate = 0;
+let current_status_index = 0;
+let Screen_reduced = 0;
+let status_lines = new Array(STATUS_LINE_HISTORY);
+let old_rows = 0;
+let old_cols = 0;
+let in_read_keyboard = 0;
+let in_mysleep = 0;
+let in_pausegame = 0;
+let pauseTime = -1;
+let Maze_rows = 0;
+let Help_shown_this_session = 0;
+
+// maze state
+let maze = null;
+
 // FUNCTION IMPLEMENTATIONS ///////////////////////////////////////////////
 
 // Initialize objects and setup
@@ -317,36 +319,7 @@ async function init() {
 }
 
 // Main function
-async function main(args) {
-    // Process command line arguments (simplified)
-    if (args) {
-        for (let i = 0; i < args.length; i++) {
-            if (args[i] === "-t" && i + 1 < args.length) {
-                Num_teleporters = parseInt(args[i + 1]);
-                i++;
-            } else if (args[i] === "-m" && i + 1 < args.length) {
-                Num_monsters = parseInt(args[i + 1]);
-                i++;
-            } else if (args[i] === "-s" && i + 1 < args.length) {
-                Max_monster_strength = parseInt(args[i + 1]);
-                i++;
-            } else if (args[i] === "-g" && i + 1 < args.length) {
-                Game_speed = parseInt(args[i + 1]);
-                i++;
-            } else if (args[i] === "-r" && i + 1 < args.length) {
-                Game_rounds = parseInt(args[i + 1]);
-                i++;
-            } else if (args[i] === "-k") {
-                WaitForKey = 1;
-            } else if (args[i] === "-w") {
-                ShowWindows = 1;
-            } else if (args[i] === "-p" && i + 1 < args.length) {
-                pauseTime = parseInt(parseFloat(args[i + 1]) * 1000);
-                i++;
-            }
-        }
-    }
-    
+async function main() {
     // Set the random seed
     Math.seedrandom(Date.now());
     
@@ -1422,7 +1395,7 @@ async function battle_monsters(monster1_idx, monster2_idx) {
 }
 
 async function create_maze(rows, cols) {
-	  Maze_rows = rows;
+    Maze_rows = rows;
     maze = new Maze(rows, cols);
     
     // Initialize with walls
@@ -2523,16 +2496,16 @@ async function calc_game_speed() {
 }
 
 function exit_game(format, ...args) {
-	  try {
+    try {
       wnoutrefresh(stdscr);
       doupdate();
-			curs_set(1);
+      curs_set(1);
       endwin();
       console.log(format, ...args);
-		} catch (error) {
-			;
-		}
-    showGameOverScreen();	
+    } catch (error) {
+      ;
+    }
+    showGameOverScreen();  
     throw new Error("Exiting the program");
 }
 
@@ -2633,6 +2606,18 @@ async function read_keyboard() {
             await pauseGame();
             was_paused = 1;
             break;
+        // Toggle WaitForKey with K
+        case 75:
+        case 107:
+            await update_status_line("Toggled WaitForKey");
+            WaitForKey = 1 - WaitForKey;
+            break;
+        // Toggle ShowWindows with W
+        case 87:
+        case 119:
+            await update_status_line("Toggled ShowWindows");
+            ShowWindows = 1 - ShowWindows;
+            break;
         // SLOW DOWN with MINUS
         case 95:
         case 45:
@@ -2727,8 +2712,8 @@ async function logMessage(format, ...args) {
 }
 
 async function sleep_millis(ms) {
-		await new Promise(resolve => setTimeout(resolve, ms));
-		return;
+    await new Promise(resolve => setTimeout(resolve, ms));
+    return;
 }
 
 async function delay_with_polling(total_delay_ms) {
@@ -2763,8 +2748,8 @@ async function delay_with_polling(total_delay_ms) {
             await sleep_millis(sleep_time_ms);
             remaining_time_ms -= sleep_time_ms;
         } else {
-					break;
-				}        
+          break;
+        }        
         // calc remaining sleep time
     } while (remaining_time_ms > 0);
 }
@@ -2850,10 +2835,12 @@ async function show_help_window() {
     mvwprintw(help_win, 6, 4, "[h/?]     - Show this Help");
     mvwprintw(help_win, 7, 4, "[H]       - Show Extended Help.");
     mvwprintw(help_win, 8, 4, "[q/Q/ESC] - Quit Game");
-    mvwprintw(help_win,10, 2, "During Pause:");
-    mvwprintw(help_win,11, 4, "[Up/Down] - Scroll Status Messages");
+    mvwprintw(help_win, 9, 4, "[k]       - Toggle WaitForKey");
+    mvwprintw(help_win,10, 4, "[w]       - Toggle ShowWindows");
+    mvwprintw(help_win,12, 2, "During Pause:");
+    mvwprintw(help_win,13, 4, "[Up/Down] - Scroll Status Messages");
     
-    mvwprintw(help_win,13, 2, "Press any key to close...");
+    mvwprintw(help_win,15, 2, "Press any key to close...");
     
     wnoutrefresh(help_win);
     doupdate();
