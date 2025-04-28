@@ -134,6 +134,7 @@ let in_mysleep = 0;
 let in_pausegame = 0;
 let pauseTime = -1;
 let Maze_rows = 0;
+let Help_shown_this_session = 0;
 
 // maze state
 let maze = null;
@@ -351,6 +352,23 @@ async function main(args) {
     
     // Initialize ncurses and settings
     await init();
+
+    // If no high scores and help not yet shown, show help
+    if (!Help_shown_this_session) {
+        let best_scores = [], worst_scores = [];
+    
+        for (let i = 0; i < MAX_HIGH_SCORES; i++) {
+            best_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
+            worst_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
+        }
+    
+        let high_score_count = await read_high_scores(best_scores, worst_scores);
+    
+        if (high_score_count === 0) {
+            await show_help_window();
+            Help_shown_this_session = 1;
+        }
+    }
     
     // Run game rounds
     for (; Game_rounds > 0; Game_rounds--) {
@@ -2506,18 +2524,15 @@ async function calc_game_speed() {
 
 function exit_game(format, ...args) {
 	  try {
-      attron(COLOR_PAIR(11) | A_BOLD);
-  	  mvwprintw(stdscr, Maze_rows + 5, 0, "*** GAME OVER! ***");
-      wclrtoeol(stdscr);
-      attroff(COLOR_PAIR(11) | A_BOLD);
       wnoutrefresh(stdscr);
       doupdate();
-      tcflush(STDIN_FILENO, TCIFLUSH);
+			curs_set(1);
       endwin();
       console.log(format, ...args);
 		} catch (error) {
-			1;
+			;
 		}
+    showGameOverScreen();	
     throw new Error("Exiting the program");
 }
 
@@ -2637,6 +2652,15 @@ async function read_keyboard() {
         case 81:
         case 27:
             exit_game("User ended game early\n");
+            break;
+        // HELP with h or ?
+        case 104:
+        case 63:
+            await show_help_window();
+            break;
+        // EXTENDED HELP with H
+        case 72:  // 'H'
+            await show_extended_help_window();
             break;
         case KEY_RESIZE:
             break;
@@ -2801,4 +2825,147 @@ async function highlight_player_solution_path(p) {
         wnoutrefresh(stdscr);
         await mysleep(parseInt(pauseTime / 40));            // Another delay
     }
+}
+
+async function show_help_window() {
+    if (ShowWindows === 0) return;
+    
+    let height = 20;
+    let width = 60;
+    let max_y, max_x;
+    let termSize = getmaxyx(stdscr);
+    max_y = termSize.rows;
+    max_x = termSize.cols;
+    
+    let help_win = newwin(height, width, Math.floor((max_y - height) / 2), Math.floor((max_x - width) / 2));
+    box(help_win, 0, 0);
+    
+    wattron(help_win, A_BOLD);
+    mvwprintw(help_win, 1, 2, "Maze4 Game Help");
+    wattroff(help_win, A_BOLD);
+    
+    mvwprintw(help_win, 3, 2, "Controls:");
+    mvwprintw(help_win, 4, 4, "[Space]   - Pause/Continue");
+    mvwprintw(help_win, 5, 4, "[+/-]     - Speed Up / Slow Down");
+    mvwprintw(help_win, 6, 4, "[h/?]     - Show this Help");
+    mvwprintw(help_win, 7, 4, "[H]       - Show Extended Help.");
+    mvwprintw(help_win, 8, 4, "[q/Q/ESC] - Quit Game");
+    mvwprintw(help_win,10, 2, "During Pause:");
+    mvwprintw(help_win,11, 4, "[Up/Down] - Scroll Status Messages");
+    
+    mvwprintw(help_win,13, 2, "Press any key to close...");
+    
+    wnoutrefresh(help_win);
+    doupdate();
+    
+    await getch(); // Wait for any key
+    delwin(help_win);
+    wnoutrefresh(stdscr);
+}
+
+async function show_extended_help_window() {
+    if (ShowWindows === 0) return;
+    
+    let height = 24;
+    let width = 70;
+    let max_y, max_x;
+    let termSize = getmaxyx(stdscr);
+    max_y = termSize.rows;
+    max_x = termSize.cols;
+    
+    let help_win = newwin(height, width, Math.floor((max_y - height) / 2), Math.floor((max_x - width) / 2));
+    box(help_win, 0, 0);
+    
+    wattron(help_win, A_BOLD);
+    mvwprintw(help_win, 1, 2, "Maze4 Extended Help");
+    wattroff(help_win, A_BOLD);
+    
+    mvwprintw(help_win, 3, 2, "Story:");
+    mvwprintw(help_win, 4, 4, "In the Maze of Munch, four Fruitbots —");
+    mvwprintw(help_win, 5, 4, "Rapid Raspberry, Bussin' Blueberry,");
+    mvwprintw(help_win, 6, 4, "Lightning Lemon, and Kwick Kiwi — race");
+    mvwprintw(help_win, 7, 4, "for glory against deadly Veggie Monsters.");
+    
+    mvwprintw(help_win, 9, 2, "Goal:");
+    mvwprintw(help_win,10, 4, "Reach your goal first! Battle monsters,");
+    mvwprintw(help_win,11, 4, "survive ambushes, and outmaneuver rivals.");
+    mvwprintw(help_win,12, 4, "Three battle losses = system failure!");
+    
+    mvwprintw(help_win,14, 2, "Inspiration:");
+    mvwprintw(help_win,15, 4, "Inspired by classic maze screensavers");
+    mvwprintw(help_win,16, 4, "and the chaotic fun of marble races.");
+    mvwprintw(help_win,17, 4, "All game logic written with AI assistance.");
+    
+    mvwprintw(help_win,19, 2, "Press any key to close...");
+    
+    wnoutrefresh(help_win);
+    doupdate();
+    
+    await getch(); // Wait for any key
+    delwin(help_win);
+    wnoutrefresh(stdscr);
+}
+
+///// HTML VERSION ONLY ///////////////////////
+
+function showGameOverScreen() {
+    // Create a semi-transparent overlay for the whole screen
+    const overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    overlay.style.zIndex = '1000';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.color = '#fff';
+    overlay.style.fontFamily = 'Courier New, monospace';
+    
+    // Create the game over message
+    const gameOverBox = document.createElement('div');
+    gameOverBox.style.backgroundColor = '#000';
+    gameOverBox.style.border = '2px solid #f00';
+    gameOverBox.style.padding = '20px';
+    gameOverBox.style.borderRadius = '5px';
+    gameOverBox.style.textAlign = 'center';
+    gameOverBox.style.maxWidth = '80%';
+    
+    // Add game over text
+    const title = document.createElement('h2');
+    title.textContent = '*** GAME OVER! ***';
+    title.style.color = '#f00';
+    title.style.marginBottom = '20px';
+    
+    // Add play again button
+    const playAgainBtn = document.createElement('a');
+    playAgainBtn.href = '#';
+    playAgainBtn.textContent = '[Play Again]';
+    playAgainBtn.style.color = '#ff0';
+    playAgainBtn.style.textDecoration = 'underline';
+    playAgainBtn.style.cursor = 'pointer';
+    playAgainBtn.style.padding = '10px';
+    playAgainBtn.style.fontSize = '1.2em';
+    playAgainBtn.onclick = function() {
+        location.reload();
+        return false;
+    };
+    
+    // Assemble the game over box
+    gameOverBox.appendChild(title);
+    gameOverBox.appendChild(playAgainBtn);
+    
+    // Add game over box to overlay
+    overlay.appendChild(gameOverBox);
+    
+    // Add to document
+    document.body.appendChild(overlay);
+    
+    // Focus on the play again button
+    playAgainBtn.focus();
+    
+    return overlay; // Return reference in case you need to remove it programmatically
 }
