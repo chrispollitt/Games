@@ -59,6 +59,7 @@ const DEF_MONSTER_DENSITY = 500;
 const MAX_MONSTERS = 26;
 const DEF_MONSTER_STRENGTH = 10;
 const MAX_MONSTER_STRENGTH = 15;
+const DEF_PLAYER_STRENGTH  = 6;
 const MAX_ATTEMPTS = 100; // Maximum attempts for placing teleporters/monsters
 const POLL_INTERVAL_MS = 333;
 const NUM_PLAYERS = 4;
@@ -216,6 +217,8 @@ let parent_map = Array(NUM_PLAYERS).fill().map(() =>
         Array(MAX_COLS).fill().map(() => ({ x: 0, y: 0 }))));
 
 // Game state
+let Abort_run_round = 0;
+let LastUpdate = Date.now();
 let Players_finished = 0;
 let Game_finished = 0;
 let Game_moves = 0;
@@ -349,7 +352,21 @@ async function main() {
 				try {
           await run_round();
 				} catch(error) {
-					console.log("ignoring run_round() error: ", error);
+					// about the round
+					Abort_run_round = 1;
+					ungetch(0);
+          while(Date.now() - LastUpdate < 2000) {
+						await new Promise((resolve) => setTimeout(resolve, 500));
+						console.log("waiting for run_round to abort");
+					}
+					delwin(battle_win);
+					Abort_run_round = 0;
+					// handle error
+					if (error.message === EXIT_PROG) {
+						throw new Error(EXIT_PROG);
+					} else {
+					  console.log("ignoring run_round() error: ", error);
+					}
 				}
         if (Screen_reduced) {
             Screen_reduced = 0;
@@ -497,7 +514,7 @@ async function initialize_players(stage) {
         
         // Initialize player 1
         players[0].id = 1;
-        players[0].strength = 5;
+        players[0].strength = DEF_PLAYER_STRENGTH;
         players[0].battles_won = 0;
         players[0].battles_lost = 0;
         players[0].recovery_turns = 0;
@@ -522,7 +539,7 @@ async function initialize_players(stage) {
         
         // Initialize player 2
         players[1].id = 2;
-        players[1].strength = 5;
+        players[1].strength = DEF_PLAYER_STRENGTH;
         players[1].battles_won = 0;
         players[1].battles_lost = 0;
         players[1].recovery_turns = 0;
@@ -547,7 +564,7 @@ async function initialize_players(stage) {
         
         // Initialize player 3
         players[2].id = 3;
-        players[2].strength = 5;
+        players[2].strength = DEF_PLAYER_STRENGTH;
         players[2].battles_won = 0;
         players[2].battles_lost = 0;
         players[2].recovery_turns = 0;
@@ -572,7 +589,7 @@ async function initialize_players(stage) {
         
         // Initialize player 4
         players[3].id = 4;
-        players[3].strength = 5;
+        players[3].strength = DEF_PLAYER_STRENGTH;
         players[3].battles_won = 0;
         players[3].battles_lost = 0;
         players[3].recovery_turns = 0;
@@ -1846,6 +1863,14 @@ async function solve_maze_multi() {
                 players[i].recovery_turns--;
         }
         
+				//  check for abort
+				if(Abort_run_round) {
+					Screen_reduced = 1;
+					Game_finished = NUM_PLAYERS;
+					break;
+				}
+				LastUpdate = Date.now();
+				
         // Check for window resize
         if (1) {
             let size = get_terminal_size();
@@ -1873,8 +1898,10 @@ async function solve_maze_multi() {
     //////////////////////////////////////////////////
     
     // Show final results
-    if (!Screen_reduced) await display_player_stats();
-    doupdate();
+    if (!Screen_reduced) { 
+		  await display_player_stats();
+      doupdate();
+		}
 }
 
 async function print_char(i, j, ichar) {
@@ -2510,7 +2537,7 @@ function exit_game(format, ...args) {
       console.log("ignoring exit_game() error: ", error);
     }
     showGameOverScreen();  
-    throw new Error("Exiting the program");
+    throw new Error(EXIT_PROG);
 }
 
 async function update_status_line(format, ...args) {
@@ -2727,6 +2754,9 @@ async function delay_with_polling(total_delay_ms) {
     let remaining_time_ms = total_delay_ms;
     
     do {
+			  if(Abort_run_round) {
+					break;
+				}
         if (remaining_time_ms > POLL_INTERVAL_MS) {
             // do read keyboard
             start = Date.now();

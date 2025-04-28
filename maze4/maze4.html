@@ -58,7 +58,7 @@
         }
         .tall-char {
             position: relative;
-            top: -0.2em;
+            top: -0.3em;
         }
         .color-pair-1  { color: #000; background-color: #000; }
         .color-pair-2  { color: #f00; background-color: #000; }
@@ -129,6 +129,7 @@ const WIDE_CHARS = [
 const TALL_CHARS = [
     '_'
 ];
+const EXIT_PROG = "Exiting the program";
 
 let LINES = 25;
 let COLS = 80;
@@ -560,6 +561,10 @@ function handleKeypress(event) {
     event.preventDefault();
 }
 
+function ungetch(ch) {
+  keyBuffer.push(ch);
+}
+
 async function getch() {
     if (keyBuffer.length > 0) {
         return keyBuffer.shift();
@@ -621,8 +626,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         try {
             await main(); // Await the async function defined in maze4.js
         } catch (error) {
-            if (error.message === "Exiting the program") {
+            if (error.message === EXIT_PROG) {
                 // Silently ignore this specific error
+								console.log("program exited normally");
             } else {
                 curs_set(1);
                 // Notify the user via dialog

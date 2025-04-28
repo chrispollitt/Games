@@ -79,6 +79,7 @@
 #define MAX_MONSTERS 26
 #define DEF_MONSTER_STRENGTH 10
 #define MAX_MONSTER_STRENGTH 15
+#define DEF_PLAYER_STRENGTH   6
 #define MAX_ATTEMPTS 100 // Maximum attempts for placing teleporters/monsters
 #define POLL_INTERVAL_MS 333
 #define NUM_PLAYERS 4
@@ -546,7 +547,7 @@ void initialize_players(int stage) {
   
     // Initialize player 1 with default directions (Up, Right, Down, Left)
     players[0].id = 1;
-    players[0].strength = 5;
+    players[0].strength = DEF_PLAYER_STRENGTH;
     players[0].battles_won = 0;
     players[0].battles_lost = 0;
     players[0].recovery_turns = 0;
@@ -571,7 +572,7 @@ void initialize_players(int stage) {
   
     // Initialize player 2 with different direction preference
     players[1].id = 2;
-    players[1].strength = 5;
+    players[1].strength = DEF_PLAYER_STRENGTH;
     players[1].battles_won = 0;
     players[1].battles_lost = 0;
     players[1].recovery_turns = 0;
@@ -596,7 +597,7 @@ void initialize_players(int stage) {
   
     // Initialize player 3 with different direction preference
     players[2].id = 3;
-    players[2].strength = 5;
+    players[2].strength = DEF_PLAYER_STRENGTH;
     players[2].battles_won = 0;
     players[2].battles_lost = 0;
     players[2].recovery_turns = 0;
@@ -621,7 +622,7 @@ void initialize_players(int stage) {
   
     // Initialize player 4 with different direction preference
     players[3].id = 4;
-    players[3].strength = 5;
+    players[3].strength = DEF_PLAYER_STRENGTH;
     players[3].battles_won = 0;
     players[3].battles_lost = 0;
     players[3].recovery_turns = 0;
