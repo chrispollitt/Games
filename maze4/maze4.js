@@ -352,9 +352,9 @@ async function main() {
 				try {
           await run_round();
 				} catch(error) {
-					// about the round
+					// abort the round
 					Abort_run_round = 1;
-					ungetch(0);
+					ungetch(126);
           while(Date.now() - LastUpdate < 2000) {
 						await new Promise((resolve) => setTimeout(resolve, 500));
 						console.log("waiting for run_round to abort");

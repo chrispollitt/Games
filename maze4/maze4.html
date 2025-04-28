@@ -546,12 +546,21 @@ function resizeterm(lines, cols) {
 // --- Keyboard and mouse ---
 function handleKeypress(event) {
     let key = event.keyCode;
-    if (event.key === 'ArrowUp') key = KEY_UP;
-    else if (event.key === 'ArrowDown') key = KEY_DOWN;
-    else if (event.key === 'ArrowLeft') key = KEY_LEFT;
+    if      (event.key === 'ArrowUp')    key = KEY_UP;
+    else if (event.key === 'ArrowDown')  key = KEY_DOWN;
+    else if (event.key === 'ArrowLeft')  key = KEY_LEFT;
     else if (event.key === 'ArrowRight') key = KEY_RIGHT;
-    else if (event.key === 'Escape') key = 27;
-    else key = event.key.charCodeAt(0); // Set to ASCII int value of key pressed
+    else if (event.key === 'Escape')     key = 27;
+    else if (event.key.length === 1) {
+        const code = event.key.charCodeAt(0);
+        if (code >= 0 && code <= 127) {
+            key = code; // Only 7-bit ASCII
+				} else {
+				    key = ERR;
+				}
+		} else {
+		   key = ERR;
+		}
     keyBuffer.push(key);
     if (keypress_callback) {
         const callback = keypress_callback;
