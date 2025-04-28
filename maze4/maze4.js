@@ -346,7 +346,11 @@ async function main() {
     // Run game rounds
     for (; Game_rounds > 0; Game_rounds--) {
         await logMessage(`Starting round ${Game_rounds}`);
-        await run_round();
+				try {
+          await run_round();
+				} catch(error) {
+					console.log("ignoring run_round() error: ", error);
+				}
         if (Screen_reduced) {
             Screen_reduced = 0;
             Game_rounds++;
@@ -2503,7 +2507,7 @@ function exit_game(format, ...args) {
       endwin();
       console.log(format, ...args);
     } catch (error) {
-      ;
+      console.log("ignoring exit_game() error: ", error);
     }
     showGameOverScreen();  
     throw new Error("Exiting the program");
