@@ -123,6 +123,9 @@ format:
 	clang-format -i $(SRCS)
 
 # Install target
+webinstall:
+	scp maze4.{js,html} whatwelo@whatwelove.org:/home/whatwelo/www/wiki/www/
+
 install: $(TARGET) maze4.6
 	install -d $(BINDIR)
 	install -m 755 $(TARGET) $(BINDIR)
@@ -135,5 +138,5 @@ uninstall:
 	rm -f $(MANDIR)/maze4.6
 
 # Phony targets
-.PHONY: all clean run trace lint install uninstall
+.PHONY: all clean run trace lint install webinstall uninstall
 .PRECIOUS: %.o %.cc %.i %.ii

@@ -764,7 +764,7 @@ function touchpad(keys) {
         touchpadContainer.id = 'touchpad-container';
         document.body.appendChild(touchpadContainer);
         
-        // Add styles for the touchpad
+        // Add styles for the touchpad - INCREASED TRANSPARENCY
         const style = document.createElement('style');
         style.textContent = `
             #touchpad-container {
@@ -775,7 +775,7 @@ function touchpad(keys) {
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(3, 1fr);
                 gap: 5px;
-                background-color: rgba(0, 0, 0, 0.7);
+                background-color: rgba(0, 0, 0, 0.3); /* More transparent background */
                 padding: 10px;
                 border-radius: 10px;
                 z-index: 1000;
@@ -784,7 +784,7 @@ function touchpad(keys) {
             .touchpad-button {
                 width: 60px;
                 height: 60px;
-                background-color: rgba(50, 50, 50, 0.8);
+                background-color: rgba(50, 50, 50, 0.4); /* More transparent buttons */
                 color: white;
                 display: flex;
                 align-items: center;
@@ -794,9 +794,11 @@ function touchpad(keys) {
                 font-size: 18px;
                 user-select: none;
                 cursor: pointer;
+                text-shadow: 0px 0px 2px #000; /* Text shadow for better visibility */
+                border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for better visibility */
             }
             .touchpad-button:active {
-                background-color: rgba(100, 100, 100, 0.8);
+                background-color: rgba(100, 100, 100, 0.6); /* More transparent active state */
             }
             @media (max-width: 600px) {
                 .touchpad-button {
@@ -807,11 +809,11 @@ function touchpad(keys) {
             }
             #touchpad-toggle {
                 position: fixed;
-                bottom: 10px;
+                bottom: 55px;
                 right: 10px;
-                width: 40px;
-                height: 40px;
-                background-color: rgba(0, 0, 0, 0.7);
+                width: 20px;
+                height: 20px;
+                background-color: rgba(0, 0, 0, 0.6); /* More visible toggle button */
                 color: white;
                 border-radius: 50%;
                 display: flex;
@@ -820,11 +822,14 @@ function touchpad(keys) {
                 z-index: 1001;
                 cursor: pointer;
                 font-family: 'Courier New', monospace;
+                border: 2px solid rgba(255, 255, 255, 0.7); /* More visible border */
+                font-size: 20px; /* Larger text for better visibility */
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Shadow for better visibility */
             }
         `;
         document.head.appendChild(style);
         
-        // Add toggle button
+        // Add toggle button - ENSURE IT'S CLEARLY VISIBLE
         const toggleButton = document.createElement('div');
         toggleButton.id = 'touchpad-toggle';
         toggleButton.innerHTML = '⊞';
@@ -873,16 +878,20 @@ function touchpad(keys) {
             }
             
             // Visual feedback for press
-            button.style.backgroundColor = 'rgba(120, 120, 120, 0.8)';
+            button.style.backgroundColor = 'rgba(120, 120, 120, 0.6)'; // More transparent active state
             setTimeout(() => {
-                button.style.backgroundColor = 'rgba(50, 50, 50, 0.8)';
+                button.style.backgroundColor = 'rgba(50, 50, 50, 0.4)'; // Return to normal transparency
             }, 100);
             
             // Call keypress callback if it exists
             if (keypress_callback) {
                 const callback = keypress_callback;
                 keypress_callback = null;
-                callback(key);
+                if (typeof key === 'string' && key.length === 1) {
+                    callback(key.charCodeAt(0));
+                } else {
+                    callback(key);
+                }
             }
         });
         
