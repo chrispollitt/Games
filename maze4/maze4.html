@@ -9,11 +9,14 @@
             background-color: #000;
             color: #ddd;
             font-family: 'Courier New', monospace;
+            font-size: 1em;
             margin: 0;
             padding: 0;
             overflow: hidden;
             text-rendering: geometricPrecision; /* Add this */
             transform-style: preserve-3d; /* Forces GPU rendering */
+            transform: scale(2);
+            transform-origin: top left;
             backface-visibility: hidden; /* May help with some rendering issues */
             -webkit-font-smoothing: none;
             font-smooth: never;
@@ -111,12 +114,35 @@ const A_BOLD = 1 << 8;
 const A_REVERSE = 1 << 9;
 const A_UNDERLINE = 1 << 10;
 
-const KEY_UP = 259;
-const KEY_DOWN = 258;
-const KEY_LEFT = 260;
-const KEY_RIGHT = 261;
-const KEY_RESIZE = 410;
-const KEY_MOUSE = 409;
+// Special keys (based on ncurses key codes)
+const KEY_UP        = 259;
+const KEY_DOWN      = 258;
+const KEY_LEFT      = 260;
+const KEY_RIGHT     = 261;
+const KEY_HOME      = 262;
+const KEY_END       = 360;
+const KEY_NPAGE     = 338; // Page Down
+const KEY_PPAGE     = 339; // Page Up
+const KEY_IC        = 331; // Insert
+const KEY_DC        = 330; // Delete
+const KEY_BACKSPACE = 263;
+const KEY_ENTER     = 343;
+const KEY_TAB       = 9;   // Standard ASCII Tab
+const KEY_ESCAPE    = 27;  // Standard ASCII Escape
+const KEY_RESIZE    = 410;
+const KEY_MOUSE     = 409;
+
+// Modifier masks (bit flags)
+const KEY_CTRL  = 0x1000;
+const KEY_ALT   = 0x2000;
+const KEY_SHIFT = 0x4000;
+const KEY_META  = 0x8000;
+
+// Function keys (F1-F12) - Ncurses defines KEY_F(n) as (0x100 + n)
+function KEY_F(n) {
+    return 264 + (n - 1); // KEY_F(1) = 264, KEY_F(2) = 265, etc.
+}
+
 const ERR = -1;
 const STDIN_FILENO = 0;
 const TCIFLUSH = 0;
@@ -545,28 +571,106 @@ function resizeterm(lines, cols) {
 
 // --- Keyboard and mouse ---
 function handleKeypress(event) {
-    let key = event.keyCode;
-    if      (event.key === 'ArrowUp')    key = KEY_UP;
-    else if (event.key === 'ArrowDown')  key = KEY_DOWN;
-    else if (event.key === 'ArrowLeft')  key = KEY_LEFT;
-    else if (event.key === 'ArrowRight') key = KEY_RIGHT;
-    else if (event.key === 'Escape')     key = 27;
-    else if (event.key.length === 1) {
-        const code = event.key.charCodeAt(0);
-        if (code >= 0 && code <= 127) {
-            key = code; // Only 7-bit ASCII
-				} else {
-				    key = ERR;
-				}
-		} else {
-		   key = ERR;
-		}
+    let key;
+
+    switch (event.key) {
+        case 'ArrowUp':
+            key = KEY_UP;
+            break;
+        case 'ArrowDown':
+            key = KEY_DOWN;
+            break;
+        case 'ArrowLeft':
+            key = KEY_LEFT;
+            break;
+        case 'ArrowRight':
+            key = KEY_RIGHT;
+            break;
+        case 'Backspace':
+            key = KEY_BACKSPACE;
+            break;
+        case 'Enter':
+            key = KEY_ENTER;
+            break;
+        case 'Tab':
+            key = KEY_TAB;
+            break;
+        case 'Escape':
+            key = KEY_ESCAPE;
+            break;
+        case 'Home':
+            key = KEY_HOME;
+            break;
+        case 'End':
+            key = KEY_END;
+            break;
+        case 'PageUp':
+            key = KEY_PPAGE;
+            break;
+        case 'PageDown':
+            key = KEY_NPAGE;
+            break;
+        case 'Insert':
+            key = KEY_IC;
+            break;
+        case 'Delete':
+            key = KEY_DC;
+            break;
+        case 'F1':
+        case 'F2':
+        case 'F3':
+        case 'F4':
+        case 'F5':
+        case 'F6':
+        case 'F7':
+        case 'F8':
+        case 'F9':
+        case 'F10':
+        case 'F11':
+        case 'F12':
+            key = KEY_F(parseInt(event.key.slice(1), 10));
+            break;
+        default:
+            if (event.key.length === 1) {
+                if (event.ctrlKey) {
+                    let ch = event.key;
+                    if (ch >= 'a' && ch <= 'z') {
+                      ch = ch.toUpperCase();
+                    }
+                    if (ch >= '@' && ch <= '_') {
+                        key = ch.charCodeAt(0) - 64; // Ctrl-A..Z -> ASCII 1..26
+                    } else {
+                        return; // Ctrl + non-letter => ignore
+                    }
+                } else {
+                    const code = event.key.charCodeAt(0);
+                    if (code >= 32 && code <= 126) {
+                        key = code; // Printable ASCII
+                    } else {
+                        return; // Non-printable
+                    }
+                }
+            } else {
+                return; // Unknown non-character key
+            }
+    }
+    if(key > 127) {
+      // Apply Control and Shift modifiers
+      if (event.ctrlKey) key |= KEY_CTRL;
+      if (event.shiftKey) key |= KEY_SHIFT;
+    }
+    // Apply Alt and Meta modifiers
+    if (event.altKey)  key |= KEY_ALT;
+    if (event.metaKey) key |= KEY_META;
+
     keyBuffer.push(key);
+
     if (keypress_callback) {
         const callback = keypress_callback;
         keypress_callback = null;
         callback(key);
     }
+
     event.preventDefault();
 }
 
@@ -625,6 +729,209 @@ Math.seedrandom = function(seed) {
     };
 };
 
+// add touch pad for touchscreen devices
+function touchpad(keys) {
+    // Check if touchscreen is available
+    const hasTouchScreen = () => {
+        if ('maxTouchPoints' in navigator) {
+            return navigator.maxTouchPoints > 0;
+        } else if ('msMaxTouchPoints' in navigator) {
+            return navigator.msMaxTouchPoints > 0;
+        } else {
+            const mQ = window.matchMedia && matchMedia('(pointer:coarse)');
+            if (mQ && mQ.media === '(pointer:coarse)') {
+                return !!mQ.matches;
+            } else if ('orientation' in window) {
+                return true; // Deprecated, but good fallback
+            } else {
+                // Only as a last resort, check user agent (not reliable)
+                const UA = navigator.userAgent;
+                return /\b(BlackBerry|webOS|iPhone|IEMobile|Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+            }
+        }
+    };
+
+    // If no touchscreen is detected, abort
+    if (!hasTouchScreen()) {
+        console.log("No touchscreen detected, touchpad not created");
+        return null;
+    }
+
+    // Create or get the touchpad container
+    let touchpadContainer = document.getElementById('touchpad-container');
+    if (!touchpadContainer) {
+        touchpadContainer = document.createElement('div');
+        touchpadContainer.id = 'touchpad-container';
+        document.body.appendChild(touchpadContainer);
+        
+        // Add styles for the touchpad
+        const style = document.createElement('style');
+        style.textContent = `
+            #touchpad-container {
+                position: fixed;
+                bottom: 80px;
+                right: 20px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                gap: 5px;
+                background-color: rgba(0, 0, 0, 0.7);
+                padding: 10px;
+                border-radius: 10px;
+                z-index: 1000;
+                touch-action: manipulation;
+            }
+            .touchpad-button {
+                width: 60px;
+                height: 60px;
+                background-color: rgba(50, 50, 50, 0.8);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                font-size: 18px;
+                user-select: none;
+                cursor: pointer;
+            }
+            .touchpad-button:active {
+                background-color: rgba(100, 100, 100, 0.8);
+            }
+            @media (max-width: 600px) {
+                .touchpad-button {
+                    width: 45px;
+                    height: 45px;
+                    font-size: 16px;
+                }
+            }
+            #touchpad-toggle {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1001;
+                cursor: pointer;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add toggle button
+        const toggleButton = document.createElement('div');
+        toggleButton.id = 'touchpad-toggle';
+        toggleButton.innerHTML = '⊞';
+        toggleButton.addEventListener('click', () => {
+            const isHidden = touchpadContainer.style.display === 'none';
+            touchpadContainer.style.display = isHidden ? 'grid' : 'none';
+            toggleButton.innerHTML = isHidden ? '⊟' : '⊞';
+        });
+        document.body.appendChild(toggleButton);
+    }
+    
+    // Clear existing buttons
+    touchpadContainer.innerHTML = '';
+    
+    // Create buttons for each key in the 3x3 grid
+    for (let i = 0; i < Math.min(keys.length, 9); i++) {
+        const button = document.createElement('div');
+        button.className = 'touchpad-button';
+        
+        const key = keys[i];
+        // Display appropriate label based on key type
+        if        (key === KEY_UP) {
+            button.innerHTML = '↑';
+        } else if (key === KEY_DOWN) {
+            button.innerHTML = '↓';
+        } else if (key === KEY_LEFT) {
+            button.innerHTML = '←';
+        } else if (key === KEY_RIGHT) {
+            button.innerHTML = '→';
+        } else if (key === ' ') {
+            button.innerHTML = '[SP]';
+        } else if (typeof key === 'number') {
+            button.innerHTML = `#${key}`;
+        } else {
+            button.innerHTML = key;
+        }
+        
+        // Set up touch/click event
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Put int value in buffer for character keys
+            if (typeof key === 'string' && key.length === 1) {
+                keyBuffer.push(key.charCodeAt(0));
+            } else {
+                keyBuffer.push(key);
+            }
+            
+            // Visual feedback for press
+            button.style.backgroundColor = 'rgba(120, 120, 120, 0.8)';
+            setTimeout(() => {
+                button.style.backgroundColor = 'rgba(50, 50, 50, 0.8)';
+            }, 100);
+            
+            // Call keypress callback if it exists
+            if (keypress_callback) {
+                const callback = keypress_callback;
+                keypress_callback = null;
+                callback(key);
+            }
+        });
+        
+        touchpadContainer.appendChild(button);
+    }
+    
+    // If less than 9 buttons, fill with empty spaces
+    for (let i = keys.length; i < 9; i++) {
+        const emptySpace = document.createElement('div');
+        emptySpace.className = 'touchpad-button';
+        emptySpace.style.visibility = 'hidden';
+        touchpadContainer.appendChild(emptySpace);
+    }
+    
+    // Default to visible
+    touchpadContainer.style.display = 'grid';
+    
+    return touchpadContainer;
+}
+
+// keep screen awake
+async function keepScreenAwake() {
+  try {
+    // Request a wake lock
+    const wakeLock = await navigator.wakeLock.request('screen');
+    
+    console.log('Wake lock is active!');
+    
+    // Optional: Listen for release events
+    wakeLock.addEventListener('release', () => {
+      console.log('Wake lock was released');
+    });
+    
+    // Optional: Release wake lock when document visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        wakeLock.release();
+        console.log('Wake lock released due to page being hidden');
+      }
+    });
+    
+    return wakeLock;
+  } catch (err) {
+    console.error(`Wake lock request failed: ${err.name}, ${err.message}`);
+    return null;
+  }
+}
+
+// load main script and call main()
 document.addEventListener('DOMContentLoaded', async function() {
     const scriptElement = document.createElement('script');
     scriptElement.src = 'maze4.js';
@@ -632,12 +939,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     scriptElement.onload = async function() {
         // Run the async main function with error handling
+				const wakeLockObj = keepScreenAwake();
         try {
             await main(); // Await the async function defined in maze4.js
         } catch (error) {
             if (error.message === EXIT_PROG) {
                 // Silently ignore this specific error
-								console.log("program exited normally");
+                console.log("program exited normally");
             } else {
                 curs_set(1);
                 // Notify the user via dialog
@@ -665,6 +973,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 closeButton.onclick = () => dialog.close();
             }
         }
+				wakeLockObj.then(wakeLock => {
+          if (wakeLock) wakeLock.release();
+        });
     };
 });
 </script>    

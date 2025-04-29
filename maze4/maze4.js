@@ -197,6 +197,18 @@ const MONSTER_NAMES = [
     "Yawning Yam", "Zealous Zucchini"
 ];
 
+const TOUCH_KEYS = [
+  ' ',     // Pause/Continue
+  '+',     // Speed Up
+  '-',     // Slow Down
+  'h',     // show Help window
+  'q',     // Quit Game
+  'k',     // Toggle WaitForKey");
+  'w',     // Toggle ShowWindows");
+  KEY_UP,  // Scroll Status Messages
+  KEY_DOWN // Scroll Status Messages
+];
+
 // Misc globals
 let battle_win;
 let Base_dx = [0, 1, 0, -1]; // Up, Right, Down, Left
@@ -273,6 +285,7 @@ async function init() {
 //    cbreak();
 //    noecho();
 //    keypad(stdscr, true);
+    touchpad(TOUCH_KEYS);
     curs_set(0);
     start_color();
     use_default_colors();
@@ -349,25 +362,25 @@ async function main() {
     // Run game rounds
     for (; Game_rounds > 0; Game_rounds--) {
         await logMessage(`Starting round ${Game_rounds}`);
-				try {
+        try {
           await run_round();
-				} catch(error) {
-					// abort the round
-					Abort_run_round = 1;
-					ungetch(126);
+        } catch(error) {
+          // abort the round
+          Abort_run_round = 1;
+          ungetch(126);
           while(Date.now() - LastUpdate < 2000) {
-						await new Promise((resolve) => setTimeout(resolve, 500));
-						console.log("waiting for run_round to abort");
-					}
-					delwin(battle_win);
-					Abort_run_round = 0;
-					// handle error
-					if (error.message === EXIT_PROG) {
-						throw new Error(EXIT_PROG);
-					} else {
-					  console.log("ignoring run_round() error: ", error);
-					}
-				}
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            console.log("waiting for run_round to abort");
+          }
+          delwin(battle_win);
+          Abort_run_round = 0;
+          // handle error
+          if (error.message === EXIT_PROG) {
+            throw new Error(EXIT_PROG);
+          } else {
+            console.log("ignoring run_round() error: ", error);
+          }
+        }
         if (Screen_reduced) {
             Screen_reduced = 0;
             Game_rounds++;
@@ -1863,14 +1876,14 @@ async function solve_maze_multi() {
                 players[i].recovery_turns--;
         }
         
-				//  check for abort
-				if(Abort_run_round) {
-					Screen_reduced = 1;
-					Game_finished = NUM_PLAYERS;
-					break;
-				}
-				LastUpdate = Date.now();
-				
+        //  check for abort
+        if(Abort_run_round) {
+          Screen_reduced = 1;
+          Game_finished = NUM_PLAYERS;
+          break;
+        }
+        LastUpdate = Date.now();
+        
         // Check for window resize
         if (1) {
             let size = get_terminal_size();
@@ -1899,9 +1912,9 @@ async function solve_maze_multi() {
     
     // Show final results
     if (!Screen_reduced) { 
-		  await display_player_stats();
+      await display_player_stats();
       doupdate();
-		}
+    }
 }
 
 async function print_char(i, j, ichar) {
@@ -2754,9 +2767,9 @@ async function delay_with_polling(total_delay_ms) {
     let remaining_time_ms = total_delay_ms;
     
     do {
-			  if(Abort_run_round) {
-					break;
-				}
+        if(Abort_run_round) {
+          break;
+        }
         if (remaining_time_ms > POLL_INTERVAL_MS) {
             // do read keyboard
             start = Date.now();
@@ -2847,7 +2860,7 @@ async function highlight_player_solution_path(p) {
 }
 
 async function show_help_window() {
-    if (ShowWindows === 0) return;
+    //if (ShowWindows === 0) return;
     
     let height = 20;
     let width = 60;
@@ -2885,7 +2898,7 @@ async function show_help_window() {
 }
 
 async function show_extended_help_window() {
-    if (ShowWindows === 0) return;
+    //if (ShowWindows === 0) return;
     
     let height = 24;
     let width = 70;
