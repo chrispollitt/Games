@@ -76,7 +76,7 @@ trace.o: trace.c
 
 # Clean rule
 clean:
-	rm -f *.o $(TARGET) maze4_high_scores.dat maze4_logfile.txt *$(TRACESUFFIX) *.err *.log
+	rm -f *.o $(TARGET) $(TARGET)_high_scores.dat $(TARGET)_logfile.txt *$(TRACESUFFIX) *.err *.log
 
 # Run the program
 run: $(TARGET) $(CATLOG).py
@@ -119,23 +119,27 @@ perf: $(TARGET)
 lint:
 	clang-tidy $(SRCS) -- 
 
+weblint:
+	jslint $(TARGET).js
+	jslint $(TARGET).html
+
 format:
 	clang-format -i $(SRCS)
 
 # Install target
 webinstall:
-	scp maze4.{js,html} whatwelo@whatwelove.org:/home/whatwelo/www/wiki/www/
+	scp $(TARGET).{js,html} whatwelo@whatwelove.org:/home/whatwelo/www/wiki/www/
 
-install: $(TARGET) maze4.6
+install: $(TARGET) $(TARGET).6
 	install -d $(BINDIR)
 	install -m 755 $(TARGET) $(BINDIR)
 	install -d $(MANDIR)
-	install -m 644 maze4.6 $(MANDIR)/maze4.6
+	install -m 644 $(TARGET).6 $(MANDIR)/$(TARGET).6
 
 # Uninstall target
 uninstall:
 	rm -f $(BINDIR)/$(TARGET)
-	rm -f $(MANDIR)/maze4.6
+	rm -f $(MANDIR)/$(TARGET).6
 
 # Phony targets
 .PHONY: all clean run trace lint install webinstall uninstall

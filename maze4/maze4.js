@@ -179,23 +179,34 @@ class Status {
 // Bot names
 const BOT_NAMES = [
     "(n/a)",
-    "RapRas", // "Rapid Raspberry", 
-    "BusBlu", // "Bussin' Blueberry",
-    "LigLem", // "Lightening Lemon", 
-    "KwiKiw" // "Kwick Kiwi"
+    "RapRas", 
+    "BusBlu", 
+    "LigLem", 
+    "KwiKiw"  
 ];
 
-const MONSTER_NAMES = [
-    "Abyssal Artichoke", "Brutal Broccoli", "Creeping Carrot",
-    "Dreadful Daikon", "Eerie Eggplant", "Fiendish Fennel",
-    "Ghastly Garlic", "Horrid Horseradish", "Infernal Iceberg",
-    "Jagged Jicama", "Killer Kale", "Lurking Leek",
-    "Mean Mushroom", "Nightmare Nori", "Ominous Onion",
-    "Petrifying Potato", "Quagmire Quinoa", "Ravaging Radish",
-    "Sinister Spinach", "Terror Tomato", "Unholy Ube",
-    "Vile Vine Spinach", "Wicked Wasabi", "Xenophobic Xigua",
-    "Yawning Yam", "Zealous Zucchini"
+const BOT_NAMES_LONG = [
+    "(n/a)",
+    "Rapid Raspberry", 
+    "Bussin' Blubery",
+    "Light'nin Lemon", 
+    "Kwick Kiwi     "
 ];
+
+var BOT_NAMES_F = [];
+
+const MONSTER_NAMES = [
+    "Abyssal Artiech", "Brutal Broc    ", "Creeping Carrot",
+    "Dread Daikon   ", "Eerie Eggplant ", "Fiend Fennel   ",
+    "Ghastly Garlic ", "Horrid H. Rad. ", "Infernal Ice B.",
+    "Jagged Jicama  ", "Killer Kale    ", "Lurking Leek   ",
+    "Mean Mushroom  ", "Night Nori     ", "Ominous Onion  ",
+    "Petrifid Potato", "Quag Quinoa    ", "Ravage Radish  ",
+    "Sinister Spinch", "Terror Tomato  ", "Unholy Ube     ",
+    "Vile Vine      ", "Wicked Wasabi  ", "Xeno Xigua     ",
+    "Yawning Yam    ", "Zealous Zuke   "
+];
+var MONSTER_NAMES_R = [];
 
 const TOUCH_KEYS = [
   ' ',     // Pause/Continue
@@ -251,12 +262,76 @@ let in_mysleep = 0;
 let in_pausegame = 0;
 let pauseTime = -1;
 let Maze_rows = 0;
+let Stats_header = "";
 let Help_shown_this_session = 0;
 
 // maze state
 let maze = null;
 
 // FUNCTION IMPLEMENTATIONS ///////////////////////////////////////////////
+
+// Main function
+async function main() {
+    // Set the random seed
+    Math.seedrandom(Date.now());
+    
+    // Initialize ncurses and settings
+    await init();
+
+    // If no high scores and help not yet shown, show help
+    if (!Help_shown_this_session) {
+        let best_scores = [], worst_scores = [];
+    
+        for (let i = 0; i < MAX_HIGH_SCORES; i++) {
+            best_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
+            worst_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
+        }
+    
+        let high_score_count = await read_high_scores(best_scores, worst_scores);
+    
+        if (high_score_count === 0) {
+            await show_help_window();
+            Help_shown_this_session = 1;
+        }
+    }
+    
+    // Run game rounds
+    for (; Game_rounds > 0; Game_rounds--) {
+        await logMessage(`Starting round ${Game_rounds}`);
+        try {
+          await run_round();
+        } catch(error) {
+          // abort the round
+          Abort_run_round = 1;
+          ungetch(126);
+          while(Date.now() - LastUpdate < 2000) {
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            console.log("waiting for run_round to abort");
+          }
+          delwin(battle_win);
+          Abort_run_round = 0;
+          // handle error
+          if (error.message === EXIT_PROG) {
+            throw new Error(EXIT_PROG);
+          } else {
+            console.log("ignoring run_round() error: ", error);
+          }
+        }
+        if (Screen_reduced) {
+            Screen_reduced = 0;
+            Game_rounds++;
+        }
+        
+        // Make screen match reported size
+        let size = get_terminal_size();
+        resizeterm(size.rows, size.cols);
+        old_rows = size.rows;
+        old_cols = size.cols;
+    }
+    
+    // Leave game
+    exit_game("Game over\n");
+}
 
 // Initialize objects and setup
 async function init() {
@@ -334,69 +409,6 @@ async function init() {
     await logMessage(`Init term size is ${size.rows}, ${size.cols}`);
 }
 
-// Main function
-async function main() {
-    // Set the random seed
-    Math.seedrandom(Date.now());
-    
-    // Initialize ncurses and settings
-    await init();
-
-    // If no high scores and help not yet shown, show help
-    if (!Help_shown_this_session) {
-        let best_scores = [], worst_scores = [];
-    
-        for (let i = 0; i < MAX_HIGH_SCORES; i++) {
-            best_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
-            worst_scores.push(new HighScore("", 0, 0, 0, 0, 0, 0));
-        }
-    
-        let high_score_count = await read_high_scores(best_scores, worst_scores);
-    
-        if (high_score_count === 0) {
-            await show_help_window();
-            Help_shown_this_session = 1;
-        }
-    }
-    
-    // Run game rounds
-    for (; Game_rounds > 0; Game_rounds--) {
-        await logMessage(`Starting round ${Game_rounds}`);
-        try {
-          await run_round();
-        } catch(error) {
-          // abort the round
-          Abort_run_round = 1;
-          ungetch(126);
-          while(Date.now() - LastUpdate < 2000) {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            console.log("waiting for run_round to abort");
-          }
-          delwin(battle_win);
-          Abort_run_round = 0;
-          // handle error
-          if (error.message === EXIT_PROG) {
-            throw new Error(EXIT_PROG);
-          } else {
-            console.log("ignoring run_round() error: ", error);
-          }
-        }
-        if (Screen_reduced) {
-            Screen_reduced = 0;
-            Game_rounds++;
-        }
-        
-        // Make screen match reported size
-        let size = get_terminal_size();
-        resizeterm(size.rows, size.cols);
-        old_rows = size.rows;
-        old_cols = size.cols;
-    }
-    
-    // Leave game
-    exit_game("Game over\n");
-}
-
 // Run a round of the game
 async function run_round() {
     let rows, cols, maze_area;
@@ -458,13 +470,13 @@ async function run_round() {
     // Implement and call ensure_path_between_corners
     await ensure_path_between_corners();
     
+    // Finish initializing players
+    await initialize_players(1);
+    
     // Place teleporters and monsters
     await place_teleporters();
     await place_monsters();
     Liv_monsters = Num_monsters;
-    
-    // Finish initializing players
-    await initialize_players(1);
     
     // Print initial maze
     clear();
@@ -632,6 +644,14 @@ async function initialize_players(stage) {
     } 
     // Stage 1
     else {
+				MONSTER_NAMES_R = shuffleArray(MONSTER_NAMES);
+				if(maze.cols < MIN_COLS + 10 ) {
+				  BOT_NAMES_F = BOT_NAMES;
+				  Stats_header = "  NAME | ST | BATS  | MOVES | STATUS";
+				} else {
+				  BOT_NAMES_F = BOT_NAMES_LONG;
+				  Stats_header = "  NAME          | ST | BATS  | MOVES | STATUS";
+				}
         // Set player start and end positions to corners
         players[0].start.x = 1;
         players[0].start.y = 1;
@@ -769,12 +789,12 @@ async function is_dead_end(x, y) {
 async function display_player_stats() {
     let base_row = maze.rows + 1;
     
-    mvwprintw(stdscr, base_row - 1, 0, "  NAME | ST | BATS  | MOVES | STATUS");
+    mvwprintw(stdscr, base_row - 1, 0, Stats_header);
     wclrtoeol(stdscr);
     
     for (let i = 0; i < NUM_PLAYERS; i++) {
         attron(COLOR_PAIR(players[i].color_pair) | A_BOLD);
-        mvwprintw(stdscr, base_row + i, 0, `${BOT_NAMES[players[i].id].padStart(6)} | ${String(players[i].strength).padStart(2)} | ${String(players[i].battles_won).padStart(2)}/${String(players[i].battles_lost).padStart(2)} |  ${String(players[i].moves).padStart(4)} | `);
+        mvwprintw(stdscr, base_row + i, 0, `${BOT_NAMES_F[players[i].id].padStart(6)} | ${String(players[i].strength).padStart(2)} | ${String(players[i].battles_won).padStart(2)}/${String(players[i].battles_lost).padStart(2)} |  ${String(players[i].moves).padStart(4)} | `);
         
         // Add status column showing player's solve status
         if (players[i].reached_goal) {
@@ -828,7 +848,7 @@ async function display_player_alert(p_idx, rank) {
     if (rank > 0) {
         mvwprintw(battle_win, 2, 2, "PLAYER REACHED GOAL!");
         // figlet goal
-        mvwprintw(battle_win, 16, 1, String.raw`        RANK = ${rank}!                    `);
+        mvwprintw(battle_win, 16, 1, String.raw`        RANK = ${rank}!                     `);
         mvwprintw(battle_win, 17, 1, String.raw` _____ _       _     _              _ `);
         mvwprintw(battle_win, 18, 1, String.raw`|  ___(_)_ __ (_)___| |__   ___  __| |`);
         mvwprintw(battle_win, 19, 1, String.raw`| |_  | | '_ \| / __| '_ \ / _ \/ _\ |`);
@@ -1111,8 +1131,8 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
         
         if (player) { // Player Bot
             wattron(battle_win, COLOR_PAIR(players[idx].color_pair) | A_BOLD);
-            mvwprintw(battle_win, 4, col, `${BOT_NAMES[idx + 1]}`);
-            mvwprintw(battle_win, 5, col, `STR: ${players[idx].strength}  WINS: ${players[idx].battles_won}`);
+            mvwprintw(battle_win, 4, col, `${BOT_NAMES_LONG[idx + 1]}`);
+            mvwprintw(battle_win, 5, col, `STR:${String(players[idx].strength).padStart(2)}  WINS:${String(players[idx].battles_won).padStart(2)}`);
             
             // Bot ASCII Art
             mvwprintw(battle_win,  6, col, String.raw`               `);
@@ -1126,8 +1146,8 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
             wattroff(battle_win, COLOR_PAIR(players[idx].color_pair) | A_BOLD);
         } else { // Monster
             wattron(battle_win, COLOR_PAIR(8) | A_BOLD);
-            mvwprintw(battle_win, 4, col, `${MONSTER_NAMES[idx]}`);
-            mvwprintw(battle_win, 5, col, `Strength: ${monsters[idx].strength}    `);
+            mvwprintw(battle_win, 4, col, `${MONSTER_NAMES_R[idx]}`);
+            mvwprintw(battle_win, 5, col, `Strength:${String(monsters[idx].strength).padStart(2)}    `);
             
             // Monster ASCII Art
             mvwprintw(battle_win,  6, col, String.raw`    .----,     `);
@@ -1172,13 +1192,13 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
             // loser is player
             players[lidx].battles_lost += 1;
             players[lidx].recovery_turns = LOSER_RECOVERY_TURNS;
-            await update_status_line(`${BOT_NAMES[lidx + 1]} ${LOST_MSG}!`);
+            await update_status_line(`${BOT_NAMES_F[lidx + 1]} ${LOST_MSG}!`);
         } else {
             // loser is monster
             Liv_monsters--;
             monsters[lidx].defeated = 1;
             maze.grid[monsters[lidx].y][monsters[lidx].x] = DEFEATED_MONSTER;
-            await update_status_line(`${MONSTER_NAMES[lidx]} ${LOST_MSG}!`);
+            await update_status_line(`${MONSTER_NAMES_R[lidx]} ${LOST_MSG}!`);
         }
         
         if (ShowWindows !== 0) {
@@ -2369,7 +2389,7 @@ async function update_high_scores(rows, cols) {
 async function display_high_scores_window(count, best_scores, worst_scores) {
     if (count === 0 || ShowWindows === 0) {
         // No high scores yet
-        await pauseForUser();
+        await pauseForUser(1);
         return;
     }
     
@@ -2411,14 +2431,18 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         // Highlight the new high score
         if (best_scores[i].this_run) {
             wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
-        }
+        } else {
+            wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
+				}
         
         mvwprintw(high_score_win, 5 + i, 3, 
             `${i + 1} ${best_scores[i].name.padEnd(6)} ${String(best_scores[i].score).padStart(4)} ${String(best_scores[i].battles_won).padStart(2)} ${String(best_scores[i].strength).padStart(2)} ${date_str}`);
         
         if (best_scores[i].this_run) {
             wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
-        }
+        } else {
+            wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
+				}
     }
     
     // Display worst scores section title
@@ -2436,21 +2460,25 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         // Highlight the new high score
         if (worst_scores[i].this_run) {
             wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
-        }
+        } else {
+            wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
+				}
         
         mvwprintw(high_score_win, 13 + i, 3,
             `${i + 1} ${worst_scores[i].name.padEnd(6)} ${String(worst_scores[i].score).padStart(4)} ${String(worst_scores[i].battles_won).padStart(2)} ${String(worst_scores[i].strength).padStart(2)} ${date_str}`);
         
         if (worst_scores[i].this_run) {
             wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
-        }
+        } else {
+            wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
+				}
     }
     
     // If we have a new best score, add some congratulatory text
     if (best_scores[0].this_run) {
         wattron(high_score_win, A_BOLD);
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
-            `** NEW CHAMPION! ${BOT_NAMES[best_scores[0].player_id]} **`);
+            `** NEW CHAMPION! ${BOT_NAMES_LONG[best_scores[0].player_id]} **`);
         wattroff(high_score_win, A_BOLD);
     }
     
@@ -2458,7 +2486,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
     if (worst_scores[0].this_run) {
         wattron(high_score_win, A_BOLD);
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
-            `** NEW WORST :( ${BOT_NAMES[worst_scores[0].player_id]} **`);
+            `** NEW WORST :( ${BOT_NAMES_LONG[worst_scores[0].player_id]} **`);
         wattroff(high_score_win, A_BOLD);
     }
     
@@ -2466,7 +2494,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
     wnoutrefresh(high_score_win);
     
     // Wait for user input
-    await pauseForUser();
+    await pauseForUser(1);
     
     // Clean up
     delwin(high_score_win);
@@ -2510,13 +2538,13 @@ async function calculate_score(moves, width, height) {
     return score > 0 ? score : 1;
 }
 
-async function pauseForUser() {
+async function pauseForUser(len) {
     await read_keyboard();
     if (WaitForKey) {
         await pauseGame();  // calls doupdate()
     } else {
         await update_status_line(DELAY_MSG);
-        await mysleep(pauseTime); // calls doupdate()
+        await mysleep((len) ? (pauseTime * 2) : (pauseTime)); // calls doupdate()
     }
     move(Maze_rows + 5, 0);
     wclrtoeol(stdscr);
@@ -2958,6 +2986,7 @@ function showGameOverScreen() {
     overlay.style.alignItems = 'center';
     overlay.style.color = '#fff';
     overlay.style.fontFamily = 'Courier New, monospace';
+    overlay.style.fontSize = '2em';
     
     // Create the game over message
     const gameOverBox = document.createElement('div');
@@ -2982,7 +3011,6 @@ function showGameOverScreen() {
     playAgainBtn.style.textDecoration = 'underline';
     playAgainBtn.style.cursor = 'pointer';
     playAgainBtn.style.padding = '10px';
-    playAgainBtn.style.fontSize = '1.2em';
     playAgainBtn.onclick = function() {
         location.reload();
         return false;
@@ -3002,4 +3030,19 @@ function showGameOverScreen() {
     playAgainBtn.focus();
     
     return overlay; // Return reference in case you need to remove it programmatically
+}
+
+function shuffleArray(array) {
+  // Create a copy of the original array to avoid modifying it directly
+  const shuffled = [...array];
+  
+  // Fisher-Yates (Knuth) shuffle algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    // Generate a random index between 0 and i (inclusive)
+    const j = Math.floor(Math.random() * (i + 1));
+    // Swap elements at positions i and j
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled;
 }
