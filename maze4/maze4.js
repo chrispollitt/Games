@@ -196,15 +196,15 @@ const BOT_NAMES_LONG = [
 var BOT_NAMES_F = [];
 
 const MONSTER_NAMES = [
-    "Abyssal Artiech", "Brutal Broc    ", "Creeping Carrot",
-    "Dread Daikon   ", "Eerie Eggplant ", "Fiend Fennel   ",
-    "Ghastly Garlic ", "Horrid H. Rad. ", "Infernal Ice B.",
+    "Abyssal Articho", "Brutal Broccoli", "Creeping Carrot",
+    "Dreaded Daikon ", "Eerie Eggplant ", "Fiendish Fennel",
+    "Ghastly Garlic ", "Horrid Habanero", "Irate Ivy-Gourd",
     "Jagged Jicama  ", "Killer Kale    ", "Lurking Leek   ",
-    "Mean Mushroom  ", "Night Nori     ", "Ominous Onion  ",
-    "Petrifid Potato", "Quag Quinoa    ", "Ravage Radish  ",
+    "Mean Mushroom  ", "Nightmare Nori ", "Ominous Onion  ",
+    "Putrid Potato  ", "Quagmire Quinoa", "Ravager Radish ",
     "Sinister Spinch", "Terror Tomato  ", "Unholy Ube     ",
-    "Vile Vine      ", "Wicked Wasabi  ", "Xeno Xigua     ",
-    "Yawning Yam    ", "Zealous Zuke   "
+    "Vile Verdolaga ", "Wicked Wasabi  ", "Xyresic Xà-Lách",
+    "Yucky Yam      ", "Zealous Zuke   "
 ];
 var MONSTER_NAMES_R = [];
 
@@ -2396,7 +2396,7 @@ async function update_high_scores(rows, cols) {
 async function display_high_scores_window(count, best_scores, worst_scores) {
     if (count === 0 || ShowWindows === 0) {
         // No high scores yet
-        await pauseForUser(1);
+        await pauseForUser(2);
         return;
     }
     
@@ -2501,7 +2501,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
     wnoutrefresh(high_score_win);
     
     // Wait for user input
-    await pauseForUser(1);
+    await pauseForUser(3);
     
     // Clean up
     delwin(high_score_win);
@@ -2551,7 +2551,7 @@ async function pauseForUser(len) {
         await pauseGame();  // calls doupdate()
     } else {
         await update_status_line(DELAY_MSG);
-        await mysleep((len) ? (pauseTime * 2) : (pauseTime)); // calls doupdate()
+        await mysleep((len) ? (pauseTime * len) : (pauseTime)); // calls doupdate()
     }
     move(Maze_rows + 5, 0);
     wclrtoeol(stdscr);
