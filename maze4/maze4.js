@@ -51,7 +51,7 @@ const MIN_ROWS = 25;
 const MIN_COLS = 40;
 const MAX_ROWS = 1024;
 const MAX_COLS = 1024;
-const DEF_GAME_SPEED = 70;
+const DEF_GAME_SPEED = 50;
 const MAX_GAME_DELAY = 200;
 const DEF_TELEPORTER_DENSITY = 1000;
 const MAX_TELEPORTERS = 10;
@@ -798,7 +798,14 @@ async function display_player_stats() {
         
         // Add status column showing player's solve status
         if (players[i].reached_goal) {
-            wprintw(stdscr, `Finished #${players[i].finished_rank}!`);
+					  var rank;
+					  switch (players[i].finished_rank) {
+							case 1: rank = '1st'; break;
+							case 2: rank = '2nd'; break;
+							case 3: rank = '3rd'; break;
+							case 4: rank = '4th'; break;
+						}
+            wprintw(stdscr, `Finished ${rank}!`);
         } else if (players[i].abandoned_race === 1) {
             wprintw(stdscr, "DNF: Trapped");
         } else if (players[i].abandoned_race === 2) {
