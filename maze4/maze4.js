@@ -2394,6 +2394,7 @@ async function update_high_scores(rows, cols) {
 
 // Display high scores in a ncurses window
 async function display_high_scores_window(count, best_scores, worst_scores) {
+	  let placed = 0;
     if (count === 0 || ShowWindows === 0) {
         // No high scores yet
         await pauseForUser(2);
@@ -2437,6 +2438,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         
         // Highlight the new high score
         if (best_scores[i].this_run) {
+					  placed = i;
             wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
@@ -2466,6 +2468,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         
         // Highlight the new high score
         if (worst_scores[i].this_run) {
+					  placed = i * -1;
             wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
@@ -2487,7 +2490,10 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
             `** NEW CHAMPION! ${BOT_NAMES_LONG[best_scores[0].player_id]} **`);
         wattroff(high_score_win, A_BOLD);
-    }
+    } else if(placed > 0) {
+        mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
+            `** Fast PLACED ${placed+1} ${BOT_NAMES_LONG[best_scores[placed].player_id]} **`);
+		}
     
     // If we have a new worst score, add some congratulatory text
     if (worst_scores[0].this_run) {
@@ -2495,7 +2501,11 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
             `** NEW WORST :( ${BOT_NAMES_LONG[worst_scores[0].player_id]} **`);
         wattroff(high_score_win, A_BOLD);
-    }
+    } else if(placed < 0) {
+			  placed = Math.abs(placed);
+        mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
+            `** Slow PLACED ${placed+1} ${BOT_NAMES_LONG[worst_scores[placed].player_id]} **`);
+		}
     
     // Refresh and show the window
     wnoutrefresh(high_score_win);
