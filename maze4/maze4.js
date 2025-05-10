@@ -644,14 +644,14 @@ async function initialize_players(stage) {
     } 
     // Stage 1
     else {
-				MONSTER_NAMES_R = shuffleArray(MONSTER_NAMES);
-				if(maze.cols < MIN_COLS + 10 ) {
-				  BOT_NAMES_F = BOT_NAMES;
-				  Stats_header = "  NAME | ST | BATS  | MOVES | STATUS";
-				} else {
-				  BOT_NAMES_F = BOT_NAMES_LONG;
-				  Stats_header = "  NAME          | ST | BATS  | MOVES | STATUS";
-				}
+        MONSTER_NAMES_R = shuffleArray(MONSTER_NAMES);
+        if(maze.cols < MIN_COLS + 10 ) {
+          BOT_NAMES_F = BOT_NAMES;
+          Stats_header = "  NAME | ST | BATS  | MOVES | STATUS";
+        } else {
+          BOT_NAMES_F = BOT_NAMES_LONG;
+          Stats_header = "  NAME          | ST | BATS  | MOVES | STATUS";
+        }
         // Set player start and end positions to corners
         players[0].start.x = 1;
         players[0].start.y = 1;
@@ -798,13 +798,13 @@ async function display_player_stats() {
         
         // Add status column showing player's solve status
         if (players[i].reached_goal) {
-					  var rank;
-					  switch (players[i].finished_rank) {
-							case 1: rank = '1st'; break;
-							case 2: rank = '2nd'; break;
-							case 3: rank = '3rd'; break;
-							case 4: rank = '4th'; break;
-						}
+            var rank;
+            switch (players[i].finished_rank) {
+              case 1: rank = '1st'; break;
+              case 2: rank = '2nd'; break;
+              case 3: rank = '3rd'; break;
+              case 4: rank = '4th'; break;
+            }
             wprintw(stdscr, `Finished ${rank}!`);
         } else if (players[i].abandoned_race === 1) {
             wprintw(stdscr, "DNF: Trapped");
@@ -2394,7 +2394,7 @@ async function update_high_scores(rows, cols) {
 
 // Display high scores in a ncurses window
 async function display_high_scores_window(count, best_scores, worst_scores) {
-	  let placed = 0;
+    let placed = 0;
     if (count === 0 || ShowWindows === 0) {
         // No high scores yet
         await pauseForUser(2);
@@ -2438,11 +2438,11 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         
         // Highlight the new high score
         if (best_scores[i].this_run) {
-					  placed = i;
+            placed = i;
             wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
-				}
+        }
         
         mvwprintw(high_score_win, 5 + i, 3, 
             `${i + 1} ${best_scores[i].name.padEnd(6)} ${String(best_scores[i].score).padStart(4)} ${String(best_scores[i].battles_won).padStart(2)} ${String(best_scores[i].strength).padStart(2)} ${date_str}`);
@@ -2451,7 +2451,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
             wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
-				}
+        }
     }
     
     // Display worst scores section title
@@ -2468,11 +2468,11 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
         
         // Highlight the new high score
         if (worst_scores[i].this_run) {
-					  placed = i * -1;
+            placed = i * -1;
             wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
-				}
+        }
         
         mvwprintw(high_score_win, 13 + i, 3,
             `${i + 1} ${worst_scores[i].name.padEnd(6)} ${String(worst_scores[i].score).padStart(4)} ${String(worst_scores[i].battles_won).padStart(2)} ${String(worst_scores[i].strength).padStart(2)} ${date_str}`);
@@ -2481,7 +2481,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
             wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
         } else {
             wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
-				}
+        }
     }
     
     // If we have a new best score, add some congratulatory text
@@ -2493,7 +2493,7 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
     } else if(placed > 0) {
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
             `** Fast PLACED ${placed+1} ${BOT_NAMES_LONG[best_scores[placed].player_id]} **`);
-		}
+    }
     
     // If we have a new worst score, add some congratulatory text
     if (worst_scores[0].this_run) {
@@ -2502,10 +2502,10 @@ async function display_high_scores_window(count, best_scores, worst_scores) {
             `** NEW WORST :( ${BOT_NAMES_LONG[worst_scores[0].player_id]} **`);
         wattroff(high_score_win, A_BOLD);
     } else if(placed < 0) {
-			  placed = Math.abs(placed);
+        placed = Math.abs(placed);
         mvwprintw(high_score_win, (height - 2), Math.floor((width - 34) / 2),
             `** Slow PLACED ${placed+1} ${BOT_NAMES_LONG[worst_scores[placed].player_id]} **`);
-		}
+    }
     
     // Refresh and show the window
     wnoutrefresh(high_score_win);
@@ -2985,6 +2985,21 @@ async function show_extended_help_window() {
     wnoutrefresh(stdscr);
 }
 
+function shuffleArray(array) {
+  // Create a copy of the original array to avoid modifying it directly
+  const shuffled = [...array];
+  
+  // Fisher-Yates (Knuth) shuffle algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    // Generate a random index between 0 and i (inclusive)
+    const j = Math.floor(Math.random() * (i + 1));
+    // Swap elements at positions i and j
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled;
+}
+
 ///// HTML VERSION ONLY ///////////////////////
 
 function showGameOverScreen() {
@@ -3049,17 +3064,3 @@ function showGameOverScreen() {
     return overlay; // Return reference in case you need to remove it programmatically
 }
 
-function shuffleArray(array) {
-  // Create a copy of the original array to avoid modifying it directly
-  const shuffled = [...array];
-  
-  // Fisher-Yates (Knuth) shuffle algorithm
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    // Generate a random index between 0 and i (inclusive)
-    const j = Math.floor(Math.random() * (i + 1));
-    // Swap elements at positions i and j
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  
-  return shuffled;
-}
