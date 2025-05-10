@@ -14,6 +14,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <algorithm>
+#include <random>
 
 // DEFINES ///////////////////////////////////////////////////////////////////
 
@@ -176,22 +178,35 @@ typedef struct Status {
 // Bot names
 const char *BOT_NAMES[] = {
     "(n/a)", 
-    "RapRas", // "Rapid Raspberry", 
-    "BusBlu", // "Bussin' Blueberry",
-    "LigLem", // "Lightening Lemon", 
-    "KwiKiw" // "Kwick Kiwi"
+    "RapRas", 
+    "BusBlu", 
+    "LigLem", 
+    "KwiKiw"  
 };
 
+const char *BOT_NAMES_LONG[] = {
+    "(n/a)",
+    "Rapid Raspberry", 
+    "Bussin' Blubery",
+    "Light'nin Lemon", 
+    "Kwick Kiwi     "
+};
+
+char *BOT_NAMES_F[5] = {};
+
 const char *MONSTER_NAMES[] = {
-    "Abyssal Artichoke",   "Brutal Broccoli",    "Creeping Carrot",
-    "Dreadful Daikon",     "Eerie Eggplant",     "Fiendish Fennel",
-    "Ghastly Garlic",      "Horrid Horseradish", "Infernal Iceberg",
-    "Jagged Jicama",       "Killer Kale",        "Lurking Leek",
-    "Mean Mushroom",       "Nightmare Nori",     "Ominous Onion",
-    "Petrifying Potato",   "Quagmire Quinoa",    "Ravaging Radish",
-    "Sinister Spinach",    "Terror Tomato",      "Unholy Ube",
-    "Vile Vine Spinach",   "Wicked Wasabi",      "Xenophobic Xigua",
-    "Yawning Yam",         "Zealous Zucchini"};
+    "Abyssal Articho", "Brutal Broccoli", "Creeping Carrot",
+    "Dreaded Daikon ", "Eerie Eggplant ", "Fiendish Fennel",
+    "Ghastly Garlic ", "Horrid Habanero", "Irate Ivy-Gourd",
+    "Jagged Jicama  ", "Killer Kale    ", "Lurking Leek   ",
+    "Mean Mushroom  ", "Nightmare Nori ", "Ominous Onion  ",
+    "Putrid Potato  ", "Quagmire Quinoa", "Ravager Radish ",
+    "Sinister Spinch", "Terror Tomato  ", "Unholy Ube     ",
+    "Vile Verdolaga ", "Wicked Wasabi  ", "Xyresic Xà-Lách",
+    "Yucky Yam      ", "Zealous Zuke   "
+};
+    
+char *MONSTER_NAMES_R[26] = {};
 
 // Misc globals
 WINDOW *battle_win;
@@ -230,6 +245,7 @@ int in_read_keyboard  = 0;
 int in_mysleep = 0;
 int in_pausegame = 0;
 int pauseTime = -1;
+char Stats_header[80];
 
 // maze state
 Maze *maze;
@@ -285,70 +301,11 @@ void solve_maze_multi();
 void update_high_scores(int rows, int cols);
 void update_monsters();
 void update_status_line(const char *format, ...);
+void show_help_window();
+void show_extended_help_window();
+void shuffleArray(const char* in[], char* out[], int n);
 
 // FUNCTION DEFS /////////////////////////////////////////////////////////////
-
-void init() {
-  struct winsize size;
-
-  // Set locale for UTF-8 support
-  setlocale(LC_ALL, "");
-
-  // Initialize ncurses
-  initscr();
-  cbreak();
-  noecho();
-  keypad(stdscr, TRUE);
-  curs_set(0);
-  start_color();
-  use_default_colors();
-  mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
-  printf("\033[?1003h\n");  // Enable mouse movement events
-
-  // Set up the resize handler
-  signal(SIGWINCH, SIG_IGN);
-
-  // Define color pairs
-  init_pair(1, COLOR_BLACK, -1);            // Path
-  init_pair(2, COLOR_RED, -1);              // Player 1
-  init_pair(3, COLOR_CYAN, -1);             // Player 2
-  init_pair(4, COLOR_YELLOW, -1);           // Player 3
-  init_pair(5, COLOR_GREEN, -1);            // Player 4
-  init_pair(6, COLOR_MAGENTA, -1);          // Current position
-  init_pair(7, COLOR_CYAN, COLOR_BLUE);     // Teleporter
-  init_pair(8, COLOR_WHITE, COLOR_MAGENTA); // Monster
-  init_pair(9, COLOR_MAGENTA, COLOR_BLACK); // Defeated monster
-  init_pair(10, COLOR_BLACK, COLOR_WHITE);  // Game stats
-  init_pair(11, COLOR_BLACK, COLOR_YELLOW); // Alert
-  //
-  init_pair(12, COLOR_RED, COLOR_BLACK);
-  init_pair(13, COLOR_WHITE, COLOR_BLACK);
-  init_pair(14, COLOR_YELLOW, COLOR_BLACK);
-  init_pair(15, COLOR_BLUE, COLOR_BLACK);
-  init_pair(16, COLOR_CYAN, COLOR_BLACK);
-
-  calc_game_speed();
-
-  if (Game_rounds < 0) {
-    Game_rounds = 1;
-  }
-  Game_roundsB = Game_rounds;
-  if (WaitForKey < 0) {
-    WaitForKey = 0;
-  }
-  if (ShowWindows < 0) {
-    ShowWindows = 0;
-  }
-  if (pauseTime < 0) {
-    pauseTime = 2 * 1000;
-  }
-
-  // make sceen match reported size
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &size); 
-  resizeterm(size.ws_row, size.ws_col);
-  old_rows = size.ws_row ; old_cols = size.ws_col;
-  logMessage("Init term size is %d, %d", size.ws_row, size.ws_col);
-}
 
 // MAIN function
 int main(int argc, char *argv[]) {
@@ -426,6 +383,69 @@ int main(int argc, char *argv[]) {
   exit_game("Game over\n");
 }
 
+// init (one time)
+void init() {
+  struct winsize size;
+
+  // Set locale for UTF-8 support
+  setlocale(LC_ALL, "");
+
+  // Initialize ncurses
+  initscr();
+  cbreak();
+  noecho();
+  keypad(stdscr, TRUE);
+  curs_set(0);
+  start_color();
+  use_default_colors();
+  mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
+  printf("\033[?1003h\n");  // Enable mouse movement events
+
+  // Set up the resize handler
+  signal(SIGWINCH, SIG_IGN);
+
+  // Define color pairs
+  init_pair(1, COLOR_BLACK, -1);            // Path
+  init_pair(2, COLOR_RED, -1);              // Player 1
+  init_pair(3, COLOR_CYAN, -1);             // Player 2
+  init_pair(4, COLOR_YELLOW, -1);           // Player 3
+  init_pair(5, COLOR_GREEN, -1);            // Player 4
+  init_pair(6, COLOR_MAGENTA, -1);          // Current position
+  init_pair(7, COLOR_CYAN, COLOR_BLUE);     // Teleporter
+  init_pair(8, COLOR_WHITE, COLOR_MAGENTA); // Monster
+  init_pair(9, COLOR_MAGENTA, COLOR_BLACK); // Defeated monster
+  init_pair(10, COLOR_BLACK, COLOR_WHITE);  // Game stats
+  init_pair(11, COLOR_BLACK, COLOR_YELLOW); // Alert
+  //
+  init_pair(12, COLOR_RED, COLOR_BLACK);
+  init_pair(13, COLOR_WHITE, COLOR_BLACK);
+  init_pair(14, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(15, COLOR_BLUE, COLOR_BLACK);
+  init_pair(16, COLOR_CYAN, COLOR_BLACK);
+
+  calc_game_speed();
+
+  if (Game_rounds < 0) {
+    Game_rounds = 1;
+  }
+  Game_roundsB = Game_rounds;
+  if (WaitForKey < 0) {
+    WaitForKey = 0;
+  }
+  if (ShowWindows < 0) {
+    ShowWindows = 0;
+  }
+  if (pauseTime < 0) {
+    pauseTime = 2 * 1000;
+  }
+
+  // make sceen match reported size
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &size); 
+  resizeterm(size.ws_row, size.ws_col);
+  old_rows = size.ws_row ; old_cols = size.ws_col;
+  logMessage("Init term size is %d, %d", size.ws_row, size.ws_col);
+}
+
 // run a round of the game
 void run_round() {
   int rows, cols, maze_area;
@@ -492,13 +512,13 @@ void run_round() {
   // Implement and call ensure_path_between_corners
   ensure_path_between_corners();
 
+    // Finish initializing players
+    initialize_players(1);
+    
   // Place teleporters and monsters
   place_teleporters();
   place_monsters();
   Liv_monsters = Num_monsters;
-
-  // Finsih initializing players
-  initialize_players(1);
 
   // Print initial maze
   clear();
@@ -651,6 +671,14 @@ void initialize_players(int stage) {
     }
   // Stage 1
   } else {
+    shuffleArray(MONSTER_NAMES, MONSTER_NAMES_R, 26);
+    if(maze->cols < MIN_COLS + 10 ) {
+      memcpy(BOT_NAMES_F, BOT_NAMES, sizeof(BOT_NAMES_F));
+      strcpy(Stats_header, "  NAME | ST | BATS  | MOVES | STATUS");
+    } else {
+      memcpy(BOT_NAMES_F, BOT_NAMES_LONG, sizeof(BOT_NAMES_F));
+      strcpy(Stats_header, "  NAME          | ST | BATS  | MOVES | STATUS");
+    }
     // Set player start and end positions to corners
     players[0].start.x = 1;
     players[0].start.y = 1;
@@ -804,17 +832,24 @@ int is_dead_end(int x, int y) {
 void display_player_stats() {
   int base_row = maze->rows + 1;
 
-  mvwprintw(stdscr, base_row - 1, 0, "  NAME | ST | BATS  | MOVES | STATUS");
+  mvwprintw(stdscr, base_row - 1, 0, "%s", Stats_header);
   wclrtoeol(stdscr);
   for (int i = 0; i < NUM_PLAYERS; i++) {
     attron(COLOR_PAIR(players[i].color_pair) | A_BOLD);
     mvwprintw(stdscr, base_row + i, 0, "%6s | %2d | %2d/%-2d |  %4d | ",
-             BOT_NAMES[players[i].id], players[i].strength,
+             BOT_NAMES_F[players[i].id], players[i].strength,
              players[i].battles_won, players[i].battles_lost, players[i].moves);
 
     // Add status column showing player's solve status
     if (players[i].reached_goal) {
-      wprintw(stdscr, "Finished #%d!", players[i].finished_rank);
+            char rankn[4];
+            switch (players[i].finished_rank) {
+              case 1: strcpy(rankn, "1st"); break;
+              case 2: strcpy(rankn, "2nd"); break;
+              case 3: strcpy(rankn, "3rd"); break;
+              case 4: strcpy(rankn, "4th"); break;
+            }
+            wprintw(stdscr, "Finished %s!", rankn);
     } else if (players[i].abandoned_race == 1) {
       wprintw(stdscr, "DNF: Trapped");
     } else if (players[i].abandoned_race == 2) {
@@ -1154,7 +1189,7 @@ void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
     int idx = leftside ? left_idx : right_idx;
     if (player) { // Player Bot
       wattron(battle_win, COLOR_PAIR(players[idx].color_pair) | A_BOLD);
-      mvwprintw(battle_win, 4, col, "%s", BOT_NAMES[idx + 1]);
+      mvwprintw(battle_win, 4, col, "%s", BOT_NAMES_LONG[idx + 1]);
       mvwprintw(battle_win, 5, col, "STR: %d  WINS: %d", players[idx].strength,
                 players[idx].battles_won);
 
@@ -1170,7 +1205,7 @@ void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
       wattroff(battle_win, COLOR_PAIR(players[idx].color_pair) | A_BOLD);
     } else { // Monster
       wattron(battle_win, COLOR_PAIR(8) | A_BOLD);
-      mvwprintw(battle_win, 4, col, "%s", MONSTER_NAMES[idx]);
+      mvwprintw(battle_win, 4, col, "%s", MONSTER_NAMES_R[idx]);
       mvwprintw(battle_win, 5, col, "Strength: %d    ", monsters[idx].strength);
 
       // Monster ASCII Art
@@ -1212,13 +1247,13 @@ void show_battle_art(int aart, int leftside, int type, int player, int left_idx,
       // loser is player
       players[lidx].battles_lost += 1;
       players[lidx].recovery_turns = LOSER_RECOVERY_TURNS;
-      update_status_line("%s %s!", BOT_NAMES[lidx + 1], LOST_MSG);
+      update_status_line("%s %s!", BOT_NAMES_F[lidx + 1], LOST_MSG);
     } else {
       // loser is monster
       Liv_monsters--;
       monsters[lidx].defeated = 1;
       maze->grid[monsters[lidx].y][monsters[lidx].x] = DEFEATED_MONSTER;
-      update_status_line("%s %s!", MONSTER_NAMES[lidx], LOST_MSG);
+      update_status_line("%s %s!", MONSTER_NAMES_R[lidx], LOST_MSG);
     }
 
     if (ShowWindows != 0) {
@@ -2545,6 +2580,7 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
   }
 
   char date_str[20];
+	int placed = 0;
 
   // Save current state to restore later
   int old_curs = curs_set(0); // Hide cursor
@@ -2581,9 +2617,10 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
     strftime(date_str, sizeof(date_str), "%Y-%m-%d", tm_info);
     // Highlight the new high score
     if (best_scores[i].this_run) {
-      wattron(high_score_win,
-              COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) |
-                  A_BOLD);
+            placed = i;
+            wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
+        } else {
+            wattron(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
     }
                                   // # Name   Score Ba St Date
     mvwprintw(high_score_win, 5 + i, 3, "%1d %-6s %4d %2d %2d %s", i + 1,
@@ -2591,9 +2628,9 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
               best_scores[i].battles_won, best_scores[i].strength, date_str);
 
     if (best_scores[i].this_run) {
-      wattroff(high_score_win,
-               COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) |
-                   A_BOLD);
+            wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair) | A_BOLD);
+        } else {
+            wattroff(high_score_win, COLOR_PAIR(players[best_scores[i].player_id - 1].color_pair));
     }
   }
 
@@ -2611,9 +2648,10 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
     strftime(date_str, sizeof(date_str), "%Y-%m-%d", tm_info);
     // Highlight the new high score
     if (worst_scores[i].this_run) {
-      wattron(high_score_win,
-              COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) |
-                  A_BOLD);
+            placed = i * -1;
+            wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
+        } else {
+            wattron(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
     }
 
     mvwprintw(high_score_win, 13 + i, 3, "%1d %-6s %4d %2d %2d %s", i + 1,
@@ -2621,26 +2659,33 @@ void display_high_scores_window(int count, HighScore best_scores[], HighScore wo
               worst_scores[i].battles_won, worst_scores[i].strength, date_str);
 
     if (worst_scores[i].this_run) {
-      wattroff(high_score_win,
-               COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) |
-                   A_BOLD);
+            wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair) | A_BOLD);
+        } else {
+            wattroff(high_score_win, COLOR_PAIR(players[worst_scores[i].player_id - 1].color_pair));
     }
   }
 
   // If we have a new best score, add some congratulatory text
   if (best_scores[0].this_run) {
     wattron(high_score_win, A_BOLD);
-    mvwprintw(high_score_win, (height - 2), (width - 34) / 2,
-              "** NEW CHAMPION! %s **", BOT_NAMES[best_scores[0].player_id]);
+        mvwprintw(high_score_win, (height - 2), (int) ((width - 34) / 2),
+            "** NEW CHAMPION! %s **", BOT_NAMES_LONG[best_scores[0].player_id]);
     wattroff(high_score_win, A_BOLD);
+    } else if(placed > 0) {
+        mvwprintw(high_score_win, (height - 2), (int) ((width - 34) / 2),
+            "** Fast PLACED %d %s **", placed+1, BOT_NAMES_LONG[best_scores[placed].player_id]);
   }
 
   // If we have a new worst score, add some congratulatory text
   if (worst_scores[0].this_run) {
     wattron(high_score_win, A_BOLD);
-    mvwprintw(high_score_win, (height - 2), (width - 34) / 2,
-              "** NEW WORST :( %s **", BOT_NAMES[worst_scores[0].player_id]);
+        mvwprintw(high_score_win, (height - 2), (int) ((width - 34) / 2),
+            "** NEW WORST :( %s **", BOT_NAMES_LONG[worst_scores[0].player_id]);
     wattroff(high_score_win, A_BOLD);
+    } else if(placed < 0) {
+        placed = abs(placed);
+        mvwprintw(high_score_win, (height - 2), (int) ((width - 34) / 2),
+            "** Slow PLACED %d %s **", placed+1, BOT_NAMES_LONG[worst_scores[placed].player_id]);
   }
 
   // Refresh and show the window
@@ -2860,6 +2905,15 @@ int read_keyboard() {
   case 27:
     exit_game("User ended game early\n");
     break;
+   // HELP with h or ?
+   case 104:
+   case 63:
+       show_help_window();
+       break;
+   // EXTENDED HELP with H
+   case 72:  // 'H'
+       show_extended_help_window();
+       break;
   case KEY_RESIZE:
     break;        
   case ERR:
@@ -3058,4 +3112,90 @@ void highlight_player_solution_path(int p) {
       wnoutrefresh(stdscr);
       mysleep((int) (pauseTime/40));            // Another delay
   }        
+}
+
+void show_help_window() {
+    //if (ShowWindows === 0) return;
+    
+    int height = 20;
+    int width = 60;
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    WINDOW *help_win = newwin(height, width, (int) ((max_y - height) / 2), (int) ((max_x - width) / 2));
+    box(help_win, 0, 0);
+    
+    wattron(help_win, A_BOLD);
+    mvwprintw(help_win, 1, 2, "Maze4 Game Help");
+    wattroff(help_win, A_BOLD);
+    
+    mvwprintw(help_win, 3, 2, "Controls:");
+    mvwprintw(help_win, 4, 4, "[Space]   - Pause/Continue");
+    mvwprintw(help_win, 5, 4, "[+/-]     - Speed Up / Slow Down");
+    mvwprintw(help_win, 6, 4, "[h/?]     - Show this Help");
+    mvwprintw(help_win, 7, 4, "[H]       - Show Extended Help.");
+    mvwprintw(help_win, 8, 4, "[q/Q/ESC] - Quit Game");
+    mvwprintw(help_win, 9, 4, "[k]       - Toggle WaitForKey");
+    mvwprintw(help_win,10, 4, "[w]       - Toggle ShowWindows");
+    mvwprintw(help_win,12, 2, "During Pause:");
+    mvwprintw(help_win,13, 4, "[Up/Down] - Scroll Status Messages");
+    
+    mvwprintw(help_win,15, 2, "Press any key to close...");
+    
+    wnoutrefresh(help_win);
+    doupdate();
+    
+    getch(); // Wait for any key
+    delwin(help_win);
+    wnoutrefresh(stdscr);
+}
+
+void show_extended_help_window() {
+    //if (ShowWindows === 0) return;
+    
+    int height = 24;
+    int width = 70;
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    WINDOW *help_win = newwin(height, width, (int) ((max_y - height) / 2), (int) ((max_x - width) / 2));
+    box(help_win, 0, 0);
+    
+    wattron(help_win, A_BOLD);
+    mvwprintw(help_win, 1, 2, "Maze4 Extended Help");
+    wattroff(help_win, A_BOLD);
+    
+    mvwprintw(help_win, 3, 2, "Story:");
+    mvwprintw(help_win, 4, 4, "In the Maze of Munch, four Fruitbots —");
+    mvwprintw(help_win, 5, 4, "Rapid Raspberry, Bussin' Blueberry,");
+    mvwprintw(help_win, 6, 4, "Lightning Lemon, and Kwick Kiwi — race");
+    mvwprintw(help_win, 7, 4, "for glory against deadly Veggie Monsters.");
+    
+    mvwprintw(help_win, 9, 2, "Goal:");
+    mvwprintw(help_win,10, 4, "Reach your goal first! Battle monsters,");
+    mvwprintw(help_win,11, 4, "survive ambushes, and outmaneuver rivals.");
+    mvwprintw(help_win,12, 4, "Three battle losses = system failure!");
+    
+    mvwprintw(help_win,14, 2, "Inspiration:");
+    mvwprintw(help_win,15, 4, "Inspired by classic maze screensavers");
+    mvwprintw(help_win,16, 4, "and the chaotic fun of marble races.");
+    mvwprintw(help_win,17, 4, "All game logic written with AI assistance.");
+    
+    mvwprintw(help_win,19, 2, "Press any key to close...");
+    
+    wnoutrefresh(help_win);
+    doupdate();
+    
+    getch(); // Wait for any key
+    delwin(help_win);
+    wnoutrefresh(stdscr);
+}
+
+void shuffleArray(const char* in[], char* out[], int n) {
+    for (int i = 0; i < n; ++i) {
+        out[i] = const_cast<char*>(in[i]);
+    }
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(out, out + n, g);
 }
