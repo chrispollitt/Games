@@ -78,13 +78,30 @@ def is_process_running(name):
             print("psutil not available - limited process detection", file=sys.stderr)
     return False
 
-def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_name):
+def addr2line_srcfile(executable, address):
+    """Resolve address to source file using addr2line."""
+    try:
+        output = subprocess.check_output(
+            ['addr2line', '-e', executable, '-f', '-C', f'0x{address:x}'],
+            stderr=subprocess.DEVNULL, text=True)
+        lines = output.strip().split('\n')
+        # addr2line -f outputs: function_name\nfile:line
+        if len(lines) >= 2:
+            srcfile = lines[1].split(':')
+            return srcfile[0]
+    except Exception:
+        pass
+    return ''
+
+def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_name, executable):
     """Process the trace file and resolve symbols"""
     in_count = 0
     out_count = 0
     call_stack = []
     timing_data = defaultdict(list)
     active_process = True
+    src_file_cache = {}
+    src_file_dbg_cache = {}
 
     with open(logfile, 'r') as f_log, open(resolved_path, 'w') as f_out:
         f_out.write("# timestamp,event,depth,duration,function\n")
@@ -100,9 +117,9 @@ def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_n
                 time.sleep(0.1)
                 continue
 
-            in_count += 1
             if line.startswith('#'):
                 continue
+            in_count += 1
             
             parts = line.strip().split(',')
             if len(parts) < 4:
@@ -110,10 +127,28 @@ def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_n
                 continue
                 
             timestamp, event, depth, func_addr_hex = parts[:4]
-            func_addr = int(func_addr_hex, 16)
+            try:
+                func_addr = int(func_addr_hex, 16)
+            except Exception:
+                print(f"Error converting address: {func_addr_hex}", file=sys.stderr)
+                continue
             img_addr = func_addr - base_offset
             func_name = symbols.get(img_addr, f"0x{func_addr:x} (unresolved)")
-            
+
+            # Filtering: resolve address to source file (cache for speed)
+            if func_name in src_file_cache:
+                srcfile = src_file_cache[func_name]
+            else:
+                srcfile = addr2line_srcfile(executable, func_addr)
+                src_file_cache[func_name] = srcfile
+                if not srcfile in src_file_dbg_cache:
+                    src_file_dbg_cache[srcfile] = True
+                    print(f"Debug: srcfile = {srcfile}", file=sys.stderr)
+
+            # If not in /home, skip this entry
+            if not srcfile.startswith('/home'):
+                continue
+
             # Handle timing and call stack
             if event == 'ENTER':
                 call_stack.append((timestamp, func_name))
@@ -133,7 +168,7 @@ def tail_and_resolve(logfile, symbols, base_offset, resolved_path, traced_proc_n
             
             f_out.write(out_line)
             out_count += 1
-    
+
     return in_count, out_count
 
 def main():
@@ -171,8 +206,8 @@ def main():
     print(f"  Main symbol address: 0x{main_addr:x}", file=sys.stderr)
     print(f"  Calculated offset:   0x{base_offset:x}\n", file=sys.stderr)
 
-    print("Starting trace resolution...", file=sys.stderr)
-    in_lines, out_lines = tail_and_resolve(logfile, symbols, base_offset, resolved_log, proc_name)
+    print("Starting trace resolution and filtering...", file=sys.stderr)
+    in_lines, out_lines = tail_and_resolve(logfile, symbols, base_offset, resolved_log, proc_name, executable)
     
     print("\nTrace processing complete.", file=sys.stderr)
     print(f"Resolved trace saved to {resolved_log}", file=sys.stderr)
