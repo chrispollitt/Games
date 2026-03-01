@@ -216,6 +216,8 @@ const TOUCH_KEYS = [
   'q',     // Quit Game
   'k',     // Toggle WaitForKey");
   'w',     // Toggle ShowWindows");
+  'm',     // Toggle Sound Mute
+  'M',     // Toggle Sound Mute
   KEY_UP,  // Scroll Status Messages
   KEY_DOWN // Scroll Status Messages
 ];
@@ -294,6 +296,8 @@ async function main() {
             Help_shown_this_session = 1;
         }
     }
+		// user interaction for sound
+		await pauseGame();
     
     // Run game rounds
     for (; Game_rounds > 0; Game_rounds--) {
@@ -480,9 +484,20 @@ async function run_round() {
     
     // Print initial maze
     clear();
+    // Create sound mute indicator badge if not already present
+    if (typeof document !== 'undefined' && !document.getElementById('sfx-mute-indicator')) {
+        const badge = document.createElement('div');
+        badge.id = 'sfx-mute-indicator';
+        badge.textContent = '🔊';
+        badge.title = 'Press M to toggle sound';
+        badge.style.cssText = 'position:fixed;bottom:8px;right:12px;font-size:1.4em;cursor:pointer;z-index:999;user-select:none;opacity:0.75;';
+        badge.onclick = () => { sfx_handleKey('m'); };
+        document.body.appendChild(badge);
+    }
     await print_maze();
     await display_player_stats();
     await pauseForUser();
+    SFX.raceStart();
     await update_status_line("The race is ON!");
     LastSLupdate = 1;
     
@@ -853,6 +868,7 @@ async function display_player_alert(p_idx, rank) {
     wattron(battle_win, COLOR_PAIR(players[p_idx - 1].color_pair) | A_BOLD);
     
     if (rank > 0) {
+        if (rank === 1) SFX.goalRank1(); else SFX.goalFinish(rank);
         mvwprintw(battle_win, 2, 2, "PLAYER REACHED GOAL!");
         // figlet goal
         mvwprintw(battle_win, 16, 1, String.raw`        RANK = ${rank}!                     `);
@@ -862,6 +878,7 @@ async function display_player_alert(p_idx, rank) {
         mvwprintw(battle_win, 20, 1, String.raw`|  _| | | | | | \__ \ | | |  __/ (_| |`);
         mvwprintw(battle_win, 21, 1, String.raw`|_|   |_|_| |_|_|___/_| |_|\___|\__,_|`);
     } else if (rank === -1) {
+        SFX.abandoned();
         mvwprintw(battle_win, 2, 2, "PLAYER ABANDONED RACE");
         // figlet abandoned
         mvwprintw(battle_win, 16, 1, String.raw` _____  OUT OF MOVES!               _ `);
@@ -871,6 +888,7 @@ async function display_player_alert(p_idx, rank) {
         mvwprintw(battle_win, 20, 1, String.raw`  |_||_|  \__,_| .__| .__/ \___|\__,_|`);
         mvwprintw(battle_win, 21, 1, String.raw`               |_|  |_|               `);
     } else if (rank === -2) {
+        SFX.abandoned();
         mvwprintw(battle_win, 2, 2, "PLAYER ABANDONED RACE");
         // figlet abandoned
         mvwprintw(battle_win, 16, 1, String.raw`        TOO MANY LOSSES!        `);
@@ -1188,6 +1206,7 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
             players[widx].strength += 1;
             players[widx].battles_won += 1;
             players[widx].recovery_turns = WINNER_RECOVERY_TURNS;
+            SFX.battleWin();
         } else {
             // winner is monster
             monsters[widx].strength += 1;
@@ -1199,12 +1218,14 @@ async function show_battle_art(aart, leftside, type, player, left_idx, right_idx
             // loser is player
             players[lidx].battles_lost += 1;
             players[lidx].recovery_turns = LOSER_RECOVERY_TURNS;
+            SFX.battleLoss();
             await update_status_line(`${BOT_NAMES_F[lidx + 1]} ${LOST_MSG}!`);
         } else {
             // loser is monster
             Liv_monsters--;
             monsters[lidx].defeated = 1;
             maze.grid[monsters[lidx].y][monsters[lidx].x] = DEFEATED_MONSTER;
+            SFX.monsterDefeated();
             await update_status_line(`${MONSTER_NAMES_R[lidx]} ${LOST_MSG}!`);
         }
         
@@ -1267,6 +1288,7 @@ async function battle_unified(combatant1_idx, combatant2_idx, type) {
     // show battle spot
     let be_x = (type !== 2) ? players[p1_idx].current.x : monsters[m1_idx].x;
     let be_y = (type !== 2) ? players[p1_idx].current.y : monsters[m1_idx].y;
+    SFX.battleStart();
     await animate_bullseye(be_y, be_x, 5, parseInt(pauseTime / 40), 0);
     
     if (ShowWindows !== 0) {
@@ -1768,6 +1790,7 @@ async function solve_maze_multi() {
                 
                 // Record teleportation
                 players[p].justTeleported = Game_moves + 2;
+                SFX.teleport();
                 
                 let teleported = new Position(newPos.x, newPos.y, current.x, current.y);
                 stacks[p].push(teleported);
@@ -2692,8 +2715,15 @@ async function read_keyboard() {
     switch (ch) {
         // PAUSE with SPACE
         case 32:
+            SFX.pause();
             await pauseGame();
             was_paused = 1;
+            break;
+        // Toggle mute with M
+        case 77:  // 'M'
+        case 109: // 'm'
+            sfx_handleKey('m');
+            await update_status_line(SFX.isMuted() ? "Sound OFF 🔇" : "Sound ON 🔊");
             break;
         // Toggle WaitForKey with K
         case 75:
@@ -2710,6 +2740,7 @@ async function read_keyboard() {
         // SLOW DOWN with MINUS
         case 95:
         case 45:
+            SFX.speedChange(false);
             await update_status_line("Slowing down...");
             Game_speed--;
             await calc_game_speed();
@@ -2717,6 +2748,7 @@ async function read_keyboard() {
         // SPEED UP with PLUS
         case 61:
         case 43:
+            SFX.speedChange(true);
             await update_status_line("Speeding up...");
             Game_speed++;
             await calc_game_speed();
@@ -2928,7 +2960,8 @@ async function show_help_window() {
     mvwprintw(help_win, 7, 4, "[H]       - Show Extended Help.");
     mvwprintw(help_win, 8, 4, "[q/Q/ESC] - Quit Game");
     mvwprintw(help_win, 9, 4, "[k]       - Toggle WaitForKey");
-    mvwprintw(help_win,10, 4, "[w]       - Toggle ShowWindows");
+    mvwprintw(help_win, 10, 4, "[m]       - Toggle Sound On/Off");
+    mvwprintw(help_win,11, 4, "[w]       - Toggle ShowWindows");
     mvwprintw(help_win,12, 2, "During Pause:");
     mvwprintw(help_win,13, 4, "[Up/Down] - Scroll Status Messages");
     
@@ -3000,9 +3033,211 @@ function shuffleArray(array) {
   return shuffled;
 }
 
+///// SOUND ENGINE ///////////////////////
+// Web Audio API sound effects for Maze4
+// All sounds are synthesized procedurally — no audio files needed.
+
+const SFX = (() => {
+    let _ctx = null;
+    let _muted = false;
+
+    function ctx() {
+        if (!_ctx) {
+            try { _ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+        }
+        // Resume if suspended (browsers require a user gesture first)
+        if (_ctx && _ctx.state === 'suspended') _ctx.resume();
+        return _ctx;
+    }
+
+    // Master gain node
+    function masterGain(vol = 0.4) {
+        const g = ctx().createGain();
+        g.gain.setValueAtTime(vol, ctx().currentTime);
+        g.connect(ctx().destination);
+        return g;
+    }
+
+    // Generic oscillator burst
+    function osc(type, freq, duration, vol = 0.35, startFreq = null, endFreq = null) {
+        if (_muted || !ctx()) return;
+        const ac = ctx();
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.type = type;
+        o.frequency.setValueAtTime(startFreq || freq, ac.currentTime);
+        if (endFreq !== null) o.frequency.exponentialRampToValueAtTime(endFreq, ac.currentTime + duration);
+        g.gain.setValueAtTime(vol, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + duration);
+        o.connect(g); g.connect(ac.destination);
+        o.start(ac.currentTime);
+        o.stop(ac.currentTime + duration);
+    }
+
+    // Noise burst (for explosions, collisions)
+    function noise(duration, vol = 0.2, filterFreq = 800) {
+        if (_muted || !ctx()) return;
+        const ac = ctx();
+        const bufSize = ac.sampleRate * duration;
+        const buf = ac.createBuffer(1, bufSize, ac.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+        const src = ac.createBufferSource();
+        src.buffer = buf;
+        const filter = ac.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = filterFreq;
+        filter.Q.value = 0.5;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(vol, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + duration);
+        src.connect(filter); filter.connect(g); g.connect(ac.destination);
+        src.start(ac.currentTime);
+    }
+
+    // Schedule a sequence of notes
+    function seq(notes) {
+        // notes: [{type, freq, start, dur, vol}]
+        if (_muted || !ctx()) return;
+        const ac = ctx();
+        notes.forEach(n => {
+            const o = ac.createOscillator();
+            const g = ac.createGain();
+            o.type = n.type || 'square';
+            o.frequency.setValueAtTime(n.freq, ac.currentTime + n.start);
+            g.gain.setValueAtTime(n.vol || 0.3, ac.currentTime + n.start);
+            g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + n.start + n.dur);
+            o.connect(g); g.connect(ac.destination);
+            o.start(ac.currentTime + n.start);
+            o.stop(ac.currentTime + n.start + n.dur + 0.01);
+        });
+    }
+
+    return {
+        // Toggle mute
+        toggleMute() { _muted = !_muted; return _muted; },
+        isMuted() { return _muted; },
+
+        // 🏁 Race start — ascending fanfare
+        raceStart() {
+            seq([
+                {type:'square', freq:262, start:0,    dur:0.12, vol:0.3},
+                {type:'square', freq:330, start:0.12, dur:0.12, vol:0.3},
+                {type:'square', freq:392, start:0.24, dur:0.12, vol:0.3},
+                {type:'square', freq:523, start:0.36, dur:0.25, vol:0.35},
+            ]);
+        },
+
+        // ⚔️ Battle begins — dramatic clash
+        battleStart() {
+            noise(0.15, 0.25, 600);
+            osc('sawtooth', 220, 0.3, 0.2, 440, 110);
+        },
+
+        // 🏆 Player wins battle — triumphant ding
+        battleWin() {
+            seq([
+                {type:'triangle', freq:523, start:0,    dur:0.1, vol:0.3},
+                {type:'triangle', freq:659, start:0.1,  dur:0.1, vol:0.3},
+                {type:'triangle', freq:784, start:0.2,  dur:0.2, vol:0.35},
+            ]);
+        },
+
+        // 💀 Player loses battle — descending gloom
+        battleLoss() {
+            seq([
+                {type:'sawtooth', freq:330, start:0,    dur:0.15, vol:0.3},
+                {type:'sawtooth', freq:277, start:0.15, dur:0.15, vol:0.3},
+                {type:'sawtooth', freq:220, start:0.3,  dur:0.25, vol:0.3},
+            ]);
+            noise(0.2, 0.15, 300);
+        },
+
+        // 🌀 Teleport — sci-fi whoosh up
+        teleport() {
+            osc('sine', 200, 0.4, 0.3, 200, 1400);
+            osc('sine', 250, 0.4, 0.15, 250, 1800);
+        },
+
+        // 🎉 Player reaches goal — rank 1 (full fanfare)
+        goalRank1() {
+            seq([
+                {type:'square', freq:523, start:0,    dur:0.1, vol:0.35},
+                {type:'square', freq:659, start:0.1,  dur:0.1, vol:0.35},
+                {type:'square', freq:784, start:0.2,  dur:0.1, vol:0.35},
+                {type:'square', freq:1047,start:0.3,  dur:0.1, vol:0.35},
+                {type:'square', freq:784, start:0.4,  dur:0.08, vol:0.3},
+                {type:'square', freq:1047,start:0.48, dur:0.35, vol:0.4},
+            ]);
+        },
+
+        // 🥈🥉 Finish (rank 2/3/4) — shorter jingle
+        goalFinish(rank) {
+            const base = [392, 330, 294][rank - 2] || 262;
+            seq([
+                {type:'triangle', freq:base,      start:0,   dur:0.12, vol:0.3},
+                {type:'triangle', freq:base*1.25, start:0.12,dur:0.12, vol:0.3},
+                {type:'triangle', freq:base*1.5,  start:0.24,dur:0.22, vol:0.35},
+            ]);
+        },
+
+        // ☠️ Player abandoned / too many losses — sad trombone
+        abandoned() {
+            seq([
+                {type:'sawtooth', freq:392, start:0,    dur:0.2,  vol:0.3},
+                {type:'sawtooth', freq:370, start:0.2,  dur:0.2,  vol:0.3},
+                {type:'sawtooth', freq:349, start:0.4,  dur:0.2,  vol:0.3},
+                {type:'sawtooth', freq:294, start:0.6,  dur:0.4,  vol:0.35},
+            ]);
+        },
+
+        // 🎮 Game over — final descending chord
+        gameOver() {
+            seq([
+                {type:'sawtooth', freq:440, start:0,   dur:0.3,  vol:0.25},
+                {type:'sawtooth', freq:349, start:0.3, dur:0.3,  vol:0.25},
+                {type:'sawtooth', freq:277, start:0.6, dur:0.5,  vol:0.3},
+            ]);
+            noise(0.5, 0.15, 200);
+        },
+
+        // ☠️ Monster defeated — crunch
+        monsterDefeated() {
+            noise(0.12, 0.25, 400);
+            osc('sawtooth', 80, 0.2, 0.2, 160, 40);
+        },
+
+        // 👾 Monster spawns / patrols (subtle)
+        monsterNearby() {
+            osc('sine', 55, 0.15, 0.08, 55, 45);
+        },
+
+        // ⏸️ Pause click
+        pause() {
+            osc('sine', 660, 0.06, 0.15);
+        },
+
+        // ➕➖ Speed change
+        speedChange(up) {
+            osc('sine', up ? 880 : 440, 0.08, 0.15);
+        },
+    };
+})();
+
+// Expose mute toggle to HTML UI (called from keyboard handler)
+function sfx_handleKey(key) {
+    if (key === 'm' || key === 'M') {
+        const muted = SFX.toggleMute();
+        // Update mute indicator if present
+        const el = document.getElementById('sfx-mute-indicator');
+        if (el) el.textContent = muted ? '🔇' : '🔊';
+    }
+}
+
 ///// HTML VERSION ONLY ///////////////////////
 
 function showGameOverScreen() {
+    SFX.gameOver();
     // Create a semi-transparent overlay for the whole screen
     const overlay = document.createElement('div');
     overlay.style.position = 'absolute';

@@ -63,22 +63,22 @@
             position: relative;
             top: -0.3em;
         }
-        .color-pair-1  { color: #000; background-color: #000; }
-        .color-pair-2  { color: #f00; background-color: #000; }
-        .color-pair-3  { color: #0ff; background-color: #000; }
-        .color-pair-4  { color: #ff0; background-color: #000; }
-        .color-pair-5  { color: #0f0; background-color: #000; }
-        .color-pair-6  { color: #f0f; background-color: #000; }
-        .color-pair-7  { color: #0ff; background-color: #00f; }
-        .color-pair-8  { color: #fff; background-color: #f0f; }
-        .color-pair-9  { color: #f0f; background-color: #000; }
-        .color-pair-10 { color: #000; background-color: #fff; }
-        .color-pair-11 { color: #000; background-color: #ff0; }
-        .color-pair-12 { color: #f00; background-color: #000; }
-        .color-pair-13 { color: #fff; background-color: #000; }
-        .color-pair-14 { color: #ff0; background-color: #000; }
-        .color-pair-15 { color: #00f; background-color: #000; }
-        .color-pair-16 { color: #0ff; background-color: #000; }
+        .color-pair-1  { color: #000; background-color: #000; }  /* black   on black   */
+        .color-pair-2  { color: #f00; background-color: #000; }  /* red     on black   */
+        .color-pair-3  { color: #0ff; background-color: #000; }  /* cyan    on black   */
+        .color-pair-4  { color: #ff0; background-color: #000; }  /* yellow  on black   */
+        .color-pair-5  { color: #090; background-color: #000; }  /* green   on black   */
+        .color-pair-6  { color: #f0f; background-color: #000; }  /* magenta on black   */
+        .color-pair-7  { color: #0ff; background-color: #00f; }  /* cyan    on blue    */
+        .color-pair-8  { color: #fff; background-color: #f0f; }  /* white   on magenta */
+        .color-pair-9  { color: #f0f; background-color: #000; }  /* magenta on black   */
+        .color-pair-10 { color: #000; background-color: #fff; }  /* black   on white   */
+        .color-pair-11 { color: #000; background-color: #ff0; }  /* black   on yellow  */
+        .color-pair-12 { color: #f00; background-color: #000; }  /* red     on black   */
+        .color-pair-13 { color: #fff; background-color: #000; }  /* white   on black   */
+        .color-pair-14 { color: #ff0; background-color: #000; }  /* yellow  on black   */
+        .color-pair-15 { color: #00f; background-color: #000; }  /* blue    on black   */
+        .color-pair-16 { color: #0ff; background-color: #000; }  /* cyan    on black   */
         .attr-bold { font-weight: bold; }
         .attr-reverse { filter: invert(100%); }
         .attr-underline { text-decoration: underline; }
@@ -390,7 +390,7 @@ function getColorCode(colorNum) {
     switch(colorNum) {
         case COLOR_BLACK: return '#000';
         case COLOR_RED: return '#f00';
-        case COLOR_GREEN: return '#0f0';
+        case COLOR_GREEN: return '#090'; // '#0f0';
         case COLOR_YELLOW: return '#ff0';
         case COLOR_BLUE: return '#00f';
         case COLOR_MAGENTA: return '#f0f';
