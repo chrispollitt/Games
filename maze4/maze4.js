@@ -842,6 +842,15 @@ async function display_player_stats() {
 async function display_player_alert(p_idx, rank) {
     Game_finished++;
     if (ShowWindows === 0) {
+			  // play SFX
+        if (rank > 0) {
+            if (rank === 1) SFX.goalRank1(); else SFX.goalFinish(rank);
+        } else if (rank === -1) {
+            SFX.abandoned();
+        } else if (rank === -2) {
+            SFX.abandoned();
+		    }
+			  // logic
         if (Game_finished !== NUM_PLAYERS)
             await pauseForUser();
         return;
