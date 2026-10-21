@@ -1,0 +1,17 @@
+# Compiled objects/binaries
+maze4/*.o
+maze4/*.exe
+
+# Logs
+maze4/*.log
+
+# Profiling/trace output
+maze4/*.perf
+maze4/trace_resolved.*
+maze4/calltree.txt
+
+# Runtime save data
+maze4/maze4_high_scores.dat
+
+# per-directory backups made before editing (no git equivalent used here)
+BAK/
