@@ -15,3 +15,6 @@ maze4/maze4_high_scores.dat
 
 # per-directory backups made before editing (no git equivalent used here)
 BAK/
+/DungeonOMA/
+/Misc/
+/maze4/cpp/
