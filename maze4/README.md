@@ -74,6 +74,7 @@ Then view it with:
 | -m N   | Number of monsters (default: auto) |
 | -s N   | Max monster strength (1–15, default: 10) |
 | -g N   | Game speed (1–100, default: 50) |
+| -S N   | Random seed: replay a game (the seed is printed when the game ends) |
 | -k     | Wait for keypress before continuing (default: no) |
 | -w     | Show battle windows (default: no) |
 | -h     | Show help message |

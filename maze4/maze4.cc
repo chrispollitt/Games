@@ -233,6 +233,8 @@ int Game_speed = -1;
 int Game_delay = 0;
 int Game_rounds = -1;
 int Game_roundsB = -1;
+unsigned int Game_seed = 0;  // random seed; -S N replays a game
+int Seed_given = 0;
 int ShowWindows = -1;
 int WaitForKey  = -1;
 int LastSLupdate = 0;
@@ -313,8 +315,12 @@ int main(int argc, char *argv[]) {
   struct winsize size;
 
   // Process command line arguments
-  while ((opt = getopt(argc, argv, "t:m:s:g:r:p:kwh")) != -1) {
+  while ((opt = getopt(argc, argv, "t:m:s:g:r:p:S:kwh")) != -1) {
     switch (opt) {
+    case 'S':
+      Game_seed = static_cast<unsigned int>(strtoul(optarg, NULL, 10));
+      Seed_given = 1;
+      break;
     case 't':
       Num_teleporters = atoi(optarg);
       break;
@@ -349,6 +355,8 @@ int main(int argc, char *argv[]) {
              MAX_MONSTER_STRENGTH, DEF_MONSTER_STRENGTH);
       printf("  -g N    Set game speed (1-100, default: %d)\n", DEF_GAME_SPEED);
       printf("  -p N    Set user pause seconds (default: %d)\n", 2);
+      printf("  -S N    Use random seed N to replay a game (default: from clock;\n"
+             "          the seed is printed when the game ends)\n");
       printf("  -k      Wait for key-press to continue (default: No)\n");
       printf("  -w      Show battle windows (default: No)\n");
       printf("  -h      Display this help message\n");
@@ -360,7 +368,8 @@ int main(int argc, char *argv[]) {
   }
 
   // Set the random seed
-  srand(static_cast<unsigned int>(time(NULL)));
+  if (!Seed_given) Game_seed = static_cast<unsigned int>(time(NULL));
+  srand(Game_seed);
 
   // init game  
   init();
@@ -382,7 +391,6 @@ int main(int argc, char *argv[]) {
   // leave game
   exit_game("Game over\n");
 }
-
 // init (one time)
 void init() {
   struct winsize size;
@@ -2778,6 +2786,7 @@ void exit_game(const char *format, ...) {
   va_start(args, format);
   vprintf(format, args);  // Forward the varargs to printf
   va_end(args);
+  printf("Seed: %u  (replay with: maze4 -S %u)\n", Game_seed, Game_seed);
   exit(0);
 }
 
@@ -3195,7 +3204,6 @@ void shuffleArray(const char* in[], char* out[], int n) {
     for (int i = 0; i < n; ++i) {
         out[i] = const_cast<char*>(in[i]);
     }
-    std::random_device rd;
-    std::mt19937 g(rd());
+    std::mt19937 g(static_cast<unsigned int>(rand()));  // follows -S seed
     std::shuffle(out, out + n, g);
 }
