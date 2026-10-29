@@ -1,0 +1,59 @@
+Waiting for log file: trace.perf
+Parsing symbols from: maze4pp
+Found 1325 symbols
+Finding first function address...
+
+Base address calculation:
+  First trace address: 0x10040edcc
+  Main symbol address: 0x10040e00f
+  Calculated offset:   0x0
+
+Starting trace resolution and filtering...
+Debug: srcfile = /home/chris/github/chrispollitt/Games/maze4/cpp/maze4pp.cc
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/cow_string.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/char_traits.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/x86_64-pc-cygwin/bits/c++config.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/ext/type_traits.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_iterator_base_funcs.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_iterator_base_types.h
+Debug: srcfile = ??
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/unique_ptr.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/tuple
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/move.h
+Call stack mismatch: entered 0x10040e171 (unresolved) but exited PathStack::push(Position const&)
+Debug: srcfile = /home/chris/github/chrispollitt/Games/maze4/cpp/maze4pp.hh
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/array
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_vector.h
+Malformed line: 593577,EN40deec
+
+Call stack mismatch: entered PathStack::push(Position const&) but exited maze::getCols()
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/alloc_traits.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_construct.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/new_allocator.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/allocator.h
+Call stack mismatch: entered 0x10040edcc (unresolved) but exited UI::printMaze(MazeGrid const&, std::vector<Player, std::allocator<Player> > const&) const
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/chrono.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/this_thread_sleep.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_iterator.h
+Call stack mismatch: entered PathStack::isEmpty() const but exited UI::printMaze(MazeGrid const&, std::vector<Player, std::allocator<Player> > const&) const
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/vector.tcc
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_algobase.h
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/new
+Debug: srcfile = /lib/gcc/x86_64-pc-cygwin/12/include/c++/bits/stl_uninitialized.h
+Malformed line: 11802345,0x1004160b0
+
+Malformed line: 126337
+Malformed line: ENTER,5,0x100415a10
+
+Malformed line: 1004160b0
+
+Malformed line: ER,5,0x1004255c0
+
+Malformed line: 15a10
+
+
+Target process has terminated
+
+Trace processing complete.
+Resolved trace saved to trace_resolved.perf
+Processed 1003246 lines, wrote 11652 lines

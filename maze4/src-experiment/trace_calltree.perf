@@ -1,0 +1,11 @@
+🌳 Timed Call Tree (Hierarchical View)
+══════════════════════════════════════════════════════════════════
+FUNCTION                                     TOTAL  AVG/CALL CALLS
+└─UI::printMaze                             5968.7    271.30    22
+  ├─MazeGrid::getRows                          0.0      0.00   293
+  ├─MazeGrid::getCols                          0.0      0.00   252
+  ├─Entity::getPosition                        0.0      0.00   536
+  └─Player::getCurrentChar                     0.0      0.00    92
+
+CSV data exported to: trace_resolved.csv
+Loop count used for calculations: 1

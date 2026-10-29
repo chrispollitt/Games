@@ -1,0 +1,5 @@
+Debug: lines = 11652
+Debug: skipping comment # timestamp,event,depth,duration,function
+Debug: skipping non-5 part line 9463294,EXIT,4,0x10040a866
+
+Debug: Calculated loop count: 1

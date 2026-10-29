@@ -1,0 +1,6 @@
+FUNCTION,TOTAL,AVG/CALL,CALLS,CALLS/LOOP
+Entity::getPosition,0.0,0.00,536,536.00
+MazeGrid::getCols,0.0,0.00,252,252.00
+MazeGrid::getRows,0.0,0.00,293,293.00
+Player::getCurrentChar,0.0,0.00,92,92.00
+UI::printMaze,5968.7,271.30,22,22.00
