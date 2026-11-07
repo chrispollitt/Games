@@ -3,24 +3,47 @@
 # Run arguments
 RUN_ARGS ?= -g100 -r2 -m4 -t2 -p0
 
-# Compiler to use
+# operating system
+OS := $(shell uname -s)
+
+# Compiler to use: gcc, except where clang is the system compiler (FreeBSD has no g++,
+# macOS's g++ is clang).  Override with: make CXX=... CC=...
+ifneq ($(filter FreeBSD Darwin,$(OS)),)
+CXX    = clang++
+CC     = clang
+else
 CXX    = g++
 CC     = gcc
+endif
 CATLOG = catlog
 SUMLOG = sumlog
 TRACEPREFIX = trace
 TRACESUFFIX = .perf
 
-# operating system
-OS := $(shell uname -s)
+# -Werror keeps gcc builds clean, but clang's -Wconversion is stricter (it includes
+# -Wsign-conversion), so with clang the warnings are shown without stopping the build.
+# WERROR=0 turns it off for gcc too; WERROR=1 forces it on.
+IS_CLANG := $(findstring clang,$(shell $(CXX) --version 2>/dev/null))
+ifeq ($(WERROR),)
+ifeq ($(IS_CLANG),)
+WERROR = 1
+else
+WERROR = 0
+endif
+endif
+ifeq ($(WERROR),1)
+WERR = -Werror
+else
+WERR =
+endif
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -g -Werror -pedantic -std=c17 -Wshadow -Wconversion -Wunused -Wformat=2 
+CFLAGS = -Wall -Wextra -g $(WERR) -pedantic -std=c17 -Wshadow -Wconversion -Wunused -Wformat=2 
 #CFLAGS = -g -Wall -std=c11
 ifeq ($(PROFILE),1)
 CXXFLAGS = -pg -O0
 else
-CXXFLAGS = -Wall -Wextra -g -Werror -pedantic -std=c++17 -Wshadow -Wconversion -Wunused -Wformat=2 
+CXXFLAGS = -Wall -Wextra -g $(WERR) -pedantic -std=c++17 -Wshadow -Wconversion -Wunused -Wformat=2 
 #CXXFLAGS = -g -Wall -std=c++11
 endif
 ifeq ($(DEBUG),1)
