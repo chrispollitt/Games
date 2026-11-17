@@ -1,0 +1,180 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>act 2
+
+The Skiff Cabin
+The inside of the mail skiff, which is mostly instrument panel, with seats added
+later as an afterthought. Beyond the glass there is the particular grey that
+means a jump is in progress. You are not meant to look at it, and you do.
+
+The pilot hunches over the controls, cap over his eyes, humming. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by sixty points.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+"Hub Station," says the pilot. "Mind the gap." There is no gap. You mind it
+anyway.
+
+Hub Station: Arrivals
+A long, low arrivals hall under a ceiling of strip lights, with the sort of
+carpet that was chosen to hide things. A kiosk stands in the middle of the
+floor; a plant, a very old plant, waits in a pot beside it. A sign says QUEUE
+HERE and points at the floor. Customs is to the east.
+
+>consult guide about the mish mash
+WSOGMM: THE WHOLE SORT OF GENERAL MISH MASH. THE GUIDE'S PREFERRED NAME FOR THE
+FACT THAT EVERYTHING THAT MIGHT HAVE HAPPENED IS STILL LYING ABOUT IN ONE HEAP,
+LIKE A WARDROBE AFTER A HOLIDAY. EVERY EARTH THERE HAS EVER BEEN IS IN IT. SO IS
+YOUR LUNCH. THE GUIDE CAN TIDY IT. THE GUIDE WOULD ASK YOU NOT TO WORRY ABOUT
+WHERE IT PUTS THINGS.
+
+[Out of the story: the joke has a respectable ancestor. In 1957 the physicist
+Hugh Everett III published a paper on the "relative state" formulation of
+quantum mechanics, from which grew the many-worlds interpretation, in which
+every possible outcome of a quantum event is real in some branch of a larger
+whole. Richard Feynman's sum over histories (1948) likewise treats a particle as
+taking every path at once. Neither would care to be quoted on sandwiches. The
+Mish Mash is the game having a little fun at their expense.]
+
+Ford ambles in after you, towel over one shoulder.
+
+>consult guide about wsogm
+(Taking "wsogm" to mean "wsogmm".)
+WSOGMM: THE WHOLE SORT OF GENERAL MISH MASH. THE GUIDE'S PREFERRED NAME FOR THE
+FACT THAT EVERYTHING THAT MIGHT HAVE HAPPENED IS STILL LYING ABOUT IN ONE HEAP,
+LIKE A WARDROBE AFTER A HOLIDAY. EVERY EARTH THERE HAS EVER BEEN IS IN IT. SO IS
+YOUR LUNCH. THE GUIDE CAN TIDY IT. THE GUIDE WOULD ASK YOU NOT TO WORRY ABOUT
+WHERE IT PUTS THINGS.
+
+[Out of the story: the joke has a respectable ancestor. In 1957 the physicist
+Hugh Everett III published a paper on the "relative state" formulation of
+quantum mechanics, from which grew the many-worlds interpretation, in which
+every possible outcome of a quantum event is real in some branch of a larger
+whole. Richard Feynman's sum over histories (1948) likewise treats a particle as
+taking every path at once. Neither would care to be quoted on sandwiches. The
+Mish Mash is the game having a little fun at their expense.]
+
+>what is the whole sort of general mish mash?
+The Whole Sort of General Mish Mash, as Ford would tell you, is what everything
+is until somebody decides otherwise: every way things might have gone, all piled
+up together like coats at a party. It is a handy name for the sort of mess that
+cannot be sorted, and a handier excuse. Do not try to tidy it. It has views.
+
+[Out of the story: the joke has a respectable ancestor. In 1957 the physicist
+Hugh Everett III published a paper on the "relative state" formulation of
+quantum mechanics, from which grew the many-worlds interpretation, in which
+every possible outcome of a quantum event is real in some branch of a larger
+whole. Richard Feynman's sum over histories (1948) likewise treats a particle as
+taking every path at once. Neither would care to be quoted on sandwiches. The
+Mish Mash is the game having a little fun at their expense.]
+
+>ask ford about the mish mash
+"The Mish Mash," says Ford, with the weariness of a man who has stopped trying
+to explain things. "It's what you call everything when you can't be bothered to
+separate it. Possible, impossible and what was for lunch. Don't try to sort it.
+It dislikes being sorted."
+
+>tell ford about wsogmm
+"The Mish Mash," says Ford, with the weariness of a man who has stopped trying
+to explain things. "It's what you call everything when you can't be bothered to
+separate it. Possible, impossible and what was for lunch. Don't try to sort it.
+It dislikes being sorted."
+
+>e
+
+Customs Hall
+A pale green hall divided by a counter and a pane of glass, behind which Clerk
+Gruba sits like a very large moth in a very small cupboard. A rack of forms
+stands by the glass, with a pen on a chain beside it; an enormous sign says FORM
+27B/6 OR NO ONE PASSES. There is a bin marked ITEMS TO DECLARE (it is full of
+nothing). Arrivals is to the west and the concourse lies east, past Gruba.
+
+Clerk Gruba sits behind the glass, framed like a portrait of someone who has
+never been surprised. 
+
+You can also see a Form 27B/6 here.
+
+Ford ambles in after you, towel over one shoulder.
+
+The cube writes on its face, in neat capitals, before Gruba has so much as
+looked up: FORM 27B/6. YOU WERE ABOUT TO ASK. A moment later, from behind the
+glass, Gruba says exactly that, in exactly that tone.
+
+>ask gruba about the mish mash
+"Cause of delay," says Gruba, flatly. "Form 27B/6 has a box for it. Third from
+the bottom. It is the only box anyone ever ticks."
+
+>w
+
+Hub Station: Arrivals
+A long, low arrivals hall under a ceiling of strip lights, with the sort of
+carpet that was chosen to hide things. A kiosk stands in the middle of the
+floor; a plant, a very old plant, waits in a pot beside it. A sign says QUEUE
+HERE and points at the floor. Customs is to the east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>inventory
+You're carrying:
+  a glass jar
+    a Babel fish
+  a coin of no known denomination
+  a wicker basket
+  a sandwich knife
+  a Guide Mk II
+  a dressing gown (being worn)
+
+>drop all
+glass jar: Dropped.
+coin of no known denomination: Dropped.
+wicker basket: Dropped.
+sandwich knife: Dropped.
+Guide Mk II: Dropped.
+
+>take all
+Guide Mk II: Taken.
+sandwich knife: Taken.
+wicker basket: Taken.
+coin of no known denomination: Taken.
+glass jar: Taken.
+
+[The score has just gone up by two points.]
+
+>egg 6
+The next XYZZY will give outcome 6.
+
+>xyzzy
+In your pocket you find a small boiled sweet you do not remember buying. It
+tastes of nostalgia and is gone before you have decided whether to like it.
+(That, the Guide would say, was merely the Whole Sort of General Mish Mash
+leaking.)
+
+>inventory
+You're carrying:
+  a glass jar
+    a Babel fish
+  a coin of no known denomination
+  a wicker basket
+  a sandwich knife
+  a Guide Mk II
+  a dressing gown (being worn)
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

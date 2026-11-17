@@ -101,6 +101,11 @@ Array entry_bits --> 1 2 4 8 16 32;
         CubeShortcut(256);
         rtrue;
     }
+    if (TopicAny('wsogmm', 'mish', 'mash', 'mishmash')) {
+        print "WSOGMM: THE WHOLE SORT OF GENERAL MISH MASH. THE GUIDE'S PREFERRED NAME FOR THE FACT THAT EVERYTHING THAT MIGHT HAVE HAPPENED IS STILL LYING ABOUT IN ONE HEAP, LIKE A WARDROBE AFTER A HOLIDAY. EVERY EARTH THERE HAS EVER BEEN IS IN IT. SO IS YOUR LUNCH. THE GUIDE CAN TIDY IT. THE GUIDE WOULD ASK YOU NOT TO WORRY ABOUT WHERE IT PUTS THINGS.^^";
+        MishFootnote();
+        rtrue;
+    }
     ! ---- Hub Station entries (a point each) ----
     if (TopicAny('hub', 'station')) {
         HubEntry(0);

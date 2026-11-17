@@ -100,3 +100,9 @@ Verb 'panic'
 
 Verb 'dont'
     * 'panic'                               -> Panic;
+
+! The Mish Mash dice (mishmash.h)
+Verb meta 'dice'
+    *                                       -> Dice
+    * 'on'                                  -> DiceOn
+    * 'off'                                 -> DiceOff;

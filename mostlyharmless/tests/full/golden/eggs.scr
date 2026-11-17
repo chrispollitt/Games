@@ -32,6 +32,8 @@ eaten.
 >xyzzy
 Your parser would like it noted that this was not in its manual, and that it is
 doing its best.
+(That, the Guide would say, was merely the Whole Sort of General Mish Mash
+leaking.)
 
 >seed 7777
 Random numbers seeded with 7777.
@@ -71,6 +73,8 @@ Time passes.
 
 >xyzzy
 Nothing happens.
+(That, the Guide would say, was merely the Whole Sort of General Mish Mash
+leaking.)
 
 >wait
 Time passes.

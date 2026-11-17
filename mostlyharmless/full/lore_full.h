@@ -31,6 +31,11 @@
 
 ! In-story facts about the Galaxy and its people.  Runs after LoreReal.
 [ LoreWorld;
+    if (TopicAny('wsogmm', 'mish', 'mash', 'mishmash')) {
+        print "The Whole Sort of General Mish Mash, as Ford would tell you, is what everything is until somebody decides otherwise: every way things might have gone, all piled up together like coats at a party. It is a handy name for the sort of mess that cannot be sorted, and a handier excuse. Do not try to tidy it. It has views.^^";
+        MishFootnote();
+        rtrue;
+    }
     if (TopicAny('towel', 'towels')) {
         "A towel is, by long Guide tradition, the most useful thing a hitchhiker can carry: warm, absorbent, a weapon in a pinch, and above all a signal. Anyone seen with one is assumed to have everything else as well. Ford has never been seen without his.";
     }
@@ -132,5 +137,61 @@
 
 [ EggKeep o;
     if (o == guide) rtrue;
+    rfalse;
+];
+
+! The Mish Mash dice stay quiet at the story's tense moments (mishmash.h)
+[ MishQuiet;
+    if (act == 5 && gun_fired == 1) rtrue;
+    if (act == 3 && location == Boardroom && heard_meeting == 0) rtrue;
+    rfalse;
+];
+
+! ------------------------------------------------------------------------
+!  The Whole Sort of General Mish Mash (WSOGMM): a running gag
+! ------------------------------------------------------------------------
+
+[ MishFootnote;
+    print "[Out of the story: the joke has a respectable ancestor. In 1957 the physicist Hugh Everett III published a paper on the ~relative state~ formulation of quantum mechanics, from which grew the many-worlds interpretation, in which every possible outcome of a quantum event is real in some branch of a larger whole. Richard Feynman's sum over histories (1948) likewise treats a particle as taking every path at once. Neither would care to be quoted on sandwiches. The Mish Mash is the game having a little fun at their expense.]^";
+];
+
+! Something a character says when asked about it; true if it answered
+[ MishTalk who;
+    switch (who) {
+      Ford:     "~The Mish Mash,~ says Ford, with the weariness of a man who has stopped trying to explain things. ~It's what you call everything when you can't be bothered to separate it. Possible, impossible and what was for lunch. Don't try to sort it. It dislikes being sorted.~";
+      Daughter: "~Is it a real thing?~ says Random. ~Everyone says it as if it is. If it is, I'd like to see the file.~";
+      Tricia:   "~It sounds like a theory with the nouns taken out,~ says Tricia. ~Give me the maths and I'll tell you whether it's physics or marketing.~";
+      Zendra:   "~Management adores it,~ says Zendra. ~It means whatever the memo needs it to mean. It's what we write when we've been told not to explain.~";
+      Marvin:   "~The Whole Sort of General Mish Mash,~ says Marvin. ~Every way things could go wrong, in one heap, all at once. I find it restful. I have been in it.~";
+      hob:      "~Mish what?~ says Hob. ~Sounds like what happens to my sandwiches when you're not looking.~";
+      Tem:      "~The Stone mentions it,~ says Tem, carefully. ~It does not say whether it is fond of it.~";
+      Gruba:    "~Cause of delay,~ says Gruba, flatly. ~Form 27B/6 has a box for it. Third from the bottom. It is the only box anyone ever ticks.~";
+      Orlo:     "~The Mish Mash,~ says Orlo, and his eyes mist. ~I have a poem about it. It is nine hundred lines. It is mostly about lunch.~";
+      Fenchurch: "~Oh, the Mish Mash,~ says Fenchurch, smiling. ~It's where I was. It's a good deal tidier than people say, once you stop trying to sort it.~";
+      Floyd:    "~Is that a game?~ says Floyd. ~I like games. Is it one where nobody wins and everybody has a nice time? Oh boy.~";
+      Dunna:    "~Mish mash,~ says Dunna, sniffing the smoke. ~Sounds like a stew.~";
+    }
+    print_ret (The) who, " gives a small, careful shrug. ~Not my department,~ comes the reply, in the tone of someone who has heard the phrase used in a more important room.";
+];
+
+
+! After XYZZY: the Guide would say it was the Mish Mash leaking
+[ EggAside;
+    if (eg-->EG_COUNT <= 2)
+        print "(That, the Guide would say, was merely the Whole Sort of General Mish Mash leaking.)^";
+];
+
+! words the player may type about the Mish Mash, so that the typo corrector
+! does not mistake them for something else
+Dictionary 'sort';
+Dictionary 'whole';
+Dictionary 'general';
+
+! Called first thing in every character's Ask / Tell / Answer handler
+[ MishAsk;
+    if (TopicAny('wsogmm', 'mish', 'mash', 'mishmash')) {
+        MishTalk(self);
+        rtrue;
+    }
     rfalse;
 ];

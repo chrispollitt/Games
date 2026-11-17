@@ -98,6 +98,7 @@ Object Kess "Vogon guard Kess" Security
        initial "Kess sits behind the desk, filling in a form about forms. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('badge', 'terminal', 'pass', 'visit'))
                "~You get a badge from the terminal,~ says Kess. ~Or you show me a pass. Nobody's shown me a pass since the takeover.~";
            if (TopicAny('scanner', 'arch', 'fish', 'knife', 'bag', 'search'))
@@ -138,6 +139,7 @@ Object Cloaker "Pim, the attendant" Cloakroom
            }
            "~Thank you, but I couldn't,~ says Pim.";
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('tag', 'property', 'jar', 'fish', 'knife', 'coat'))
                "~Hand it in and I'll give you a tag,~ says Pim. ~Hand back the tag and I'll give it all back. That is the only way I know of being useful.~";
            "~I mind the coats,~ says Pim. ~It's a living.~";
@@ -161,6 +163,7 @@ Object cheer_lift "cheerful lift" LiftLobby
        description "A gleaming lift whose doors seem to be smiling, which is a worse thing for a lift than you would think.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Hello!~ says the lift. ~It's a wonderful day for going up!~ It waits, brightly, for some response.";
        ],
        before [;
@@ -173,6 +176,7 @@ Object sullen_lift "sullen lift" LiftLobby
        description "A dull lift with its doors shut. It manages to look unwelcoming even from behind a door.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Nobody ever asks the grey one,~ says the lift, in a voice like a closing door. ~They always ask the bright one.~";
        ],
        before [;
@@ -185,6 +189,7 @@ Object robot "service robot" LiftLobby
        description "A scuffed, slump-shouldered service robot in the corner, with its head against the wall and a diode or two visibly misbehaving. A plate on its chest says SIRIUS CYBERNETICS CORPORATION: YOUR PLASTIC PAL WHO'S FUN TO BE WITH.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('marvin', 'depressed', 'brain'))
                "~Not Marvin,~ says the robot, without turning. ~People do ask. He's a cousin. His brain's the size of a planet. Mine's the size of a lift button.~";
            if (TopicAny('lift', 'lifts', 'cheerful', 'sullen', 'up', 'floor'))
@@ -234,6 +239,7 @@ Object Zendra "Zendra" Editorial
        initial "Zendra, who sits at the desk nearest the lift, looks up with something like relief. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('mk', 'ii', 'guide', 'cube', 'new', 'edition')) {
                Award(A_ZEN1, 3);
                "~It isn't right,~ says Zendra, lowering her voice. ~The Mk II. It doesn't hold entries. It holds readers. Every edit we make goes into it, and then it makes its own: not about things, about people. I've seen it write a paragraph about a man who hadn't arrived yet.~";
@@ -262,6 +268,7 @@ Object Orlo "Orlo" Editorial
        initial "Orlo stands at the foot of the north-east stairs, a notebook tucked under one arm like a small, vulnerable animal. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('poem', 'poetry', 'verse', 'notebook', 'write', 'writing', 'compose'))
                "Orlo's heavy face is suddenly full of light. ~Poetry,~ he says. ~It must be terrible. Give me the worst you have. Then I will know it is sincere.~ (You can COMPOSE a poem for him.)";
            if (TopicAny('stairs', 'server', 'servers', 'core', 'up'))
@@ -381,6 +388,7 @@ Object vogon_eds "Vogon editors" Boardroom
        description "Eleven Vogons in the same dark suit sit round the table, each with a notebook, each with a face like an apology that has gone wrong. At the head sits the Chief Editor, whose name nobody has been allowed to learn.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "The Vogons do not respond to you. They are very much busy not responding.";
        ],
   has animate scenery pluralname;
@@ -401,11 +409,12 @@ Object core "Mk II core" ServerFloor
        description "A ribbed pillar in grey, with a slot at about the height of your face. It is warm, like the cube in your pocket, and gives the impression of having been listening to the cube.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if ((TopicAny('worst', 'dread', 'fear', 'terrible', 'truth', 'honest', 'honestly') || TopicAny('afraid', 'wrong', 'bad'))) {
                if (have_coords) "~I have told you,~ says the core, pleasantly. ~I am sorry it was true.~";
                have_coords = 1;
                Award(A_CORE, 15);
-               "A long pause. The indicator lights stop blinking, for the first time since you arrived. ~The worst thing I could tell you,~ says the core, in the cube's voice, but without any of its sweetness, ~is that every Earth will be drawn into a single room, in London, on a single Thursday, and will end there. The room is a pub. The coordinates are held in me, and I will give you them, because you have asked the one question I cannot answer pleasantly.~ The slot glows, and a sheet of green paper slides out, bearing a map reference. The girl is already there; she was always going to be. You take the sheet.";
+               "A long pause. The indicator lights stop blinking, for the first time since you arrived. ~The worst thing I could tell you,~ says the core, in the cube's voice, but without any of its sweetness, ~is that every Earth will be drawn into a single room, in London, on a single Thursday, and will end there. The Whole Sort of General Mish Mash is what everything is until someone decides otherwise, and I am the someone. The room is a pub. The coordinates are held in me, and I will give you them, because you have asked the one question I cannot answer pleasantly.~ The slot glows, and a sheet of green paper slides out, bearing a map reference. The girl is already there; she was always going to be. You take the sheet.";
            }
            if (have_coords) "~You have what you came for,~ says the core, smoothly. ~Please go away.~";
            if (TopicAny('random', 'girl', 'daughter'))
@@ -565,7 +574,7 @@ Object roof_ship "Ford's escape ship" Roof
         if (meet_t == 2)
             print "^~Item one,~ says the Chief Editor. ~The variants. We have identified four hundred and eleven. The Mk II reports that it has made contact with the daughter. She is, apparently, very promising.~^";
         if (meet_t == 3)
-            print "^~Item two. The date. It is a Thursday, in London, on the Earth the girl has been drawn to. Every other Earth is to be drawn to the same afternoon, in the same room, by a method the Mk II describes as hospitality.~ A pause. ~Item three. The Grebulons.~^";
+            print "^~Item two. The date. It is a Thursday, in London, on the Earth the girl has been drawn to. Every other Earth is to be drawn to the same afternoon, in the same room, by a method the Mk II describes as hospitality. The minutes will record the underlying difficulty as the Whole Sort of General Mish Mash.~ A pause. ~Item three. The Grebulons.~^";
         if (meet_t == 4)
             print "^~The Grebulons,~ says the Chief Editor, ~have been engaged. They have a chart. They have forgotten what it is for, which is useful. They will press the button when the room is full.~ A rustle of agreement, like paper in a drawer.^";
         if (meet_t == 5) {

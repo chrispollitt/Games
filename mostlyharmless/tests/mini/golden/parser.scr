@@ -80,6 +80,7 @@ Commands outside the story start with a slash, as in a chat program:
   /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help
   /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands
   /INTRO  /HHGG                              overviews for newcomers
+  /DICE ON|OFF                               the Mish Mash dice
 
 Everything else you type is part of the story. Plain English is fine, and so are
 questions, such as WHO IS FORD PREFECT? Without the slash, those words are just

@@ -254,3 +254,10 @@ Two linked ideas from the user, also recorded as ideas only:
    - Because "random" will also appear in Tricia's and Ford's topic lists, test that the topic handlers still work with the event firing around them.
    - State goes in the `eg` array (global variables are nearly used up).
    - Candidate milestone: **M13** (WSOGMM sub-theme plus the "random" dice event), designed together because they share text and tone.
+
+### 13b. M13 status (2026-11-16): built
+
+- **Dice on "random" (both games):** `engine/mishmash.h`. When a completed turn's command contains the word `random`, the Mish Mash rolls a twelve-sided die after the action and prints `[The Mish Mash rolls a N.]` with a small flavour outcome (a colour flicker, a note-taking watcher, the cube's comment, Random's "Did somebody say something?", a falling die, a word about how games roll dice). At most one roll per five turns; silent while a macro replays, after the Act V accident, during the Boardroom meeting, and when switched off with `/DICE OFF` (`/DICE ON` returns it). It never changes puzzle state, score, trust, compliance or endings, and is repeatable under `SEED n`.
+- **Test harness:** `tests/walk.sh` now starts every walkthrough with `/DICE OFF` and removes that block from the transcript (`tests/dicefilter.awk`), except tests whose names start with `dice`, so the existing goldens stay repeatable.
+- **WSOGMM (full game):** `CONSULT GUIDE ABOUT THE MISH MASH` (or WSOGMM, typos forgiven) and the plain question both answer, with the physics footnote (Everett's 1957 relative-state paper and the many-worlds interpretation; Feynman's 1948 sum over histories; the game says it is joking). Every character answers `ASK X ABOUT THE MISH MASH` in their own voice (Ford, Random, Tricia, Zendra, Marvin, Hob, Tem, Gruba, Orlo, Fenchurch, Floyd, Dunna, and a polite shrug for the rest). It also surfaces in the kiosk's excuses, the Boardroom minutes, the core's explanation, and the radio ending, and XYZZY's first outcomes carry an aside that the Guide would blame the Mish Mash.
+- Tests: `dice` (both games), `mish` (full).

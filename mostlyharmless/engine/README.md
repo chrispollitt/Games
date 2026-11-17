@@ -8,6 +8,7 @@
 | `macro.h` | `/MACRO RECORD name`, `STOP`, `PLAY name`, `LIST`, `SHOW`, `DELETE`: record and replay story commands (6 macros of up to 16 commands). Replay echoes and runs each command normally and stops at the first surprise. Needs `Replace KeyboardPrimitive;` before `Include "Parser";`. Faithful mode disables it. |
 | `newbie.h` | `/INTRO` (how interactive fiction works) and `/HHGG` (the franchise, spoiler-free). A game supplies `GameBlurb`. |
 | `eggs.h` | Hidden surprises: `XYZZY` (random good and mildly annoying outcomes, never harmful), `PLUGH`, `PLOVER`, `ZORK`, `GRUE`, `PANIC`. A game supplies `EggRoomOK(r)` and `EggKeep(o)`. |
+| `mishmash.h` | The Mish Mash dice: whenever a turn is completed by a command containing the word `random`, roll a twelve-sided die for a small flavour event; `/DICE ON|OFF`. A game supplies `MishQuiet()`. |
 | `compound.h` | Compound commands: `TAKE PARCEL AND EXAMINE IT`, `DROP ALL, LOOK`, `E; E` (the library mis-reads AND before a verb, so we turn it into THEN). |
 | `slash.h` | `/SAVE`, `/HINT`, `/HELP` ... and the "did you want the slash version?" reply. `/SAVE name` and `/RESTORE name` accept a file name; see the note below. |
 | `hints.h` | Progressive hints (`Puzzle` class, `/HINT`, `/HINT BACK`), `/DIFFICULTY` (easy / average / faithful), the cube compliance counter (`Comply`, `CubeAllowsRadio`) and `HintTick` (call once a turn; easy mode offers a nudge after a long stall). |

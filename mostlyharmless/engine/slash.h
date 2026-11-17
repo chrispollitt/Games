@@ -41,6 +41,7 @@ Global slash_file_len = 0;
       'difficulty':                            return 19;
       'macro':                                 return 20;
       'intro', 'introduction', 'tutorial', 'newbie': return 21;
+      'dice':                                  return 23;
       'hhgg', 'background':                    return 22;
     }
     rfalse;
@@ -70,6 +71,7 @@ Global slash_file_len = 0;
       20: print "MACRO";
       21: print "INTRO";
       22: print "HHGG";
+      23: print "DICE";
     }
 ];
 
@@ -162,7 +164,8 @@ Global slash_file_len = 0;
     print "  /SCRIPT  /UNSCRIPT                            a transcript of your game^";
     print "  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help^";
     print "  /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands^";
-    print "  /INTRO  /HHGG                              overviews for newcomers^^";
+    print "  /INTRO  /HHGG                              overviews for newcomers^";
+    print "  /DICE ON|OFF                               the Mish Mash dice^^";
     print "Everything else you type is part of the story. Plain English is fine, and so are questions, such as WHO IS FORD PREFECT? Without the slash, those words are just ordinary input, and the game will tell you if you needed one.^";
     rtrue;
 ];

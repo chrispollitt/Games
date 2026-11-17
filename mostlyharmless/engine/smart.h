@@ -109,6 +109,7 @@
     SlashStrip();
     TypoFixAll();
     SplitCompound();
+    MishScan();
     StripFiller();
     SlashCheck();
     rfalse;
@@ -261,5 +262,6 @@ Include "compound";
 Include "macro";
 Include "newbie";
 Include "eggs";
+Include "mishmash";
 Include "lore_real";
 Include "hints";

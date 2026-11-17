@@ -762,6 +762,7 @@ Object Director
   with daemon [;
          FollowStep();
          HintTick();
+         MishRoll();
          switch (phase) {
            0:
              pt++;

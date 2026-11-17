@@ -27,6 +27,7 @@ Commands about the game itself start with a slash, as in a chat program:
 | `/DIFFICULTY EASY` / `AVERAGE` / `FAITHFUL` | how much help you get |
 | `/SAVE`, `/RESTORE`, `/UNDO`, `/QUIT` ... | the usual, with a slash |
 | `/MACRO RECORD name` ... `/MACRO STOP`, `/MACRO PLAY name` | record and replay a sequence of commands (it stops if anything is different) |
+| `/DICE ON|OFF` | the Mish Mash rolls a die for a small flourish whenever you type the word *random* |
 | `/INTRO`, `/HHGG` | short overviews for newcomers: interactive fiction; the Hitchhiker franchise |
 | `/HELP`, `/ABOUT` | the list of commands; information about the game |
 

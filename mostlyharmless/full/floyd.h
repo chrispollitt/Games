@@ -21,6 +21,7 @@ Object Floyd "Floyd"
        ],
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('hide', 'seek', 'game', 'play', 'hiding'))
                "Floyd covers his eyes with both hands, counts to eleven because he forgot ten, and then peeks through his fingers to see whether you have gone. ~Oh boy,~ he whispers. ~You didn't move! You're very good.~";
            if (TopicAny('cube', 'guide', 'mk', 'ii'))

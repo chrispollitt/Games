@@ -54,7 +54,8 @@ Object kiosk "information kiosk" Arrivals
        description "A tall kiosk with a screen that glows with the calm of something that has never been wrong, and is not about to start.",
        life [;
          Ask, Answer, Tell:
-           "~Customs is to your west,~ says the kiosk, with great confidence. It is not. ~Lost Property is closed,~ it adds. It is not. ~Have a nice day,~ it concludes, and the screen dims.";
+           if (MishAsk()) rtrue;
+           "~Customs is to your west,~ says the kiosk, with great confidence. It is not. ~Lost Property is closed,~ it adds. It is not. ~All delays are due to the Whole Sort of General Mish Mash,~ it adds, which, to its own surprise, is true. ~Have a nice day,~ it concludes, and the screen dims.";
        ],
   has animate scenery;
 
@@ -132,6 +133,7 @@ Object Gruba "Clerk Gruba" Customs
        ],
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('form', 'paper', 'paperwork', '27b', 'stamp', 'sign'))
                "~Form 27B/6,~ says Gruba. ~Completed, signed, stamped. The stamp is behind the glass. You are not.~";
            if (TopicAny('queue', 'queues', 'line', 'wait', 'theory'))
@@ -232,6 +234,7 @@ Object Attendant "Lost Property Attendant" LostProp
        initial "The Attendant stands behind the counter, with the air of a man who can find anything and would prefer you hadn't lost it. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('towel', 'stain', 'norway', 'fjord', 'fjords', 'norwegian', 'coast')) {
                if (towel in player || towel has worn) "~You have it already,~ says the Attendant, not unkindly.";
                if (TopicAny('norway', 'fjord', 'fjords', 'norwegian', 'coast')) {
@@ -281,6 +284,7 @@ Object Clerk "clearance clerk" Gate
        life [;
          Give: if (noun == sandwich) return ServeSandwich(self);
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('clearance', 'permit', 'permission', 'ship', 'probability'))
                "~Probability clearance,~ says the Clerk. ~It takes weeks. Or an afternoon, if the applicant is pleasant. A pleasant applicant brings something sweet.~";
            if (TopicAny('sandwich', 'honey', 'food', 'hungry', 'lunch'))

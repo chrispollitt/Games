@@ -22,7 +22,13 @@
     "Quite right. Don't.";
 ];
 
-[ Xyzzy r n i k;
+[ Xyzzy  res;
+    res = XyzzyRoll();
+    EggAside();
+    return res;
+];
+
+[ XyzzyRoll r n i k;
     if (eg-->EG_FORCE == 0 && (turns < 2 || (eg-->EG_COUNT > 0 && turns - eg-->EG_LAST < 10)))
         "Nothing happens. (The magic seems to need a moment.)";
     eg-->EG_LAST = turns;

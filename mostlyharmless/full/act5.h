@@ -73,6 +73,7 @@ Object man "man in the raincoat"
        ],
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (awarded->A_AGR1 == 0) {
                Award(A_AGR1, 5);
                "The man in the raincoat looks at you with enormous tiredness. ~I am,~ he says, ~someone who has been waiting a very long time to see you. Not today, though. Not quite. You will know me by what I leave behind.~ He turns back to his glass, politely, like a man who has said as much as is proper.";
@@ -87,6 +88,7 @@ Object barman "barman" Bar
        initial "The barman polishes a glass, with the air of a man whose job is not to ask. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('sandwich', 'food', 'eat', 'lunch', 'hungry', 'order', 'ploughman')) {
                if (parent(sandwich) ~= nothing) "~You've got one already,~ says the barman, not unkindly.";
                sand_flags = BIT_MEAT + BIT_PICKLE;
@@ -137,6 +139,7 @@ Object grebulons "Grebulons" Lawn
                "The nearer Grebulon takes it, eyes it, passes it to the other, who takes a bite and looks up with great emotion. ~This,~ says the first, ~is hospitality. We had forgotten. We had a button, you know, and no idea what it was for.~";
            }
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('button', 'press', 'red', 'purpose', 'for')) {
                Award(A_GREB2, 5);
                "~The button,~ says the nearer Grebulon, vaguely. ~It is red. It is very large. We were told to press it when the room was full. We don't remember what room. Or what happens.~ A silence. ~Everything, probably.~";
@@ -295,7 +298,7 @@ Object grebulons "Grebulons" Lawn
 [ RadioEnding;
     ending = 3;
     Award(A_CHOICE, 10);
-    print "The fish slides into your ear with the faint reluctance of something that has already guessed what you are about to ask of it, and for a moment the whole pub goes quiet in the way a church does. Then you feel it: a vast number of small, bored, golden creatures, in a vast number of ears, all quietly deciding that this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere an improbability that has been building for decades curdles, politely, into something kinder.^^";
+    print "The fish slides into your ear with the faint reluctance of something that has already guessed what you are about to ask of it, and for a moment the whole pub goes quiet in the way a church does. Then you feel it: a vast number of small, bored, golden creatures, in a vast number of ears, all quietly deciding that this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere an improbability that has been building for decades curdles, politely, into something kinder, and the Whole Sort of General Mish Mash, for once, sorts itself out.^^";
     print "There is a pop.^^";
     print "You are sitting on a velvet chair at a table in an enormous domed restaurant. Beyond a vast window the universe is ending, magnificently, the way it does every night; nobody is looking.^";
     StartAct6();

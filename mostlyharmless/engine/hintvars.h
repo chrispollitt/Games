@@ -36,5 +36,9 @@ Constant EG_LAST  = 0;      ! the turn on which XYZZY last did something
 Constant EG_COUNT = 1;      ! how many times it has
 Constant EG_FLOYD = 2;      ! the game's own secret (Floyd in the full game): 0 unseen, 1 found, 2 parted
 Constant EG_FORCE = 3;      ! debug builds: make the next XYZZY give this outcome
-Array eg --> 6;
+Constant EG_DICE  = 4;      ! 0 the Mish Mash dice are on (default), 1 off
+Constant EG_RLAST = 5;      ! the turn on which the dice last rolled
+Constant EG_RFLAG = 6;      ! this line contained the word random
+Constant EG_RCOUNT = 7;     ! how many times they have rolled
+Array eg --> 8;
 #endif;

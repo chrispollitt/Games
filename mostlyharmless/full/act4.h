@@ -74,6 +74,7 @@ Object officer "police officer" PressPen
        description "A large, tired constable with a face like a closed door.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Press only,~ says the officer, in the voice of a man for whom this is the whole of the law.";
        ],
   has animate male scenery;
@@ -129,6 +130,7 @@ Object newsagent "newsagent" HighRoad
        description "A cramped corner shop with a rack of papers outside and a man behind the counter who has just had an interesting morning.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('girl', 'random', 'kebab', 'teenager', 'young', 'stolen', 'steal'))
                "~Oh, her,~ says the newsagent, and winces. ~Bought nothing. Took a kebab from the van across the road and left a coin on the counter like nothing I've ever seen. Then she asked for the Tube.~";
            if (TopicAny('paper', 'headline', 'news', 'tabloid'))
@@ -218,6 +220,7 @@ Object Dee "Dee" StudioLobby
        initial "Dee, the receptionist, looks at you over a headset. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('random', 'girl', 'teenager', 'daughter', 'kid'))
                "~A girl came through an hour ago,~ says Dee. ~Walked straight to the green room as if she owned it. Tricia took her in. I let her. It seemed the quickest thing.~";
            if (TopicAny('tricia', 'mcmillan', 'presenter'))
@@ -265,6 +268,7 @@ Object manager "floor manager" StudioFloor
        description "A man with a clipboard and an expression of permanent crisis.",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Not now,~ says the floor manager, over his shoulder, to someone you cannot see.";
        ],
   has animate male scenery;
@@ -292,6 +296,7 @@ Object Tricia "Tricia McMillan" GreenRoom
        ],
        life [;
          Ask, Tell, Answer:
+           if (MishAsk()) rtrue;
            if (TopicAny('broadcast', 'air', 'autocue', 'television', 'tv', 'slot')) {
                if (self.convinced == 0) "~Why would I give you air?~ says Tricia. ~I don't know who you are yet.~";
                broadcast_ok = 1;

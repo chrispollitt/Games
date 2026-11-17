@@ -337,6 +337,7 @@ Object hob "Hob" SandHut
        life [;
          Give: if (noun == sandwich) return ServeSandwich(self);
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if ((TopicAny('order', 'lunch', 'sandwich', 'usual', 'want', 'wants') || TopicAny('food', 'eat')))
                "~Same as always,~ says Hob. ~Meat and sourberry, thick as you like. And no pickle. I have views about pickle.~";
            if (TopicAny('pickle', 'pickles', 'roots'))
@@ -361,6 +362,7 @@ Object Dunna "Dunna" Smokehouse
        initial "Dunna stands at the racks, watching the meat as though it might try something. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('meat', 'trade', 'buy', 'sell', 'price', 'sandwich')) {
                if (cleaver.sharp == 0)
                    "~Meat's not for coin,~ says Dunna. ~And I'll not give it for love, either. My cleaver wouldn't cut butter. Sort me an edge on it and we'll talk.~";
@@ -392,6 +394,7 @@ Object Tem "Tem" Lodge
        life [;
          Give: if (noun == sandwich) return ServeSandwich(self);
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if ((TopicAny('tooth', 'jaw', 'hurt', 'pain', 'food', 'eat') || TopicAny('lunch', 'order', 'sandwich', 'want')))
                "~Can't chew,~ says Tem. ~Hard crust, hard meat, hard luck. Something soft would be a kindness: honey, that herb curd. Nothing that fights back.~";
            if (TopicAny('stone', 'hearing', 'listens'))
@@ -426,6 +429,7 @@ Object pilot "mail pilot"
        life [;
          Give: if (noun == sandwich) return ServeSandwich(self);
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('skiff', 'fly', 'ship', 'earth', 'trip', 'break'))
                "~Break,~ says the pilot, without opening his eyes, ~is a break.~";
            if ((TopicAny('lunch', 'food', 'eat', 'hungry', 'sandwich', 'want') || TopicAny('order', 'pickle', 'pickles')))
@@ -455,6 +459,7 @@ Object Trillian "Trillian"
        initial "Trillian stands in the middle of things, composed. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('random', 'girl', 'daughter', 'her', 'child')) {
                Award(A_TRILL1, 1);
                "~Clever, furious and far too like both of us,~ says Trillian. ~She was an accident that took a great deal of paperwork.~";
@@ -493,6 +498,7 @@ Object Daughter "Random"
        life [;
          Give: return RandomGive();
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (act >= 4 && RandomTalkLate()) rtrue;
            if ((TopicAny('food', 'eat', 'hungry', 'lunch') || TopicAny('sandwich', 'meal', 'dinner', 'order'))) {
                if (random_fed) "~I told you. It was fine.~ She looks away. ~Maybe another.~";
@@ -520,6 +526,7 @@ Object Ford "Ford Prefect"
        initial "Ford is here, restless, taking in the place as though pricing it. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (act >= 2 && FordTalkLate()) rtrue;
            Award(A_FORDHI, 1);
            if (TopicAny('guide', 'cube', 'mk', 'ii', 'parcel')) {
@@ -559,6 +566,7 @@ Object Director
   with daemon [;
          FollowStep();
          HintTick();
+         MishRoll();
          if (difficulty == DIFF_EASY && act == 1 && location == SandHut && hob in SandHut && hob_told == 0) {
              hob_told = 1;
              print "^Hob catches your eye and says, helpfully, ~Meat and sourberry, same as always. No pickle.~^";

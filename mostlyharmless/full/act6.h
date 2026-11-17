@@ -34,6 +34,7 @@ Object Marvin "Marvin" DiningHall
        initial "Marvin stands beside your chair with a tray, in the way of someone who has been waiting a very long time for no one to ask. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('diode', 'diodes', 'pain', 'left', 'side', 'health')) {
                Award(A_MARVIN, 6);
                marvin_follows = 1;
@@ -63,6 +64,7 @@ Object Waiter "waiter" DiningHall
        initial "A waiter hovers at your elbow with a pad, perfectly patient. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('dish', 'special', 'day', 'meat', 'beef', 'steak', 'roast'))
                "~Today's dish,~ says the waiter, ~is the shoulder of a very fine animal who has put himself forward for the purpose. He will tell you so himself. Most guests find it an affecting conversation.~";
            if (TopicAny('order', 'menu', 'dinner', 'food', 'eat', 'hungry'))
@@ -77,6 +79,7 @@ Object dish "Dish of the Day" DiningHall
        initial "A large, amiable animal in a bow tie waits patiently beside the waiter. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Do have me,~ says the Dish of the Day, warmly. ~I've been looking forward to it since the beginning of time. I'm very good with mustard.~";
        ],
   has animate male scenery;
@@ -93,6 +96,7 @@ Object Host "host" Foyer
        initial "The host stands behind the desk, ready to be delighted. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            "~Your table is waiting,~ says the host warmly. ~Where it always was. Where it always will be. Don't hurry, but do not be late.~";
        ],
   has animate male scenery;
@@ -109,6 +113,7 @@ Object Chef "chef" Kitchen
        initial "The chef stands in the middle of the kitchen, absolutely still. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('sandwich', 'sandwiches', 'bread', 'lunch'))
                "The chef's eyes brighten. ~Bread,~ he says. ~Something honest in the middle of all this. I would give a great deal for a quiet hour and a good sandwich. Someone told me there's a man who makes them.~";
            "~I'm cooking the end of the world,~ says the chef, with enormous modesty. ~It's mostly a matter of timing.~";
@@ -138,6 +143,7 @@ Object Fenchurch "Fenchurch" Terrace
        initial "Fenchurch sits at the corner table, alone, looking out at the end of the Universe. ",
        life [;
          Ask, Answer, Tell:
+           if (MishAsk()) rtrue;
            if (TopicAny('sketch', 'drawing', 'tilt', 'head', 'picture')) {
                tilt_seen = 1;
                "~You drew me,~ says Fenchurch, with her head on one side. ~Forty times, Random says. Each time you got the tilt wrong. I'd like to see.~ She does not say it unkindly. She watches your hands.";

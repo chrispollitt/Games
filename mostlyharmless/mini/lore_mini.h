@@ -126,3 +126,12 @@
     if (o == guide) rtrue;
     rfalse;
 ];
+
+! The Mish Mash dice stay quiet at the story's tense moments (mishmash.h)
+[ MishQuiet;
+    if (gun_fired == 1) rtrue;
+    rfalse;
+];
+
+[ EggAside;
+];
