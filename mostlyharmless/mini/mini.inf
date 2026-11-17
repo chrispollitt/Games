@@ -810,7 +810,7 @@ Object Director
     move dressing_gown to player;
     give dressing_gown worn;
     StartDaemon(Director);
-    print "^It has been several hundred days since the last time anything happened to you. You have been rather looking forward to the next several hundred.^^~A fan adaptation of the fifth book, with original text. Type /ABOUT for details or /HINT if you are stuck. Commands outside the story, like /SAVE, start with a slash; /HELP lists them.~^^";
+    print "^It has been several hundred days since the last time anything happened to you. You have been rather looking forward to the next several hundred.^^~A fan adaptation of the fifth book, with original text. Type /ABOUT for details or /HINT if you are stuck. Commands outside the story, like /SAVE, start with a slash; /HELP lists them. New to interactive fiction? /INTRO. New to the Hitchhiker's Guide? /HHGG.~^^";
 ];
 
 [ MakeSub;

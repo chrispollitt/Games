@@ -3,6 +3,7 @@
 ## Unreleased
 
 - `/MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE` (engine/macro.h).
+- `/INTRO` and `/HHGG`: short out-of-story overviews for newcomers to interactive fiction and to the Hitchhiker franchise (engine/newbie.h).
 
 ## 1.0.0 — 2026-11-16 (first public release)
 

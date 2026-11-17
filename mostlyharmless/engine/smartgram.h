@@ -83,3 +83,10 @@ Verb meta 'macro'
     * 'show' topic                          -> MacroShow
     * 'delete' topic                        -> MacroDelete
     * topic                                 -> MacroPlay;
+
+! Overviews for newcomers (newbie.h)
+Verb meta 'intro' 'introduction' 'tutorial' 'newbie'
+    *                                       -> Intro;
+
+Verb meta 'hhgg' 'background'
+    *                                       -> Hhgg;

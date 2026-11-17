@@ -201,3 +201,8 @@ Hidden, never required, never harmful. Every egg is original prose or a short ho
 **M10 status (2026-11-16): `/MACRO` is built** (`engine/macro.h`). As designed, replay is not a skip button: each command is echoed and run normally, and replay stops at the first surprise (a command that did not parse,
 a change in location, unexpected points, or a change in what is in the room or your hands compared with the recording). Differences from the sketch above: slots are 6 macros of 16 commands; commands are stored as typed; points
 *not* gained on replay are not a surprise, only unexpected points are. Tests: `tests/mini/macro.cmd`, `macro_save.cmd`, `tests/full/macro.cmd`.
+
+## 11a. M11 status (2026-11-16): newcomer overviews are built
+
+`/INTRO` (what interactive fiction is and how to play it) and `/HHGG` (a spoiler-free account of the franchise, ending with where the game fits) live in `engine/newbie.h`; each game supplies one paragraph, `GameBlurb`. Both are marked
+`[Out of the story: ...]`, mentioned in the opening banner and in `/HELP`, and use only original wording. Tests: `tests/full/newbie.cmd`, `tests/mini/newbie.cmd`.

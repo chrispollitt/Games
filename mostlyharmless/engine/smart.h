@@ -259,5 +259,6 @@ Include "slash";
 Include "typo";
 Include "compound";
 Include "macro";
+Include "newbie";
 Include "lore_real";
 Include "hints";
