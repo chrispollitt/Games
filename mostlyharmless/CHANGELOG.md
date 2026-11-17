@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.3.0 — 2026-11-16
 
 - Full game: if you found Floyd, he and Marvin meet at Milliways (Act VI), with a foreshadowing line at Hub Station and a flourish at the final toast. No points; completion routes unchanged.
 
