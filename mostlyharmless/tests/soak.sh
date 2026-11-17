@@ -46,13 +46,14 @@ for ((r = 1; r <= runs; r++)); do
     grep -v '^act ' "$spine" | head -n $k >> "$cmd"
   fi
   for ((i = 0; i < len; i++)); do
-    case $((RANDOM % 8)) in
+    case $((RANDOM % 10)) in
       0|1) echo "$(pick "${dirs[@]}")" ;;
       2|3) echo "$(pick take drop examine open wear search) $(pick "${nouns[@]}")" ;;
       4)   echo "ask $(pick "${nouns[@]}") about $(pick "${topics[@]}")" ;;
       5)   echo "give $(pick "${nouns[@]}") to $(pick "${nouns[@]}")" ;;
       6)   echo "put $(pick "${nouns[@]}") $(pick in on) $(pick "${nouns[@]}")" ;;
       7)   echo "$(pick "${verbs[@]}") $(pick "${nouns[@]}")" ;;
+      8|9) echo "$(pick xyzzy xyzzy plugh plover grue panic sing)" ;;
     esac
   done >> "$cmd"
   echo "/hint" >> "$cmd"

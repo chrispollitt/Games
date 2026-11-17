@@ -650,6 +650,7 @@ Object Director
         move Tricia to location;
         print "^Tricia follows, taking in the place with a journalist's eye.^";
     }
+    FloydFollow();
     if (random_follows && Daughter notin location) {
         move Daughter to location;
         print "^Random drifts in after you at a distance she clearly considers dignified.^";

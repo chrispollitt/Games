@@ -110,3 +110,19 @@
 [ ParserExamples;
     print "TAKE KNIFE, ASK HOB ABOUT LUNCH, GO TO THE MEADOW, MAKE A SANDWICH WITH MEAT, or a question such as WHO IS FORD PREFECT?";
 ];
+
+! Where this game sits in the franchise (used by /HHGG)
+[ GameBlurb;
+    print "Where this game fits: LAST ORDERS ON LAMUELLA is a short retelling of the fifth and last novel, Mostly Harmless (1992), in which Arthur has settled on a quiet planet and found a good use for his hands: he makes sandwiches. It follows the book's main events and, like the BBC radio version of that book, has a happier ending as well as the novel's.^";
+];
+
+! Egg hooks (eggs.h)
+[ EggRoomOK r;
+    if (RegionOf(r) == RegionOf(location)) rtrue;
+    rfalse;
+];
+
+[ EggKeep o;
+    if (o == guide) rtrue;
+    rfalse;
+];

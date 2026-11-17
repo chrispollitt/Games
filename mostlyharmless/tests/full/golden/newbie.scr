@@ -1,0 +1,164 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/intro
+
+[Out of the story: A SHORT INTRODUCTION TO INTERACTIVE FICTION
+
+This is interactive fiction: a story told in text, which you steer by typing.
+You read a description of where you are, then type what you want to do, and the
+story answers. There are no graphics and no clock; take as long as you like.
+
+How to play
+  Look around: LOOK (or L). Study something: EXAMINE SKETCH (or X SKETCH).
+  Move: NORTH, SOUTH, EAST, WEST (or N, S, E, W), sometimes UP, DOWN, IN or OUT;
+or GO TO THE MEADOW.
+  Pick things up and use them: TAKE KNIFE, DROP IT, GIVE SANDWICH TO HOB, PUT
+LOAF ON BOARD. INVENTORY (or I) lists what you carry.
+  Talk: ASK HOB ABOUT LUNCH, or just ask a question such as WHO IS FORD PREFECT?
+  Let time go by: WAIT.
+
+Commands can be long or short. This game copes with plain English, filler words,
+punctuation, small typos, and commands joined by AND or THEN (TAKE PARCEL AND
+EXAMINE IT).
+
+Commands about the game itself start with a slash: /HINT (a nudge that gets
+clearer each time you ask), /DIFFICULTY (how much help you get), /SAVE and
+/RESTORE, /UNDO (take back your last move), /MACRO (record a routine you
+repeat), and /HELP for the rest.
+
+Good habits: read descriptions closely, because clues hide in them; examine
+anything with a name; talk to everyone about everything; try the obvious thing
+and then the silly one. If you are stuck, wander, look again, or ask for a hint.
+Nothing you try can make this story unwinnable; the worst that happens is a
+sadder ending.]
+
+>/hhgg
+
+[Out of the story: THE HITCHHIKER'S GUIDE TO THE GALAXY, FOR NEWCOMERS
+
+Douglas Adams (1952-2001) began The Hitchhiker's Guide to the Galaxy as a BBC
+Radio 4 comedy that first went out in March 1978. Its hero is Arthur Dent, an
+ordinary Englishman who is whisked off the Earth, moments before it is
+demolished to make way for a hyperspace bypass, by his friend Ford Prefect, who
+turns out to be an alien researcher for the Guide: a best-selling electronic
+travel book with the words DON'T PANIC on its cover.
+
+It grew into what its author called a trilogy in five parts: five novels (1979,
+1980, 1982, 1984 and 1992), a television series (1981), Infocom's text adventure
+(1984), stage shows, comics, a feature film (2005) and radio adaptations of the
+later books (2004-2005). A sixth novel, And Another Thing..., by Eoin Colfer,
+appeared in 2009 with the Adams estate's approval. Every version retells the
+story a little differently, and fans take that as part of the joke, so an
+adaptation like this one is in good company.
+
+A few things worth knowing: the Babel fish (a small yellow fish that, in your
+ear, translates every language you hear); the towel (the most useful thing a
+hitchhiker can carry); the Vogons (the Galaxy's bureaucrats, whose poetry is
+said to be the third worst in the Universe); and the number 42. The people you
+will meet include Ford Prefect, Trillian, Zaphod Beeblebrox and Marvin the
+Paranoid Android.
+
+Where this game fits: THE LONG WAY ROUND adapts the fifth and last novel, Mostly
+Harmless (1992), in which Arthur has settled on a quiet planet and found a good
+use for his hands: he makes sandwiches. It follows the book's main events and
+invents the rest; and, like the BBC radio version of that book, it has a happier
+ending as well as the novel's.
+
+You do not need to have read any of it; the game tells you what you need. This
+is an unofficial fan work, with entirely original text.]
+
+>intro
+I'm afraid I didn't follow that. Did you want the slash version? /INTRO
+
+>/tutorial
+
+[Out of the story: A SHORT INTRODUCTION TO INTERACTIVE FICTION
+
+This is interactive fiction: a story told in text, which you steer by typing.
+You read a description of where you are, then type what you want to do, and the
+story answers. There are no graphics and no clock; take as long as you like.
+
+How to play
+  Look around: LOOK (or L). Study something: EXAMINE SKETCH (or X SKETCH).
+  Move: NORTH, SOUTH, EAST, WEST (or N, S, E, W), sometimes UP, DOWN, IN or OUT;
+or GO TO THE MEADOW.
+  Pick things up and use them: TAKE KNIFE, DROP IT, GIVE SANDWICH TO HOB, PUT
+LOAF ON BOARD. INVENTORY (or I) lists what you carry.
+  Talk: ASK HOB ABOUT LUNCH, or just ask a question such as WHO IS FORD PREFECT?
+  Let time go by: WAIT.
+
+Commands can be long or short. This game copes with plain English, filler words,
+punctuation, small typos, and commands joined by AND or THEN (TAKE PARCEL AND
+EXAMINE IT).
+
+Commands about the game itself start with a slash: /HINT (a nudge that gets
+clearer each time you ask), /DIFFICULTY (how much help you get), /SAVE and
+/RESTORE, /UNDO (take back your last move), /MACRO (record a routine you
+repeat), and /HELP for the rest.
+
+Good habits: read descriptions closely, because clues hide in them; examine
+anything with a name; talk to everyone about everything; try the obvious thing
+and then the silly one. If you are stuck, wander, look again, or ask for a hint.
+Nothing you try can make this story unwinnable; the worst that happens is a
+sadder ending.]
+
+>/background
+
+[Out of the story: THE HITCHHIKER'S GUIDE TO THE GALAXY, FOR NEWCOMERS
+
+Douglas Adams (1952-2001) began The Hitchhiker's Guide to the Galaxy as a BBC
+Radio 4 comedy that first went out in March 1978. Its hero is Arthur Dent, an
+ordinary Englishman who is whisked off the Earth, moments before it is
+demolished to make way for a hyperspace bypass, by his friend Ford Prefect, who
+turns out to be an alien researcher for the Guide: a best-selling electronic
+travel book with the words DON'T PANIC on its cover.
+
+It grew into what its author called a trilogy in five parts: five novels (1979,
+1980, 1982, 1984 and 1992), a television series (1981), Infocom's text adventure
+(1984), stage shows, comics, a feature film (2005) and radio adaptations of the
+later books (2004-2005). A sixth novel, And Another Thing..., by Eoin Colfer,
+appeared in 2009 with the Adams estate's approval. Every version retells the
+story a little differently, and fans take that as part of the joke, so an
+adaptation like this one is in good company.
+
+A few things worth knowing: the Babel fish (a small yellow fish that, in your
+ear, translates every language you hear); the towel (the most useful thing a
+hitchhiker can carry); the Vogons (the Galaxy's bureaucrats, whose poetry is
+said to be the third worst in the Universe); and the number 42. The people you
+will meet include Ford Prefect, Trillian, Zaphod Beeblebrox and Marvin the
+Paranoid Android.
+
+Where this game fits: THE LONG WAY ROUND adapts the fifth and last novel, Mostly
+Harmless (1992), in which Arthur has settled on a quiet planet and found a good
+use for his hands: he makes sandwiches. It follows the book's main events and
+invents the rest; and, like the BBC radio version of that book, it has a happier
+ending as well as the novel's.
+
+You do not need to have read any of it; the game tells you what you need. This
+is an unofficial fan work, with entirely original text.]
+
+>/help
+
+Commands outside the story start with a slash, as in a chat program:
+
+  /SAVE  /RESTORE  /RESTART  /QUIT  /UNDO       the game itself
+  /SCORE  /FULLSCORE  /NOTIFY ON|OFF            your progress
+  /VERBOSE  /BRIEF  /SUPERBRIEF                 how much is described
+  /SCRIPT  /UNSCRIPT                            a transcript of your game
+  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help
+  /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands
+  /INTRO  /HHGG                              overviews for newcomers
+
+Everything else you type is part of the story. Plain English is fine, and so are
+questions, such as WHO IS FORD PREFECT? Without the slash, those words are just
+ordinary input, and the game will tell you if you needed one.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

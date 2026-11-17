@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 — 2026-11-16
+
+- `/MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE` (engine/macro.h).
+- A few hidden surprises (see docs/PLAN.md section 12a), including a cameo robot in the full game.
+- `/INTRO` and `/HHGG`: short out-of-story overviews for newcomers to interactive fiction and to the Hitchhiker franchise (engine/newbie.h).
+
 ## 1.0.0 — 2026-11-16 (first public release)
 
 **MOSTLY HARMLESS: THE LONG WAY ROUND** (full game, Z-machine v8)
@@ -12,6 +18,7 @@
 
 **Shared engine**
 - Flexible input: filler words, punctuation, one-letter typos, loose phrasing, questions (`WHO WAS DOUGLAS ADAMS?`), compound commands (`TAKE PARCEL AND EXAMINE IT`).
+- `/MACRO` records and replays command sequences (it stops if anything is different, and never skips the story).
 - Out-of-story commands behind a slash: `/SAVE`, `/RESTORE` (optionally with a name, as a reminder), `/HINT`, `/DIFFICULTY`, `/HELP` and so on.
 
 **Testing**

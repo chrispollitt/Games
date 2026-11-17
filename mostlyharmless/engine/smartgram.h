@@ -72,3 +72,31 @@ Verb meta 'help'
 
 Verb meta 'slashmiss'
     *                                       -> SlashMiss;
+
+! /MACRO: record and replay command sequences (macro.h)
+Verb meta 'macro'
+    *                                       -> MacroList
+    * 'list'                                -> MacroList
+    * 'stop'                                -> MacroStop
+    * 'record' topic                        -> MacroRecord
+    * 'play' topic                          -> MacroPlay
+    * 'show' topic                          -> MacroShow
+    * 'delete' topic                        -> MacroDelete
+    * topic                                 -> MacroPlay;
+
+! Overviews for newcomers (newbie.h)
+Verb meta 'intro' 'introduction' 'tutorial' 'newbie'
+    *                                       -> Intro;
+
+Verb meta 'hhgg' 'background'
+    *                                       -> Hhgg;
+
+! Hidden surprises (eggs.h)
+Verb 'xyzzy' 'plugh' 'plover' 'zork' 'grue'
+    *                                       -> Egg;
+
+Verb 'panic'
+    *                                       -> Panic;
+
+Verb 'dont'
+    * 'panic'                               -> Panic;

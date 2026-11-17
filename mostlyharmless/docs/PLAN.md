@@ -151,7 +151,7 @@ M2 is the big gate: we agree the whole story, puzzles and hints on paper before 
 4. May I build **dfrotz** to make testing reliable?
 5. Names: keep "LAST ORDERS ON LAMUELLA" for the mini, and pick a new subtitle for the full game?
 
-## 10. Future feature: `/MACRO` (requested 2026-11-16)
+## 10. `/MACRO` (requested 2026-11-16; built as M10)
 
 Record and replay often-used long command sequences (the sandwich routine is the obvious case). To be built in the shared engine
 after the full game's acts are in (so both games get it); not scheduled yet. Design constraints, so the game stays enjoyable:
@@ -197,3 +197,60 @@ Hidden, never required, never harmful. Every egg is original prose or a short ho
   `DON'T PANIC` typed at the very start (the game takes your word for it); `LOOK AT THE UNIVERSE` on the Milliways terrace; `SING` in the pub; and `FROTZ`/`XYZZY` style words that only work once.
 - **Where it lives:** `engine/eggs.h` (XYZZY, PLUGH, GRUE and friends, shared by both games) and per-game hooks for Floyd and place-specific eggs.
 - **Tests:** a seeded run proves that XYZZY never breaks the score or locks a puzzle; the eggs list is documented here so nothing is a secret from the maintainers.
+
+**M10 status (2026-11-16): `/MACRO` is built** (`engine/macro.h`). As designed, replay is not a skip button: each command is echoed and run normally, and replay stops at the first surprise (a command that did not parse,
+a change in location, unexpected points, or a change in what is in the room or your hands compared with the recording). Differences from the sketch above: slots are 6 macros of 16 commands; commands are stored as typed; points
+*not* gained on replay are not a surprise, only unexpected points are. Tests: `tests/mini/macro.cmd`, `macro_save.cmd`, `tests/full/macro.cmd`.
+
+## 11a. M11 status (2026-11-16): newcomer overviews are built
+
+`/INTRO` (what interactive fiction is and how to play it) and `/HHGG` (a spoiler-free account of the franchise, ending with where the game fits) live in `engine/newbie.h`; each game supplies one paragraph, `GameBlurb`. Both are marked
+`[Out of the story: ...]`, mentioned in the opening banner and in `/HELP`, and use only original wording. Tests: `tests/full/newbie.cmd`, `tests/mini/newbie.cmd`.
+
+## 12a. M12 status (2026-11-16): easter eggs are built
+
+Documented here so that nothing is a secret from the maintainers. None is required, none changes the score, trust or compliance, and none can make a game unwinnable.
+
+| Egg | Where | What happens |
+|---|---|---|
+| `XYZZY` | anywhere (`engine/eggs.h`) | Rolls a die (twelve outcomes), at most once per ten turns. Good: a free hint rung, a boiled sweet, a note on the word's origin in Colossal Cave, a kind word, a coin that isn't, a note-taking watcher. Mildly annoying: the hollow voice calls you a fool, a parser sulk, a distant sigh, a short trip back to a room you have already visited in the *current act*, or one carried item (never the Guide) slipping to the floor where you stand. |
+| `PLUGH`, `PLOVER`, `ZORK`, `GRUE` | anywhere | One sly line each; `GRUE` is a reassurance that the nearest one is vegetarian. |
+| `PANIC`, `DON'T PANIC` | anywhere | "Quite right. Don't." |
+| `MAKE TEA`, `ORDER TEA` | sandwich hut, Milliways | A warm brown drink that is in no way tea (the waiter at Milliways is sympathetic). |
+| `SING` | the Dancing Gnu | The pub listens, briefly. |
+| **Floyd** | full game: `SEARCH SHELVES` three times in Lost Property | A small, dented, cheerful robot (a nod to Infocom's *Planetfall*) joins you around Hub Station, stays behind when the ship leaves, and is helping the chef at Milliways. An out-of-story note credits the reference. |
+
+Tester aids (debug builds only): `SEED n` (use 1000 or more; smaller seeds make a counter, not a random stream), `EGG n` (force the next XYZZY outcome 1 to 12). Tests: `eggs`, `eggs2`, `eggs_all` (both games) and `tests/full/complete_floyd.cmd` (the whole game with Floyd, still 400 points).
+
+## 13. Note for later: a running gag, "the Whole Sort of General Mish Mash" (WSOGMM) (requested 2026-11-16)
+
+The user loves this concept from *Mostly Harmless* and wants it as a **sub-theme and running gag in the full story**. Recorded as an idea only; nothing is built. Details of the book's own treatment should be
+re-checked against the novel before writing anything (we do not quote it; the prose stays original).
+
+**Why it fits.** The full game already runs on parallel Earths: Tricia is the other London's Trillian, the memorandum counts four hundred and eleven Earth variants, and the Mk II "draws every road to one afternoon". WSOGMM is the
+perfect all-purpose name for the way those possibilities are jumbled together, and the perfect catch-all excuse for anyone who cannot, or will not, explain something.
+
+**Possible shape (to be designed in a later milestone, M13 candidate)**
+- A Guide entry (`CONSULT GUIDE ABOUT WSOGMM`, and the plain question `WHAT IS THE WHOLE SORT OF GENERAL MISH MASH?` through `LoreWorld`), written fresh, in the cube's smooth, slightly sinister voice.
+- A recurring verbal tic: Ford, Zendra, the Vogon editors and the Grebulons each reach for "it's all down to the Mish Mash" when they cannot explain a thing; Random takes it seriously; Tricia asks for the maths; Marvin finds it depressing.
+- One or two *lightly* load-bearing moments: the Boardroom meeting's talk of "hospitality" and the core's coordinates both lean on it, and a late joke ties it to the radio ending (the fish "sorting out" the Mish Mash).
+- Acronym play: WSOGMM spelled out, mis-spelled and mis-expanded by different characters (a good use of the typo-forgiveness engine: players who mistype it are gently corrected).
+- An out-of-story footnote, in the established `[Out of the story: ...]` style, pointing to the real physics behind the joke. Candidates to verify and cite properly: Hugh Everett III's "relative state" formulation of quantum mechanics (1957), the many-worlds interpretation that grew from it, and Feynman's sum-over-histories (path integral) idea that "everything that can happen, in a sense, does". Choose one primary source and say plainly that the game is joking.
+- Footnote placement: `/HHGG`, the Guide entry, and perhaps `EXAMINE` on the Mk II core.
+
+**Engineering notes.** Keep any state in the `eg`/`mv`-style arrays, because the full game has only about six free Z-machine global variables. Any new text needs a golden-transcript test, and the 400-point walkthrough must still succeed untouched.
+
+### 13a. Addendum (2026-11-16): the Mish Mash and dice
+
+Two linked ideas from the user, also recorded as ideas only:
+
+1. **The XYZZY die belongs to the Mish Mash.** `XYZZY`'s random good-and-bad outcomes (see 12a) already behave like the Whole Sort of General Mish Mash, so in the full story it should be *explained* that way: when XYZZY misfires, the Guide, Zendra or the
+   core can put it down to the Mish Mash leaking. The out-of-story footnote can say, in a line, that the die is a nod to Colossal Cave and to the idea that nothing in a jumble of possibilities is quite fixed.
+2. **A dice-rolled event whenever the player types "random".** The word is also the name of Arthur's daughter, so it will be typed a lot (`ASK RANDOM ABOUT FOOD`). Design notes so it stays a delight and never an annoyance:
+   - Detect the dictionary word `random` in the player's input (in `BeforeParsing`); roll after the action, so the command itself always works exactly as it should.
+   - Share the cooldown idea from XYZZY (at most one event per several turns), and make most outcomes *small and narrative*: a brief flicker in a description, a stray remark from the cube or from Random herself ("Did somebody say something?"), a one-line aside about the Mish Mash, now and then a harmless oddity such as a plant that is briefly a different colour.
+   - Show the roll as a small out-of-story flourish (for example `[The Mish Mash rolls a 4.]`) so that the "dice" idea is visible, and provide a way to switch it off (`/DICE OFF`, remembered in the saved game) for players who find it intrusive.
+   - Never change puzzle state, score, trust, compliance or the endings; never fire during the Act V fuse or while a macro is replaying; keep it deterministic under `SEED n` so golden-transcript tests still work.
+   - Because "random" will also appear in Tricia's and Ford's topic lists, test that the topic handlers still work with the event firing around them.
+   - State goes in the `eg` array (global variables are nearly used up).
+   - Candidate milestone: **M13** (WSOGMM sub-theme plus the "random" dice event), designed together because they share text and tone.

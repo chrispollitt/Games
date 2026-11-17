@@ -39,6 +39,9 @@ Global slash_file_len = 0;
       'help':                                  return 17;
       'pronouns', 'nouns':                     return 18;
       'difficulty':                            return 19;
+      'macro':                                 return 20;
+      'intro', 'introduction', 'tutorial', 'newbie': return 21;
+      'hhgg', 'background':                    return 22;
     }
     rfalse;
 ];
@@ -64,6 +67,9 @@ Global slash_file_len = 0;
       17: print "HELP";
       18: print "PRONOUNS";
       19: print "DIFFICULTY";
+      20: print "MACRO";
+      21: print "INTRO";
+      22: print "HHGG";
     }
 ];
 
@@ -154,7 +160,9 @@ Global slash_file_len = 0;
     print "  /SCORE  /FULLSCORE  /NOTIFY ON|OFF            your progress^";
     print "  /VERBOSE  /BRIEF  /SUPERBRIEF                 how much is described^";
     print "  /SCRIPT  /UNSCRIPT                            a transcript of your game^";
-    print "  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP   help and information^^";
+    print "  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help^";
+    print "  /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands^";
+    print "  /INTRO  /HHGG                              overviews for newcomers^^";
     print "Everything else you type is part of the story. Plain English is fine, and so are questions, such as WHO IS FORD PREFECT? Without the slash, those words are just ordinary input, and the game will tell you if you needed one.^";
     rtrue;
 ];

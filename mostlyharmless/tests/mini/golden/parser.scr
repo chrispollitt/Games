@@ -77,7 +77,9 @@ Commands outside the story start with a slash, as in a chat program:
   /SCORE  /FULLSCORE  /NOTIFY ON|OFF            your progress
   /VERBOSE  /BRIEF  /SUPERBRIEF                 how much is described
   /SCRIPT  /UNSCRIPT                            a transcript of your game
-  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP   help and information
+  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help
+  /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands
+  /INTRO  /HHGG                              overviews for newcomers
 
 Everything else you type is part of the story. Plain English is fine, and so are
 questions, such as WHO IS FORD PREFECT? Without the slash, those words are just

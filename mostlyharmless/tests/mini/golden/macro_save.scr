@@ -1,0 +1,54 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/macro record trip
+(Recording "trip". Everything you type now is remembered, up to sixteen
+commands. /MACRO STOP finishes.)
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>look
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>/macro stop
+(Recorded 2 commands as "trip". /MACRO PLAY trip replays it.)
+
+>/save
+Save failed.
+
+>/macro list
+Macros:
+  trip (2 commands)
+
+>/restore
+File was not saved from this story!
+Restore failed.
+
+>/macro list
+Macros:
+  trip (2 commands)
+
+>/macro show trip
+Macro "trip":
+  1. e
+  2. look
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

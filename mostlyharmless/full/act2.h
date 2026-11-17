@@ -189,10 +189,20 @@ Object LostProp "Lost Property"
   has light;
 
 Object lp_shelves "shelves of lost things" LostProp
-  with name 'shelves' 'things' 'umbrellas' 'gloves' 'boot' 'trumpet' 'stack',
+  with name 'shelves' 'things' 'umbrellas' 'gloves' 'boot' 'trumpet' 'stack' 'heap' 'crate',
+       tries 0,
        description "Row after row of someone's lost something. You get the feeling that nobody has ever come back for a single one.",
        before [;
-         Search: "You could look for years. It would take the Attendant, who knows where everything is, about a second.";
+         Search:
+           if (eg-->EG_FLOYD ~= 0)
+               "You have found all that the heap has to give, and one thing it did not know it had.";
+           self.tries = self.tries + 1;
+           if (self.tries == 1)
+               "You poke about. A crate rattles, then thinks better of it. The Attendant, who knows where everything is, would find what you want in about a second; but you are not here for what you want.";
+           if (self.tries == 2)
+               "You work your way deeper, behind the trumpet and the enormous boot. Something in the crate whirs, very quietly, in the manner of a person trying not to giggle.";
+           FloydFound();
+           rtrue;
        ],
   has scenery pluralname;
 
@@ -326,6 +336,7 @@ Object gate_ship "waiting ship" Gate
 ];
 
 [ ActTwoEnd;
+    FloydParts();
     print "^You show the ticket to nobody in particular, and the gate opens. The ship's door swings up with a sigh. Ford gives you a nod that is partly encouragement and partly the nod of a man who has had a bad idea and is committed to it.^^";
     StartAct3();
 ];
