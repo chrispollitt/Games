@@ -90,3 +90,13 @@ Verb meta 'intro' 'introduction' 'tutorial' 'newbie'
 
 Verb meta 'hhgg' 'background'
     *                                       -> Hhgg;
+
+! Hidden surprises (eggs.h)
+Verb 'xyzzy' 'plugh' 'plover' 'zork' 'grue'
+    *                                       -> Egg;
+
+Verb 'panic'
+    *                                       -> Panic;
+
+Verb 'dont'
+    * 'panic'                               -> Panic;

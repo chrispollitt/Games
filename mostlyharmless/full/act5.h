@@ -51,6 +51,11 @@ Object Bar "The Dancing Gnu"
          new_line;
          rtrue;
        ],
+       before [;
+         Sing:
+           print "You sing, quietly, a verse of something you half-remember. The man at the corner table looks up. Behind the bar the barman stops polishing his glass, and for a moment the whole pub is listening. Then the moment goes, as moments do, and the barman goes back to the glass, but a little more gently than before.^";
+           rtrue;
+       ],
        s_to HighRoad, out_to HighRoad,
        w_to Snug, d_to Cellar, e_to PubYard,
   has light;

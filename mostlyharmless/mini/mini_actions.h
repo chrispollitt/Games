@@ -11,6 +11,8 @@
 ! Free-form sandwich orders:  MAKE A SANDWICH WITH MEAT AND BERRIES,
 ! MAKE HOB THE USUAL, MAKE ME SOMETHING WITH PICKLES BUT NO MEAT ...
 [ MakeFreeSub w neg have ex bits who i sawsand;
+    if (TopicAny('tea', 'coffee', 'cocoa'))
+        "You hold out your hands and ask the air for a hot drink. The air obliges, after a fashion: something warm and brown arrives in a cup, and it is in no way tea. You put it down, with respect, and do not look at it again.";
     wn = consult_from;
     for (i = 0 : i < consult_words : i++) {
         w = NextWord();

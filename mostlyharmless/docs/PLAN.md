@@ -206,3 +206,18 @@ a change in location, unexpected points, or a change in what is in the room or y
 
 `/INTRO` (what interactive fiction is and how to play it) and `/HHGG` (a spoiler-free account of the franchise, ending with where the game fits) live in `engine/newbie.h`; each game supplies one paragraph, `GameBlurb`. Both are marked
 `[Out of the story: ...]`, mentioned in the opening banner and in `/HELP`, and use only original wording. Tests: `tests/full/newbie.cmd`, `tests/mini/newbie.cmd`.
+
+## 12a. M12 status (2026-11-16): easter eggs are built
+
+Documented here so that nothing is a secret from the maintainers. None is required, none changes the score, trust or compliance, and none can make a game unwinnable.
+
+| Egg | Where | What happens |
+|---|---|---|
+| `XYZZY` | anywhere (`engine/eggs.h`) | Rolls a die (twelve outcomes), at most once per ten turns. Good: a free hint rung, a boiled sweet, a note on the word's origin in Colossal Cave, a kind word, a coin that isn't, a note-taking watcher. Mildly annoying: the hollow voice calls you a fool, a parser sulk, a distant sigh, a short trip back to a room you have already visited in the *current act*, or one carried item (never the Guide) slipping to the floor where you stand. |
+| `PLUGH`, `PLOVER`, `ZORK`, `GRUE` | anywhere | One sly line each; `GRUE` is a reassurance that the nearest one is vegetarian. |
+| `PANIC`, `DON'T PANIC` | anywhere | "Quite right. Don't." |
+| `MAKE TEA`, `ORDER TEA` | sandwich hut, Milliways | A warm brown drink that is in no way tea (the waiter at Milliways is sympathetic). |
+| `SING` | the Dancing Gnu | The pub listens, briefly. |
+| **Floyd** | full game: `SEARCH SHELVES` three times in Lost Property | A small, dented, cheerful robot (a nod to Infocom's *Planetfall*) joins you around Hub Station, stays behind when the ship leaves, and is helping the chef at Milliways. An out-of-story note credits the reference. |
+
+Tester aids (debug builds only): `SEED n` (use 1000 or more; smaller seeds make a counter, not a random stream), `EGG n` (force the next XYZZY outcome 1 to 12). Tests: `eggs`, `eggs2`, `eggs_all` (both games) and `tests/full/complete_floyd.cmd` (the whole game with Floyd, still 400 points).

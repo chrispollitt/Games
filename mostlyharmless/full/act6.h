@@ -163,7 +163,7 @@ Object terrace_table "corner table" Terrace
 !  Routines for Act VI
 ! ========================================================================
 
-[ DineSub w i veg dishy;
+[ DineSub w i veg dishy teaq;
     if (location ~= DiningHall) "Nobody here is taking orders.";
     if (awarded->A_ORDER) "You have already ordered, and very well.";
     wn = consult_from;
@@ -173,7 +173,10 @@ Object terrace_table "corner table" Terrace
         if (w == 'salad' or 'vegetables' or 'vegetable' or 'veg' or 'vegetarian' or 'soup' or 'sandwich' or 'bread'
                 or 'pasta' or 'risotto' or 'omelette' or 'cheese' or 'anything' or 'something') veg = 1;
         if (w == 'dish' or 'meat' or 'steak' or 'beef' or 'roast' or 'shoulder' or 'special' or 'day') dishy = 1;
+        if (w == 'tea') teaq = 1;
     }
+    if (teaq)
+        "~Tea,~ says the waiter, and looks at you with sympathy. ~We do have a drink that is a long way from tea, and a very good friend of it. Most guests find that it settles the nerves.~ He brings it. It is warm, brown, and in no way tea. It is, you find, quite pleasant.";
     if (dishy)
         "You open your mouth to order the dish of the day, and the animal in the bow tie turns to you with such shining, uncomplicated eagerness that the word will not come. ~Do have me,~ it says. ~I'd be honoured.~ You find you simply cannot, and you say so, as gently as you can. ~Never mind,~ says the Dish of the Day, ~someone will.~ The waiter raises an eyebrow, as if to say that he sees this a good deal.";
     if (veg) {
@@ -236,6 +239,7 @@ Object terrace_table "corner table" Terrace
     move Daughter to DiningHall;
     move Tricia to DiningHall;
     move pencil to terrace_table;
+    FloydKitchen();
     PlayerTo(DiningHall);
     if (sketch_given)
         print "^Random, who has not said a word since the pop, reaches into her coat and hands you something folded very small. ~I took it from your hut,~ she says, not looking at you. ~On the first day. I wanted to know what you looked at.~ It is the pencil sketch. She has smoothed it flat.^";

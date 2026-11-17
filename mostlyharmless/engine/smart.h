@@ -260,5 +260,6 @@ Include "typo";
 Include "compound";
 Include "macro";
 Include "newbie";
+Include "eggs";
 Include "lore_real";
 Include "hints";

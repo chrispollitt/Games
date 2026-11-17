@@ -28,3 +28,13 @@ Constant MV_SCORE = 5;      ! the score before the command now running
 Array mv --> 6;
 
 #endif;
+
+#ifndef EGGVARS_DONE;
+Constant EGGVARS_DONE;
+! Easter-egg state (see eggs.h), in an array to spare global variables
+Constant EG_LAST  = 0;      ! the turn on which XYZZY last did something
+Constant EG_COUNT = 1;      ! how many times it has
+Constant EG_FLOYD = 2;      ! the game's own secret (Floyd in the full game): 0 unseen, 1 found, 2 parted
+Constant EG_FORCE = 3;      ! debug builds: make the next XYZZY give this outcome
+Array eg --> 6;
+#endif;

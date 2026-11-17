@@ -1,0 +1,173 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>seed 4242
+Random numbers seeded with 4242.
+
+>take fish
+Taken.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>s
+You can't go that way.
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south.
+
+>egg 1
+The next XYZZY will give outcome 1.
+
+>xyzzy
+A hollow voice says "Fool."
+
+>egg 2
+The next XYZZY will give outcome 2.
+
+>xyzzy
+Nothing happens.
+
+>egg 3
+The next XYZZY will give outcome 3.
+
+>xyzzy
+A hollow voice, quite kindly, whispers:
+[Hint 1 of 4] Hob is waiting at the sandwich hut, and he would like something.
+
+>egg 4
+The next XYZZY will give outcome 4.
+
+>xyzzy
+The world makes a small, apologetic noise and rearranges itself.
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>egg 5
+The next XYZZY will give outcome 5.
+
+>xyzzy
+A sudden, unexplained weakness takes your fingers, and the Babel fish slips and
+lands at your feet.
+
+>egg 6
+The next XYZZY will give outcome 6.
+
+>xyzzy
+In your pocket you find a small boiled sweet you do not remember buying. It
+tastes of nostalgia and is gone before you have decided whether to like it.
+
+>egg 7
+The next XYZZY will give outcome 7.
+
+>xyzzy
+[Out of the story: XYZZY is a magic word from Colossal Cave Adventure, the first
+text adventure, begun by Will Crowther and extended by Don Woods in 1976-77. A
+great many later games have kept it as a tip of the hat.]
+
+>egg 8
+The next XYZZY will give outcome 8.
+
+>xyzzy
+Your parser would like it noted that this was not in its manual, and that it is
+doing its best.
+
+>egg 9
+The next XYZZY will give outcome 9.
+
+>xyzzy
+Somewhere nearby, something that takes notes makes a note.
+
+>egg 10
+The next XYZZY will give outcome 10.
+
+>xyzzy
+A pleasant voice, from nowhere in particular, says: "Well done." It does not say
+for what.
+
+>egg 11
+The next XYZZY will give outcome 11.
+
+>xyzzy
+Somewhere a very long way off, someone small sighs, and thinks no more of it.
+
+>egg 12
+The next XYZZY will give outcome 12.
+
+>xyzzy
+You find a coin in your hand that was not there a moment ago. It is of no known
+denomination, and by the time you look again it is gone.
+
+>inventory
+You're carrying:
+  a dressing gown (being worn)
+
+>look
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+You can also see a Babel fish here.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

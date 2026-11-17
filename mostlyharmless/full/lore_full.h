@@ -116,3 +116,21 @@
 [ GameBlurb;
     print "Where this game fits: THE LONG WAY ROUND adapts the fifth and last novel, Mostly Harmless (1992), in which Arthur has settled on a quiet planet and found a good use for his hands: he makes sandwiches. It follows the book's main events and invents the rest; and, like the BBC radio version of that book, it has a happier ending as well as the novel's.^";
 ];
+
+! Egg hooks (eggs.h)
+[ EggRoomOK r;
+    switch (act) {
+      1: if (r == Hut or Green or SandHut or Orchard or Smokehouse or Lodge or Meadow or River) rtrue;
+      2: if (r == Arrivals or Customs or Concourse or LostProp or Gate) rtrue;
+      3: if (r == Plaza or Lobby or Security or Cloakroom or LiftLobby or Editorial or FordOffice or Archive) rtrue;
+      4: if (r == PressPen or Cordon or HighRoad or Tube or Plat1 or Plat2 or StudioLobby or StudioFloor or GreenRoom or Flat) rtrue;
+      5: if (r == Bar or Snug or Cellar or PubYard or Lawn) rtrue;
+      6: if (r == DiningHall or Foyer or Kitchen or Terrace) rtrue;
+    }
+    rfalse;
+];
+
+[ EggKeep o;
+    if (o == guide) rtrue;
+    rfalse;
+];
