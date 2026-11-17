@@ -1,0 +1,34 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Release 1 / Serial number 261116 / Inform v6.45 Library v6.12.8 S
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>hello
+Hello, yourself. There is nobody here to hear you who has not already heard.
+
+>/endscript
+There is no slash command called /endscript. /HELP lists them.
+
+>/script
+Transcripting is already on.
+
+>/help
+
+Commands outside the story start with a slash, as in a chat program:
+
+  /SAVE  /RESTORE  /RESTART  /QUIT  /UNDO       the game itself
+  /SCORE  /FULLSCORE  /NOTIFY ON|OFF            your progress
+  /VERBOSE  /BRIEF  /SUPERBRIEF                 how much is described
+  /SCRIPT  /UNSCRIPT                            a transcript of your game
+  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP    help
+  /MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE   record and replay commands
+  /INTRO  /HHGG                              overviews for newcomers
+
+Everything else you type is part of the story. Plain English is fine, and so are
+questions, such as WHO IS FORD PREFECT? Without the slash, those words are just
+ordinary input, and the game will tell you if you needed one.
+
+>/unscript
+
+End of transcript.

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 — 2026-11-16
 
 - `/MACRO RECORD|STOP|PLAY|LIST|SHOW|DELETE` (engine/macro.h).
 - A few hidden surprises (see docs/PLAN.md section 12a), including a cameo robot in the full game.
