@@ -72,4 +72,8 @@ playtest is the best next step. Future ideas (`/MACRO`, newcomer overviews, east
 
 ## Licence
 
-No licence has been chosen yet; until one is added all rights are reserved by the repository owner.
+- The reusable engine and tooling (`engine/`, `build.sh`, `tests/*.sh`) are under the **MIT licence** (`LICENSE`).
+- The games, their text and the documentation are under **Creative Commons Attribution-NonCommercial-ShareAlike 4.0** (`LICENSE-CONTENT`).
+- Third-party notices are in `NOTICE`; the details are in `LICENSING.md`.
+
+This is an unofficial, non-commercial fan work and is not endorsed by the estate of Douglas Adams. See `CREDITS.md`.

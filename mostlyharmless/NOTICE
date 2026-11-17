@@ -1,0 +1,23 @@
+MOSTLY HARMLESS (fan adaptation)
+
+An unofficial, non-commercial fan work. "The Hitchhiker's Guide to the Galaxy" and its
+characters, places and related names are the property of their respective owners, including
+the estate of Douglas Adams. This project is not affiliated with or endorsed by them. All
+story text in this repository is original; no passages are copied from the novels, the
+radio or television scripts, or Infocom's game.
+
+Third-party material
+--------------------
+* Inform 6 standard library (parser.h, verblib.h, grammar.h, english.h, linklpa.h, infix.h)
+  Copyright Graham Nelson 1993-2004 and David Griffith 2012-2025.
+  Licensed under the traditional Inform licence or the Artistic License 2.0
+  (text: third_party/Inform6-library-ARTISTIC-2.0.txt). It is compiled into every story
+  file built from this repository; the library source is not redistributed here.
+* The Inform 6 compiler (inform6) is used to build the games but is not part of this
+  repository or its distributions.
+* Frotz / dfrotz (David Griffith and contributors, GPL) is used to run the automated tests
+  but is not part of this repository or its distributions.
+* LICENSE-CONTENT is the unmodified legal text of Creative Commons
+  Attribution-NonCommercial-ShareAlike 4.0 International, from creativecommons.org.
+* Homage: Infocom's "The Hitchhiker's Guide to the Galaxy" (1984, Douglas Adams and Steve
+  Meretzky), and "Planetfall" and "Colossal Cave" in the planned easter eggs.

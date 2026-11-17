@@ -8,4 +8,4 @@ entirely original; nothing is quoted from the novels, the radio and television s
 - **Tools:** the Inform 6 compiler and standard library (Graham Nelson and contributors); Frotz, dfrotz and nfrotz for testing (David Griffith and contributors).
 - **Homage:** Infocom's *The Hitchhiker's Guide to the Galaxy* (Douglas Adams and Steve Meretzky) is the game this one tries to be kind to.
 
-**Licence:** none has been chosen yet. Until one is added, all rights are reserved by the repository owner. See the note in the README.
+**Licence:** MIT for the engine and tooling, CC BY-NC-SA 4.0 for the games and documents; see `LICENSING.md`, `LICENSE` and `LICENSE-CONTENT`.
