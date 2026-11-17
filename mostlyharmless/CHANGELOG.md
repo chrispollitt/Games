@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.0 — 2026-11-16
 
 - The Mish Mash rolls dice whenever you type the word "random" (`/DICE ON|OFF`, engine/mishmash.h).
 - The "Whole Sort of General Mish Mash" as a running gag in the full game, with a physics footnote.
