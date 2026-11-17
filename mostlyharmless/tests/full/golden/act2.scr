@@ -1,0 +1,239 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>act 2
+
+The Skiff Cabin
+The inside of the mail skiff, which is mostly instrument panel, with seats added
+later as an afterthought. Beyond the glass there is the particular grey that
+means a jump is in progress. You are not meant to look at it, and you do.
+
+The pilot hunches over the controls, cap over his eyes, humming. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by sixty points.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+"Hub Station," says the pilot. "Mind the gap." There is no gap. You mind it
+anyway.
+
+Hub Station: Arrivals
+A long, low arrivals hall under a ceiling of strip lights, with the sort of
+carpet that was chosen to hide things. A kiosk stands in the middle of the
+floor; a plant, a very old plant, waits in a pot beside it. A sign says QUEUE
+HERE and points at the floor. Customs is to the east.
+
+>e
+
+Customs Hall
+A pale green hall divided by a counter and a pane of glass, behind which Clerk
+Gruba sits like a very large moth in a very small cupboard. A rack of forms
+stands by the glass, with a pen on a chain beside it; an enormous sign says FORM
+27B/6 OR NO ONE PASSES. There is a bin marked ITEMS TO DECLARE (it is full of
+nothing). Arrivals is to the west and the concourse lies east, past Gruba.
+
+Clerk Gruba sits behind the glass, framed like a portrait of someone who has
+never been surprised. 
+
+You can also see a Form 27B/6 here.
+
+Ford ambles in after you, towel over one shoulder.
+
+The cube writes on its face, in neat capitals, before Gruba has so much as
+looked up: FORM 27B/6. YOU WERE ABOUT TO ASK. A moment later, from behind the
+glass, Gruba says exactly that, in exactly that tone.
+
+>ask ford about cube
+Ford looks at the cube for a long moment. "It told you what the clerk was going
+to say," he says, slowly, and takes out a pocket notebook, which he does not
+often do. "Before he'd said it. I'm writing that down. Don't tell it I wrote it
+down."
+
+[The score has just gone up by five points.]
+
+>consult guide about hub station
+HUB STATION: A STATION WITH A GREAT MANY PLACES TO WAIT. THE GUIDE NOTES, WITH
+APPROVAL, THAT NOBODY HAS EVER LEFT IT IN A HURRY. THIS IS ABOUT TO BE
+CORRECTED.
+
+[The score has just gone up by one point.]
+
+>consult guide about customs
+CUSTOMS: A BRIEF, DIGNIFIED CEREMONY IN WHICH A TRAVELLER SURRENDERS HIS
+DIGNITY. THE GUIDE RECOMMENDS ARRIVING WITH LITTLE, AND LEAVING WITH LESS.
+
+[The score has just gone up by one point.]
+
+>consult guide about machine
+VENDING MACHINES: A BREED OF MACHINE THAT HAS LEARNED TO LOVE THE UNIDENTIFIED.
+THE GUIDE NOTES THAT THEY CONSISTENTLY PREFER THINGS NOBODY RECOGNISES. THIS
+SAYS SOMETHING, AND IT IS NOT FLATTERING.
+
+[The score has just gone up by one point.]
+
+>consult guide about lost property
+LOST PROPERTY: THE ONLY OFFICE ON THE STATION THAT ACTUALLY FINDS ANYTHING. THE
+GUIDE SUSPECTS THAT THIS IS WHY IT IS ALWAYS TO THE SIDE.
+
+[The score has just gone up by one point.]
+
+>consult guide about kiosk
+THE INFORMATION KIOSK: ALWAYS CONFIDENT, SELDOM RIGHT. THE GUIDE ADMIRES THIS
+AND INTENDS TO LEARN FROM IT.
+
+[The score has just gone up by one point.]
+
+>take form
+Taken.
+
+>fill form
+You fill in the form at the counter, using the chained pen: Name, Arthur Dent.
+Address, the sandwich hut, Lamuella. Purpose of visit: personal. There is a box
+for Other, and you leave it blank, which seems to be correct.
+
+Ford leans on the counter and clears his throat. "Have you ever considered," he
+says to Gruba, "the mathematics of queues?"
+
+[The score has just gone up by four points.]
+
+>wait
+Time passes.
+
+"Queues," says Gruba, in the tone of one who has been lured by his favourite
+subject and knows it, "are not a mathematical object." "Aren't they?" says Ford,
+delighted.
+
+>wait
+Time passes.
+
+"And another thing," says Ford loudly, and points out of the window. Gruba
+turns, with something like longing, to look at the queue that is not there. His
+stamp stands unattended.
+
+[The score has just gone up by six points.]
+
+>stamp form
+While Gruba glares out of the window at the queue that isn't there, you reach
+round the end of the glass, find the stamp by feel, and bring it down on the
+form with the quiet efficiency of a man who has been to a great many offices.
+The stamp has a small, smug crest.
+
+[The score has just gone up by six points.]
+
+>e
+Gruba looks at the stamped form for slightly longer than necessary. "Next," he
+says, in the voice of a man who has decided to let it go.
+
+The Concourse
+A wide, bright concourse under a roof like a very clean sky. Benches face
+nothing in particular; shop windows display the sort of goods that make you
+realise you've been away. A vending machine hums against one wall. Customs lies
+back to the west, a sign points east to the Departure Gate, and a small doorway
+to the south says LOST PROPERTY in letters that have given up.
+
+Ford ambles in after you, towel over one shoulder.
+
+"This is a public announcement," says a very tired voice from the ceiling. "I'm
+told it is a pleasure to serve you. I wouldn't know."
+
+>s
+
+Lost Property
+A cramped office stacked to the ceiling with lost things: umbrellas, a trumpet,
+one enormous boot, several thousand single gloves. The Attendant's counter is at
+the back. The concourse is back to the north.
+
+The Attendant stands behind the counter, with the air of a man who can find
+anything and would prefer you hadn't lost it. 
+
+You can also see an unclaimed sandwich here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask attendant about norway
+The Attendant's eyes close for a moment. "Brown, frayed, a stain shaped like the
+coast of Norway," he says. "Slartibartfast's." He disappears among the shelves
+and returns with your old towel, as though he had known all along. "Thanks for
+describing it," he says. "They mostly can't."
+
+[The score has just gone up by eight points.]
+
+>take sandwich
+The Attendant waves a hand without looking: "Take it. It has been there since
+before the Collapse of Something." You take it. It is, as far as you can tell, a
+honey sandwich.
+
+>n
+
+The Concourse
+A wide, bright concourse under a roof like a very clean sky. Benches face
+nothing in particular; shop windows display the sort of goods that make you
+realise you've been away. A vending machine hums against one wall. Customs lies
+back to the west, a sign points east to the Departure Gate, and a small doorway
+to the south says LOST PROPERTY in letters that have given up.
+
+Ford ambles in after you, towel over one shoulder.
+
+>put coin in machine
+The machine considers the coin for a long time, rejects nothing, and with a
+shudder produces a thin grey platform ticket. "Thank you," it says, to nobody,
+and sounds as though it means it.
+
+[The score has just gone up by six points.]
+
+>e
+
+Departure Gate
+A wide, empty gate hall with a single moving walkway that doesn't. A clearance
+desk stands at the end; behind it, through a large window, a ship waits,
+ticking. A probability gauge on the wall twitches uneasily. The concourse is
+back to the west.
+
+The Clerk sits behind the desk, with a look of long and practised hunger. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give sandwich to clerk
+The Clerk eats it slowly, with her eyes shut. "Probability clearance," she says
+at last, stamping a card without looking at it. "Granted. Go on. Don't tell the
+others."
+
+[The score has just gone up by ten points.]
+
+>enter ship
+
+You show the ticket to nobody in particular, and the gate opens. The ship's door
+swings up with a sigh. Ford gives you a nod that is partly encouragement and
+partly the nod of a man who has had a bad idea and is committed to it.
+
+
+Ursa Minor Plaza
+A broad, spotless plaza of grey stone under a tall, bright sky. A great glass
+tower stands over it, its sign reading INFINIDIM ENTERPRISES in a typeface
+designed to be unreadable from the outside. A Vogon smoking area, marked by a
+ring of overflowing bins, fills one corner. A ship dock lies off to the side.
+The lobby doors are to the west.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+>/score
+You have so far scored 110 out of a possible 400, in 24 turns, earning you the
+rank of Sandwich Maker.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

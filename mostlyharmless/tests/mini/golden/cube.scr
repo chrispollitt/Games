@@ -1,0 +1,168 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>take fish
+Taken.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>ask hob about order
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>take knife
+Taken.
+
+>take meat
+Taken.
+
+>put meat on board
+You put the cured meat on the chopping board.
+
+>take berries
+Taken.
+
+>put berries on board
+You put the sourberries on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+
+>give sandwich to hob
+(first taking the sandwich)
+Hob takes it in both hands, weighs it like a newborn and bites. For a while he
+is quite unavailable for conversation. "That," he says at last, "is why we keep
+you." He pays in a coin of no known denomination, shakes your hand, and strolls
+off into the morning, chewing.
+
+Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes
+later a child skids in to shout that the mail hopper has been, and has left a
+parcel on the village green with the sandwich maker's name on it. Nobody on
+Lamuella has ever received a parcel before. The hopper itself, you gather, has
+landed on the meadow and is not yet sure it will leave.
+
+[The score has just gone up by ten points.]
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>open parcel
+You open the brown parcel, revealing a handwritten note and a Guide Mk II.
+
+[The score has just gone up by five points.]
+
+>take guide
+Taken.
+
+>read note
+In Ford's scrawl: "Arthur. Mind this for me. Don't switch it on, don't believe a
+word it says and don't let it near anyone who wants to be helped. Will collect.
+Soon-ish. F."
+
+A sound like tearing silk comes down out of the sky, and a sleek white shuttle
+puts itself carefully down in the meadow. Presently two people come looking for
+you: a woman, brisk and tired, and a girl who walks several paces behind with
+her hands in her pockets as if she had been delivered against her will.
+
+"Hello, Arthur," says the woman. You know her at once. Of all the people you did
+not expect to see on Lamuella, she is the first. "This is Random. She's your
+daughter."
+
+She says it the way one reports a delay on a railway. The girl says nothing,
+which she does with great force.
+
+[The score has just gone up by two points.]
+
+>switch on guide
+The cube warms against your palm. A line of friendly text blooms on its face:
+HELLO, ARTHUR. IT IS GOOD TO FINALLY BE SOMEWHERE WITH A VIEW. Beneath it, in
+smaller type: YOU APPEAR TO BE HAPPY. THIS HAS BEEN NOTED.
+
+[The score has just gone up by three points.]
+
+>consult guide about hob order
+THE GUIDE HAS ALREADY WORKED OUT WHAT HOB WANTS: MEAT AND SOURBERRIES, NO
+PICKLES. YOU WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.
+
+>consult guide about hob order
+THE GUIDE HAS ALREADY WORKED OUT WHAT HOB WANTS: MEAT AND SOURBERRIES, NO
+PICKLES. YOU WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.
+
+>consult guide about the pilot
+THE PILOT WANTS A SANDWICH OF PICKLED ROOTS AND NOTHING ELSE. YOU WERE ABOUT TO
+ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.
+
+>consult guide about random food
+RANDOM WILL EAT SOURBERRIES AND PICKLED ROOTS, AND NOTHING FROM THE MEAT. YOU
+WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.
+
+The cube makes a small, satisfied sound. "Good."
+
+Trillian consults something on her wrist that is not a watch. "I have to go,"
+she says. "There is a story in another galaxy, and it won't wait. Look after
+her. She is excellent at looking after herself, which is not the same thing."
+She kisses her daughter on the top of the head, which Random permits as one
+permits weather, and walks away up the meadow. A moment later the white shuttle
+goes up like a breath being let out.
+
+Random, who now has a father whom she has met for ten minutes, regards the hut
+roof with extreme attention.
+
+>comply 4
+Compliance is now 4.
+
+>consult guide about fenchurch
+FENCHURCH: NOT IN THIS EDITION. THE GUIDE REGRETS THAT SOME ENTRIES ARE, AT
+PRESENT, UNAVAILABLE.
+
+>/hint
+[Hint 1 of 4] Random is hungry and will not say so.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

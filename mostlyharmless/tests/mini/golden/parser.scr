@@ -1,0 +1,163 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>tkae the fish
+(Taking "tkae" to mean "take".)
+Taken.
+
+>exmaine sketch
+(Taking "exmaine" to mean "examine".)
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>inventroy
+(Taking "inventroy" to mean "inventory".)
+You're carrying:
+  a Babel fish
+  a dressing gown (being worn)
+
+>who was douglas adams?
+[Out of the story: Douglas Adams (1952-2001) was an English writer and humorist,
+born in Cambridge. He created The Hitchhiker's Guide to the Galaxy as a BBC
+Radio 4 comedy that first aired in March 1978, then turned it into a series of
+novels, five of them his own, ending with Mostly Harmless in 1992. He also wrote
+the Dirk Gently novels, co-wrote Last Chance to See with the zoologist Mark
+Carwardine, worked on Doctor Who as a writer and script editor, and co-wrote
+Infocom's 1984 Hitchhiker's text adventure with Steve Meretzky. He died in
+California in May 2001, at the age of 49. This game is an unofficial fan tribute
+and has no connection with his estate.]
+
+>dougals adams
+(Taking "dougals" to mean "douglas".)
+[Out of the story: Douglas Adams (1952-2001) was an English writer and humorist,
+born in Cambridge. He created The Hitchhiker's Guide to the Galaxy as a BBC
+Radio 4 comedy that first aired in March 1978, then turned it into a series of
+novels, five of them his own, ending with Mostly Harmless in 1992. He also wrote
+the Dirk Gently novels, co-wrote Last Chance to See with the zoologist Mark
+Carwardine, worked on Doctor Who as a writer and script editor, and co-wrote
+Infocom's 1984 Hitchhiker's text adventure with Steve Meretzky. He died in
+California in May 2001, at the age of 49. This game is an unofficial fan tribute
+and has no connection with his estate.]
+
+>what is a vogan?
+(Taking "vogan" to mean "vogon".)
+Vogons are the Galaxy's most efficient bureaucrats and its least attractive
+people. They demolished the Earth to build a hyperspace bypass, and have been
+completing the paperwork ever since. Their poetry is also said to be dreadful.
+Nobody has asked you to confirm this.
+
+>please could you look
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+
+>i want to take the jar
+Taken.
+
+>/foo
+There is no slash command called /foo. /HELP lists them.
+
+>/
+
+Commands outside the story start with a slash, as in a chat program:
+
+  /SAVE  /RESTORE  /RESTART  /QUIT  /UNDO       the game itself
+  /SCORE  /FULLSCORE  /NOTIFY ON|OFF            your progress
+  /VERBOSE  /BRIEF  /SUPERBRIEF                 how much is described
+  /SCRIPT  /UNSCRIPT                            a transcript of your game
+  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP   help and information
+
+Everything else you type is part of the story. Plain English is fine, and so are
+questions, such as WHO IS FORD PREFECT? Without the slash, those words are just
+ordinary input, and the game will tell you if you needed one.
+
+>/score
+You have so far scored 2 out of a possible 100, in 7 turns, earning you the rank
+of Passenger Without a Towel.
+
+>score
+I'm afraid I didn't follow that. Did you want the slash version? /SCORE
+
+>save the fish
+I only understood you as far as wanting to save.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>pleese go to the sandwhich hut
+(Taking "pleese" to mean "please".)
+(Taking "sandwhich" to mean "sandwich".)
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>ask hob abuot lunch
+(Taking "abuot" to mean "about".)
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>mkae hob teh usual
+(Taking "mkae" to mean "make".)
+(Taking "teh" to mean "the".)
+(first taking the knife)
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+Hob takes it in both hands, weighs it like a newborn and bites. For a while he
+is quite unavailable for conversation. "That," he says at last, "is why we keep
+you." He pays in a coin of no known denomination, shakes your hand, and strolls
+off into the morning, chewing.
+
+Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes
+later a child skids in to shout that the mail hopper has been, and has left a
+parcel on the village green with the sandwich maker's name on it. Nobody on
+Lamuella has ever received a parcel before. The hopper itself, you gather, has
+landed on the meadow and is not yet sure it will leave.
+
+[The score has just gone up by ten points.]
+
+>make me a sandwhich with meat and berries
+(Taking "sandwhich" to mean "sandwich".)
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+
+>/hint
+[Hint 1 of 4] Something was left on the village green with your name on it.
+
+>/notify off
+Score notification off.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

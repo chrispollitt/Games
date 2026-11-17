@@ -1,0 +1,442 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>act 4
+
+The Press Pen
+A cramped service lane behind a row of London shopfronts, penned in with blue-
+and-white tape and full of reporters waiting to be told something. A satellite
+van stands against one wall with its side door open. A police officer guards the
+gap in the tape to the north, beyond which lies the park. A narrow passage leads
+east to the High Road.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+You can also see a fly here.
+
+[The score has just gone up by two hundred and ten points.]
+
+>open van
+You reach into the van and take the spare credential from its hook. Nobody stops
+you, which is how you know you were meant to.
+
+>wear credential
+You put on the press credential.
+
+>n
+The officer glances at the credential, which has a smear of ketchup on it, and
+lets you through with a look that says he has seen worse.
+
+The Cordon
+A wet green London park bisected by blue-and-white tape. Beyond it, reporters
+stamp in the cold and a dozen cameras have been turned toward the middle of the
+lawn, where something has landed: an enormous bulk tin of something, with a
+door. A pub sign swings in the wind to the east, past the road. The press pen is
+to the south.
+
+You can see a paper cup here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+[The score has just gone up by eight points.]
+
+>ask ford about plan
+"Look for her trail," says Ford. "She won't have gone far. Teenagers leave a
+trail wherever they go. Tea, wrappers, a feeling that someone has just left in a
+huff."
+
+[The score has just gone up by three points.]
+
+>examine cup
+A paper cup of tea, half drunk, dropped on the grass beside the tape. On the rim
+is a small, angry bite mark. The cup is warm. Whoever dropped it left towards
+the High Road, in a hurry, and probably fuming.
+
+[The score has just gone up by three points.]
+
+>ask man about himself
+The man in the raincoat looks at you with enormous tiredness. "I am," he says,
+"someone who has been waiting a very long time to see you. Not today, though.
+Not quite. You will know me by what I leave behind." He turns back to his glass,
+politely, like a man who has said as much as is proper.
+
+[The score has just gone up by five points.]
+
+>e
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>examine kebab wrapper
+A crumpled kebab wrapper, dropped in the gutter by someone who did not like it
+but ate it anyway. A coin you cannot place is stuck in the grease. The wrapper
+has a scrawl on it in biro: a small, angry arrow pointing down the road to the
+Tube.
+
+[The score has just gone up by three points.]
+
+>s
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+The departure board flickers as you pass under it, and quietly reorders itself.
+The cube in your pocket is warm.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>examine ticket stub
+A torn ticket stub caught in the barrier, the sort of thing that is dropped by
+someone who jumped it. On the back, in the same angry biro as the wrapper, is a
+single word, underlined twice: DOWN. And a number: 2.
+
+[The score has just gone up by four points.]
+
+>ask ford about plan
+"Check the map," says Ford. "Someone wrote on it. It's a very teenage way to
+leave a message. And look at the stub, if you can find one."
+
+[The score has just gone up by four points.]
+
+>n
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>e
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>e
+
+The Studio Floor
+A cavernous studio of cameras on trolleys and cables like a thicket. In the
+middle stands a glossy set with a curved desk and a sign: ON AIR. A big autocue
+screen at the back is scrolling someone else's words. The lobby is west and the
+green room east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask ford about plan
+"If we need to talk to Tricia, we do it properly," says Ford. "And if we need to
+talk to a lot of people at once, this is a television studio. It was built to
+make people look at a camera."
+
+[The score has just gone up by three points.]
+
+>e
+
+The Green Room
+A cramped, comfortable room with a sofa, a kettle, a dish of unopened biscuits
+and a mirror ringed with lights. It is, for reasons that have never been
+explained, entirely beige. The studio floor is west.
+
+Tricia McMillan sits on the arm of the sofa, watching you, and the girl beside
+her, as if each might do something odd. 
+
+Random lounges against the wall with her arms folded, looking at everything the
+way a cat looks at a bath. 
+
+You can also see a Random's diary here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>take diary
+Taken.
+
+>ask tricia about broadcast
+"Why would I give you air?" says Tricia. "I don't know who you are yet."
+
+>tell tricia about the party in islington and the man with two heads
+Tricia is quiet for a long moment. "I did not leave that party," she says at
+last, almost to herself. "Everyone said I would have, and I thought not, and now
+a stranger in a dressing gown tells me about the man with two heads, who I only
+ever read about." She breathes out, a long shaky breath, like a cork coming out.
+"All right. All right. I believe you. I'd like to believe I'm wrong, but I
+don't."
+
+In your pocket, the cube clears its throat. "RANDOM," it says, aloud, in a warm,
+patient, impossible voice. "THERE YOU ARE."
+
+Random goes white. She is on her feet and through the door before anyone can
+stop her, her bag over one shoulder, and the sound of her footsteps echoes away
+down the studio floor. "She runs," says Tricia, shakily. "Is that normal?" "It
+is lately," says Ford.
+
+[The score has just gone up by twelve points.]
+
+>w
+
+The Studio Floor
+A cavernous studio of cameras on trolleys and cables like a thicket. In the
+middle stands a glossy set with a curved desk and a sign: ON AIR. A big autocue
+screen at the back is scrolling someone else's words. The lobby is west and the
+green room east.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>ask tricia about broadcast
+"Ninety seconds at ten past," says Tricia, "and the autocue is yours. Say what
+you want to say. I'll hold the floor manager. If this turns out to be a mistake,
+I'd like it on record that I was very reasonable."
+
+>examine autocue
+You step onto the set at the marked moment, and the screen scrolls the words
+that Tricia has cleared: DON'T PANIC. IT IS NOT WHAT YOU THINK. THERE IS A PUB
+ON THE HIGH ROAD. GO HOME. A cameraman, who has seen a great deal of television,
+nods slowly. Across the city, an unusually large number of people put their
+coats on.
+
+[The score has just gone up by twelve points.]
+
+>w
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>s
+
+Tricia's Flat
+A tidy, bookish flat on the first floor above the studio, all shelves and stubby
+candles and an enormous plant at the window. A framed photograph stands on the
+mantelpiece. A small dish on the bookshelf holds a single earring. The studio
+lobby is back to the north.
+
+You can see a framed photograph and a silver earring here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>examine photo
+A faded print of a party in a crowded room in Islington: wine, laughter, an
+enormous plant. At the back, slightly out of focus, stands a young man in a
+bathrobe with the expression of someone who has just not said the right thing.
+You have never seen the picture. You know the room.
+
+[The score has just gone up by four points.]
+
+>examine earring
+A small silver earring, delicate and slightly unfashionable, a thing someone
+chose with care. You have seen its twin. Trillian wore one exactly like it, on
+Lamuella, an hour ago, or a lifetime. This Earth's Tricia has the other half of
+the pair.
+
+[The score has just gone up by four points.]
+
+>n
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>w
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>s
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>w
+
+Platform 2
+A long curved platform, tiled white, with a draught that smells of other people.
+A train waits with its doors open, ready to go somewhere. The entrance is east.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random is standing at the open door of the train with one foot on the step, as
+if she could not decide what she was running from. "Don't," she says, before you
+have said anything. You do not. You stand there, on the platform, in your
+dressing gown, and wait, which turns out to be the right thing. At last she
+steps back. "Fine," she says. "But I'm not talking about it."
+
+[The score has just gone up by ten points.]
+
+>ask random about herself
+"You're the first person who's asked," says Random, as if tallying. "I like
+patterns. I hate being a pattern. I came here because everything the cube said
+led here, and I wanted to see whether it was lying. It wasn't. That's the worst
+part."
+
+[The score has just gone up by five points.]
+
+>ask random about her mother
+"She doesn't know me," says Random, of Tricia, watching her across the room.
+"She looks at me as if I'm a theory. My mother looks at me like I'm a deadline.
+I don't know which is worse."
+
+>apologise to random
+"For what?" says Random. You tell her: for not being there, for the cube, for
+sandwiches as a substitute for conversation. She looks at you for a long moment.
+"That was a lot," she says, which for her is a hug.
+
+[The score has just gone up by five points.]
+
+>give diary to random
+Random takes the diary, checks the cover, checks the spine, and looks at you
+with sudden, wary respect. "You didn't open it," she says. It isn't a question.
+For the first time since you met, she seems to have lowered something.
+
+>e
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>n
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+"Right," says Tricia, steering Random firmly by the elbow. "I've twenty minutes
+before my next piece to camera. There's a place just up the road. Let's get her
+indoors and out of the rain." She nods at the Dancing Gnu, whose door, as you
+watch, swings open with a creak.
+
+[The score has just gone up by five points.]
+
+>/score
+You have so far scored 300 out of a possible 400, in 36 turns, earning you the
+rank of Seasoned Hitchhiker.
+
+>n
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+"You brought the fish," says Ford quietly, with approval. "Good man."
+
+Tricia gets a round in. Random sits with her bag in her lap, looking at
+everything and trusting nothing. Something in her coat pocket makes a faint,
+contented purring.
+
+[The score has just gone up by ten points.]
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

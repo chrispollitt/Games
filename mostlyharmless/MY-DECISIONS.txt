@@ -1,0 +1,29 @@
+ANSWERS:
+1. Pistol accident: should it always happen, as in the book, or can the player defuse it? I lean toward always happening, which keeps the endings clean.
+go with your suggestion
+2. Extra ending: should there be a third ending beyond the two? I’d leave it out.
+go with your suggestion
+3. Cameos: how much of Marvin and Zaphod should appear before the final act? I’d keep it very light.
+people love these characters. have a few Cameos.
+4. The cube: I made the Guide Mk II helpful but quietly steering. The book’s version is probably more sinister, so say if you want it darker.
+for me, the Mk II being somewhat menacing is central
+5. Title: “The Long Way Round” is a placeholder.
+That can be the subtitle
+6. Book details: rows marked [check] are details I’m not sure of. Please correct me where my memory of the book is off.
+please see my comments below
+7. Size: the design is about 55,000 words, which is big. A 30-room version is possible if you prefer.
+your suggested size is perfect
+
+BOOK DETAILS:
+01-story-and-systems.md:    45: The Guide's new owners are Vogons | book (fairly sure: Infinidim Enterprises) **[check]** | Act III HQ; the company with "six names and one address" |
+yes, Vogons are the new owners
+01-story-and-systems.md:    46: Mk II reads and anticipates the reader | book, loosely **[check]** | Core mechanic: the cube answers before you ask, and is not on your side |
+we will go with that.
+01-story-and-systems.md:    48: Tricia McMillan is Trillian's counterpart on the other Earth, a TV presenter | book (fairly sure) **[check]** | Act IV |
+yes. from a parallel Earth.
+01-story-and-systems.md:    50: A pub scene with a laser pistol goes wrong | book **[check details]** | Act V |
+yes.
+01-story-and-systems.md:    51: Grebulons reduce every Earth at once | book **[check]** | Act V lawn scene; the button |
+yes.
+04-cast-and-objects.md:     46: **The Chief Editor and board** | Vogons; heard in the Boardroom; never named in full (**[check]** the book's name). |
+we will go with that.

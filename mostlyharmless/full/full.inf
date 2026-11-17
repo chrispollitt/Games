@@ -1,0 +1,185 @@
+!  MOSTLY HARMLESS: THE LONG WAY ROUND
+!
+!  An unofficial interactive fan adaptation of the plot of the fifth
+!  Hitchhiker's Guide novel.  All prose is original.  The Hitchhiker's
+!  Guide to the Galaxy and its characters belong to the estate of
+!  Douglas Adams; this is a non-commercial tribute.
+!
+!  Status: Act I (Lamuella) of six.  See docs/full/.
+!  Build:  ../build.sh full [debug]      (Z-machine version 8)
+
+Constant Story "MOSTLY HARMLESS: THE LONG WAY ROUND";
+Constant Headline "^An unofficial interactive fan adaptation of the fifth book.^";
+Constant MAX_SCORE = 400;
+Release 1;
+
+! ---- score awards (each given once) ------------------------------------
+Constant A_SKETCH = 1;      ! 2
+Constant A_FISH = 2;        ! 2
+Constant A_BERRIES = 3;     ! 3
+Constant A_WHET = 4;        ! 2
+Constant A_TRADE = 5;       ! 4
+Constant A_HOB = 6;         ! 10
+Constant A_TEM = 7;         ! 5
+Constant A_PARCEL = 8;      ! 3
+Constant A_NOTE = 9;        ! 2
+Constant A_TRILL1 = 10;     ! 1
+Constant A_TRILL2 = 11;     ! 1
+Constant A_TRILL3 = 12;     ! 1
+Constant A_RANDOMFED = 13;  ! 10
+Constant A_FORDGUIDE = 14;  ! 1
+Constant A_FORDVOGON = 15;  ! 1
+Constant A_PILOT = 16;      ! 8
+Constant A_SKIFF = 17;      ! 3
+Constant A_FORDHI = 18;     ! 1
+! Act II
+Constant A_FORM = 19;       ! 4
+Constant A_STAMP = 20;      ! 6
+Constant A_DISTRACT = 21;   ! 6
+Constant A_COIN = 22;       ! 6
+Constant A_TOWEL = 23;      ! 8
+Constant A_CLEAR = 24;      ! 10
+Constant A_SUSPECT = 25;    ! 5
+Constant A_ENT1 = 26;       ! 1 each, five entries (26-30)
+! Act III
+Constant A_BADGE = 31;      ! 8
+Constant A_SCAN = 32;       ! 8
+Constant A_LIFT = 33;       ! 10
+Constant A_ZEN1 = 34;       ! 3
+Constant A_ZEN2 = 35;       ! 3
+Constant A_ZEN3 = 36;       ! 2
+Constant A_DESK = 37;       ! 7
+Constant A_STACK = 38;      ! 4
+Constant A_DRAWER = 39;     ! 3
+Constant A_MEMO = 40;       ! 5
+Constant A_POEM = 41;       ! 15
+Constant A_MEET = 42;       ! 12
+Constant A_CORE = 43;       ! 15
+Constant A_ROOF = 44;       ! 5
+
+! Act IV
+Constant A_CORDON = 45;     ! 8
+Constant A_TRAIL1 = 46;     ! 3
+Constant A_TRAIL2 = 47;     ! 3
+Constant A_TRAIL3 = 48;     ! 4
+Constant A_TRUST2 = 49;     ! 5
+Constant A_TRUST4 = 50;     ! 5
+Constant A_TRICIA = 51;     ! 12
+Constant A_AGR1 = 52;       ! 5
+Constant A_AGR2 = 53;       ! 5
+Constant A_BROAD = 54;      ! 12
+Constant A_FLAT1 = 55;      ! 4
+Constant A_FLAT2 = 56;      ! 4
+Constant A_CHASE = 57;      ! 10
+Constant A_F4A = 58;        ! 3
+Constant A_F4B = 59;        ! 3
+Constant A_F4C = 60;        ! 4
+! Act V
+Constant A_SEAT = 61;       ! 5
+Constant A_MATCH = 62;      ! 15
+Constant A_PREP = 63;       ! 10
+Constant A_GREB1 = 64;      ! 5
+Constant A_GREB2 = 65;      ! 5
+Constant A_FISH5 = 66;      ! 10
+Constant A_CHOICE = 67;     ! 10
+
+Array awarded -> 80;
+
+! ---- story state --------------------------------------------------------
+Global phase = 0;           ! 0 morning; 1 parcel; 2 Trillian here; 3 Random; 4 Ford; 5 pilot
+Global pt = 0;
+Global hob_fed = 0;
+Global tem_fed = 0;
+Global random_fed = 0;
+Global pilot_fed = 0;
+Global guide_revealed = 0;
+Global trust = 0;
+Global ford_follows = 0;
+Global random_follows = 0;
+Global act_ended = 0;
+Global act = 1;            ! 1 Lamuella, 2 Hub Station, 3 Guide HQ ...
+Global ending = 0;
+! Act II
+Global form_state = 0;      ! 0 none, 1 taken, 2 filled, 3 stamped
+Global gruba_t = 0;
+Global gruba_away = 0;
+Global cleared = 0;
+Global cube_knew = 0;
+Global entries = 0;         ! bit per Guide entry read in Act II
+Global cabin_t = 0;
+Global ann_t = 0;
+Global cube_sc = 0;         ! which cube shortcuts have been taken (bits)
+! Act III
+Global lift_ok = 0;
+Global orlo_moved = 0;
+Global poem_shown = 0;
+Global meet_t = 0;
+Global heard_meeting = 0;
+Global have_coords = 0;
+Global desk_open = 0;
+Global found_files = 0;
+! Act IV
+Global cube_edit = 0;
+Global broadcast_ok = 0;
+Global small_killed = 0;
+Global tricia_follows = 0;
+Global random_caught = 0;
+Global random_gone = 0;
+Global tube_t = 0;
+Global man_seen = 0;
+Global rand_asked = 0;
+Global trust_sorry = 0;
+Global small_end_done = 0;
+Global man_pos = 0;
+! Act V
+Global bar_t = 0;
+Global after_t = 0;
+Global doom_t = 9;
+Global gun_fired = 0;
+Global matchbook_read = 0;
+Global card_read = 0;
+Global warned = 0;
+Global seated = 0;
+Global fish_checked = 0;
+Array man_vis -> 4;
+
+Include "hintvars";
+Include "Parser";
+Include "VerbLib";
+
+[ Award idx pts;
+    if (awarded->idx) return;
+    awarded->idx = 1;
+    score = score + pts;
+];
+
+Include "sandwich";
+Include "act1";
+Include "guide";
+Include "act2";
+Include "act3";
+Include "act4";
+Include "act5";
+
+[ Initialise;
+    location = Hut;
+    move dressing_gown to player;
+    give dressing_gown worn;
+    move i_berries to Orchard;
+    StartDaemon(Director);
+    print "^It has been several hundred days since the last time anything happened to you. You have been rather looking forward to the next several hundred.^^~A fan adaptation of the fifth book, with original text. Type /ABOUT for details or /HINT if you are stuck. Commands outside the story, like /SAVE, start with a slash; /HELP lists them. /DIFFICULTY changes how much help you get.~^^";
+];
+
+Include "smart";
+Include "lore_full";
+Include "full_actions";
+Include "Grammar";
+Include "smartgram";
+Include "full_gram";
+Include "debug";
+Include "fulldebug";
+Include "hints_act1";
+Include "hints_act2";
+Include "hints_act3";
+Include "hints_act4";
+Include "hints_act5";

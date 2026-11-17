@@ -1,0 +1,953 @@
+!  MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+!
+!  An unofficial interactive fan adaptation of the plot of the fifth
+!  Hitchhiker's Guide novel.  All prose is original.  The Hitchhiker's
+!  Guide to the Galaxy and its characters belong to the estate of
+!  Douglas Adams; this is a non-commercial tribute.
+!
+!  Two endings: the book's (the Earth is demolished) and the happier
+!  one from the BBC radio adaptation (rescue by Babel fish).
+!
+!  Compile with:   ../build.sh mini [debug]
+
+Constant Story "MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA";
+Constant Headline "^An unofficial interactive fan adaptation of the fifth book.^";
+Constant MAX_SCORE = 100;
+Release 1;
+
+! ---- sandwich ingredient bits ------------------------------------------
+Constant BIT_MEAT = 1;
+Constant BIT_BERRY = 2;
+Constant BIT_PICKLE = 4;
+
+! ---- score awards (each given once) ------------------------------------
+Constant A_SKETCH = 1;      ! 2
+Constant A_HOB = 2;         ! 10
+Constant A_PARCEL = 3;      ! 5
+Constant A_NOTE = 4;        ! 2
+Constant A_GUIDEON = 5;     ! 3
+Constant A_TRILLIAN = 6;    ! 2
+Constant A_RANDOMFED = 7;   ! 10
+Constant A_FORDGUIDE = 8;   ! 3
+Constant A_FORDVOGON = 9;   ! 3
+Constant A_PILOT = 10;      ! 10
+Constant A_ARRIVE = 11;     ! 5
+Constant A_TRICIA1 = 12;    ! 5
+Constant A_TRICIA2 = 13;    ! 5
+Constant A_MATCH = 14;      ! 15
+Constant A_ENDMATCH = 15;   ! 10
+Constant A_RADIO = 16;      ! 10
+
+Array awarded -> 20;
+
+! ---- story state --------------------------------------------------------
+Global phase = 0;           ! 0 Lamuella morning ... see Director
+Global pt = 0;              ! turns spent in the current phase
+Global hob_fed = 0;
+Global guide_revealed = 0;
+Global random_fed = 0;
+Global pilot_fed = 0;
+Global ford_follows = 0;
+Global random_follows = 0;
+Global sand_flags = 0;
+Global bar_t = 0;
+Global after_t = 0;
+Global doom_t = 9;
+Global gun_fired = 0;
+Global matchbook_read = 0;
+Global ending = 0;
+Global nudged = 0;
+
+Include "Parser";
+Include "VerbLib";
+
+! ========================================================================
+!  Helper routines
+! ========================================================================
+
+[ Award idx pts;
+    if (awarded->idx) return;
+    awarded->idx = 1;
+    score = score + pts;
+];
+
+[ SandwichDesc lc;
+    if (lc) print "a sandwich of "; else print "A sandwich of ";
+    switch (sand_flags) {
+      1: print "meat";
+      2: print "sourberries";
+      3: print "meat and sourberries";
+      4: print "pickled roots";
+      5: print "meat and pickled roots";
+      6: print "sourberries and pickled roots";
+      7: print "meat, sourberries and pickled roots";
+      default: print "nothing in particular";
+    }
+    print ", between two thick slabs of Lamuellan bread";
+];
+
+! ========================================================================
+!  Lamuella
+! ========================================================================
+
+Object Hut "Arthur's Hut"
+  with description
+         "A single round room of mud, thatch and optimism. Everything in it is exactly where you left it, because there is nowhere else for it to be. A shelf runs along one wall, and a bed, which is a bed on a generous day, takes up the other. The doorway opens east onto the village green.",
+       e_to Green,
+       out_to Green,
+  has light;
+
+Object bed "bed" Hut
+  with name 'bed' 'bunk' 'cot',
+       description "It is a bed. You have slept on it every night for what feels like a happy eternity.",
+       before [;
+         Enter: "Sleep is something you have become very good at lately. Not now, though; there are sandwiches to be made.";
+       ],
+  has scenery;
+
+Object shelf "wooden shelf" Hut
+  with name 'wooden' 'shelf' 'plank' 'ledge',
+       description "A plank on two pegs. It holds the sum of your possessions, which is a short sum.",
+  has scenery supporter;
+
+Object sketch "pencil sketch" shelf
+  with name 'pencil' 'sketch' 'drawing' 'picture' 'portrait' 'paper',
+       description [;
+         Award(A_SKETCH, 2);
+         "It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her head as if the world were a question she meant to answer later. Fenchurch. You have drawn her at least forty times and never once got the tilt right. She vanished in the middle of a hyperspace jump, which is a thing that happens, and which nobody has ever satisfactorily explained to you.";
+       ];
+
+Object jar "glass jar" shelf
+  with name 'glass' 'jar' 'tank' 'bowl' 'water',
+       description "A glass jar of cloudy water. Something small and golden swims in it, minding its own business with great thoroughness.",
+  has container open transparent;
+
+Object fish "Babel fish" jar
+  with name 'babel' 'fish' 'yellow' 'golden' 'leech',
+       description "A Babel fish: a small yellow thing with the look of a leech that has found religion. It lives on the brainwave energy of whoever is nearby and, in return, makes every language they hear come out as their own. You have always been faintly suspicious of how good a deal that is.";
+
+Object dressing_gown "dressing gown"
+  with name 'dressing' 'gown' 'robe',
+       description "Your dressing gown. It has been through more than most people's whole lives, and it has not once complained.",
+  has clothing;
+
+Object Green "The Village Green"
+  with description [;
+         print "A trampled circle of grass ringed by a dozen houses like your own. Smoke rises, unhurried, from one or two chimneys. Your house is to the west, the sandwich hut stands to the east, and a path runs north to the meadow where the occasional ship puts down.";
+         if (phase >= 1 && phase <= 5 && parent(parcel) == Green)
+             print " Someone has left a brown parcel in the middle of the grass, as if it were an offering.";
+         new_line;
+         rtrue;
+       ],
+       w_to Hut,
+       e_to SandHut,
+       n_to Meadow,
+  has light;
+
+Object SandHut "The Sandwich Hut"
+  with description
+         "A low hut with a wide shutter that folds down into a counter. This is where your life happens. Shelves and a cool pit hold the ingredients, a chopping board sits in the middle of the counter, and the knife hangs from its nail. The village green is back to the west.",
+       w_to Green,
+       out_to Green,
+  has light;
+
+Object counter "counter" SandHut
+  with name 'counter' 'shutter' 'window',
+       description "A hinged shutter, folded down. It has seen a great many lunches go by.",
+  has scenery supporter;
+
+Object board "chopping board" SandHut
+  with name 'chopping' 'board' 'cutting',
+       description "A thick round of pale wood, scarred by years of honest work. Whatever you want in a sandwich goes here.",
+  has scenery supporter;
+
+Object loaf "loaf of bread" board
+  with name 'loaf' 'bread' 'round' 'slab',
+       description "A broad round of Lamuellan bread, still faintly warm.";
+
+Object knife "sandwich knife" counter
+  with name 'knife' 'blade',
+       description "A long knife, worn narrow by sharpening. The tool of your trade.";
+
+Object cold_pit "cool pit" SandHut
+  with name 'cool' 'cold' 'pit' 'hole' 'larder' 'store',
+       description "A neat hole in the floor, lined with leaves, where things stay cold.",
+  has scenery container open;
+
+Object meat "cured meat" cold_pit
+  with name 'meat' 'cured' 'ham' 'flesh',
+       description "A dark slab of cured meat. The animal it came from was, you were assured, perfectly normal.";
+
+Object pantry "pantry shelf" SandHut
+  with name 'pantry' 'shelf' 'shelves' 'ledge',
+       description "A rough shelf of jars and baskets.",
+  has scenery supporter;
+
+Object berries "sourberries" pantry
+  with name 'sourberries' 'sourberry' 'berries' 'berry' 'sour',
+       description "A handful of tiny purple berries so sour they make the back of your knees tingle.",
+  has pluralname;
+
+Object pickles "pickled roots" pantry
+  with name 'pickles' 'pickle' 'pickled' 'roots' 'root',
+       description "Pale roots in brine. The local equivalent of pickle, and every bit as divisive.",
+  has pluralname;
+
+Object sandwich "sandwich"
+  with name 'sandwich' 'sarnie' 'lunch',
+       description [;
+         SandwichDesc();
+         print ". ";
+         "It looks very much like something somebody might want.";
+       ],
+  has edible;
+
+Object hob "Hob" SandHut
+  with name 'hob' 'villager' 'man' 'customer' 'lamuellan',
+       description "Hob is broad, patient and permanently hungry, in the manner of people who have only ever been disappointed by lunch in small ways.",
+       initial "Hob leans on the counter with the air of a man who has been waiting since before the sun. ",
+       life [;
+         Ask:
+           if (TopicAny('sandwich', 'order', 'usual', 'lunch', 'food', 'want', 'wants')
+                   || TopicAny('hungry', 'eat', 'like', 'likes', 'hungry', 'meal'))
+               "~Same as always,~ says Hob. ~Meat and sourberry, thick as you like. And no pickle. I have views about pickle.~";
+           if (TopicAny('pickle', 'pickles'))
+               "~Pickle,~ says Hob, with the distaste of a man discussing a rival.";
+           if (Lore()) rtrue;
+           "Hob considers this for a while and decides it is not a thing that needs answering.";
+         Tell:
+           "Hob nods wisely at nothing in particular.";
+         Give:
+           if (noun ~= sandwich)
+               "~That's not a sandwich,~ says Hob, with great gentleness.";
+           if (sand_flags == BIT_MEAT + BIT_BERRY) {
+               remove sandwich;
+               remove hob;
+               hob_fed = 1;
+               Award(A_HOB, 10);
+               "Hob takes it in both hands, weighs it like a newborn and bites. For a while he is quite unavailable for conversation. ~That,~ he says at last, ~is why we keep you.~ He pays in a coin of no known denomination, shakes your hand, and strolls off into the morning, chewing.";
+           }
+           if (sand_flags & BIT_PICKLE)
+               "Hob looks at the pickled roots, then at you, like a man betrayed by his dog.";
+           if (~~(sand_flags & BIT_MEAT))
+               "~No meat?~ Hob lifts the top slice in case the meat is hiding underneath. ~It's a very nice sandwich. It just isn't mine.~";
+           "~Needs the sourberry,~ says Hob, kindly but without budging.";
+       ],
+  has animate male proper;
+
+Object Meadow "The Landing Meadow"
+  with description [;
+         print "A wide, flat meadow of soft grass where visitors, on the rare occasions that Lamuella has any, are invited to park. The sky above it is very large and has the look of somewhere things can arrive from. The village green is back to the south.";
+         new_line;
+         rtrue;
+       ],
+       s_to Green,
+  has light;
+
+! The courier's skiff and its pilot arrive with the parcel
+Object skiff "mail skiff"
+  with name 'skiff' 'mail' 'hopper' 'ship' 'courier' 'craft' 'vessel',
+       description "A stubby, patched, cheerful little vessel, painted the colour of a postbox that has been left out in the rain. The hatch stands open.",
+       initial [;
+         if (phase >= 6)
+             "A mail skiff has been parked, with serene disregard, where no parking is allowed. ";
+         "A mail skiff squats in the grass, its engine ticking as it cools. ";
+       ],
+       before [;
+         Enter:
+           if (phase < 5)
+               "There is no reason to go anywhere in it yet.";
+           if (pilot_fed == 0)
+               "The pilot lifts his hat an inch. ~Break,~ he says, ~is a break.~ Perhaps he might be persuaded with something to eat.";
+       ],
+       after [;
+         Enter:
+           Journey();
+           rtrue;
+       ],
+  has container open enterable static;
+
+Object pilot "pilot"
+  with name 'pilot' 'courier' 'postman' 'driver' 'man',
+       description "A heavyset, weary being in a postal cap, asleep standing up, which is a skill.",
+       initial [;
+         if (phase >= 6)
+             "The pilot has gone back to sleep against the skiff. ";
+         "The pilot dozes against the skiff's flank, cap over his eyes. ";
+       ],
+       before [;
+         WakeOther:
+           "He opens one eye, assesses you for edibility, and closes it again.";
+       ],
+       life [;
+         Ask:
+           if (TopicAny('fly', 'skiff', 'ride', 'lift', 'flight', 'london', 'chase'))
+               "~Fly? On my break?~ He thinks about it. ~Feed me and I'll consider it. Pickles. Thick. Nothing else on it: I have a delicate constitution and strong views.~";
+           if (TopicAny('food', 'sandwich', 'lunch', 'eat', 'hungry', 'pickles'))
+               "~Pickled roots,~ says the pilot dreamily. ~On bread. Nothing else on it. Ever.~";
+           if (Lore()) rtrue;
+           "The pilot sighs, which seems to be his way of saying that talking is also not on his break.";
+         Give:
+           if (noun ~= sandwich)
+               "The pilot looks at it with the weariness of the over-delivered.";
+           if (sand_flags == BIT_PICKLE) {
+               remove sandwich;
+               pilot_fed = 1;
+               Award(A_PILOT, 10);
+               "The pilot eats it in four bites, eyes closed, like a man receiving a sacrament. ~I'd fly you to the edge of the Galaxy for that,~ he says. ~Well. Not the edge. But somewhere.~ He taps the skiff's flank. ~Whenever you're ready.~";
+           }
+           "~Not that,~ says the pilot, with sorrow rather than anger. ~Pickles. Only pickles.~";
+       ],
+  has animate male;
+
+Object fordship "Ford's ship"
+  with name 'ford^s' 'ship' 'old' 'battered' 'craft' 'vessel',
+       description "An old, battered, deeply personal ship, held together by bad language.",
+       initial "Ford's ship is parked crookedly in the grass, one landing leg on a flower. ",
+       before [;
+         Enter: "The hatch is shut and the ship is, in any case, Ford's.";
+       ],
+  has static;
+
+! ------------------------------------------------------------------------
+!  Things that arrive
+! ------------------------------------------------------------------------
+
+Object parcel "brown parcel"
+  with name 'brown' 'parcel' 'package' 'box',
+       description "A parcel wrapped in brown paper and a great deal of string, addressed in blunt capitals to THE SANDWICH MAKER, LAMUELLA. The handwriting is distantly familiar.",
+       after [;
+         Open:
+           guide_revealed = 1;
+           pt = 0;
+           Award(A_PARCEL, 5);
+           ! default message lists the contents
+       ],
+  has container openable;
+
+Object note "handwritten note" parcel
+  with name 'note' 'handwritten' 'paper' 'letter' 'message',
+       description [;
+         Award(A_NOTE, 2);
+         "In Ford's scrawl: ~Arthur. Mind this for me. Don't switch it on, don't believe a word it says and don't let it near anyone who wants to be helped. Will collect. Soon-ish. F.~";
+       ],
+       before [;
+       ];
+
+Object guide "Guide Mk II" parcel
+  with name 'guide' 'mk' 'cube' 'device' 'book' 'ii',
+       description [;
+         if (self has on)
+             "The cube's face glows with patient, attentive text.";
+         "A smooth grey cube about the size of a paperback, with one dimple where you would expect a switch. It is warm, in the way a cat is warm when it's pretending to be asleep.";
+       ],
+       before [;
+         Consult:
+           if (self hasnt on) "The cube is switched off. It looks, if anything, smug about it.";
+           GuideEntry();
+           rtrue;
+       ],
+       after [;
+         SwitchOn:
+           Award(A_GUIDEON, 3);
+           "The cube warms against your palm. A line of friendly text blooms on its face: HELLO, ARTHUR. IT IS GOOD TO FINALLY BE SOMEWHERE WITH A VIEW. Beneath it, in smaller type: YOU APPEAR TO BE HAPPY. THIS HAS BEEN NOTED.";
+       ],
+  has switchable;
+
+! ------------------------------------------------------------------------
+!  People
+! ------------------------------------------------------------------------
+
+Object Trillian "Trillian"
+  with name 'trillian' 'woman' 'tricia',
+       description "Poised, tired and impeccable, the way people are who have been to a great many places and been charming at all of them.",
+       initial "Trillian stands in the middle of things, composed. ",
+       life [;
+         Ask:
+           Award(A_TRILLIAN, 2);
+           if (TopicAny('random', 'girl', 'daughter', 'her', 'child'))
+               "~Clever, furious and far too like both of us,~ says Trillian. ~She was an accident that took a great deal of paperwork.~";
+           if (TopicAny('father', 'arthur', 'you', 'donor', 'how'))
+               "~Don't ask about the method,~ says Trillian. ~It involved a hospital, a donor form, and nobody's idea of romance. But it's your side of the family she's got her chin from.~";
+           if (TopicAny('ford', 'guide', 'parcel', 'cube'))
+               "Trillian's mouth tightens. ~I've heard Ford's name near a very large amount of trouble lately. Don't be any use to him.~";
+           if (TopicAny('earth', 'tricia', 'london', 'home'))
+               "~There was another Earth, you know,~ she says. ~One I never left. I've often wondered how she got on.~";
+           if (Lore()) rtrue;
+           "~Later, Arthur,~ says Trillian. ~I'm on a very short fuse.~";
+       ],
+  has animate female proper;
+
+Object Daughter "Random"
+  with name 'random' 'girl' 'daughter' 'teenager' 'kid',
+       description "Random is somewhere around the lower end of her teens, with the narrow, clever, furious face of someone who has decided in advance not to like anything. She has your chin, which seems to annoy her more than anything.",
+       initial "Random lounges against the wall with her arms folded, looking at everything the way a cat looks at a bath. ",
+       life [;
+         Ask:
+           if (TopicAny('food', 'eat', 'hungry', 'sandwich', 'lunch', 'dinner'))
+               "~Nothing that used to have a face,~ says Random. ~No meat. And not boring, either. If it's not sour I don't see the point.~";
+           if (TopicAny('mother', 'mum', 'trillian', 'mom'))
+               "~She's busy,~ says Random. ~She's always busy. It's practically her hobby.~";
+           if (TopicAny('guide', 'cube', 'mk', 'ii', 'parcel'))
+               "~It talks, right?~ says Random, with the first flicker of interest you've seen. ~I bet it's more interesting than anyone here.~";
+           if (TopicAny('you', 'father', 'dad', 'arthur', 'me'))
+               "~I don't know yet,~ says Random. ~Ask me when you've stopped making sandwiches.~";
+           if (TopicAny('ford'))
+               "~Never met him,~ says Random. ~Sounds like trouble. I'm in.~";
+           if (Lore()) rtrue;
+           "Random shrugs in a manner designed to be filed.";
+         AskFor:
+           if (laser in self) {
+               FireGun(1);
+               rtrue;
+           }
+           "~No,~ says Random.";
+         Give:
+           if (noun ~= sandwich)
+               "~I don't want that,~ says Random.";
+           if (sand_flags == BIT_BERRY + BIT_PICKLE) {
+               remove sandwich;
+               random_fed = 1;
+               Award(A_RANDOMFED, 10);
+               "Random inspects it with deep suspicion, bites, and holds very still. ~Okay,~ she says, with her mouth full, in a tone of grudging scientific honesty. ~That's actually good.~ It is the first thing you've given her that she has not immediately turned into an insult.";
+           }
+           if (sand_flags & BIT_MEAT)
+               "~It was alive once,~ says Random, passing it back as though it might bite.";
+           "~Boring,~ says Random. ~Make it worse. I mean better.~";
+       ],
+  has animate female proper;
+
+Object Ford "Ford Prefect"
+  with name 'ford' 'prefect' 'friend',
+       description "Ford looks like a man who has just heard a very good joke at somebody else's expense. A towel is slung over one shoulder.",
+       initial "Ford is here, restless, taking in the room as though pricing it. ",
+       life [;
+         Ask:
+           if (TopicAny('guide', 'cube', 'mk', 'ii', 'parcel', 'book')) {
+               Award(A_FORDGUIDE, 3);
+               "~It isn't finished,~ says Ford, ~which is the only reason it's still dangerous. The Mk II. It reads you while you read it. I mailed it to you because nobody in the history of the Galaxy has ever looked for anything important in a sandwich hut. No offence.~";
+           }
+           if (TopicAny('vogons', 'vogon', 'megadodo', 'infinidim', 'publisher', 'office')) {
+               Award(A_FORDVOGON, 3);
+               "~They bought the Guide,~ says Ford. ~Through a company with six names and one address. I walked up to the address. Vogons, Arthur. Vogons in suits, which is only Vogons with better excuses. They want Earth gone, all of it, in all its versions, and this new edition is how they plan to be sure.~";
+           }
+           if (TopicAny('random', 'girl', 'daughter'))
+               "~Your daughter, apparently,~ says Ford. ~That's a lot to take in. Take it in later.~";
+           if (TopicAny('trillian'))
+               "~Trillian's always been three steps ahead of the rest of us,~ says Ford, ~and then she sets off at a run.~";
+           if (TopicAny('fenchurch'))
+               "Ford's expression changes, just once. ~I'm sorry about her. I really am. People do go missing in jumps. They go somewhere. That's the thing: they go somewhere.~";
+           if (TopicAny('fish', 'babel'))
+               "~Never go anywhere dangerous without one of those,~ says Ford. ~Bring it. Don't ask me why. It'll be useful, or it'll be funny.~";
+           if (TopicAny('skiff', 'pilot', 'chase', 'plan', 'follow', 'london', 'earth')) {
+               if (phase >= 5)
+                   "~The mail skiff,~ says Ford. ~On the meadow, with a pilot who's off duty and hungry. Pickled roots on bread, he says. Make him one and he'll fly us anywhere, within reason. We're going to Earth, and not the one you remember.~";
+               "~Later,~ says Ford. ~Things are about to go wrong. I'd like us to be ready.~";
+           }
+           if (Lore()) rtrue;
+           "~Ask me later,~ says Ford. ~Preferably somewhere with a bar.~";
+       ],
+  has animate male proper;
+
+Object Tricia "Tricia McMillan"
+  with name 'tricia' 'mcmillan' 'reporter' 'woman' 'journalist',
+       description "A woman in her thirties with a microphone, a good coat, and the particular energy of someone who has been told to stand in a park until something happens. She has a face you know extremely well and have never seen before.",
+       initial "A woman with a microphone and a determined jaw is explaining something to a camera. ",
+       life [;
+         Ask:
+           if (TopicAny('aliens', 'alien', 'ship', 'craft', 'spacecraft', 'grebulons')) {
+               Award(A_TRICIA1, 5);
+               "~They asked me aboard for an interview,~ says Tricia. ~They've lost most of their memory and all of their sense of purpose. They wanted my date, time and place of birth. Then my star sign. For planning purposes, they said. I think they're running an astrology programme on the whole planet, and I don't think it's going well.~";
+           }
+           if (TopicAny('random', 'girl', 'daughter', 'mum', 'mother', 'her')) {
+               Award(A_TRICIA2, 5);
+               "~I get a lot of strangers,~ says Tricia. ~I don't generally get one who looks at me as if I've come back from the dead.~ She looks at Random again, thoughtful. ~She called me Mum. I don't have children. Don't you have a way of explaining that?~";
+           }
+           if (TopicAny('trillian'))
+               "~Never heard of her,~ says Tricia. She says it a little too quickly.";
+           if (TopicAny('bar', 'pub', 'drink', 'gnu'))
+               "~The Dancing Gnu, across the road,~ says Tricia. ~Don't judge it by the sign.~";
+           if (Lore()) rtrue;
+           "~Not on camera,~ says Tricia. ~Ask me later.~";
+       ],
+  has animate female proper;
+
+! ------------------------------------------------------------------------
+!  Earth, the one that is still there
+! ------------------------------------------------------------------------
+
+Object Site "A London Park, Cordoned Off"
+  with description [;
+         print "A wet green London park bisected by blue-and-white tape. Beyond it, reporters stamp in the cold and a dozen cameras have been turned toward the middle of the lawn, where something has landed. It looks like an enormous bulk tin of something, with a door. A pub sign swings to the east.";
+         new_line;
+         rtrue;
+       ],
+       e_to Bar,
+  has light;
+
+Object Bar "The Dancing Gnu"
+  with description [;
+         print "A pub that has been trying to look historic since about last Tuesday. Low beams, dark wood, a carpet whose pattern has given up. The door is to the west.";
+         if (gun_fired == 0)
+             print " At a small corner table, a man in a damp raincoat drinks alone, with the look of someone who is waiting for something to happen, again.";
+         else
+             print " Everyone who is not under a table is trying to be.";
+         new_line;
+         rtrue;
+       ],
+       w_to Site,
+       out_to Site,
+  has light;
+
+Object man "man in the raincoat"
+  with name 'man' 'raincoat' 'stranger' 'patron' 'drinker',
+       description [;
+         if (gun_fired)
+             "He is down, and has the peaceful expression of someone who has finished a very long errand. It is, you will think later, the quietest end anybody has had in that pub.";
+         "He has the face of someone who has been a great many things, none of them for very long.";
+       ],
+  has animate male scenery;
+
+Object matchbook "matchbook"
+  with name 'matchbook' 'matches' 'match' 'book' 'matchbox',
+       description [;
+         if (matchbook_read == 0) {
+             matchbook_read = 1;
+             Award(A_MATCH, 15);
+             doom_t = after_t + 5;
+             "The cover bears the pub's name and an address. Inside, in the cramped hand of a man who kept careful count of everything, are a date and a time. You know the date. You know the time. Years ago, in some other context, a furious voice told you where it expected to meet its last end, and at what hour: here, this table, this minute. A creature who had come back and back and back, as one small animal after another, each of them killed by something you happened to be doing. The score is settled. Whatever it was, it is finished. For the first time since a bulldozer in a country lane, a very old knot inside you comes loose.^^Ford has been reading over your shoulder. He begins to laugh, the laugh of a man who has just seen the last piece of a very long joke arrive.";
+         }
+         "The cover bears the pub's name and an address. You have already read what's inside it.";
+       ],
+       initial [;
+         if (matchbook_read == 0)
+             "A matchbook lies on the floor near the corner table.";
+         "The matchbook you read lies on the floor.";
+       ];
+
+Object laser "laser pistol"
+  with name 'laser' 'pistol' 'gun' 'weapon' 'device',
+       description "A short ugly weapon with a safety catch Random has not yet read about.",
+       before [;
+         Take, Pull:
+           if (self in Daughter) {
+               FireGun(1);
+               rtrue;
+           }
+       ];
+
+! ========================================================================
+!  Scenes
+! ========================================================================
+
+! Cube shortcuts: the Guide will simply tell you.  It is happy to save you the
+! trouble, and the engine counts every time you let it (compliance).
+Global cube_given = 0;
+
+[ CubeAnswer bit;
+    if ((cube_given & bit) == 0) {
+        cube_given = cube_given | bit;
+        Comply(1);
+    }
+];
+
+[ GuideEntry;
+    if (TopicAny('hob') && TopicAny('order', 'usual', 'wants', 'want', 'likes', 'lunch', 'sandwich')) {
+        print "THE GUIDE HAS ALREADY WORKED OUT WHAT HOB WANTS: MEAT AND SOURBERRIES, NO PICKLES. YOU WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.^";
+        CubeAnswer(1);
+        rtrue;
+    }
+    if (TopicAny('pilot', 'courier', 'skiff')) {
+        print "THE PILOT WANTS A SANDWICH OF PICKLED ROOTS AND NOTHING ELSE. YOU WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.^";
+        CubeAnswer(2);
+        rtrue;
+    }
+    if (TopicAny('random', 'daughter', 'girl') && TopicAny('food', 'eat', 'eats', 'hungry', 'sandwich', 'lunch', 'feed')) {
+        print "RANDOM WILL EAT SOURBERRIES AND PICKLED ROOTS, AND NOTHING FROM THE MEAT. YOU WERE ABOUT TO ASK. IT IS HAPPY TO SAVE YOU THE TROUBLE.^";
+        CubeAnswer(4);
+        rtrue;
+    }
+    if (TopicAny('sandwich', 'sandwiches', 'hob', 'lunch'))
+        "SANDWICHES: AN INEFFICIENT BUT STRANGELY DURABLE ART FORM. THE GUIDE RECOMMENDS ASKING THE CUSTOMER WHAT THEY WANT, THEN GIVING IT TO THEM. THIS IS CALLED CUSTOMER SERVICE AND IS BEING PHASED OUT ELSEWHERE.";
+    if (TopicAny('ford', 'prefect'))
+        "FORD PREFECT: AN EXCELLENT CONTRIBUTOR. HE WILL NOT BE NEEDED MUCH LONGER.";
+    if (TopicAny('random', 'daughter', 'girl'))
+        "RANDOM DENT: A TEENAGER OF PROMISE. THE GUIDE SUGGESTS YOU SPEND AS MUCH TIME WITH HER AS POSSIBLE. THIS IS NOT A THREAT. IT IS AN ITINERARY.";
+    if (TopicAny('earth'))
+        "EARTH: MOSTLY HARMLESS. THE GUIDE NOTES THAT THIS ENTRY HAS BEEN, PERHAPS, UNDER-EDITED. IT IS BEING REVISED.";
+    if (TopicAny('vogons', 'vogon', 'jeltz'))
+        "VOGONS: A PLEASANT, MISUNDERSTOOD PEOPLE. THE GUIDE HAS RECEIVED NO COMPLAINTS ABOUT THEM, AS ANYONE WHO MIGHT COMPLAIN HAS BEEN ASKED NOT TO.";
+    if (TopicAny('fenchurch'))
+        "FENCHURCH: NOT IN THIS EDITION. THE GUIDE REGRETS THAT SOME ENTRIES ARE, AT PRESENT, UNAVAILABLE.";
+    if (TopicAny('douglas', 'adams'))
+        "DOUGLAS ADAMS: A MOSTLY HARMLESS INDIVIDUAL OF EARTH ORIGIN. THE GUIDE IS UNABLE TO CONFIRM FURTHER DETAILS, OWING TO AN UNEXPLAINED SHORTAGE OF SPACE. (OUT OF THE STORY: TRY ASKING THE GAME DIRECTLY, E.G. WHO WAS DOUGLAS ADAMS?)";
+    if (TopicAny('fish', 'babel'))
+        "BABEL FISH: A SMALL, USEFUL CREATURE OF SURPRISING TIMING. THE GUIDE ADVISES KEEPING ONE ABOUT YOUR PERSON AT ALL TIMES. THE GUIDE CANNOT EXPLAIN WHY IT IS GIVING THIS ADVICE.";
+    "THE GUIDE HAS NO ENTRY FOR THAT. THE GUIDE REGARDS THIS AS A TEMPORARY STATE OF AFFAIRS.";
+];
+
+[ FollowStep;
+    if (ford_follows && Ford notin location) {
+        move Ford to location;
+        print "^Ford ambles in after you, towel over one shoulder.^";
+    }
+    if (random_follows && Daughter notin location) {
+        move Daughter to location;
+        print "^Random drifts in after you at a distance she clearly considers dignified.^";
+    }
+];
+
+[ CourierArrives;
+    move parcel to Green;
+    move skiff to Meadow;
+    move pilot to Meadow;
+    print "^Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes later a child skids in to shout that the mail hopper has been, and has left a parcel on the village green with the sandwich maker's name on it. Nobody on Lamuella has ever received a parcel before. The hopper itself, you gather, has landed on the meadow and is not yet sure it will leave.^";
+];
+
+[ TrillianArrives;
+    phase = 2; pt = 0;
+    move Trillian to location;
+    move Daughter to location;
+    random_follows = 1;
+    print "^A sound like tearing silk comes down out of the sky, and a sleek white shuttle puts itself carefully down in the meadow. Presently two people come looking for you: a woman, brisk and tired, and a girl who walks several paces behind with her hands in her pockets as if she had been delivered against her will.^^~Hello, Arthur,~ says the woman. You know her at once. Of all the people you did not expect to see on Lamuella, she is the first. ~This is Random. She's your daughter.~^^She says it the way one reports a delay on a railway. The girl says nothing, which she does with great force.^";
+];
+
+[ TrillianLeaves;
+    phase = 3; pt = 0;
+    remove Trillian;
+    print "^Trillian consults something on her wrist that is not a watch. ~I have to go,~ she says. ~There is a story in another galaxy, and it won't wait. Look after her. She is excellent at looking after herself, which is not the same thing.~ She kisses her daughter on the top of the head, which Random permits as one permits weather, and walks away up the meadow. A moment later the white shuttle goes up like a breath being let out.^^Random, who now has a father whom she has met for ten minutes, regards the hut roof with extreme attention.^";
+];
+
+[ FordArrives;
+    phase = 4; pt = 0;
+    move fordship to Meadow;
+    move Ford to location;
+    ford_follows = 1;
+    print "^A rattling, wheezing noise announces that someone has landed a ship on the meadow without much regard for its feelings. A little while later Ford Prefect strides in, hair on end, towel over his shoulder.^^~Arthur!~ he says. ~Good. You got it. Please tell me you didn't switch it on.~ He glances at Random, then at you. ~Ah. A great deal has happened since I last checked. Sit down. Or don't.~^";
+];
+
+[ RandomFlees;
+    phase = 5; pt = 0;
+    move guide to Daughter;
+    remove Daughter;
+    random_follows = 0;
+    remove fordship;
+    print "^While you were listening to Ford, Random has done three things quietly: found where the cube was, put it in her coat, and located the one ship on the meadow whose owner is distracted. By the time you notice, there is a noise from the meadow like a large animal clearing its throat. Through the doorway you see a battered ship wobble upward, pick up speed, and go.^^Ford stares after it. ~Of course she took my ship,~ he says. ~Of course she did.~ Then he is practical, which is the most alarming thing about him. ~The mail skiff. It's on the meadow with a pilot who is, as I understand it, hungry. Make him something he wants and he'll fly us anywhere within reason. She'll take it to Earth. Not the one you know: another one, where nothing was ever demolished. Which is exactly why they want it.~^";
+];
+
+[ Journey;
+    move skiff to Site;
+    move pilot to Site;
+    move Daughter to Site;
+    ford_follows = 1;
+    move Ford to Site;
+    phase = 6; pt = 0;
+    Award(A_ARRIVE, 5);
+    print "^The pilot checks nothing in particular, says a word to the instrument panel, and the world drops out from under you. There is a sensation like missing a step in the dark, followed by another like finding it. For one long instant in the middle of the jump you think of a girl who stepped into one of these and was not on the other side; you grip the armrest until the feeling passes.^^~Not long now,~ says Ford, mostly to himself. ~Earth. The one that's still there.~^";
+    PlayerTo(Site);
+];
+
+[ SiteScene;
+    if (pt == 1) {
+        print "^Random is already here, standing a little too close to the woman with the microphone and looking at her with an intensity that has only one explanation. ~Mum?~ she says.^^~Er,~ says the woman, ~no.~ Her face, in profile, is a face you would know in the dark. It is the face of the woman who left you on Lamuella half an hour ago, only younger, and with the particular wariness of someone who has never left home.^";
+    }
+    if (pt == 3) {
+        move Tricia to Bar;
+        move Daughter to Bar;
+        if (location == Site)
+            print "^~I've got twenty minutes before my next piece to camera,~ says the woman with the microphone. ~There's a place across the road. Let's get her indoors and out of the rain.~ She steers Random firmly east, toward the pub, and the pair of them go in.^";
+        else
+            print "^Tricia comes in with Random in tow, steering her toward a table.^";
+    }
+    if (pt == 6 || pt == 11)
+        if (location == Site)
+            print "^~The pub, Arthur,~ says Ford. ~East. I have a feeling about it.~^";
+];
+
+[ BarStep;
+    if (location ~= Bar) return;
+    bar_t++;
+    if (bar_t == 1)
+        print "^Tricia gets a round in. Random sits with her bag in her lap, looking at everything and trusting nothing. Something in her coat pocket makes a faint, contented purring.^";
+    if (bar_t == 2) {
+        move laser to Daughter;
+        print "^Random takes something short and ugly out of her bag and puts it on the table, where it looks out of place. It is a laser pistol. She has found it somewhere on the way and has not yet read the instructions.^";
+    }
+    if (bar_t == 4 && gun_fired == 0)
+        FireGun(0);
+];
+
+[ FireGun why;
+    gun_fired = 1;
+    phase = 8;
+    after_t = 0;
+    doom_t = 9;
+    move matchbook to Bar;
+    move laser to Daughter;
+    if (why == 1)
+        print "^Your fingers have barely closed on it before Random yanks it back. There is a click, a whine, and a line of white light that makes the air smell of toast.^";
+    else
+        print "^Random picks up the pistol to hand it to you, and her thumb finds the one control she hasn't read about. There is a click, a whine, and a line of white light that makes the air smell of toast.^";
+    print "^The beam wanders. It touches the beams, a bottle, the corner table. A man in a damp raincoat is no longer sitting at it. The pub erupts: there is shouting, a stampede, a barman diving for the cellar, someone on a table.^";
+];
+
+[ AfterStep;
+    after_t++;
+    if (after_t == doom_t - 3 && matchbook_read == 0)
+        print "^~Arthur,~ says Ford, pulling you aside. ~Something on the floor by that table. Look at it. Quickly.~^";
+    if (matchbook_read == 1 && fish in player && random_fed && Daughter in location && after_t == doom_t - 2)
+        print "^Random's fingers have found your sleeve. Ford, wiping his eyes, nudges you. ~Arthur. Pocket. Fish. If ever there was a moment.~^";
+    if (after_t >= doom_t)
+        Doom();
+];
+
+[ Doom;
+    if (matchbook_read) {
+        Award(A_ENDMATCH, 10);
+        ending = 2;
+    } else
+        ending = 1;
+    print "^Across the road, in a ship the size of a bulk tin, two Grebulons who have forgotten why they came finish their long afternoon of calculation. The chart is clear on one point: the thing in the way of everything good is this particular planet. One of them presses the sort of button one presses when one has forgotten what it does.^^In the pocket of Random's coat the Mk II finishes the job it was built for, which was never to guide anyone anywhere but to make quite sure that every road led to a single room on a single afternoon. It purrs once, in satisfaction, folds itself in half, and is not there any more.^^";
+    if (matchbook_read)
+        print "You have time, at least, to think that the books are balanced. You have a daughter, and a friend, and a very great deal of sky is coming down, and for once none of it is your fault.^^";
+    else
+        print "You have time for one question. It is a good one, and there will be nobody left to answer it.^^";
+    print "The sky goes out. Not just here: in every London, over every field, in every version of every Earth there has ever been, the same thing happens, quietly, at the same moment. It is the original demolition order, finally served in full. The Vogons will be pleased. They will not say so.^";
+    deadflag = 3;
+];
+
+[ RadioEnding;
+    ending = 3;
+    Award(A_ENDMATCH, 10);
+    Award(A_RADIO, 10);
+    print "The fish slides into your ear with the faint reluctance of something that has already guessed what you are about to ask of it, and for a moment the whole pub goes quiet in the way a church does. Then you feel it: a vast number of small, bored, golden creatures, in a vast number of ears, all quietly deciding that this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere an improbability that has been building for decades curdles, politely, into something kinder.^^";
+    print "There is a pop.^^";
+    print "You are sitting on a velvet chair at a table in an enormous domed restaurant. Beyond a vast window the universe is ending, magnificently, the way it does every night; nobody is looking. A very old, very large, very depressed robot is standing next to your chair with a tray he evidently picked up out of habit. ~I have been waiting,~ says Marvin. ~Naturally. Nobody asked.~ Ford, beside you, is laughing so hard he has to hold the table. Random is still holding your hand, and has not noticed.^^";
+    print "A woman at the corner table stands up. She tilts her head, exactly the way you have never once got right in a drawing.^^~I fell out of the jump,~ says Fenchurch, ~and I didn't know how to find you. So I waited somewhere every road eventually passes.~^^";
+    print "The cube is nowhere. The Vogons will have to find some other way. For now the Earth is a little further away and entirely, for the moment, intact; Random has her father's chin and she is, with an effort, willing to be seen with it. The universe ends, over the soup, and you find that you do not mind. It is, on the whole, mostly harmless.^";
+    deadflag = 3;
+];
+
+[ DeathMessage;
+    switch (ending) {
+      1: print "The Earth has been demolished. Again.";
+      2: print "The Earth has been demolished, with the books balanced";
+      3: print "Rescued, improbably, by fish";
+      default: print "The story has ended";
+    }
+];
+
+[ PrintRank;
+    print ", earning you the rank of ";
+    if (score < 20) print "Passenger Without a Towel";
+    else if (score < 50) print "Sandwich Maker";
+    else if (score < 80) print "Reluctant Hitchhiker";
+    else if (score < 100) print "Mostly Harmless";
+    else print "Properly Sorted, Against All Odds";
+    print ".^";
+];
+
+! ========================================================================
+!  The director: story clock
+! ========================================================================
+
+Object Director
+  with daemon [;
+         FollowStep();
+         HintTick();
+         switch (phase) {
+           0:
+             pt++;
+             if (hob_fed) {
+                 phase = 1;
+                 pt = 0;
+                 CourierArrives();
+             }
+             else if (pt == 25 && location == SandHut)
+                 print "^Hob coughs, gently, in the manner of a man who is making a point.^";
+           1:
+             pt++;
+             if (guide_revealed) {
+                 if (nudged == 0) nudged = 1;
+                 if (pt >= 3) TrillianArrives();
+             } else if (pt == 14)
+                 print "^You find yourself wondering about the brown parcel on the village green.^";
+           2:
+             pt++;
+             if (pt == 5) TrillianLeaves();
+           3:
+             pt++;
+             if (pt == 4) FordArrives();
+           4:
+             pt++;
+             if (pt == 5) RandomFlees();
+           5:
+             pt++;
+             if (pt % 9 == 0 && pilot_fed == 0 && location ~= Meadow && location ~= SandHut)
+                 print "^~The pilot, Arthur,~ says Ford. ~Pickled roots on bread, nothing else. Hurry.~^";
+           6:
+             pt++;
+             SiteScene();
+             if (location == Bar && Tricia in Bar && Daughter in Bar) {
+                 phase = 7;
+                 bar_t = 0;
+             }
+           7:
+             BarStep();
+           8:
+             AfterStep();
+         }
+       ];
+
+! ========================================================================
+!  Entry points and verbs
+! ========================================================================
+
+[ Initialise;
+    location = Hut;
+    move dressing_gown to player;
+    give dressing_gown worn;
+    StartDaemon(Director);
+    print "^It has been several hundred days since the last time anything happened to you. You have been rather looking forward to the next several hundred.^^~A fan adaptation of the fifth book, with original text. Type /ABOUT for details or /HINT if you are stuck. Commands outside the story, like /SAVE, start with a slash; /HELP lists them.~^^";
+];
+
+[ MakeSub;
+    if (location ~= SandHut)
+        "Sandwiches are made at the sandwich hut; that is rather the point of it.";
+    if (parent(sandwich) ~= nothing)
+        "There is a sandwich already on the go. Finish with that one first.";
+    if (loaf notin board)
+        "You will want the loaf on the chopping board first.";
+    if (knife notin player)
+        "A sandwich maker without his knife is a man with a loaf and a theory. Pick it up.";
+    sand_flags = 0;
+    if (meat in board) sand_flags = sand_flags + BIT_MEAT;
+    if (berries in board) sand_flags = sand_flags + BIT_BERRY;
+    if (pickles in board) sand_flags = sand_flags + BIT_PICKLE;
+    if (sand_flags == 0)
+        "Bread on bread is a very honest sandwich, but it is not what anyone is waiting for. Put something else on the board with the loaf.";
+    if (meat in board) move meat to cold_pit;
+    if (berries in board) move berries to pantry;
+    if (pickles in board) move pickles to pantry;
+    move loaf to counter;
+    move sandwich to board;
+    print "You slice, stack and press, with the unhurried competence of long practice. The result is ";
+    SandwichDesc(1);
+    print ".^";
+    rtrue;
+];
+
+[ FishEarSub;
+    if (noun ~= fish)
+        "That is not going in anyone's ear.";
+    if (fish notin player && fish notin jar)
+        "You cannot reach it.";
+    if (phase < 8 || matchbook_read == 0)
+        "You hold the fish up to your ear. It wriggles with great reluctance and conveys, in some way you find hard to describe, that it is saving itself for something.";
+    if (random_fed == 0 || Daughter notin location)
+        "The fish hesitates at the rim of your ear, as though a quorum were needed and the room does not have one yet. It wants, in some wordless way, the people who matter.";
+    if (CubeAllowsRadio() == 0)
+        "The fish starts toward your ear and stops. It turns, very slowly, to look at the cube, which has been quiet for some time. Whatever it sees, it decides with the gravity of something small and wise that it will not be getting involved.";
+    RadioEnding();
+    rtrue;
+];
+
+[ AboutSub;
+    print "^MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA^^An unofficial interactive fan adaptation of the fifth Hitchhiker's Guide novel. The story follows the main events of the book; all prose and puzzles are original. The Hitchhiker's Guide to the Galaxy and its characters belong to the estate of Douglas Adams. This is a non-commercial tribute.^^There are two endings: the book's, and the happier one from the BBC radio adaptation.^";
+    rtrue;
+];
+
+Include "smart";
+Include "lore_mini";
+Include "mini_actions";
+Include "Grammar";
+Include "smartgram";
+Include "mini_gram";
+
+Verb meta 'about' 'credits' 'info'
+    *                                 -> About;
+
+Extend 'put' first
+    * noun 'in' 'ear'                 -> FishEar
+    * noun 'in' 'my' 'ear'            -> FishEar
+    * noun 'in' 'your' 'ear'          -> FishEar
+    * noun 'in' 'the' 'ear'           -> FishEar
+    * noun 'into' 'ear'               -> FishEar;
+
+Extend 'insert' first
+    * noun 'in' 'ear'                 -> FishEar
+    * noun 'in' 'my' 'ear'            -> FishEar
+    * noun 'in' 'the' 'ear'           -> FishEar
+    * noun 'into' 'ear'               -> FishEar;
+Include "debug";
+
+! ------------------------------------------------------------------------
+!  Hint ladders (see engine/hints.h)
+! ------------------------------------------------------------------------
+
+Puzzle p_order "Hob's lunch"
+  with hint1 "Hob is waiting at the sandwich hut, and he would like something.",
+       hint2 "Ask him what he wants. Everything for a sandwich is at the hut.",
+       hint3 "Put what he asks for on the chopping board beside the loaf, and have the knife in hand.",
+       hint4 "ASK HOB ABOUT LUNCH, then put the meat and the sourberries on the board, MAKE SANDWICH, and GIVE SANDWICH TO HOB. (You may want to look around your own hut first.)",
+       active [; return phase == 0; ],
+       done [; return hob_fed; ];
+
+Puzzle p_parcel "The parcel"
+  with hint1 "Something was left on the village green with your name on it.",
+       hint2 "Open it, and read what is inside.",
+       hint3 "There is a note. It is worth taking the cube, too.",
+       hint4 "OPEN PARCEL, TAKE GUIDE, READ NOTE. (You might also keep the Babel fish from your hut about you; a fan of the Guide would.)",
+       active [; return phase == 1; ];
+
+Puzzle p_random "Feeding Random"
+  with hint1 "Random is hungry and will not say so.",
+       hint2 "Ask her about food, and watch what she would take from your counter.",
+       hint3 "She likes sharp, sour things, and nothing from the cured meat.",
+       hint4 "MAKE A SANDWICH WITH SOURBERRIES AND PICKLED ROOTS, then GIVE SANDWICH TO RANDOM. Keep the Babel fish with you.",
+       active [; return phase == 2 || phase == 3; ],
+       done [; return random_fed; ];
+
+Puzzle p_ford "Ford's news"
+  with hint1 "Ford has something to say, if you let him.",
+       hint2 "Ask him about the Guide.",
+       hint3 "Then ask him about the Vogons.",
+       hint4 "ASK FORD ABOUT GUIDE, then ASK FORD ABOUT VOGONS. Stay alert.",
+       active [; return phase == 4; ];
+
+Puzzle p_pilot "The pilot's break"
+  with hint1 "The pilot is on his break and says so.",
+       hint2 "What does a man on his break like to eat?",
+       hint3 "He has strong views: one ingredient only.",
+       hint4 "MAKE A SANDWICH WITH PICKLED ROOTS, GIVE SANDWICH TO PILOT, then ENTER SKIFF.",
+       active [; return phase == 5; ],
+       done [; return pilot_fed; ];
+
+Puzzle p_follow "Into London"
+  with hint1 "Everyone seems to be heading somewhere.",
+       hint2 "There is a pub sign, to the east.",
+       hint3 "Tricia and Random have gone there already.",
+       hint4 "Go EAST into the Dancing Gnu, and keep your eyes open.",
+       active [; return phase == 6 || phase == 7; ];
+
+Puzzle p_match "The corner table"
+  with hint1 "Something small is lying near the corner table.",
+       hint2 "Pick it up and look at it.",
+       hint3 "It is a matchbook, and it is addressed to you in a way.",
+       hint4 "TAKE MATCHBOOK, EXAMINE MATCHBOOK.",
+       active [; return phase == 8 && matchbook_read == 0; ];
+
+Puzzle p_nofish "The fish that stayed behind"
+  with hint1 "The matchbook has changed what this afternoon is for.",
+       hint2 "Something small and useful would help now.",
+       hint3 "The Babel fish stayed in its jar, back on Lamuella.",
+       hint4 "You cannot go back from here, so the happy ending is closed this time. The book's ending is still worth seeing; next time, take the fish from the jar at the start.",
+       active [; return phase == 8 && matchbook_read && fish notin player; ];
+
+Puzzle p_end "The choice"
+  with hint1 "The people who matter are in the room.",
+       hint2 "Does Random trust you, and has she been fed?",
+       hint3 "The fish has been waiting a long time for this.",
+       hint4 "PUT FISH IN EAR. Random must be here and must have been fed, and the cube must not have taken over.",
+       active [; return phase == 8 && matchbook_read && fish in player; ];
+

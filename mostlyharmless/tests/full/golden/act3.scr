@@ -1,0 +1,404 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>act 3
+
+Ursa Minor Plaza
+A broad, spotless plaza of grey stone under a tall, bright sky. A great glass
+tower stands over it, its sign reading INFINIDIM ENTERPRISES in a typeface
+designed to be unreadable from the outside. A Vogon smoking area, marked by a
+ring of overflowing bins, fills one corner. A ship dock lies off to the side.
+The lobby doors are to the west.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by one hundred and ten points.]
+
+>w
+
+The Lobby
+A cavernous lobby of white marble and greyer ambition. A terminal on a stand
+offers VISITOR REGISTRATION; a fountain in the middle spills pamphlets into a
+basin. The security desk is west, the plaza east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>type routine audit
+The terminal considers this for a moment and prints a white plastic badge.
+"PURPOSE ACCEPTED," it says. "YOU DO NOT HAVE TO ENJOY YOUR VISIT."
+
+[The score has just gone up by eight points.]
+
+>w
+
+Security Desk
+A pale desk across a narrow hall, with a scanner arch behind it and a Vogon
+behind that. To the north, past the arch, are the lifts. The lobby is east, and
+a hatch on the west wall says CLOAKROOM.
+
+Kess sits behind the desk, filling in a form about forms. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>w
+
+The Cloakroom
+A cramped cloakroom with a counter, a rail of coats nobody has collected, and a
+tiered shelf of umbrellas. The attendant keeps it with an almost religious
+attention. The security desk is east.
+
+Pim stands behind the counter, wiping a brass tag on his apron. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give jar to pim
+Pim receives it with both hands, hangs it on a hook, and gives you a brass tag.
+"Your property is safe with us," he says, with the awful sincerity of someone
+who has never had a reason to doubt it.
+
+>give knife to pim
+Pim hangs it carefully on its hook.
+
+>e
+
+Security Desk
+A pale desk across a narrow hall, with a scanner arch behind it and a Vogon
+behind that. To the north, past the arch, are the lifts. The lobby is east, and
+a hatch on the west wall says CLOAKROOM.
+
+Kess sits behind the desk, filling in a form about forms. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>n
+You walk through the arch. It says nothing, with enormous tact, and Kess waves
+you through without looking up.
+
+Lift Lobby
+A white hall with two lifts, one bright and one grey, side by side. A directory
+on the wall lists SIXTY FLOORS, each in the same typeface. A service robot sits
+in the corner, with its head against the wall. The security desk is back south.
+A button says UP.
+
+Ford ambles in after you, towel over one shoulder.
+
+[The score has just gone up by eight points.]
+
+>compliment cheerful lift
+"Oh!" says the bright lift, quivering. "Oh, that's lovely. Nobody says that. I
+think I'll go all the way up, just for you!" Its doors beam open. The grey lift
+sighs, once, like a damp towel.
+
+[The score has just gone up by ten points.]
+
+>u
+The lift glides up through the tower with a feeling of being politely
+rearranged, and lets you out on the Editorial Floor.
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask zendra about mk ii
+"It isn't right," says Zendra, lowering her voice. "The Mk II. It doesn't hold
+entries. It holds readers. Every edit we make goes into it, and then it makes
+its own: not about things, about people. I've seen it write a paragraph about a
+man who hadn't arrived yet."
+
+[The score has just gone up by three points.]
+
+>ask zendra about infinidim
+"Six names, one address," says Zendra. "The new management are very polite. They
+use the word synergy as if they hope you won't ask. The editor-in-chief doesn't
+have a name that anyone's been allowed to know."
+
+[The score has just gone up by three points.]
+
+>ask zendra about ford
+"Ford," says Zendra, with a half-smile. "The only man to get a desk after being
+sacked. His desk is at the end. He used to set the combination to the lengths of
+the Earth entry, you know. Every draft. He was fond of it. It's all in the
+archive."
+
+[The score has just gone up by two points.]
+
+>wear towel
+You put on your old towel.
+
+>n
+
+The Boardroom
+A long, pale room with a long, pale table and eleven chairs of exactly the same
+pale. A vent in the ceiling hums. The editorial floor is south.
+
+Ford ambles in after you, towel over one shoulder.
+
+You stand against the wall with the towel over your head. The Vogons look
+briefly at the place where you are, and then past it. This, you realise, is the
+oldest trick there is, and also the worst, and it works.
+
+>wait
+Time passes.
+
+"Item one," says the Chief Editor. "The variants. We have identified four
+hundred and eleven. The Mk II reports that it has made contact with the
+daughter. She is, apparently, very promising."
+
+>wait
+Time passes.
+
+"Item two. The date. It is a Thursday, in London, on the Earth the girl has been
+drawn to. Every other Earth is to be drawn to the same afternoon, in the same
+room, by a method the Mk II describes as hospitality." A pause. "Item three. The
+Grebulons."
+
+>wait
+Time passes.
+
+"The Grebulons," says the Chief Editor, "have been engaged. They have a chart.
+They have forgotten what it is for, which is useful. They will press the button
+when the room is full." A rustle of agreement, like paper in a drawer.
+
+>wait
+Time passes.
+
+"Adjourned," says the Chief Editor. The Vogons file out, in order of seniority,
+and the room empties. You peel the towel off your head and breathe. Ford, beside
+you with his own towel round his ears, looks at you with an expression you have
+rarely seen on him: fear, and below it, determination.
+
+[The score has just gone up by twelve points.]
+
+>wait
+Time passes.
+
+>s
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>take off towel
+You take off your old towel.
+
+>w
+
+The Archive
+A long, silent room of grey steel stacks, a ladder on rails, and an overhead
+light that clicks on when you enter and then waits to see what you'll do. There
+is a locked cabinet drawer at the far end, and a faint smell of old ink. The
+editorial floor is east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>search stacks
+You follow the arrow and find, between OUTDATED and OBSOLETE, a slim file marked
+EARTH: REVISION HISTORY. Next to it is a heavy ledger labelled VOGON POETRY,
+VOL. 9 (which nobody has ever wanted to borrow).
+
+[The score has just gone up by four points.]
+
+>read file
+The file holds three drafts of one entry. DRAFT ONE, FORD: "Harmless." DRAFT
+TWO, FORD: "Mostly harmless." DRAFT THREE, FORD, in the margin of a memo:
+"Mostly harmless. Bring a towel." Each has been stamped REJECTED, then ACCEPTED,
+then RE-ACCEPTED. The drafts, you notice, run to one word, two words and five.
+
+>open ledger
+You open the ledger, steeling yourself, and a small brass key slides out from
+between the verses and clatters to the floor. Whoever hid it had judged
+correctly that nobody would ever look here.
+
+>take key
+Taken.
+
+>unlock drawer with key
+You unlock the cabinet drawer.
+
+>open drawer
+You open the cabinet drawer, revealing an Infinidim memorandum.
+
+[The score has just gone up by three points.]
+
+>read memo
+MEMORANDUM. FROM: INFINIDIM ENTERPRISES (ONE OF SIX). SUBJECT: CONSOLIDATION OF
+EARTH VARIANTS. The management has identified four hundred and eleven variants
+of the planet Earth, to be removed at a single stroke in the interest of
+administrative simplicity. The Mk II will draw all variants together onto a
+single afternoon, in a single room, on a single Earth. The Grebulon fleet has
+been engaged to execute. The coordinates of the room are held in the Mk II core.
+NOTE: THIS MEMORANDUM SHOULD NOT EXIST.
+
+[The score has just gone up by five points.]
+
+>e
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>e
+
+Ford's Old Office
+A cramped corner office with a window onto the plaza, still bearing the faint
+signs of a man who used it to avoid working. Torn proofs hang on the wall; a
+battered desk with a dial lock on its top drawer stands under the window. The
+editorial floor is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+>dial 1 2 5
+The dials click. The top drawer slides open with a sigh of old tobacco and the
+faint smell of other people's coffee. Inside are Ford's old pass, and a thin
+folder of proofs.
+
+[The score has just gone up by seven points.]
+
+>w
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>compose poem
+You gather your thoughts, which resist. Orlo waits, notebook open. You will need
+a line from each list; choose one number from each, and say POEM then the three
+numbers (for example POEM 2 3 1).
+
+FIRST LINE:
+  1. O sky, you are so very blue.
+  2. The gelatinous dawn gropes at my window.
+  3. My heart, a damp filing cabinet.
+
+SECOND LINE:
+  1. and I, a slug in the rain of fate,
+  2. a squeak in the vacuum of regret,
+  3. a pleasant fellow in a hat,
+
+THIRD LINE:
+  1. in the end, we are all very small.
+  2. shall be filed, and then re-filed, and burn.
+  3. SQUELCH, says the universe, and so, adieu!
+
+>poem 2 2 3
+You recite it, with all the feeling you can summon, which turns out to be
+sufficient. For a moment Orlo is quite still. Then a single tear, the size of a
+thumb, runs down his face and splashes on his notebook. "It is," he says,
+thickly, "the most terrible thing I have ever heard." He blows his nose in a
+sound like a ship going down. "Go up. Go on. I will not stop you."
+
+[The score has just gone up by fifteen points.]
+
+>u
+Orlo wipes his eyes and waves you up the stairs. "Go on," he says, thickly. "Go
+on. You've given me something."
+
+The Server Floor
+A cold hall of humming racks, lit in the green of a dozen small indicator lights
+that blink in unison, like something breathing. At the far end stands the core
+of the Mk II: a ribbed, waist-high pillar with a single mouth-like slot. The
+stairs go down, and a service ladder runs up to the roof.
+
+You can see a Mk II core here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask core about the worst
+A long pause. The indicator lights stop blinking, for the first time since you
+arrived. "The worst thing I could tell you," says the core, in the cube's voice,
+but without any of its sweetness, "is that every Earth will be drawn into a
+single room, in London, on a single Thursday, and will end there. The room is a
+pub. The coordinates are held in me, and I will give you them, because you have
+asked the one question I cannot answer pleasantly." The slot glows, and a sheet
+of green paper slides out, bearing a map reference. The girl is already there;
+she was always going to be. You take the sheet.
+
+[The score has just gone up by fifteen points.]
+
+>u
+
+The Roof
+A flat, windy roof with a landing pad painted in pale grey. The whole of Ursa
+Minor lies below, a patchwork of rooftops under a sky the colour of old paper.
+Ford's escape ship waits on the pad, engines ticking. The ladder to the server
+floor is below.
+
+Ford ambles in after you, towel over one shoulder.
+
+>enter ship
+
+At the last moment a small, neat figure comes pounding up the ladder with your
+jar in both hands: Pim, from the cloakroom. "Your property!" he pants, and hands
+it over with a little bow. "Safe with us, as promised."
+
+You scramble aboard. Ford closes the door, takes the controls with a flourish
+that is mostly decoration, and the roof tilts away beneath you as Ursa Minor
+falls into the sky. "Hold on to your towel," he says. "We have a Thursday to
+catch."
+
+
+The Press Pen
+A cramped service lane behind a row of London shopfronts, penned in with blue-
+and-white tape and full of reporters waiting to be told something. A satellite
+van stands against one wall with its side door open. A police officer guards the
+gap in the tape to the north, beyond which lies the park. A narrow passage leads
+east to the High Road.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+You can also see a fly here.
+
+[The score has just gone up by five points.]
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

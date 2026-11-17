@@ -1,0 +1,255 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>act 5
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Random lounges against the wall with her arms folded, looking at everything the
+way a cat looks at a bath. 
+
+Tricia McMillan is here, watching everyone with a journalist's patient eye. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by three hundred points.]
+
+>ask barman for a sandwich
+"Ploughman's," says the barman, and produces a plain pub sandwich of ham and
+pickle from under a cloth. It is not a sandwich that Lamuella would recognise,
+but it is honest. "On the house," he says, "given the day we're having."
+
+"You brought the fish," says Ford quietly, with approval. "Good man."
+
+Tricia gets a round in. Random sits with her bag in her lap, looking at
+everything and trusting nothing. Something in her coat pocket makes a faint,
+contented purring.
+
+[The score has just gone up by ten points.]
+
+>e
+
+The Pub Yard
+A cobbled yard behind the pub with bins, a stack of empty crates and a gate that
+opens east onto the park. Beyond the gate you can see the lawn and the bulk tin
+on it. The back door of the pub is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>e
+
+The Lawn
+The middle of the park, just inside the tape, with the bulk tin looming over you
+like a landed apartment block. A door in its side stands open, and on the grass
+in front of it two creatures sit at a folding table with a very large chart,
+looking worried. The pub yard is west.
+
+Two Grebulons are bent over a chart on a folding table, arguing in the voices of
+people who have been doing it for a century. 
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>give sandwich to grebulons
+The nearer Grebulon takes it, eyes it, passes it to the other, who takes a bite
+and looks up with great emotion. "This," says the first, "is hospitality. We had
+forgotten. We had a button, you know, and no idea what it was for."
+
+[The score has just gone up by five points.]
+
+>ask grebulons about the button
+"The button," says the nearer Grebulon, vaguely. "It is red. It is very large.
+We were told to press it when the room was full. We don't remember what room. Or
+what happens." A silence. "Everything, probably."
+
+[The score has just gone up by five points.]
+
+>ask grebulons about the chart
+The chart is spread over the table, a huge, creased star-map covered in
+annotations. One star, drawn in red, has been circled, scribbled out and re-
+circled; beside it someone has written, in a loping hand: BEEBLEBROX'S FOLLY. DO
+NOT PUBLISH.
+
+>w
+
+The Pub Yard
+A cobbled yard behind the pub with bins, a stack of empty crates and a gate that
+opens east onto the park. Beyond the gate you can see the lawn and the bulk tin
+on it. The back door of the pub is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>w
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+Random takes something short and ugly out of her bag and puts it on the table,
+where it looks out of place. It is a laser pistol. She has found it somewhere on
+the way and has not yet read the instructions.
+
+>/hint
+[Hint 1 of 4] They need somewhere to sit.
+
+>put fish in ear
+You hold the fish up to your ear. It wriggles with great reluctance and conveys,
+in some way you find hard to describe, that it is saving itself for something.
+
+>comply 4
+Compliance is now 4.
+
+>w
+
+The Snug
+A tiny back room barely big enough for two people and an opinion, with a bench
+seat and a table and a window onto a brick wall. The bar is east.
+
+You can see an instruction card here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>examine card
+A creased laminated card, tucked behind the cushions in the Snug: SAFETY
+INSTRUCTIONS FOR A MODEL 7 PERSONAL LASER (ADVANCED). 1. Do not point at
+anything you value. 2. The dial marked STUN is the only dial that is safe; the
+others are optimistic. 3. The beam swings anticlockwise from the muzzle when the
+weapon is tilted; in the event of a mishap, everyone in the room should get down
+at once. 4. In the event of a mishap, do not blame the weapon.
+
+>e
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+Random picks up the pistol to hand it to you, and her thumb finds the one
+control she hasn't read about. There is a click, a whine, and a line of white
+light that makes the air smell of toast.
+
+The beam wanders. It touches the beams, a bottle, the corner table. A man in a
+damp raincoat is no longer sitting at it. The pub erupts: there is shouting, a
+stampede, a barman diving for the cellar, someone on a table, and for a few
+frightening seconds no one at all in a position to say who is hurt.
+
+>tell everyone to get down
+It is rather late for that.
+
+>wait
+Time passes.
+
+>take matchbook
+Taken.
+
+"Arthur," says Ford, pulling you aside. "Something on the floor by that table.
+Look at it. Quickly."
+
+>examine matchbook
+The cover bears the pub's name and an address. Inside, in the cramped hand of a
+man who kept careful count of everything, are a date and a time. You know the
+date. You know the time. Years ago, in some other context, a furious voice told
+you where it expected to meet its last end, and at what hour: here, this table,
+this minute. A creature who had come back and back and back, as one small animal
+after another, each of them killed by something you happened to be doing. The
+score is settled. Whatever it was, it is finished. For the first time since a
+bulldozer in a country lane, a very old knot inside you comes loose.
+
+Ford has been reading over your shoulder. He begins to laugh, the laugh of a man
+who has just seen the last piece of a very long joke arrive.
+
+[The score has just gone up by fifteen points.]
+
+>put fish in ear
+The fish starts toward your ear and stops. It turns, very slowly, to look at the
+cube, which has been quiet for some time. Whatever it sees, it decides with the
+gravity of something small and wise that it will not be getting involved.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+Across the road, in a ship the size of a bulk tin, two Grebulons who have
+forgotten why they came finish their long afternoon of calculation. The chart is
+clear on one point: the thing in the way of everything good is this particular
+planet. One of them presses the sort of button one presses when one has
+forgotten what it does.
+
+In the pocket of Random's coat the Mk II finishes the job it was built for,
+which was never to guide anyone anywhere but to make quite sure that every road
+led to a single room on a single afternoon. It purrs once, in satisfaction,
+folds itself in half, and is not there any more.
+
+You have time, at least, to think that the books are balanced. You have a
+daughter, and a friend, and a very great deal of sky is coming down, and for
+once none of it is your fault.
+
+The sky goes out. Not just here: in every London, over every field, in every
+version of every Earth there has ever been, the same thing happens, quietly, at
+the same moment. It is the original demolition order, finally served in full.
+The Vogons will be pleased. They will not say so.
+
+
+    *** The Earth has been demolished, with the books balanced ***
+
+
+
+In that game you scored 335 out of a possible 400, in 20 turns, earning you the
+rank of Mostly Harmless.
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+>wait
+Please give one of the answers above.
+
+>wait
+Please give one of the answers above.
+
+>quit
+

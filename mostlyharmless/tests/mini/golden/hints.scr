@@ -1,0 +1,103 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/hint
+[Hint 1 of 4] Hob is waiting at the sandwich hut, and he would like something.
+
+>/hint
+[Hint 2 of 4] Ask him what he wants. Everything for a sandwich is at the hut.
+
+>/hint
+[Hint 3 of 4] Put what he asks for on the chopping board beside the loaf, and
+have the knife in hand.
+
+>/hint
+[Hint 4 of 4] ASK HOB ABOUT LUNCH, then put the meat and the sourberries on the
+board, MAKE SANDWICH, and GIVE SANDWICH TO HOB. (You may want to look around
+your own hut first.)
+[That was the last hint for this one.]
+
+>/hint
+[Hint 4 of 4] ASK HOB ABOUT LUNCH, then put the meat and the sourberries on the
+board, MAKE SANDWICH, and GIVE SANDWICH TO HOB. (You may want to look around
+your own hut first.)
+[That was the last hint for this one.]
+
+>/hint back
+[Hint 3 of 4] Put what he asks for on the chopping board beside the loaf, and
+have the knife in hand.
+
+>/difficulty
+Difficulty is AVERAGE. /DIFFICULTY EASY, AVERAGE or FAITHFUL changes it.
+
+>/difficulty faithful
+Faithful: one hint per puzzle, and the game keeps quiet unless you ask.
+
+>/hint
+[Hint 1 of 1] Hob is waiting at the sandwich hut, and he would like something.
+[Faithful mode gives one hint per puzzle. /DIFFICULTY AVERAGE gives the full
+set.]
+
+>/hint
+[Hint 1 of 1] Hob is waiting at the sandwich hut, and he would like something.
+[Faithful mode gives one hint per puzzle. /DIFFICULTY AVERAGE gives the full
+set.]
+
+>/hint back
+[Hint 1 of 1] Hob is waiting at the sandwich hut, and he would like something.
+
+>/difficulty easy
+Easy: hints are unlimited, and the game will offer a nudge if you have been
+stuck a while.
+
+>/difficulty average
+Average: /HINT gives up to four steps for each puzzle, whenever you ask.
+
+>/difficulty nonsense
+I didn't catch that. /DIFFICULTY EASY, AVERAGE or FAITHFUL.
+
+>hint
+I'm afraid I didn't follow that. Did you want the slash version? /HINT
+
+>hint back
+I'm afraid I didn't follow that. Did you want the slash version? /HINT
+
+>puzzles
+Hob's lunch: rung 4, active
+The parcel: rung 0
+Feeding Random: rung 0
+Ford's news: rung 0
+The pilot's break: rung 0
+Into London: rung 0
+The corner table: rung 0
+The fish that stayed behind: rung 0
+The choice: rung 0
+
+>/hint again
+[Hint 4 of 4] ASK HOB ABOUT LUNCH, then put the meat and the sourberries on the
+board, MAKE SANDWICH, and GIVE SANDWICH TO HOB. (You may want to look around
+your own hut first.)
+[That was the last hint for this one.]
+
+>comply 2
+Compliance is now 2.
+
+>puzzles
+Hob's lunch: rung 4, active
+The parcel: rung 0
+Feeding Random: rung 0
+Ford's news: rung 0
+The pilot's break: rung 0
+Into London: rung 0
+The corner table: rung 0
+The fish that stayed behind: rung 0
+The choice: rung 0
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

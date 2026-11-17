@@ -1,0 +1,210 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>tkae basket
+(Taking "tkae" to mean "take".)
+Taken.
+
+>exmaine sketch
+(Taking "exmaine" to mean "examine".)
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>/hint
+[Hint 1 of 4] The shelf holds things worth looking at.
+
+>/hint
+[Hint 2 of 4] Look at both objects on the shelf.
+
+>make hob the usual
+Sandwiches are made at the sandwich hut; that is rather the point of it.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter are a loaf of bread and a sandwich knife. In the cool pit are
+some pickled roots. On the pantry shelf are some honey and some herb curd.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>make hob the usual
+There is no cured meat in the cool pit at the moment. Dunna smokes the
+village's, and she is not handing it over yet.
+
+>make a sandwhich with honey and curd
+(Taking "sandwhich" to mean "sandwich".)
+(first taking the knife)
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of honey and herb curd, between two thick slabs of
+Lamuellan bread.
+
+>/hint
+[Hint 1 of 4] Hob will want sourberries, and they grow on the slope south of the
+green.
+
+>ask hob abuot lunch
+(Taking "abuot" to mean "about".)
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>who is hob?
+(Taking a closer look at Hob.)
+A broad, patient man with sawdust in his beard, and the air of someone who has
+been waiting a very long time for lunch and hasn't minded.
+
+>who was douglas adams?
+[Out of the story: Douglas Adams (1952-2001) was an English writer and humorist,
+born in Cambridge. He created The Hitchhiker's Guide to the Galaxy as a BBC
+Radio 4 comedy that first aired in March 1978, then turned it into a series of
+novels, five of them his own, ending with Mostly Harmless in 1992. He also wrote
+the Dirk Gently novels, co-wrote Last Chance to See with the zoologist Mark
+Carwardine, worked on Doctor Who as a writer and script editor, and co-wrote
+Infocom's 1984 Hitchhiker's text adventure with Steve Meretzky. He died in
+California in May 2001, at the age of 49. This game is an unofficial fan tribute
+and has no connection with his estate.]
+
+>what is a vogan?
+(Taking "vogan" to mean "vogon".)
+Vogons are the Galaxy's most efficient bureaucrats and its least attractive
+people. They demolished the Earth to build a hyperspace bypass, and have been
+completing the paperwork ever since. Their poetry is also said to be dreadful.
+Nobody has asked you to confirm this.
+
+>/difficulty easy
+Easy: hints are unlimited, and the game will offer a nudge if you have been
+stuck a while.
+
+>/difficulty
+Difficulty is EASY. /DIFFICULTY EASY, AVERAGE or FAITHFUL changes it.
+
+>/difficulty faithful
+Faithful: one hint per puzzle, and the game keeps quiet unless you ask.
+
+>/hint
+[Hint 1 of 1] Hob will want sourberries, and they grow on the slope south of the
+green.
+[Faithful mode gives one hint per puzzle. /DIFFICULTY AVERAGE gives the full
+set.]
+
+>/hint
+[Hint 1 of 1] Hob will want sourberries, and they grow on the slope south of the
+green.
+[Faithful mode gives one hint per puzzle. /DIFFICULTY AVERAGE gives the full
+set.]
+
+>/difficulty average
+Average: /HINT gives up to four steps for each puzzle, whenever you ask.
+
+>go to the orchard
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+>/hint
+[Hint 2 of 4] The bushes bite. Something you own is thick enough to protect your
+arms.
+
+>take berries
+You pick the berries with your sleeves held out of the thorns' way, and tip them
+into the basket. The bees allow it, after a short debate.
+
+[The score has just gone up by three points.]
+
+>wear gown
+You're already wearing that.
+
+>take berries
+Taken.
+
+>go to the sandwhich hut
+(Taking "sandwhich" to mean "sandwich".)
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a loaf of bread. On the chopping board is a sandwich. In the
+cool pit are some pickled roots. On the pantry shelf are some honey and some
+herb curd.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>puzzles
+1.1 Wake and look around: rung 2
+1.2 Pick the berries: rung 2, active, done
+1.3 The smoker's price: rung 0, active
+1.4 Hob's order: rung 0
+1.5 Tem's order: rung 0
+1.6 The parcel: rung 0
+1.7 Trillian and Random: rung 0
+1.8 Feed Random: rung 0
+1.9 Ford's arrival: rung 0
+1.10 The pilot's break: rung 0
+2.1 The form: rung 0
+2.3 The towel: rung 0
+2.4 Ford's distraction / 2.1 stamp: rung 0
+2.2 The coin: rung 0
+2.5 Clearance: rung 0
+2.6 First suspicion: rung 0
+Next: the gate: rung 0
+3.1 The visitor badge: rung 0
+3.2 The scanner: rung 0
+3.3 The lifts: rung 0
+3.4 Zendra: rung 0
+3.5 Ford's desk: rung 0
+3.6 The Earth entry: rung 0
+3.7 Vogon poetry: rung 0
+3.8 Under the towel: rung 0
+3.9 The paradox: rung 0
+3.10 Out by the roof: rung 0
+4.1 Past the cordon: rung 0
+4.2 The trail: rung 0
+4.4 Tricia: rung 0
+4.6 The broadcast: rung 0
+4.8 The Underground: rung 0
+4.3 Random's trust: rung 0
+4.7 The flat: rung 0
+To the pub: rung 0
+5.1 The table: rung 0
+5.3 The pistol: rung 0
+5.4 The Grebulons: rung 0
+5.2 The matchbook: rung 0
+5.6 The choice: rung 0
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

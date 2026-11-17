@@ -1,0 +1,8 @@
+# build outputs
+*.z3
+*.z5
+*.z8
+*.zblorb
+
+# test transcripts from the current run (golden ones live in tests/*/golden/)
+tests/out/
