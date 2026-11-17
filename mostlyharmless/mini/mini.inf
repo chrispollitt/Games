@@ -58,6 +58,8 @@ Global matchbook_read = 0;
 Global ending = 0;
 Global nudged = 0;
 
+Include "hintvars";
+Replace KeyboardPrimitive;          ! macro.h supplies it
 Include "Parser";
 Include "VerbLib";
 

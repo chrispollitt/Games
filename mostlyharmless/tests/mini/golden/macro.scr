@@ -1,0 +1,278 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/macro
+You have no macros yet. /MACRO RECORD name starts one; everything you type after
+that is remembered until /MACRO STOP.
+
+>/macro record fish
+(Recording "fish". Everything you type now is remembered, up to sixteen
+commands. /MACRO STOP finishes.)
+
+>take fish
+Taken.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>/macro stop
+(Recorded 3 commands as "fish". /MACRO PLAY fish replays it.)
+
+>w
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+
+>/macro list
+Macros:
+  fish (3 commands)
+
+>/macro show fish
+Macro "fish":
+  1. take fish
+  2. examine sketch
+  3. e
+
+>drop fish
+Dropped.
+
+>/macro play fish
+(Replaying "fish". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>take fish
+Taken.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>
+(The macro has finished.)
+
+>w
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+
+>/macro fish
+(Replaying "fish". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>take fish
+You already have the Babel fish.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>
+(The macro has finished.)
+
+>look
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>/macro delete fish
+Deleted.
+
+>/macro list
+You have no macros yet. /MACRO RECORD name starts one; everything you type after
+that is remembered until /MACRO STOP.
+
+>/macro play fish
+You have no macro by that name. /MACRO LIST shows them.
+
+>/difficulty faithful
+Faithful: one hint per puzzle, and the game keeps quiet unless you ask.
+
+>/macro
+Faithful mode does without macros. /DIFFICULTY AVERAGE turns them on.
+
+>/difficulty average
+Average: /HINT gives up to four steps for each puzzle, whenever you ask.
+
+>/macro record a
+(Recording "a". Everything you type now is remembered, up to sixteen commands.
+/MACRO STOP finishes.)
+
+>look
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>/macro stop
+(Recorded 1 command as "a". /MACRO PLAY a replays it.)
+
+>/macro record walk
+(Recording "walk". Everything you type now is remembered, up to sixteen
+commands. /MACRO STOP finishes.)
+
+>w
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>/macro stop
+(Recorded 3 commands as "walk". /MACRO PLAY walk replays it.)
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>/macro walk
+(Replaying "walk". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>w
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>
+(The macro has finished.)
+
+>e
+You can't go that way.
+
+>/macro walk
+(Replaying "walk". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>
+(The macro stops here: things are not quite as they were when you recorded it.)
+
+>/macro list
+Macros:
+  a (1 command)
+  walk (3 commands)
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

@@ -151,7 +151,7 @@ M2 is the big gate: we agree the whole story, puzzles and hints on paper before 
 4. May I build **dfrotz** to make testing reliable?
 5. Names: keep "LAST ORDERS ON LAMUELLA" for the mini, and pick a new subtitle for the full game?
 
-## 10. Future feature: `/MACRO` (requested 2026-11-16)
+## 10. `/MACRO` (requested 2026-11-16; built as M10)
 
 Record and replay often-used long command sequences (the sandwich routine is the obvious case). To be built in the shared engine
 after the full game's acts are in (so both games get it); not scheduled yet. Design constraints, so the game stays enjoyable:
@@ -197,3 +197,7 @@ Hidden, never required, never harmful. Every egg is original prose or a short ho
   `DON'T PANIC` typed at the very start (the game takes your word for it); `LOOK AT THE UNIVERSE` on the Milliways terrace; `SING` in the pub; and `FROTZ`/`XYZZY` style words that only work once.
 - **Where it lives:** `engine/eggs.h` (XYZZY, PLUGH, GRUE and friends, shared by both games) and per-game hooks for Floyd and place-specific eggs.
 - **Tests:** a seeded run proves that XYZZY never breaks the score or locks a puzzle; the eggs list is documented here so nothing is a secret from the maintainers.
+
+**M10 status (2026-11-16): `/MACRO` is built** (`engine/macro.h`). As designed, replay is not a skip button: each command is echoed and run normally, and replay stops at the first surprise (a command that did not parse,
+a change in location, unexpected points, or a change in what is in the room or your hands compared with the recording). Differences from the sketch above: slots are 6 macros of 16 commands; commands are stored as typed; points
+*not* gained on replay are not a surprise, only unexpected points are. Tests: `tests/mini/macro.cmd`, `macro_save.cmd`, `tests/full/macro.cmd`.

@@ -26,6 +26,7 @@ Commands about the game itself start with a slash, as in a chat program:
 | `/HINT`, `/HINT BACK` | a progressive hint for the puzzle you are probably stuck on |
 | `/DIFFICULTY EASY` / `AVERAGE` / `FAITHFUL` | how much help you get |
 | `/SAVE`, `/RESTORE`, `/UNDO`, `/QUIT` ... | the usual, with a slash |
+| `/MACRO RECORD name` ... `/MACRO STOP`, `/MACRO PLAY name` | record and replay a sequence of commands (it stops if anything is different) |
 | `/HELP`, `/ABOUT` | the list of commands; information about the game |
 
 Spoiler-heavy walkthroughs: [full game](docs/WALKTHROUGH-full.md), [mini game](docs/WALKTHROUGH-mini.md).

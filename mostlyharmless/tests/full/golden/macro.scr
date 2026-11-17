@@ -1,0 +1,95 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/macro record fish
+(Recording "fish". Everything you type now is remembered, up to sixteen
+commands. /MACRO STOP finishes.)
+
+>take fish
+Taken.
+
+[The score has just gone up by two points.]
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>/macro stop
+(Recorded 2 commands as "fish". /MACRO PLAY fish replays it.)
+
+>drop fish
+Dropped.
+
+>/macro play fish
+(Replaying "fish". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>take fish
+Taken.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+>
+(The macro has finished.)
+
+>/macro show fish
+Macro "fish":
+  1. take fish
+  2. examine sketch
+
+>take fish and sketch
+Babel fish: You already have the Babel fish.
+pencil sketch: Taken.
+
+>/macro fish
+(Replaying "fish". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>take fish
+You already have the Babel fish.
+
+>
+(The macro stops here: things are not quite as they were when you recorded it.)
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>/macro fish
+(Replaying "fish". Each command is run as if you had typed it, and the replay
+stops if anything is different.)
+
+>take fish
+You already have the Babel fish.
+
+>
+(The macro stops here: things are not quite as they were when you recorded it.)
+
+>/macro list
+Macros:
+  fish (2 commands)
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

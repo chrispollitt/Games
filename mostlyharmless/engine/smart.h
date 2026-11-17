@@ -167,6 +167,7 @@
 ! ------------------------------------------------------------------------
 
 [ ParserError etype;
+    if (mv-->MV_STATE == 2) mv-->MV_FAIL = 1;
     if (etype == STUCK_PE or VERB_PE) {
         ! The player may well have typed a question or a bare topic
         consult_from = 1;
@@ -257,5 +258,6 @@
 Include "slash";
 Include "typo";
 Include "compound";
+Include "macro";
 Include "lore_real";
 Include "hints";

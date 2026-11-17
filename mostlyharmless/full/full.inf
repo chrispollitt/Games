@@ -126,7 +126,6 @@ Global meet_t = 0;
 Global heard_meeting = 0;
 Global have_coords = 0;
 Global desk_open = 0;
-Global found_files = 0;
 ! Act IV
 Global cube_edit = 0;
 Global broadcast_ok = 0;
@@ -139,7 +138,6 @@ Global man_seen = 0;
 Global rand_asked = 0;
 Global trust_sorry = 0;
 Global small_end_done = 0;
-Global man_pos = 0;
 ! Act V
 Global bar_t = 0;
 Global after_t = 0;
@@ -158,6 +156,7 @@ Global sketch_given = 0;
 Array man_vis -> 4;
 
 Include "hintvars";
+Replace KeyboardPrimitive;          ! macro.h supplies it
 Include "Parser";
 Include "VerbLib";
 

@@ -72,3 +72,14 @@ Verb meta 'help'
 
 Verb meta 'slashmiss'
     *                                       -> SlashMiss;
+
+! /MACRO: record and replay command sequences (macro.h)
+Verb meta 'macro'
+    *                                       -> MacroList
+    * 'list'                                -> MacroList
+    * 'stop'                                -> MacroStop
+    * 'record' topic                        -> MacroRecord
+    * 'play' topic                          -> MacroPlay
+    * 'show' topic                          -> MacroShow
+    * 'delete' topic                        -> MacroDelete
+    * topic                                 -> MacroPlay;
