@@ -1,0 +1,114 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>take fish and sketch
+Babel fish: Taken.
+pencil sketch: Taken.
+
+[The score has just gone up by two points.]
+
+>examine sketch and then drop it
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+Dropped.
+
+>take sketch, inventory
+Taken.
+You're carrying:
+  a pencil sketch
+  a Babel fish
+  a dressing gown (being worn)
+
+>take basket; wear gown
+Taken.
+You're already wearing that.
+
+>drop all and look
+wicker basket: Dropped.
+pencil sketch: Dropped.
+Babel fish: Dropped.
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+You can see a Babel fish, a pencil sketch, a wicker basket (which is empty), a
+bed and a wooden shelf (on which is a glass jar (which is empty)) here.
+
+>take basket and gown and e
+wicker basket: Taken.
+dressing gown: You take off the dressing gown.
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>w and take basket then drop it
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+You can see a Babel fish, a pencil sketch, a bed and a wooden shelf (on which is
+a glass jar (which is empty)) here.
+You already have the wicker basket.
+Dropped.
+
+>inventory
+You're carrying:
+  a dressing gown
+
+>e, s
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+>take berries and n
+The bushes have thorns like an accountant's smile; you would leave half your
+hands behind. Something thick over your arms would help.
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>hob, hello
+You seem to want to talk to someone, but I can't see whom.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

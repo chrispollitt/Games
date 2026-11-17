@@ -19,7 +19,14 @@ Class Ingredient
   with ibit 0,
        home 0,
        missing "You haven't any of that to hand.",
-       article "some";
+       article "some",
+       before [;
+         Drop:
+           if (location ~= SandHut) {
+               SendHome(self);
+               "You can hardly leave the larder lying about; you tuck it back where it belongs.";
+           }
+       ];
 
 ! What is on the chopping board, as a bit pattern
 [ BoardFlags o f;
@@ -62,6 +69,7 @@ Class Ingredient
 [ MakeSub f;
     if (location ~= SandHut)
         "Sandwiches are made at the sandwich hut; that is rather the point of it.";
+    StraySandwich();
     if (parent(sandwich) ~= nothing)
         "There is a sandwich already on the go. Finish with that one first.";
     if (loaf notin board)
@@ -141,6 +149,7 @@ Class Ingredient
         "Sandwiches are made at the sandwich hut; that is rather the point of it.";
     if (who ~= 0 && who notin location)
         "There's nobody here to make it for.";
+    StraySandwich();
     if (parent(sandwich) ~= nothing)
         "There is a sandwich already on the go. Finish with that one first.";
     if (bits == 0 && BoardFlags() == 0)
@@ -187,4 +196,13 @@ Class Ingredient
     print (string) prefix, " ";
     WriteListFrom(child(o), ENGLISH_BIT + ISARE_BIT);
     print ".^";
+];
+
+! A forgotten sandwich lying in some other room is quietly cleared away, so
+! that it can never block the next one.
+[ StraySandwich;
+    if (parent(sandwich) == nothing) return;
+    if (parent(sandwich) == board || parent(sandwich) == location) return;
+    if (IndirectlyContains(player, sandwich)) return;
+    remove sandwich;
 ];

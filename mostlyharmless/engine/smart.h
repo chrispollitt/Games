@@ -94,9 +94,12 @@
     for (i = 2 : i < n + 2 : i++) {
         c = buffer->i;
         ! question marks, shouting and brackets are just noise
-        if (c == '?' or '!' or ';' or ':' or '(' or ')') c = ' ';
+        if (c == '?' or '!' or ':' or '(' or ')') c = ' ';
+        if (c == ';') c = ',';
         ! apostrophes disappear, so that WHAT'S becomes WHATS
         if (c == 39 or 96) continue;
+        ! 1-2-5 or 1,2,5 between digits: separate the numbers
+        if ((c == '-' or ',') && i > 2 && i < n + 1 && buffer->(i - 1) >= '0' && buffer->(i - 1) <= '9' && buffer->(i + 1) >= '0' && buffer->(i + 1) <= '9') c = ' ';
         buffer->j = c;
         j++;
     }
@@ -105,6 +108,7 @@
     Tokenise__(buffer, parse);
     SlashStrip();
     TypoFixAll();
+    SplitCompound();
     StripFiller();
     SlashCheck();
     rfalse;
@@ -198,11 +202,32 @@
     rfalse;
 ];
 
+! How many words of the topic are neither a name of o nor ordinary question filler?
+[ TopicExtras o i w n;
+    wn = consult_from;
+    n = 0;
+    for (i = 0 : i < consult_words : i++) {
+        w = NextWord();
+        if (w == 0) continue;
+        if (WordInProperty(w, o, name)) continue;
+        if (w == 'is' or 'are' or 'was' or 'the' or 'a' or 'an' or 'who' or 'whos' or 'what' or 'whats'
+                or 'that' or 'this' or 'about') continue;
+        n++;
+    }
+    return n;
+];
+
 [ QuestionSub o;
     if (Lore()) rtrue;
-    ! Otherwise, if the question mentions something in sight, describe it
+    ! Otherwise, if the question mentions someone in the room, put it to them;
+    ! if it mentions something in sight, describe it
     objectloop (o) {
         if (o ~= player && o ~= location && TestScope(o, player) && ObjInTopic(o)) {
+            if (o has animate && TopicExtras(o) > 0) {
+                print "(Asking ", (the) o, ".)^";
+                <Ask o>;
+                rtrue;
+            }
             print "(Taking a closer look at ", (the) o, ".)^";
             <Examine o>;
             rtrue;
@@ -231,5 +256,6 @@
 
 Include "slash";
 Include "typo";
+Include "compound";
 Include "lore_real";
 Include "hints";

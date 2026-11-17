@@ -156,7 +156,12 @@ Object Concourse "The Concourse"
 
 Object vending "vending machine" Concourse
   with name 'vending' 'machine' 'slot' 'dispenser',
-       description "A tall machine with a slot, a flap, and a sign: EXACT CHANGE ONLY. The coin return has a handwritten note on it: ALSO NO.",
+       description [;
+         print "A tall machine with a slot, a flap, and a sign: EXACT CHANGE ONLY. The coin return has a handwritten note on it: ALSO NO.";
+         if (difficulty == DIFF_EASY) print " In very small letters along the slot: ACCEPTS ANY COIN NOBODY RECOGNISES.";
+         new_line;
+         rtrue;
+       ],
        before [;
          Take: "It is bolted to the floor, and to the building, and apparently to the idea of being a vending machine.";
        ],
@@ -345,6 +350,14 @@ Object gate_ship "waiting ship" Gate
             }
             "~Keep it in your pocket,~ says Ford. ~Don't encourage it.~";
         }
+        if (TopicAny('coin', 'coins', 'ticket', 'machine', 'vending', 'money')) {
+            if (ticket in player) "~You have your ticket,~ says Ford. ~Keep it somewhere dull.~";
+            if (coin notin player && awarded->A_COIN == 0) {
+                move coin to player;
+                "~Lost your coin?~ says Ford, patting his pockets. ~Everyone does. I always carry a few that nobody recognises. Here: try this one in the machine.~ He presses a small, heavy coin into your hand.";
+            }
+            "~The machine takes whatever nobody recognises,~ says Ford. ~Try your coin. It is very probably the right sort.~";
+        }
         if (TopicAny('station', 'hub', 'plan', 'where', 'next'))
             "~Ursa Minor,~ says Ford. ~The Guide's offices. Where the story gets written. We need to know what the girl was told, and by whom. That means getting a ticket, a clearance and a form that Gruba will stamp.~";
     }
@@ -429,6 +442,7 @@ Object gate_ship "waiting ship" Gate
     if (act == 3) Act3Tick();
     if (act == 4) Act4Tick();
     if (act == 5) Act5Tick();
+    if (act == 6) Act6Tick();
 ];
 
 [ StartAct2;

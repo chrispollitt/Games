@@ -195,7 +195,12 @@ Object robot "service robot" LiftLobby
 
 Object directory "building directory" LiftLobby
   with name 'directory' 'floors' 'list',
-       description "SIXTY FLOORS, SIXTY IDENTICAL LISTINGS. Floor 12 is EDITORIAL. Floor 40 is STRATEGY. Floor 59 is something called INTEGRATION. Floor 60 is LEFT BLANK.",
+       description [;
+         print "SIXTY FLOORS, SIXTY IDENTICAL LISTINGS. Floor 12 is EDITORIAL. Floor 40 is STRATEGY. Floor 59 is something called INTEGRATION. Floor 60 is LEFT BLANK.";
+         if (difficulty == DIFF_EASY) print " A small card pinned beneath it reads: THE BRIGHT LIFT LIKES PRAISE. THE GREY LIFT LIKES SYMPATHY.";
+         new_line;
+         rtrue;
+       ],
   has scenery;
 
 Object Editorial "The Editorial Floor"
@@ -489,6 +494,9 @@ Object roof_ship "Ford's escape ship" Roof
             if (k == 3) n3 = v;
         }
     }
+    if (k == 1 && n1 >= 100 && n1 <= 999) {
+        n3 = n1 % 10; n2 = (n1 / 10) % 10; n1 = n1 / 100; k = 3;
+    }
     if (k < 3) "The lock has three dials. Try DIAL and three numbers, for example DIAL 4 5 6.";
     if (fdesk has open) "The drawer is open already.";
     if (n1 == 1 && n2 == 2 && n3 == 5) {
@@ -584,6 +592,10 @@ Object roof_ship "Ford's escape ship" Roof
     act = 3;
     pt = 0;
     ford_follows = 1;
+    if (towel notin player) {
+        move towel to player;
+        print "^Ford shoves something soft into your hands. ~Yours,~ he says. ~Lost Property gave it to me while you were being thorough. Don't thank me; just don't lose it.~^";
+    }
     move Ford to Plaza;
     PlayerTo(Plaza);
 ];

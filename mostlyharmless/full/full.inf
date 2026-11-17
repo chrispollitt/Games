@@ -82,6 +82,15 @@ Constant A_GREB1 = 64;      ! 5
 Constant A_GREB2 = 65;      ! 5
 Constant A_FISH5 = 66;      ! 10
 Constant A_CHOICE = 67;     ! 10
+! Act VI
+Constant A_ORDER = 68;      ! 8
+Constant A_MARVIN = 69;     ! 6
+Constant A_TILT = 70;       ! 12
+Constant A_TOAST1 = 71;     ! 2 (Ford)
+Constant A_TOAST2 = 72;     ! 3 (Random)
+Constant A_TOAST3 = 73;     ! 3 (Tricia)
+Constant A_TOAST4 = 74;     ! 3 (Marvin)
+Constant A_TOAST5 = 75;     ! 3 (Fenchurch)
 
 Array awarded -> 80;
 
@@ -141,6 +150,11 @@ Global card_read = 0;
 Global warned = 0;
 Global seated = 0;
 Global fish_checked = 0;
+Global hob_told = 0;
+! Act VI
+Global marvin_follows = 0;
+Global tilt_seen = 0;
+Global sketch_given = 0;
 Array man_vis -> 4;
 
 Include "hintvars";
@@ -160,6 +174,7 @@ Include "act2";
 Include "act3";
 Include "act4";
 Include "act5";
+Include "act6";
 
 [ Initialise;
     location = Hut;
@@ -183,3 +198,4 @@ Include "hints_act2";
 Include "hints_act3";
 Include "hints_act4";
 Include "hints_act5";
+Include "hints_act6";

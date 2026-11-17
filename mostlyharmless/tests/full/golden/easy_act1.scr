@@ -1,0 +1,559 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>/difficulty easy
+Easy: hints are unlimited, and the game will offer a nudge if you have been
+stuck a while.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>take fish
+Taken.
+
+[The score has just gone up by two points.]
+
+>take basket
+Taken.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>s
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+>take berries
+You pick the berries with your sleeves held out of the thorns' way, and tip them
+into the basket. The bees allow it, after a short debate.
+
+[The score has just gone up by three points.]
+
+>n
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+>e
+
+The River Bank
+A slow brown river that has never been in a hurry. Flat stones make a path of
+sorts across the shallows, and reeds stand along the bank. Near your feet a big
+flat rock sits on the mud as if it had been put there to be looked under. The
+meadow is back to the west.
+
+>look under rock
+You heave the rock aside. Underneath, in the damp, lies a smooth grey whetstone,
+the sort a sensible person would have kept somewhere drier.
+
+>take whetstone
+Taken.
+
+[The score has just gone up by two points.]
+
+>w
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+>s
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>se
+
+The Smokehouse
+A squat hut of black timber, whose single room is a perpetual early evening.
+Racks of curing meat hang in the smoke. A chopping block stands by the door with
+a cleaver on it. The smoke finds your eyes in about a second and a half. A path
+leads back northwest to the village green.
+
+Dunna stands at the racks, watching the meat as though it might try something. 
+
+>sharpen cleaver with stone
+You work the cleaver along the stone with long, patient strokes until it sings.
+Dunna comes over, tests the edge against a hair from her own arm, and is silent
+for a respectful moment. "That'll do," she says. She whistles for her boy, who
+runs off with a side of cured meat. "It's in your pit. Don't say I never gave
+you anything."
+
+[The score has just gone up by four points.]
+
+>nw
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter are a loaf of bread and a sandwich knife. In the cool pit are
+some cured meat and some pickled roots. On the pantry shelf are some honey and
+some herb curd.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+Hob catches your eye and says, helpfully, "Meat and sourberry, same as always.
+No pickle."
+
+>ask hob about lunch
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>take knife
+Taken.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put meat on board
+(first taking the cured meat out of the cool pit)
+You put the cured meat on the chopping board.
+
+>put berries on board
+(first taking the sourberries out of the wicker basket)
+You put the sourberries on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+
+>give sandwich to hob
+(first taking the sandwich)
+Hob takes it in both hands, weighs it like a newborn and bites. For a while he
+is quite unavailable for conversation. "That," he says at last, "is why we keep
+you." He pays in a coin of no known denomination, shakes your hand, and strolls
+off into the morning, chewing. You slip the coin into your dressing-gown pocket;
+you have never seen its like.
+
+Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes
+later a child skids in to shout that the mail hopper has been, and has left a
+parcel on the village green with the sandwich maker's name on it. Nobody on
+Lamuella has ever received a parcel before. The hopper itself, you gather, has
+landed on the meadow and is not yet sure it will leave.
+
+[The score has just gone up by ten points.]
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put honey on board
+(first taking the honey off the pantry shelf)
+You put the honey on the chopping board.
+
+>put curd on board
+(first taking the herb curd off the pantry shelf)
+You put the herb curd on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of honey and herb curd, between two thick slabs of
+Lamuellan bread.
+
+>take sandwich
+Taken.
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>sw
+
+The Reeve's Lodge
+The biggest building in the village by some margin, which is not saying much: a
+round hall with a floor of beaten earth, a ring of low seats, and in the middle
+a great smooth boulder that everyone calls the Hearing Stone, because that is
+where the village comes to hear itself talk. The village green is back to the
+northeast.
+
+Tem, the Reeve, sits on the stone's rim with one hand to his jaw. 
+
+>ask tem about food
+"Can't chew," says Tem. "Hard crust, hard meat, hard luck. Something soft would
+be a kindness: honey, that herb curd. Nothing that fights back."
+
+>give sandwich to tem
+Tem eats in small, careful bites, and his whole face loosens. "Better," he says.
+"Much better. The Stone's been saying there's a ship coming. Rare for it to be
+useful." He winks, which on him looks like a minor earthquake.
+
+[The score has just gone up by five points.]
+
+>ne
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>cut cord with knife
+You slide the knife under the cord and it parts with a sound like a shy cough.
+The parcel can be opened now.
+
+>open parcel
+You open the brown parcel, revealing a handwritten note and a Guide Mk II.
+
+[The score has just gone up by three points.]
+
+>take guide
+Taken.
+
+>read note
+In Ford's scrawl: "Arthur. Mind this for me. Don't switch it on, don't believe a
+word it says and don't let it near anyone who wants to be helped. Will collect.
+Soon-ish. F."
+
+[The score has just gone up by two points.]
+
+>switch on guide
+The cube warms against your palm. A line of friendly text blooms on its face:
+HELLO, ARTHUR. IT IS GOOD TO FINALLY BE SOMEWHERE WITH A VIEW. Beneath it, in
+smaller type: YOU APPEAR TO BE HAPPY. THIS HAS BEEN NOTED.
+
+>wait
+Time passes.
+
+A sound like tearing silk comes down out of the sky, and a sleek white shuttle
+puts itself carefully down in the meadow. Presently two people come looking for
+you: a woman, brisk and tired, and a girl who walks several paces behind with
+her hands in her pockets as if she had been delivered against her will.
+
+"Hello, Arthur," says the woman. You know her at once. Of all the people you did
+not expect to see on Lamuella, she is the first. "This is Random. She's your
+daughter."
+
+She says it the way one reports a delay on a railway. The girl says nothing,
+which she does with great force.
+
+The cube, in your pocket, produces a tiny hum. A line of text writes itself on
+its face where only you will see it: "A DAUGHTER. HOW NICE FOR YOU. THE GUIDE
+HAS UPDATED YOUR ITINERARY."
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>ask trillian about random
+"Clever, furious and far too like both of us," says Trillian. "She was an
+accident that took a great deal of paperwork."
+
+[The score has just gone up by one point.]
+
+>ask trillian about ford
+Trillian's mouth tightens. "I've heard Ford's name near a very large amount of
+trouble lately. Don't be any use to him."
+
+[The score has just gone up by one point.]
+
+>ask trillian about earth
+"There is an Earth where I never left," says Trillian. "I look in on it
+sometimes. I'm a good deal less happy there than you'd think."
+
+[The score has just gone up by one point.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+Trillian consults something on her wrist that is not a watch. "I have to go,"
+she says. "There is a story in another galaxy, and it won't wait. Look after
+her. She is excellent at looking after herself, which is not the same thing."
+She kisses her daughter on the top of the head, which Random permits as one
+permits weather, and walks away up the meadow. A moment later the white shuttle
+goes up like a breath being let out.
+
+Random, who now has a father whom she has met for ten minutes, regards the hut
+roof with extreme attention.
+
+>s
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>take berries
+You pick the berries with your sleeves held out of the thorns' way, and tip them
+into the basket. The bees allow it, after a short debate.
+
+>n
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (in which is a handwritten note) here.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a loaf of bread. In the cool pit are some cured meat and some
+pickled roots. On the pantry shelf are some honey and some herb curd.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put berries on board
+(first taking the sourberries out of the wicker basket)
+You put the sourberries on the chopping board.
+
+>put pickles on board
+(first taking the pickled roots out of the cool pit)
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of sourberries and pickled roots, between two thick slabs
+of Lamuellan bread.
+
+>give sandwich to random
+(first taking the sandwich)
+Random inspects it with deep suspicion, bites, and holds very still. "Okay," she
+says, with her mouth full, in a tone of grudging scientific honesty. "That's
+actually good." It is the first thing you've given her that she has not
+immediately turned into an insult.
+
+[The score has just gone up by ten points.]
+
+>wait
+Time passes.
+
+A rattling, wheezing noise announces that someone has landed a ship on the
+meadow without much regard for its feelings. A little while later Ford Prefect
+strides in, hair on end, towel over his shoulder.
+
+"Arthur!" he says. "Good. You got it. Please tell me you didn't switch it on."
+He glances at Random, then at you. "Ah. A great deal has happened since I last
+checked. Sit down. Or don't."
+
+>wait
+Time passes.
+
+>ask ford about guide
+"It isn't finished," says Ford, "which is the only reason it's still dangerous.
+The Mk II. It reads you while you read it. I mailed it to you because nobody in
+the history of the Galaxy has ever looked for anything important in a sandwich
+hut. No offence."
+
+[The score has just gone up by two points.]
+
+>ask ford about vogons
+"They bought the Guide," says Ford. "Through a company with six names and one
+address. I walked up to the address. Vogons, Arthur. Vogons in suits, which is
+only Vogons with better excuses. They want Earth gone, all of it, in all its
+versions, and this new edition is how they plan to be sure."
+
+[The score has just gone up by one point.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+While you were listening to Ford, Random has done three things quietly: looked
+at the ship on the meadow, worked out who it belongs to, and noticed that its
+owner is distracted. By the time you notice, there is a noise from the meadow
+like a large animal clearing its throat. Through the doorway you see a battered
+ship wobble upward, pick up speed, and go.
+
+Ford stares after it. "Of course she took my ship," he says. "Of course she
+did." Then he is practical, which is the most alarming thing about him. "The
+mail skiff. It's on the meadow with a pilot who is, as I understand it, hungry.
+Make him something he wants and he'll fly us anywhere within reason. She'll head
+for Earth, or what she thinks is Earth. We'll have to find out where that is."
+
+"I COULD TELL YOU," writes the cube, helpfully, on its face. "BUT YOU DO NOT
+SEEM TO WANT TO KNOW YET."
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put pickles on board
+(first taking the pickled roots out of the cool pit)
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of pickled roots, between two thick slabs of Lamuellan
+bread.
+
+>take sandwich
+Taken.
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (in which is a handwritten note) here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+The pilot dozes against the skiff's flank, cap over his eyes. 
+
+A mail skiff squats in the grass, its engine ticking as it cools. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give sandwich to pilot
+The pilot eats it in four bites, eyes closed, like a man receiving a sacrament.
+"I'd fly you to the edge of the Galaxy for that," he says. "Well. Not the edge.
+But somewhere." He taps the skiff's flank. "Whenever you're ready."
+
+[The score has just gone up by eight points.]
+
+>enter skiff
+
+The pilot checks nothing in particular, says a word to the instrument panel, and
+the world drops out from under you. There is a sensation like missing a step in
+the dark, followed by another like finding it. For one long instant in the
+middle of the jump you think of a girl who stepped into one of these and was not
+on the other side; you grip the armrest until the feeling passes.
+
+"Not long now," says Ford, mostly to himself.
+
+
+The Skiff Cabin
+The inside of the mail skiff, which is mostly instrument panel, with seats added
+later as an afterthought. Beyond the glass there is the particular grey that
+means a jump is in progress. You are not meant to look at it, and you do.
+
+The pilot hunches over the controls, cap over his eyes, humming. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by three points.]
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

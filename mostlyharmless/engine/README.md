@@ -5,7 +5,8 @@
 | `smart.h` | Input clean-up (`BeforeParsing`), everyday-verb synonyms (`UnknownVerb`), friendlier errors (`ParserError`), questions (`Lore`, `QuestionSub`), loose `Talk`/`Hello`. Includes the three files below. |
 | `smartgram.h` | Grammar: questions, tell/ask/talk, hello, `go to ...`, `/hint`, `/help`. |
 | `typo.h` | Typo forgiveness (one slip per word, unambiguous only). |
-| `slash.h` | `/SAVE`, `/HINT`, `/HELP` ... and the "did you want the slash version?" reply. |
+| `compound.h` | Compound commands: `TAKE PARCEL AND EXAMINE IT`, `DROP ALL, LOOK`, `E; E` (the library mis-reads AND before a verb, so we turn it into THEN). |
+| `slash.h` | `/SAVE`, `/HINT`, `/HELP` ... and the "did you want the slash version?" reply. `/SAVE name` and `/RESTORE name` accept a file name; see the note below. |
 | `hints.h` | Progressive hints (`Puzzle` class, `/HINT`, `/HINT BACK`), `/DIFFICULTY` (easy / average / faithful), the cube compliance counter (`Comply`, `CubeAllowsRadio`) and `HintTick` (call once a turn; easy mode offers a nudge after a long stall). |
 | `debug.h` | Tester verbs, compiled only with `-D`: `COMPLY n`, `PUZZLES`. |
 | `lore_real.h` | Real-world facts (Douglas Adams, the series, Infocom ...), always marked "[Out of the story: ...]". |
@@ -37,3 +38,12 @@ Use it only inside topic actions (`Question`, `Ask`, `WalkTo`, ...), after setti
 ## Building
 
 `../build.sh <game> [debug]` puts `engine/` on the include path.
+
+## Notes
+
+**`/SAVE name` and `/RESTORE name`.** The Z-machine does not let a story file choose the save file's name; the interpreter asks for it itself. So the name you type is
+removed from the command and shown back as a reminder just before the interpreter's own prompt, and `/RESTORE` on its own reminds you of the last name used this session.
+A real "save as NAME" would need a Glulx build or an interpreter that cooperates.
+
+**Compound commands.** `compound.h` turns `AND`, a comma or a semicolon that is followed by a verb (or a compass direction) into `THEN`, which the library already understands.
+`TAKE LOAF AND KNIFE` still takes both; `TAKE LOAF AND EXAMINE IT` takes, then examines. A comma after a person's name (`HOB, HELLO`) is still treated as addressing them.

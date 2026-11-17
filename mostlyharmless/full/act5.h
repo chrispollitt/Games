@@ -13,7 +13,7 @@ Object matchbook "matchbook"
          if (matchbook_read == 0) {
              matchbook_read = 1;
              Award(A_MATCH, 15);
-             doom_t = after_t + 5;
+             doom_t = after_t + 5; if (difficulty == DIFF_FAITHFUL) doom_t = after_t + 4;
              "The cover bears the pub's name and an address. Inside, in the cramped hand of a man who kept careful count of everything, are a date and a time. You know the date. You know the time. Years ago, in some other context, a furious voice told you where it expected to meet its last end, and at what hour: here, this table, this minute. A creature who had come back and back and back, as one small animal after another, each of them killed by something you happened to be doing. The score is settled. Whatever it was, it is finished. For the first time since a bulldozer in a country lane, a very old knot inside you comes loose.^^Ford has been reading over your shoulder. He begins to laugh, the laugh of a man who has just seen the last piece of a very long joke arrive.";
          }
          "The cover bears the pub's name and an address. You have already read what's inside it.";
@@ -156,6 +156,11 @@ Object grebulons "Grebulons" Lawn
     pt = 0;
     move man to Bar;
     move card to Snug;
+    if (IndirectlyContains(player, fish) == 0) {
+        move jar to player;
+        move fish to jar;
+        print "^Ford falls into step beside you and, without comment, presses a jam jar into your hands. ~Found this in the gutter,~ he says. ~I think it's yours.~ Inside, something small and yellow turns over and goes back to sleep.^";
+    }
     tricia_follows = 1;
     random_follows = 1;
     ford_follows = 1;
@@ -212,8 +217,10 @@ Object grebulons "Grebulons" Lawn
     gun_fired = 1;
     after_t = 0;
     doom_t = 6;
+    if (difficulty == DIFF_FAITHFUL) doom_t = 5;
     if (card_read && warned) {
         doom_t = 9;
+        if (difficulty == DIFF_FAITHFUL) doom_t = 7;
         Award(A_PREP, 10);
     }
     move matchbook to Bar;
@@ -285,9 +292,8 @@ Object grebulons "Grebulons" Lawn
     Award(A_CHOICE, 10);
     print "The fish slides into your ear with the faint reluctance of something that has already guessed what you are about to ask of it, and for a moment the whole pub goes quiet in the way a church does. Then you feel it: a vast number of small, bored, golden creatures, in a vast number of ears, all quietly deciding that this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere an improbability that has been building for decades curdles, politely, into something kinder.^^";
     print "There is a pop.^^";
-    print "You are sitting on a velvet chair at a table in an enormous domed restaurant. Beyond a vast window the universe is ending, magnificently, the way it does every night; nobody is looking.^^";
-    print "(Act VI is still being written. This is where the happy ending will go on.)^";
-    deadflag = 3;
+    print "You are sitting on a velvet chair at a table in an enormous domed restaurant. Beyond a vast window the universe is ending, magnificently, the way it does every night; nobody is looking.^";
+    StartAct6();
 ];
 
 [ Act5Tick;

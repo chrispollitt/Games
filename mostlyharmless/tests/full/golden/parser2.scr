@@ -1,0 +1,173 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>pick up the basket
+Taken.
+
+>look at the sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>wear the gown
+You're already wearing that.
+
+>walk to the sandwich hut
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter are a loaf of bread and a sandwich knife. In the cool pit are
+some pickled roots. On the pantry shelf are some honey and some herb curd.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>talk to hob
+You could ASK Hob ABOUT something (his lunch, say). Or just type your question.
+
+>what does hob want?
+(Asking Hob.)
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>where is the meat?
+You haven't the faintest idea, and nobody here looks any better informed. You
+can EXAMINE things, ASK people about them, or type /HINT for a nudge.
+
+>who is dunna?
+You haven't the faintest idea, and nobody here looks any better informed. You
+can EXAMINE things, ASK people about them, or type /HINT for a nudge.
+
+>i want to make a sandwich with meat and berries
+There is no cured meat in the cool pit at the moment. Dunna smokes the
+village's, and she is not handing it over yet.
+
+>go east
+You can't go that way.
+
+>hello hob
+You greet Hob, who acknowledges you in the manner of someone who has other
+things on their mind. You could ASK Hob ABOUT something.
+
+>what should i do?
+[Hint 1 of 4] Hob will want sourberries, and they grow on the slope south of the
+green.
+
+>how do i make a sandwich
+You are very good at them: bread, then whatever the customer actually wants, no
+more and no less. People on Lamuella have views about this. Try MAKE A SANDWICH
+WITH MEAT AND SOURBERRIES, or ASK a customer what they like.
+
+>take all
+loaf of bread: Taken.
+sandwich knife: Taken.
+pickled roots: Taken.
+honey: Taken.
+herb curd: Taken.
+
+>drop everything
+herb curd: Dropped.
+honey: Dropped.
+pickled roots: Dropped.
+sandwich knife: (You hang it on its nail instead.)
+loaf of bread: Dropped.
+wicker basket: Dropped.
+
+>inventory
+You're carrying:
+  a sandwich knife
+  a dressing gown (being worn)
+
+>get the knife
+You already have the sandwich knife.
+
+>cut the loaf
+What do you want to cut the loaf of bread with?
+
+>eat the loaf
+(first taking the loaf of bread)
+The loaf of bread is plainly inedible.
+
+>put the knife on the shelf
+You put the sandwich knife on the pantry shelf.
+
+>go to the orchard please
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+>could you take the berries
+You pick a handful and immediately have nowhere to put them. A basket would
+help.
+
+>climb the bushes
+Climbing that would achieve little.
+
+>what is a babel fish?
+The Babel fish: a small yellow thing that lives in your ear, feeds on the
+brainwaves of whoever is near, and in return translates every language you hear
+into your own. It is such a useful coincidence that some people take it as proof
+of something. You have never had the energy to find out what. There is one in a
+jar in your hut.
+
+>tell hob about the weather
+You can't see anything like that here. (LOOK and INVENTORY will remind you what
+is around.)
+
+>ask the pilot about the skiff
+You can't see anything like that here. (LOOK and INVENTORY will remind you what
+is around.)
+
+>give the coin to hob
+You can't see anything like that here. (LOOK and INVENTORY will remind you what
+is around.)
+
+>go to the smokehouse
+
+The Smokehouse
+A squat hut of black timber, whose single room is a perpetual early evening.
+Racks of curing meat hang in the smoke. A chopping block stands by the door with
+a cleaver on it. The smoke finds your eyes in about a second and a half. A path
+leads back northwest to the village green.
+
+Dunna stands at the racks, watching the meat as though it might try something. 
+
+>ask dunna about her cleaver
+"Blunt as a tax," says Dunna. "It wants a good stone. The river has one, if you
+can find it. Under something heavy, I'd have said."
+
+>take cleaver
+It is Dunna's, and she is standing right there.
+
+>examine smoke
+Dark sides of meat, curing in a smoke so thick you could set a spoon in it.
+
+>shout
+(to Dunna)
+You could ASK Dunna ABOUT something (meat, her cleaver, the price). Or just type
+your question.
+
+>say hello to dunna
+Dunna's reply is mostly smoke.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

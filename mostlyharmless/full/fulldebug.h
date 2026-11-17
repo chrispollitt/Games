@@ -52,13 +52,14 @@ Verb meta 'act'
         random_follows = 1; tricia_follows = 1; ford_follows = 1;
         act = 4;
         move Ford to Bar; move Tricia to Bar; move Daughter to Bar;
+        if (noun == 6) { score = 360; StartAct6(); rtrue; }
         StartAct5();
         move player to Bar;
         location = Bar;
         PlayerTo(Bar);
         rtrue;
     }
-    "ACT 2, 3, 4 or 5.";
+    "ACT 2, 3, 4, 5 or 6.";
 ];
 
 #endif;

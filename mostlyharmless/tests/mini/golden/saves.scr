@@ -1,0 +1,35 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>take fish
+Taken.
+
+>/save mygame
+(When your interpreter asks for a file name, give it "mygame". A story file
+cannot choose the name for you.)
+Save failed.
+
+>/restore mygame
+(When your interpreter asks for a file name, give it "mygame". A story file
+cannot choose the name for you.)
+File was not saved from this story!
+Restore failed.
+
+>inventory
+You're carrying:
+  a Babel fish
+  a dressing gown (being worn)
+
+>/restore
+(Your last file name this session was "mygame".)
+File was not saved from this story!
+Restore failed.
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

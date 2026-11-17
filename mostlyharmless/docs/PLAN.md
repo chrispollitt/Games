@@ -128,8 +128,8 @@ Open choice: ship hints first and add the difficulty switch in a later milestone
 | M4 | Act 1 implemented and tested | |
 | M5 | Acts 2–3 | **done 2026-11-16**: Hub Station (6 rooms, 50 pts) and Guide HQ (11 rooms, 100 pts) playable end to end; `act 2` and `act 3` debug jumps; 5 cube shortcuts with compliance; walkthroughs `act2`, `act3`, `shortcuts` |
 | M6 | Acts 4–5 | **done 2026-11-16**: London (10 rooms, 90 pts) and the pub/lawn (5 rooms, 60 pts) playable; both book endings and the radio choice; 10 full-game walkthroughs pass |
-| M7 | Act 6 + both endings in the full game, scoring to 400 | |
-| M8 | Full playtest, balance, typo/parser tuning, polish | |
+| M7 | Act 6 + both endings in the full game, scoring to 400 | **done 2026-11-16**: Milliways (4 rooms, 40 pts); `tests/full/finale.cmd` plays the whole radio route from Act V to exactly 400 |
+| M8 | Full playtest, balance, typo/parser tuning, polish | **done 2026-11-16** (first pass): safety nets, Easy/Faithful assists, soak and release tests, parser fixes; see "As built (M8)" in docs/full/03-puzzles.md. A human playtest is still the best next step. |
 | M9 | Release builds (Z8) of both games, walkthroughs, README | |
 
 M2 is the big gate: we agree the whole story, puzzles and hints on paper before writing code.
@@ -179,3 +179,21 @@ Two short, optional, out-of-story texts for people new to the genre or the franc
 - Offered once, lightly: the opening banner mentions `/INTRO` and `/HHGG`; never forced; skippable.
 - Easy to maintain: each is one routine in `engine/newbie.h` taking a flag for which game it is describing.
 - Tests: the text appears, is marked out-of-story, and stays under a screen or two.
+
+## 12. Future feature: easter eggs (requested 2026-11-16)
+
+Hidden, never required, never harmful. Every egg is original prose or a short homage, nothing quoted at length, nothing that can break a puzzle or the score.
+
+- **Floyd (a nod to Infocom's *Planetfall*).** A small, dented, relentlessly cheerful robot, found only by a player who pokes about where nobody looks
+  (leading candidate: the heap of lost things at Hub Station, with a second appearance in the Milliways kitchen). He is childlike, curious and a little
+  heartbreaking; he plays at hiding; he follows for a few rooms and says things like "Oh boy!"-adjacent in his own words. An out-of-story note explains the reference
+  (marked `[Out of the story: ...]`, crediting Infocom and its authors). Pure atmosphere: no points, no puzzle role.
+- **XYZZY (a nod to *Colossal Cave*), with random consequences.** Typing `XYZZY` anywhere rolls a die. A table of about twelve outcomes, roughly half good and half mildly annoying, none permanent:
+  *good:* a lucky find (a spare towel, a sweet, a free hint rung), a brief teleport to a pleasant earlier room, a kind word from the cube-that-isn't, a free Guide entry.
+  *bad:* a hollow voice calling you a fool, a trip to a random earlier room, a gentle dropping of one carried item (put back where you stand), a short bout of sarcasm from the parser, the cube announcing "Good." with no explanation.
+  Rules: never alters puzzle state, score, compliance or trust irrecoverably; at most one per ten turns; `PLUGH` and `PLOVER` get a sly one-liner each.
+- **A few hidden surprises of my choosing** (all one- or two-liners, found by trying the obvious joke):
+  `GRUE` / `WAIT IN THE DARK` (a short Zork-style warning, played straight); asking anyone for `TEA` (a drink "almost, but not quite, entirely unlike tea");
+  `DON'T PANIC` typed at the very start (the game takes your word for it); `LOOK AT THE UNIVERSE` on the Milliways terrace; `SING` in the pub; and `FROTZ`/`XYZZY` style words that only work once.
+- **Where it lives:** `engine/eggs.h` (XYZZY, PLUGH, GRUE and friends, shared by both games) and per-game hooks for Floyd and place-specific eggs.
+- **Tests:** a seeded run proves that XYZZY never breaks the score or locks a puzzle; the eggs list is documented here so nothing is a secret from the maintainers.

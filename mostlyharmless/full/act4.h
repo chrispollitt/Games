@@ -387,6 +387,7 @@ Object Tricia "Tricia McMillan" GreenRoom
 [ TriciaConvinced;
     Tricia.convinced = 1;
     Award(A_TRICIA, 12);
+    if (difficulty == DIFF_EASY) broadcast_ok = 1;
     print "Tricia is quiet for a long moment. ~I did not leave that party,~ she says at last, almost to herself. ~Everyone said I would have, and I thought not, and now a stranger in a dressing gown tells me about the man with two heads, who I only ever read about.~ She breathes out, a long shaky breath, like a cork coming out. ~All right. All right. I believe you. I'd like to believe I'm wrong, but I don't.~^";
     print "^In your pocket, the cube clears its throat. ~RANDOM,~ it says, aloud, in a warm, patient, impossible voice. ~THERE YOU ARE.~^^";
     print "Random goes white. She is on her feet and through the door before anyone can stop her, her bag over one shoulder, and the sound of her footsteps echoes away down the studio floor. ~She runs,~ says Tricia, shakily. ~Is that normal?~ ~It is lately,~ says Ford.^";

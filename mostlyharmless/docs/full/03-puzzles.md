@@ -262,3 +262,44 @@ Zaphod in a margin note on Ford's proofs (3.5), a London tabloid headline (High 
 - **Choice (+10):** `PUT FISH IN EAR` needs the matchbook read, trust 4 or more, compliance 3 or less, and Random, Tricia and Ford present. Until Act VI exists, the radio ending stops at "There is a pop".
 - **Scores:** Act IV ends at 300; the book endings top out at 350 (not 360 as first drafted); the radio route reaches 360 here and 400 with Act VI.
 - **Cube shortcut bits:** credential 32, trail 64, Tricia 128, autocue 256 (nine shortcuts now built).
+
+---
+
+## As built (M7): Act VI and the radio ending
+
+- **Arrival:** `PUT FISH IN EAR` (conditions as in Act V) now carries on into the Dining Hall at Milliways. The fish and the cube are gone; Ford, Random and Tricia are at the table; Marvin stands beside your chair. If the sketch was left on Lamuella, Random hands it to you ("I took it from your hut"), so the last puzzle can never be lost.
+- **6.1 (+8):** `ORDER SALAD` (or soup, a sandwich, anything vegetarian). Ordering the Dish of the Day does not work; you find you cannot.
+- **6.2 (+6):** `ASK MARVIN ABOUT HIS DIODES`; he then follows you to the terrace.
+- **6.3 (+12):** `EXAMINE FENCHURCH` (to see the tilt), `TAKE PENCIL` from the terrace table, then `DRAW` with the sketch in hand.
+- **6.4 (+14):** `TOAST` on the terrace: 2 for Ford, 3 each for Random, Tricia, Marvin and Fenchurch being at the table. This ends the game with "Rescued, improbably, by fish".
+- **Scoring:** the radio route reaches exactly 400 (tests/full/finale.cmd).
+
+---
+
+## As built (M8): safety nets, assists and test tooling
+
+**No-dead-end safety nets added**
+- Dropping an ingredient away from the sandwich hut returns it to its home; a forgotten sandwich in another room is cleared when you make the next one.
+- If the towel was never claimed, Ford hands it to you at the start of Act III.
+- If the coin was lost, Ford gives you another (`ASK FORD ABOUT THE COIN` at Hub Station).
+- If the fish was left behind, the roof (Act III) or Ford (start of Act V) returns the jar.
+- Random returns on her own if the Tube chase takes too long; the sketch is returned by Random at Milliways.
+
+**Difficulty assists now implemented**
+- *Easy:* gown and credential put on automatically; Hob volunteers his order; the vending machine and the building directory print their rule; Tricia clears the broadcast without being asked; the poem threshold is lower; the Customs window stays open longer; idle nudges after 20 stalled turns.
+- *Faithful:* one hint rung per puzzle; the Act V fuse after the shot is two turns shorter.
+- *Not implemented (stated honestly):* turning off the library's implicit takes, and extra red herrings.
+
+**Input handling:** `DIAL 1-2-5`, `DIAL 125` and `POEM two two three` work; "what does Hob want?" is put to Hob.
+
+**Test tooling:** `tests/soak.sh <game> <act> [runs] [length]` (random commands from a random point in each act's walkthrough: 270 runs found no interpreter errors); `tests/release.sh` (release builds, size report, release replay against goldens); walkthroughs `parser2`, `act3_alt`, `easy_act1`, `faithful_finale`.
+
+**Sizes:** release full game `full.z8` is 225,792 bytes (limit for Z8: 524,288); the mini game is 134,144 bytes (Z5 limit 262,144).
+
+---
+
+## As built (post-M8): compound commands and save names
+
+- **Compound commands** (`engine/compound.h`): `TAKE PARCEL AND EXAMINE IT`, `DROP ALL, LOOK`, `E; S`, `TAKE BERRIES AND N`. The standard library's own "AND followed by a verb" test is broken
+  by operator precedence in this library version, so the engine rewrites such connectives to THEN before parsing. Tests: `tests/full/compound.cmd`, `tests/mini/compound.cmd`.
+- **`/SAVE name`, `/RESTORE name`:** accepted; because a Z-machine story cannot choose the file name, the game reminds you to give that name to the interpreter's own prompt. Test: `tests/mini/saves.cmd`.

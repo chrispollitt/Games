@@ -58,8 +58,7 @@
     switch (ending) {
       1: print "The Earth has been demolished. Again";
       2: print "The Earth has been demolished, with the books balanced";
-      3: print "Rescued, improbably, by fish (the happy ending goes on in Act VI, still being written)";
-      9: print "End of Act V";
+      3: print "Rescued, improbably, by fish";
       default: print "The story has ended";
     }
 ];

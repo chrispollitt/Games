@@ -14,6 +14,8 @@ Global slash_len  = 0;
 Global slash_on   = 0;     ! 1 if this turn's command began with a slash
 Global slash_miss = 0;     ! 1: bare word needing a slash; 2: unknown /command
 Global slash_code = 0;
+Array slash_file -> 44;
+Global slash_file_len = 0;
 
 ! Which slash command, if any, does dictionary word w stand for?
 [ SlashCode w;
@@ -100,6 +102,12 @@ Global slash_code = 0;
     k = SlashCode(w);
 
     if (slash_on) {
+        if ((k == 1 || k == 2) && nw >= 2) { SlashFileName(k); rfalse; }
+        if (k == 2 && slash_file_len > 0) {
+            print "(Your last file name this session was ~";
+            for (i = 0 : i < slash_file_len : i++) print (char) slash_file->i;
+            print "~.)^";
+        }
         if (k ~= 0) rfalse;                ! a real slash command: go ahead
         n = WordLength(1);
         if (n > 20) n = 20;
@@ -149,4 +157,26 @@ Global slash_code = 0;
     print "  /HINT [BACK]  /DIFFICULTY  /ABOUT  /VERSION  /HELP   help and information^^";
     print "Everything else you type is part of the story. Plain English is fine, and so are questions, such as WHO IS FORD PREFECT? Without the slash, those words are just ordinary input, and the game will tell you if you needed one.^";
     rtrue;
+];
+
+! ------------------------------------------------------------------------
+!  /SAVE name  and  /RESTORE name
+!
+!  A Z-machine game cannot choose the file name: the interpreter asks for it
+!  itself.  So the name is taken from the command, removed, and handed back
+!  to the player as a reminder just before the interpreter's own prompt.
+! ------------------------------------------------------------------------
+
+
+[ SlashFileName k  n i p;
+    n = WordLength(2);
+    if (n > 40) n = 40;
+    for (i = 0 : i < n : i++) slash_file->i = (WordAddress(2))->i;
+    slash_file_len = n;
+    p = (WordAddress(1) - buffer) + WordLength(1);
+    buffer->1 = p - 2;                       ! the verb alone
+    Tokenise__(buffer, parse);
+    print "(When your interpreter asks for a file name, give it ~";
+    for (i = 0 : i < n : i++) print (char) slash_file->i;
+    print "~. A story file cannot choose the name for you.)^";
 ];

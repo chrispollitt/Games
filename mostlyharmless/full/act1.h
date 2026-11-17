@@ -559,6 +559,10 @@ Object Director
   with daemon [;
          FollowStep();
          HintTick();
+         if (difficulty == DIFF_EASY && act == 1 && location == SandHut && hob in SandHut && hob_told == 0) {
+             hob_told = 1;
+             print "^Hob catches your eye and says, helpfully, ~Meat and sourberry, same as always. No pickle.~^";
+         }
          if (act >= 2) { ActTick(); return; }
          switch (phase) {
            0:

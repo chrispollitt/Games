@@ -1,0 +1,56 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>take fish and examine it
+Taken.
+A Babel fish: a small yellow thing with the look of a leech that has found
+religion. It lives on the brainwave energy of whoever is nearby and, in return,
+makes every language they hear come out as their own. You have always been
+faintly suspicious of how good a deal that is.
+
+>drop it then take it
+Dropped.
+Taken.
+
+>look; inventory
+
+Arthur's Hut
+A single round room of mud, thatch and optimism. Everything in it is exactly
+where you left it, because there is nowhere else for it to be. A shelf runs
+along one wall, and a bed, which is a bed on a generous day, takes up the other.
+The doorway opens east onto the village green.
+
+On the wooden shelf are a pencil sketch and a glass jar.
+You're carrying:
+  a Babel fish
+  a dressing gown (being worn)
+
+>e and then e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>quit
+I'm afraid I didn't follow that. Did you want the slash version? /QUIT
+
+>/quit
+Are you sure you want to quit? y
+

@@ -103,3 +103,15 @@ Extend 'put' first
     * noun 'in' 'my' 'ear'                  -> FishEar
     * noun 'in' 'the' 'ear'                 -> FishEar
     * noun 'into' 'ear'                     -> FishEar;
+
+! ---- Act VI ----
+Verb 'order' 'request'
+    * topic                                 -> Dine;
+
+Verb 'draw' 'redraw' 'amend'
+    *                                       -> Draw
+    * topic                                 -> Draw;
+
+Verb 'toast' 'cheer'
+    *                                       -> Toast
+    * topic                                 -> Toast;
