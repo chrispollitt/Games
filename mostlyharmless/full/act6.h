@@ -50,6 +50,9 @@ Object Marvin "Marvin" DiningHall
                "~The young one,~ says Marvin. ~She asked me whether I would be content. I said no. She said, good. We got on rather well.~";
            if (TopicAny('arthur', 'you', 'dent'))
                "~You,~ says Marvin. ~Arthur. I have been waiting at the table where you were due. I brought a tray. I would very much like it if someone took something off it.~";
+           if (TopicAny('floyd', 'cheerful', 'small'))
+               if (eg-->EG_MEET)
+                   "~Floyd,~ says Marvin, as if testing the word for a crack. ~He is a very small robot with a very large capacity for being pleased. I have told him that all of it is pointless. He said thank you. I do not know what to do with a person like that.~ A pause. ~I find I do not want him to stop.~";
            if (TopicAny('ford', 'prefect'))
                "~Mr Prefect,~ says Marvin. ~He tipped me once. It was a coin I did not recognise. I have kept it ever since.~";
            if (TopicAny('dinner', 'food', 'order', 'menu', 'waiter'))
@@ -213,6 +216,10 @@ Object terrace_table "corner table" Terrace
     print "You stand, which is not usual, and pick up a glass, which is. The table looks up: Fenchurch, with her head on one side, Random, with her chin; Ford, in the middle of an anecdote he abandons; ";
     if (Tricia in location) print "Tricia, with a journalist's raised eyebrow; ";
     if (Marvin in location) print "Marvin, still holding his tray, waiting for the point; ";
+    if (Floyd in location) {
+        if (Marvin in location) print "Floyd, holding the other corner of the tray and a glass he has been given, entirely sincerely upside down; ";
+        else print "Floyd, holding a glass he has been given, entirely sincerely upside down; ";
+    }
     print "and you find you have nothing prepared.^^";
     print "~To the end of the Universe,~ you say, ~which I am told does this every night, and to everyone who turned up for it.~ You look at Random, who looks at her plate. ~To the people who were late. And to the ones who were never going to be anywhere else.~^^";
     print "The glasses touch. Beyond the glass, the Universe finishes, magnificently, the way it does every night; and at your table nobody is looking at it, because everyone is looking at each other.^^";
@@ -223,10 +230,12 @@ Object terrace_table "corner table" Terrace
 ];
 
 [ Act6Tick;
+    pt++;
     if (marvin_follows && Marvin notin location) {
         move Marvin to location;
         print "^Marvin shuffles in after you with his tray.^";
     }
+    FloydTick();
 ];
 
 [ StartAct6;

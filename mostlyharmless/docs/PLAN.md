@@ -218,7 +218,9 @@ Documented here so that nothing is a secret from the maintainers. None is requir
 | `PANIC`, `DON'T PANIC` | anywhere | "Quite right. Don't." |
 | `MAKE TEA`, `ORDER TEA` | sandwich hut, Milliways | A warm brown drink that is in no way tea (the waiter at Milliways is sympathetic). |
 | `SING` | the Dancing Gnu | The pub listens, briefly. |
-| **Floyd** | full game: `SEARCH SHELVES` three times in Lost Property | A small, dented, cheerful robot (a nod to Infocom's *Planetfall*) joins you around Hub Station, stays behind when the ship leaves, and is helping the chef at Milliways. An out-of-story note credits the reference. |
+| **Floyd** | full game: `SEARCH SHELVES` three times in Lost Property | A small, dented, cheerful robot (a nod to Infocom's *Planetfall*) joins you around Hub Station, stays behind when the ship leaves, and is helping the chef at Milliways, where he meets Marvin (see below). An out-of-story note credits the reference. |
+
+**Floyd meets Marvin (full game, Act VI).** If you found Floyd, the two robots meet once at Milliways: at once if you take Marvin (after the diodes) into the kitchen, otherwise Floyd wanders out of the kitchen after a few turns to find the sad noise. Marvin lets Floyd carry a corner of his tray; Floyd then follows you, joins the toast, and each has a topic about the other. A Concourse announcement in Act II foreshadows it. No points. State: `eg-->EG_MEET`; debug aid `SETFLOYD 2` (before `ACT 6`).
 
 Tester aids (debug builds only): `SEED n` (use 1000 or more; smaller seeds make a counter, not a random stream), `EGG n` (force the next XYZZY outcome 1 to 12). Tests: `eggs`, `eggs2`, `eggs_all` (both games) and `tests/full/complete_floyd.cmd` (the whole game with Floyd, still 400 points).
 

@@ -448,6 +448,8 @@ Object gate_ship "waiting ship" Gate
                 switch ((ann_t / 8) % 3) {
                   0: print "^~This is a public announcement,~ says a very tired voice from the ceiling. ~I'm told it is a pleasure to serve you. I wouldn't know.~^";
                   1: print "^~Would the owner of a depressed robot,~ says the voice, ~kindly collect it. Not that anyone will.~^";
+                      if (Floyd in location)
+                          print "^Floyd's head comes up. ~A sad robot?~ he whispers. ~Somewhere? I'd like to meet him. I'd be very good at it.~^";
                   2: print "^~Passengers are reminded that the end of the Universe is not a delay,~ says the voice, ~and will not be treated as one. This message has been brought to you by Marvin, who is wasted on it.~^";
                 }
             }

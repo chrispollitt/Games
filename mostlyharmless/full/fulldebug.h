@@ -8,6 +8,16 @@
 Verb meta 'act'
     * number                                -> JumpAct;
 
+Verb meta 'setfloyd'
+    * number                                -> SetFloyd;
+
+! SETFLOYD n: set Floyd's state before jumping (2 = parted at Hub Station)
+[ SetFloydSub;
+    eg-->EG_FLOYD = noun;
+    eg-->EG_MEET = 0;
+    "(Floyd state set.)";
+];
+
 ! Common state: as if Act I had been completed
 [ JumpBase;
     hob_fed = 1; tem_fed = 1; random_fed = 1; pilot_fed = 1;

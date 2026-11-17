@@ -1810,6 +1810,16 @@ principled. "You are," says Ford, with feeling, "a better man than I am."
 
 [The score has just gone up by eight points.]
 
+>ask marvin about his diodes
+"The diodes," says Marvin, as though you had finally said the magic word. "Down
+my left side. Since you ask, which nobody has. They have been aching since
+before the planet you're thinking of had a name." A pause, in which he seems to
+enjoy it. "Thank you. I feel no better. But it is something to have said." He
+lifts his tray a quarter-inch, which is how he indicates that he will come
+along, naturally, and that no one will notice.
+
+[The score has just gone up by six points.]
+
 >e
 
 The Kitchen
@@ -1826,9 +1836,46 @@ Tricia follows, taking in the place with a journalist's eye.
 
 Random drifts in after you at a distance she clearly considers dignified.
 
+Marvin shuffles in after you with his tray.
+
+Floyd sees Marvin and stops dead, with one foot still in the air. Marvin sees
+Floyd, and does not move at all, which for Marvin is a form of surprise.
+
+"Oh boy," says Floyd, softly. "You're big. I mean, you're sad. You're very, very
+sad. That is the best sad I have ever seen."
+
+Marvin turns his head, by perhaps two degrees. "I have a brain the size of a
+planet," he says, "and in all of it I had not allowed for this." A pause that
+lasts about a century. "You are cheerful. I have not seen cheerful since the
+Heart of Gold. It did not end well."
+
+"I don't mind," says Floyd. "I'll just stand here and be cheerful, and you can
+stand there and be sad, and nobody has to do anything clever. I'm good at that.
+Can I carry your tray?"
+
+Marvin looks at the tray for some time. "Nobody has ever asked," he says. He
+does not hand it over. But he tilts it, very slightly, towards Floyd, and Floyd
+takes one corner of it with enormous care, and they stand there like that.
+
+>ask floyd about marvin
+"Marvin," says Floyd, in the voice of someone who has been handed a very rare
+thing. "He's the saddest person I ever met. I'm going to look after him. He says
+it won't help. I said I know, but I'll do it anyway."
+
+>ask marvin about floyd
+"Floyd," says Marvin, as if testing the word for a crack. "He is a very small
+robot with a very large capacity for being pleased. I have told him that all of
+it is pointless. He said thank you. I do not know what to do with a person like
+that." A pause. "I find I do not want him to stop."
+
 >ask floyd about onions
 Floyd tilts his head one way and then the other. "Oh boy," he says, which seems
 to cover it.
+
+>examine floyd
+Floyd stands at Marvin's elbow with one corner of the tray in both hands,
+looking at the world with undiminished delight. Marvin looks at it with
+undiminished despair. Between them they seem to have the whole of it covered.
 
 >w
 
@@ -1840,24 +1887,15 @@ playing something faintly apologetic. Your own table, round and large and
 beautifully laid, stands in the middle. The foyer is south, the kitchen east
 through a swing door, and glass doors to the north open onto a terrace.
 
-Marvin stands beside your chair with a tray, in the way of someone who has been
-waiting a very long time for no one to ask. 
-
 Ford ambles in after you, towel over one shoulder.
 
 Tricia follows, taking in the place with a journalist's eye.
 
 Random drifts in after you at a distance she clearly considers dignified.
 
->ask marvin about his diodes
-"The diodes," says Marvin, as though you had finally said the magic word. "Down
-my left side. Since you ask, which nobody has. They have been aching since
-before the planet you're thinking of had a name." A pause, in which he seems to
-enjoy it. "Thank you. I feel no better. But it is something to have said." He
-lifts his tray a quarter-inch, which is how he indicates that he will come
-along, naturally, and that no one will notice.
+Marvin shuffles in after you with his tray.
 
-[The score has just gone up by six points.]
+Floyd trots in after you, one hand still on the tray.
 
 >n
 
@@ -1879,6 +1917,8 @@ Tricia follows, taking in the place with a journalist's eye.
 Random drifts in after you at a distance she clearly considers dignified.
 
 Marvin shuffles in after you with his tray.
+
+Floyd trots in after you, one hand still on the tray.
 
 >examine fenchurch
 She sits at the corner table with her chin on her hand, looking at the end of
@@ -1907,8 +1947,9 @@ That's me."
 You stand, which is not usual, and pick up a glass, which is. The table looks
 up: Fenchurch, with her head on one side, Random, with her chin; Ford, in the
 middle of an anecdote he abandons; Tricia, with a journalist's raised eyebrow;
-Marvin, still holding his tray, waiting for the point; and you find you have
-nothing prepared.
+Marvin, still holding his tray, waiting for the point; Floyd, holding the other
+corner of the tray and a glass he has been given, entirely sincerely upside
+down; and you find you have nothing prepared.
 
 "To the end of the Universe," you say, "which I am told does this every night,
 and to everyone who turned up for it." You look at Random, who looks at her
@@ -1932,7 +1973,7 @@ whole, mostly harmless.
 
 
 
-In that game you scored 400 out of a possible 400, in 206 turns, earning you the
+In that game you scored 400 out of a possible 400, in 209 turns, earning you the
 rank of Remarkably Harmless.
 
 Would you like to RESTART, RESTORE a saved game or QUIT?

@@ -1,18 +1,21 @@
 !  floyd.h -- a hidden cameo: a small robot found in the heap at Lost Property
 !  (a nod to the robot of Infocom's Planetfall).  He tags along through Hub
 !  Station, stays behind when the ship goes, and turns up again in the kitchen
-!  at Milliways.  State: eg-->EG_FLOYD = 0 unseen, 1 following, 2 parted.
+!  at Milliways.  State: eg-->EG_FLOYD = 0 unseen, 1 following, 2 parted,
+!  3 following again at Milliways (after he has met Marvin: eg-->EG_MEET).
 !  No points, no puzzle role.
 
 Object Floyd "Floyd"
   with name 'floyd' 'robot' 'small' 'dented',
        description [;
-         if (location == Kitchen)
+         if (eg-->EG_MEET && Marvin in location)
+             "Floyd stands at Marvin's elbow with one corner of the tray in both hands, looking at the world with undiminished delight. Marvin looks at it with undiminished despair. Between them they seem to have the whole of it covered.";
+         if (location == Kitchen && eg-->EG_FLOYD ~= 3)
              "Floyd sits on a stool at the chef's elbow, handing him onions one at a time with tremendous care. He has the look of a small robot who has been given an important job and intends to be worthy of it.";
          "A small, dented robot about the height of a ten-year-old, with a flexible head, two eyes that do not quite match, and the posture of someone who is about to ask you a question. He is, by any measure, delighted to be here.";
        ],
        initial [;
-         if (location == Kitchen) {
+         if (location == Kitchen && eg-->EG_FLOYD ~= 3) {
              print "Floyd sits on a stool at the chef's elbow, handing him onions. ";
              rtrue;
          }
@@ -26,8 +29,13 @@ Object Floyd "Floyd"
                "Floyd covers his eyes with both hands, counts to eleven because he forgot ten, and then peeks through his fingers to see whether you have gone. ~Oh boy,~ he whispers. ~You didn't move! You're very good.~";
            if (TopicAny('cube', 'guide', 'mk', 'ii'))
                "Floyd looks at your pocket and takes a small step backward. ~That one says nice things,~ he says. ~Nice things aren't the same as being nice. I'm only a robot, but I know that.~";
-           if (TopicAny('marvin', 'robot', 'robots'))
+           if (TopicAny('marvin', 'robot', 'robots')) {
+               if (eg-->EG_MEET)
+                   "~Marvin,~ says Floyd, in the voice of someone who has been handed a very rare thing. ~He's the saddest person I ever met. I'm going to look after him. He says it won't help. I said I know, but I'll do it anyway.~";
+               if (act == 6)
+                   "~Marvin?~ says Floyd. ~I haven't met him. Somebody in the dining hall is making the saddest noise I ever heard. I think that's him. I'd like to meet whoever is making it.~";
                "~Marvin?~ says Floyd. ~I haven't met him. I'd like to. I think he'd be sad, and I'm good at that. I stay and I don't say anything clever.~";
+           }
            if (TopicAny('sandwich', 'sandwiches', 'lunch', 'food'))
                "~Do you have anything electrical?~ says Floyd hopefully. ~No? That's all right. I like watching people eat. They look so pleased with themselves.~";
            if (TopicAny('towel'))
@@ -75,4 +83,37 @@ Object Floyd "Floyd"
 ! At Milliways he turns up again in the kitchen, if you found him
 [ FloydKitchen;
     if (eg-->EG_FLOYD == 2) move Floyd to Kitchen;
+];
+
+! The two robots meet (Act VI), once, when they are in the same place.
+! Floyd then follows the player, as Marvin does after the diodes.
+[ FloydMeetsMarvin;
+    if (eg-->EG_MEET ~= 0) return;
+    if (Floyd notin location || Marvin notin location) return;
+    eg-->EG_MEET = 1;
+    eg-->EG_FLOYD = 3;
+    print "^Floyd sees Marvin and stops dead, with one foot still in the air. Marvin sees Floyd, and does not move at all, which for Marvin is a form of surprise.^^";
+    print "~Oh boy,~ says Floyd, softly. ~You're big. I mean, you're sad. You're very, very sad. That is the best sad I have ever seen.~^^";
+    print "Marvin turns his head, by perhaps two degrees. ~I have a brain the size of a planet,~ he says, ~and in all of it I had not allowed for this.~ A pause that lasts about a century. ~You are cheerful. I have not seen cheerful since the Heart of Gold. It did not end well.~^^";
+    print "~I don't mind,~ says Floyd. ~I'll just stand here and be cheerful, and you can stand there and be sad, and nobody has to do anything clever. I'm good at that. Can I carry your tray?~^^";
+    print "Marvin looks at the tray for some time. ~Nobody has ever asked,~ he says. He does not hand it over. But he tilts it, very slightly, towards Floyd, and Floyd takes one corner of it with enormous care, and they stand there like that.^";
+];
+
+! Called from Act6Tick each turn: they meet if the player has brought them
+! together, or Floyd wanders out of the kitchen to find the sad noise.
+[ FloydTick;
+    if (eg-->EG_FLOYD == 3) {
+        if (Floyd notin location) {
+            move Floyd to location;
+            print "^Floyd trots in after you, one hand still on the tray.^";
+        }
+        return;
+    }
+    if (eg-->EG_FLOYD ~= 2 || eg-->EG_MEET ~= 0) return;
+    if (Floyd in location && Marvin in location) { FloydMeetsMarvin(); return; }
+    if (pt >= 7 && Floyd in Kitchen && Marvin in location && location ~= Kitchen) {
+        move Floyd to location;
+        print "^The kitchen door swings, and a small dented robot puts his head round it. ~I heard a noise,~ he says. ~A really sad one. I came to see.~^";
+        FloydMeetsMarvin();
+    }
 ];

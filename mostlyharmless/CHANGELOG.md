@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Full game: if you found Floyd, he and Marvin meet at Milliways (Act VI), with a foreshadowing line at Hub Station and a flourish at the final toast. No points; completion routes unchanged.
+
 ## 1.2.0 — 2026-11-16
 
 - The Mish Mash rolls dice whenever you type the word "random" (`/DICE ON|OFF`, engine/mishmash.h).

@@ -195,10 +195,13 @@ examine matchbook
 sit
 put fish in ear
 order salad
-e
-ask floyd about onions
-w
 ask marvin about his diodes
+e
+ask floyd about marvin
+ask marvin about floyd
+ask floyd about onions
+examine floyd
+w
 n
 examine fenchurch
 take pencil

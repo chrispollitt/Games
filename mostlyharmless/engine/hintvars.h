@@ -40,5 +40,6 @@ Constant EG_DICE  = 4;      ! 0 the Mish Mash dice are on (default), 1 off
 Constant EG_RLAST = 5;      ! the turn on which the dice last rolled
 Constant EG_RFLAG = 6;      ! this line contained the word random
 Constant EG_RCOUNT = 7;     ! how many times they have rolled
-Array eg --> 8;
+Constant EG_MEET = 8;       ! full game: Floyd has met Marvin (0 no, 1 yes)
+Array eg --> 9;
 #endif;
