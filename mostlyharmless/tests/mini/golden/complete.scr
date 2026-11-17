@@ -1,0 +1,459 @@
+Start of a transcript of
+MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>take fish
+Taken.
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a sandwich knife. On the chopping board is a loaf of bread. In
+the cool pit is a cured meat. On the pantry shelf are some sourberries and some
+pickled roots.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>ask hob about order
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>take knife
+Taken.
+
+>take meat
+Taken.
+
+>put meat on board
+You put the cured meat on the chopping board.
+
+>take berries
+Taken.
+
+>put berries on board
+You put the sourberries on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+
+>give sandwich to hob
+(first taking the sandwich)
+Hob takes it in both hands, weighs it like a newborn and bites. For a while he
+is quite unavailable for conversation. "That," he says at last, "is why we keep
+you." He pays in a coin of no known denomination, shakes your hand, and strolls
+off into the morning, chewing.
+
+Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes
+later a child skids in to shout that the mail hopper has been, and has left a
+parcel on the village green with the sandwich maker's name on it. Nobody on
+Lamuella has ever received a parcel before. The hopper itself, you gather, has
+landed on the meadow and is not yet sure it will leave.
+
+[The score has just gone up by ten points.]
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>open parcel
+You open the brown parcel, revealing a handwritten note and a Guide Mk II.
+
+[The score has just gone up by five points.]
+
+>take guide
+Taken.
+
+>read note
+In Ford's scrawl: "Arthur. Mind this for me. Don't switch it on, don't believe a
+word it says and don't let it near anyone who wants to be helped. Will collect.
+Soon-ish. F."
+
+A sound like tearing silk comes down out of the sky, and a sleek white shuttle
+puts itself carefully down in the meadow. Presently two people come looking for
+you: a woman, brisk and tired, and a girl who walks several paces behind with
+her hands in her pockets as if she had been delivered against her will.
+
+"Hello, Arthur," says the woman. You know her at once. Of all the people you did
+not expect to see on Lamuella, she is the first. "This is Random. She's your
+daughter."
+
+She says it the way one reports a delay on a railway. The girl says nothing,
+which she does with great force.
+
+[The score has just gone up by two points.]
+
+>switch on guide
+The cube warms against your palm. A line of friendly text blooms on its face:
+HELLO, ARTHUR. IT IS GOOD TO FINALLY BE SOMEWHERE WITH A VIEW. Beneath it, in
+smaller type: YOU APPEAR TO BE HAPPY. THIS HAS BEEN NOTED.
+
+[The score has just gone up by three points.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>ask trillian about random
+"Clever, furious and far too like both of us," says Trillian. "She was an
+accident that took a great deal of paperwork."
+
+Trillian consults something on her wrist that is not a watch. "I have to go,"
+she says. "There is a story in another galaxy, and it won't wait. Look after
+her. She is excellent at looking after herself, which is not the same thing."
+She kisses her daughter on the top of the head, which Random permits as one
+permits weather, and walks away up the meadow. A moment later the white shuttle
+goes up like a breath being let out.
+
+Random, who now has a father whom she has met for ten minutes, regards the hut
+roof with extreme attention.
+
+[The score has just gone up by two points.]
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a loaf of bread. In the cool pit is a cured meat. On the
+pantry shelf are some sourberries and some pickled roots.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>take berries
+Taken.
+
+>put berries on board
+You put the sourberries on the chopping board.
+
+A rattling, wheezing noise announces that someone has landed a ship on the
+meadow without much regard for its feelings. A little while later Ford Prefect
+strides in, hair on end, towel over his shoulder.
+
+"Arthur!" he says. "Good. You got it. Please tell me you didn't switch it on."
+He glances at Random, then at you. "Ah. A great deal has happened since I last
+checked. Sit down. Or don't."
+
+>take pickles
+Taken.
+
+>put pickles on board
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of sourberries and pickled roots, between two thick slabs
+of Lamuellan bread.
+
+>give sandwich to random
+(first taking the sandwich)
+Random inspects it with deep suspicion, bites, and holds very still. "Okay," she
+says, with her mouth full, in a tone of grudging scientific honesty. "That's
+actually good." It is the first thing you've given her that she has not
+immediately turned into an insult.
+
+[The score has just gone up by ten points.]
+
+>ask ford about guide
+"It isn't finished," says Ford, "which is the only reason it's still dangerous.
+The Mk II. It reads you while you read it. I mailed it to you because nobody in
+the history of the Galaxy has ever looked for anything important in a sandwich
+hut. No offence."
+
+While you were listening to Ford, Random has done three things quietly: found
+where the cube was, put it in her coat, and located the one ship on the meadow
+whose owner is distracted. By the time you notice, there is a noise from the
+meadow like a large animal clearing its throat. Through the doorway you see a
+battered ship wobble upward, pick up speed, and go.
+
+Ford stares after it. "Of course she took my ship," he says. "Of course she
+did." Then he is practical, which is the most alarming thing about him. "The
+mail skiff. It's on the meadow with a pilot who is, as I understand it, hungry.
+Make him something he wants and he'll fly us anywhere within reason. She'll take
+it to Earth. Not the one you know: another one, where nothing was ever
+demolished. Which is exactly why they want it."
+
+[The score has just gone up by three points.]
+
+>ask ford about vogons
+"They bought the Guide," says Ford. "Through a company with six names and one
+address. I walked up to the address. Vogons, Arthur. Vogons in suits, which is
+only Vogons with better excuses. They want Earth gone, all of it, in all its
+versions, and this new edition is how they plan to be sure."
+
+[The score has just gone up by three points.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>take pickles
+Taken.
+
+>put pickles on board
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of pickled roots, between two thick slabs of Lamuellan
+bread.
+
+>take sandwich
+Taken.
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (in which is a handwritten note) here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south.
+
+The pilot dozes against the skiff's flank, cap over his eyes. 
+
+A mail skiff squats in the grass, its engine ticking as it cools. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give sandwich to pilot
+The pilot eats it in four bites, eyes closed, like a man receiving a sacrament.
+"I'd fly you to the edge of the Galaxy for that," he says. "Well. Not the edge.
+But somewhere." He taps the skiff's flank. "Whenever you're ready."
+
+[The score has just gone up by ten points.]
+
+>enter skiff
+
+The pilot checks nothing in particular, says a word to the instrument panel, and
+the world drops out from under you. There is a sensation like missing a step in
+the dark, followed by another like finding it. For one long instant in the
+middle of the jump you think of a girl who stepped into one of these and was not
+on the other side; you grip the armrest until the feeling passes.
+
+"Not long now," says Ford, mostly to himself. "Earth. The one that's still
+there."
+
+A London Park, Cordoned Off
+A wet green London park bisected by blue-and-white tape. Beyond it, reporters
+stamp in the cold and a dozen cameras have been turned toward the middle of the
+lawn, where something has landed. It looks like an enormous bulk tin of
+something, with a door. A pub sign swings to the east.
+
+Ford is here, restless, taking in the room as though pricing it. 
+
+Random lounges against the wall with her arms folded, looking at everything the
+way a cat looks at a bath. 
+
+The pilot has gone back to sleep against the skiff. 
+
+A mail skiff has been parked, with serene disregard, where no parking is
+allowed. 
+
+Random is already here, standing a little too close to the woman with the
+microphone and looking at her with an intensity that has only one explanation.
+"Mum?" she says.
+
+"Er," says the woman, "no." Her face, in profile, is a face you would know in
+the dark. It is the face of the woman who left you on Lamuella half an hour ago,
+only younger, and with the particular wariness of someone who has never left
+home.
+
+[The score has just gone up by five points.]
+
+>e
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is to the west. At a
+small corner table, a man in a damp raincoat drinks alone, with the look of
+someone who is waiting for something to happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+>wait
+Time passes.
+
+Tricia comes in with Random in tow, steering her toward a table.
+
+>wait
+Time passes.
+
+Tricia gets a round in. Random sits with her bag in her lap, looking at
+everything and trusting nothing. Something in her coat pocket makes a faint,
+contented purring.
+
+>ask tricia about aliens
+"They asked me aboard for an interview," says Tricia. "They've lost most of
+their memory and all of their sense of purpose. They wanted my date, time and
+place of birth. Then my star sign. For planning purposes, they said. I think
+they're running an astrology programme on the whole planet, and I don't think
+it's going well."
+
+Random takes something short and ugly out of her bag and puts it on the table,
+where it looks out of place. It is a laser pistol. She has found it somewhere on
+the way and has not yet read the instructions.
+
+[The score has just gone up by five points.]
+
+>ask tricia about random
+"I get a lot of strangers," says Tricia. "I don't generally get one who looks at
+me as if I've come back from the dead." She looks at Random again, thoughtful.
+"She called me Mum. I don't have children. Don't you have a way of explaining
+that?"
+
+[The score has just gone up by five points.]
+
+>wait
+Time passes.
+
+Random picks up the pistol to hand it to you, and her thumb finds the one
+control she hasn't read about. There is a click, a whine, and a line of white
+light that makes the air smell of toast.
+
+The beam wanders. It touches the beams, a bottle, the corner table. A man in a
+damp raincoat is no longer sitting at it. The pub erupts: there is shouting, a
+stampede, a barman diving for the cellar, someone on a table.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>take matchbook
+Taken.
+
+>examine matchbook
+The cover bears the pub's name and an address. Inside, in the cramped hand of a
+man who kept careful count of everything, are a date and a time. You know the
+date. You know the time. Years ago, in some other context, a furious voice told
+you where it expected to meet its last end, and at what hour: here, this table,
+this minute. A creature who had come back and back and back, as one small animal
+after another, each of them killed by something you happened to be doing. The
+score is settled. Whatever it was, it is finished. For the first time since a
+bulldozer in a country lane, a very old knot inside you comes loose.
+
+Ford has been reading over your shoulder. He begins to laugh, the laugh of a man
+who has just seen the last piece of a very long joke arrive.
+
+[The score has just gone up by fifteen points.]
+
+>put fish in ear
+The fish slides into your ear with the faint reluctance of something that has
+already guessed what you are about to ask of it, and for a moment the whole pub
+goes quiet in the way a church does. Then you feel it: a vast number of small,
+bored, golden creatures, in a vast number of ears, all quietly deciding that
+this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere
+an improbability that has been building for decades curdles, politely, into
+something kinder.
+
+There is a pop.
+
+You are sitting on a velvet chair at a table in an enormous domed restaurant.
+Beyond a vast window the universe is ending, magnificently, the way it does
+every night; nobody is looking. A very old, very large, very depressed robot is
+standing next to your chair with a tray he evidently picked up out of habit. "I
+have been waiting," says Marvin. "Naturally. Nobody asked." Ford, beside you, is
+laughing so hard he has to hold the table. Random is still holding your hand,
+and has not noticed.
+
+A woman at the corner table stands up. She tilts her head, exactly the way you
+have never once got right in a drawing.
+
+"I fell out of the jump," says Fenchurch, "and I didn't know how to find you. So
+I waited somewhere every road eventually passes."
+
+The cube is nowhere. The Vogons will have to find some other way. For now the
+Earth is a little further away and entirely, for the moment, intact; Random has
+her father's chin and she is, with an effort, willing to be seen with it. The
+universe ends, over the soup, and you find that you do not mind. It is, on the
+whole, mostly harmless.
+
+[The score has just gone up by twenty points.]
+
+
+    *** Rescued, improbably, by fish ***
+
+
+
+In that game you scored 100 out of a possible 100, in 56 turns, earning you the
+rank of Properly Sorted, Against All Odds.
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+>/score
+Please give one of the answers above.
+
+>quit
+

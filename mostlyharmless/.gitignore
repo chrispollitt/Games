@@ -6,3 +6,6 @@
 
 # test transcripts from the current run (golden ones live in tests/*/golden/)
 tests/out/
+
+# release packages
+dist/

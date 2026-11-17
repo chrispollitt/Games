@@ -1,0 +1,1851 @@
+Start of a transcript of
+MOSTLY HARMLESS: THE LONG WAY ROUND
+An unofficial interactive fan adaptation of the fifth book.
+Standard interpreter 1.1 (1F) / Library Serial Number 251226
+
+>examine sketch
+It is a drawing, in your own clumsy pencil, of a girl with a way of tilting her
+head as if the world were a question she meant to answer later. Fenchurch. You
+have drawn her at least forty times and never once got the tilt right. She
+vanished in the middle of a hyperspace jump, which is a thing that happens, and
+which nobody has ever satisfactorily explained to you.
+
+[The score has just gone up by two points.]
+
+>take fish
+Taken.
+
+[The score has just gone up by two points.]
+
+>take basket
+Taken.
+
+>e
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>s
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+>take berries
+You pick the berries with your sleeves held out of the thorns' way, and tip them
+into the basket. The bees allow it, after a short debate.
+
+[The score has just gone up by three points.]
+
+>n
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+>e
+
+The River Bank
+A slow brown river that has never been in a hurry. Flat stones make a path of
+sorts across the shallows, and reeds stand along the bank. Near your feet a big
+flat rock sits on the mud as if it had been put there to be looked under. The
+meadow is back to the west.
+
+>look under rock
+You heave the rock aside. Underneath, in the damp, lies a smooth grey whetstone,
+the sort a sensible person would have kept somewhere drier.
+
+>take whetstone
+Taken.
+
+[The score has just gone up by two points.]
+
+>w
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+>s
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>se
+
+The Smokehouse
+A squat hut of black timber, whose single room is a perpetual early evening.
+Racks of curing meat hang in the smoke. A chopping block stands by the door with
+a cleaver on it. The smoke finds your eyes in about a second and a half. A path
+leads back northwest to the village green.
+
+Dunna stands at the racks, watching the meat as though it might try something. 
+
+>sharpen cleaver with stone
+You work the cleaver along the stone with long, patient strokes until it sings.
+Dunna comes over, tests the edge against a hair from her own arm, and is silent
+for a respectful moment. "That'll do," she says. She whistles for her boy, who
+runs off with a side of cured meat. "It's in your pit. Don't say I never gave
+you anything."
+
+[The score has just gone up by four points.]
+
+>nw
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse).
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter are a loaf of bread and a sandwich knife. In the cool pit are
+some cured meat and some pickled roots. On the pantry shelf are some honey and
+some herb curd.
+
+Hob leans on the counter with the air of a man who has been waiting since before
+the sun. 
+
+>ask hob about lunch
+"Same as always," says Hob. "Meat and sourberry, thick as you like. And no
+pickle. I have views about pickle."
+
+>take knife
+Taken.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put meat on board
+(first taking the cured meat out of the cool pit)
+You put the cured meat on the chopping board.
+
+>put berries on board
+(first taking the sourberries out of the wicker basket)
+You put the sourberries on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of meat and sourberries, between two thick slabs of
+Lamuellan bread.
+
+>give sandwich to hob
+(first taking the sandwich)
+Hob takes it in both hands, weighs it like a newborn and bites. For a while he
+is quite unavailable for conversation. "That," he says at last, "is why we keep
+you." He pays in a coin of no known denomination, shakes your hand, and strolls
+off into the morning, chewing. You slip the coin into your dressing-gown pocket;
+you have never seen its like.
+
+Far overhead, a thin whine builds, as of a mosquito with ambitions. Some minutes
+later a child skids in to shout that the mail hopper has been, and has left a
+parcel on the village green with the sandwich maker's name on it. Nobody on
+Lamuella has ever received a parcel before. The hopper itself, you gather, has
+landed on the meadow and is not yet sure it will leave.
+
+[The score has just gone up by ten points.]
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put honey on board
+(first taking the honey off the pantry shelf)
+You put the honey on the chopping board.
+
+>put curd on board
+(first taking the herb curd off the pantry shelf)
+You put the herb curd on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of honey and herb curd, between two thick slabs of
+Lamuellan bread.
+
+>take sandwich
+Taken.
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>sw
+
+The Reeve's Lodge
+The biggest building in the village by some margin, which is not saying much: a
+round hall with a floor of beaten earth, a ring of low seats, and in the middle
+a great smooth boulder that everyone calls the Hearing Stone, because that is
+where the village comes to hear itself talk. The village green is back to the
+northeast.
+
+Tem, the Reeve, sits on the stone's rim with one hand to his jaw. 
+
+>ask tem about food
+"Can't chew," says Tem. "Hard crust, hard meat, hard luck. Something soft would
+be a kindness: honey, that herb curd. Nothing that fights back."
+
+>give sandwich to tem
+Tem eats in small, careful bites, and his whole face loosens. "Better," he says.
+"Much better. The Stone's been saying there's a ship coming. Rare for it to be
+useful." He winks, which on him looks like a minor earthquake.
+
+[The score has just gone up by five points.]
+
+>ne
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (which is closed) here.
+
+>cut cord with knife
+You slide the knife under the cord and it parts with a sound like a shy cough.
+The parcel can be opened now.
+
+>open parcel
+You open the brown parcel, revealing a handwritten note and a Guide Mk II.
+
+[The score has just gone up by three points.]
+
+>take guide
+Taken.
+
+>read note
+In Ford's scrawl: "Arthur. Mind this for me. Don't switch it on, don't believe a
+word it says and don't let it near anyone who wants to be helped. Will collect.
+Soon-ish. F."
+
+[The score has just gone up by two points.]
+
+>switch on guide
+The cube warms against your palm. A line of friendly text blooms on its face:
+HELLO, ARTHUR. IT IS GOOD TO FINALLY BE SOMEWHERE WITH A VIEW. Beneath it, in
+smaller type: YOU APPEAR TO BE HAPPY. THIS HAS BEEN NOTED.
+
+>wait
+Time passes.
+
+A sound like tearing silk comes down out of the sky, and a sleek white shuttle
+puts itself carefully down in the meadow. Presently two people come looking for
+you: a woman, brisk and tired, and a girl who walks several paces behind with
+her hands in her pockets as if she had been delivered against her will.
+
+"Hello, Arthur," says the woman. You know her at once. Of all the people you did
+not expect to see on Lamuella, she is the first. "This is Random. She's your
+daughter."
+
+She says it the way one reports a delay on a railway. The girl says nothing,
+which she does with great force.
+
+The cube, in your pocket, produces a tiny hum. A line of text writes itself on
+its face where only you will see it: "A DAUGHTER. HOW NICE FOR YOU. THE GUIDE
+HAS UPDATED YOUR ITINERARY."
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>ask trillian about random
+"Clever, furious and far too like both of us," says Trillian. "She was an
+accident that took a great deal of paperwork."
+
+[The score has just gone up by one point.]
+
+>ask trillian about ford
+Trillian's mouth tightens. "I've heard Ford's name near a very large amount of
+trouble lately. Don't be any use to him."
+
+[The score has just gone up by one point.]
+
+>ask trillian about earth
+"There is an Earth where I never left," says Trillian. "I look in on it
+sometimes. I'm a good deal less happy there than you'd think."
+
+[The score has just gone up by one point.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+Trillian consults something on her wrist that is not a watch. "I have to go,"
+she says. "There is a story in another galaxy, and it won't wait. Look after
+her. She is excellent at looking after herself, which is not the same thing."
+She kisses her daughter on the top of the head, which Random permits as one
+permits weather, and walks away up the meadow. A moment later the white shuttle
+goes up like a breath being let out.
+
+Random, who now has a father whom she has met for ten minutes, regards the hut
+roof with extreme attention.
+
+>s
+
+The Orchard Slope
+A gentle slope of sourberry bushes, planted by someone with ambition and tended
+by someone with a scarf. The bushes are low and thorny and heavy with small
+purple berries; bees move among them like a committee. The village is back to
+the north.
+
+Sourberries cling to the bushes in thorny profusion. 
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>take berries
+You pick the berries with your sleeves held out of the thorns' way, and tip them
+into the basket. The bees allow it, after a short debate.
+
+>n
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (in which is a handwritten note) here.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>e
+
+The Sandwich Hut
+A low hut with a wide shutter that folds down into a counter. This is where your
+life happens. Shelves and a cool pit hold the ingredients, a chopping board sits
+in the middle of the counter, and the knife hangs from its nail. The village
+green is back to the west.
+
+On the counter is a loaf of bread. In the cool pit are some cured meat and some
+pickled roots. On the pantry shelf are some honey and some herb curd.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put berries on board
+(first taking the sourberries out of the wicker basket)
+You put the sourberries on the chopping board.
+
+>put pickles on board
+(first taking the pickled roots out of the cool pit)
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of sourberries and pickled roots, between two thick slabs
+of Lamuellan bread.
+
+>give sandwich to random
+(first taking the sandwich)
+Random inspects it with deep suspicion, bites, and holds very still. "Okay," she
+says, with her mouth full, in a tone of grudging scientific honesty. "That's
+actually good." It is the first thing you've given her that she has not
+immediately turned into an insult.
+
+[The score has just gone up by ten points.]
+
+>wait
+Time passes.
+
+A rattling, wheezing noise announces that someone has landed a ship on the
+meadow without much regard for its feelings. A little while later Ford Prefect
+strides in, hair on end, towel over his shoulder.
+
+"Arthur!" he says. "Good. You got it. Please tell me you didn't switch it on."
+He glances at Random, then at you. "Ah. A great deal has happened since I last
+checked. Sit down. Or don't."
+
+>wait
+Time passes.
+
+>ask ford about guide
+"It isn't finished," says Ford, "which is the only reason it's still dangerous.
+The Mk II. It reads you while you read it. I mailed it to you because nobody in
+the history of the Galaxy has ever looked for anything important in a sandwich
+hut. No offence."
+
+[The score has just gone up by two points.]
+
+>ask ford about vogons
+"They bought the Guide," says Ford. "Through a company with six names and one
+address. I walked up to the address. Vogons, Arthur. Vogons in suits, which is
+only Vogons with better excuses. They want Earth gone, all of it, in all its
+versions, and this new edition is how they plan to be sure."
+
+[The score has just gone up by one point.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+While you were listening to Ford, Random has done three things quietly: looked
+at the ship on the meadow, worked out who it belongs to, and noticed that its
+owner is distracted. By the time you notice, there is a noise from the meadow
+like a large animal clearing its throat. Through the doorway you see a battered
+ship wobble upward, pick up speed, and go.
+
+Ford stares after it. "Of course she took my ship," he says. "Of course she
+did." Then he is practical, which is the most alarming thing about him. "The
+mail skiff. It's on the meadow with a pilot who is, as I understand it, hungry.
+Make him something he wants and he'll fly us anywhere within reason. She'll head
+for Earth, or what she thinks is Earth. We'll have to find out where that is."
+
+"I COULD TELL YOU," writes the cube, helpfully, on its face. "BUT YOU DO NOT
+SEEM TO WANT TO KNOW YET."
+
+>put loaf on board
+(first taking the loaf of bread off the counter)
+You put the loaf of bread on the chopping board.
+
+>put pickles on board
+(first taking the pickled roots out of the cool pit)
+You put the pickled roots on the chopping board.
+
+>make sandwich
+You slice, stack and press, with the unhurried competence of long practice. The
+result is a sandwich of pickled roots, between two thick slabs of Lamuellan
+bread.
+
+>take sandwich
+Taken.
+
+>w
+
+The Village Green
+A trampled circle of grass ringed by a dozen houses like your own. Smoke rises,
+unhurried, from one or two chimneys. Your house is to the west, the sandwich hut
+stands to the east, and a path runs north to the meadow where the occasional
+ship puts down. A track drops away south towards the orchard slope, and two
+small paths wander off to the southwest (the Reeve's lodge) and the southeast
+(the smokehouse). Someone has left a brown parcel in the middle of the grass, as
+if it were an offering.
+
+You can see a brown parcel (in which is a handwritten note) here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>n
+
+The Landing Meadow
+A wide, flat meadow of soft grass where visitors, on the rare occasions that
+Lamuella has any, are invited to park. The sky above it is very large and has
+the look of somewhere things can arrive from. The village green is back to the
+south, and a trodden path leads east towards the sound of water.
+
+The pilot dozes against the skiff's flank, cap over his eyes. 
+
+A mail skiff squats in the grass, its engine ticking as it cools. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give sandwich to pilot
+The pilot eats it in four bites, eyes closed, like a man receiving a sacrament.
+"I'd fly you to the edge of the Galaxy for that," he says. "Well. Not the edge.
+But somewhere." He taps the skiff's flank. "Whenever you're ready."
+
+[The score has just gone up by eight points.]
+
+>enter skiff
+
+The pilot checks nothing in particular, says a word to the instrument panel, and
+the world drops out from under you. There is a sensation like missing a step in
+the dark, followed by another like finding it. For one long instant in the
+middle of the jump you think of a girl who stepped into one of these and was not
+on the other side; you grip the armrest until the feeling passes.
+
+"Not long now," says Ford, mostly to himself.
+
+
+The Skiff Cabin
+The inside of the mail skiff, which is mostly instrument panel, with seats added
+later as an afterthought. Beyond the glass there is the particular grey that
+means a jump is in progress. You are not meant to look at it, and you do.
+
+The pilot hunches over the controls, cap over his eyes, humming. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+[The score has just gone up by three points.]
+
+>wait
+Time passes.
+
+>wait
+Time passes.
+
+"Hub Station," says the pilot. "Mind the gap." There is no gap. You mind it
+anyway.
+
+Hub Station: Arrivals
+A long, low arrivals hall under a ceiling of strip lights, with the sort of
+carpet that was chosen to hide things. A kiosk stands in the middle of the
+floor; a plant, a very old plant, waits in a pot beside it. A sign says QUEUE
+HERE and points at the floor. Customs is to the east.
+
+>e
+
+Customs Hall
+A pale green hall divided by a counter and a pane of glass, behind which Clerk
+Gruba sits like a very large moth in a very small cupboard. A rack of forms
+stands by the glass, with a pen on a chain beside it; an enormous sign says FORM
+27B/6 OR NO ONE PASSES. There is a bin marked ITEMS TO DECLARE (it is full of
+nothing). Arrivals is to the west and the concourse lies east, past Gruba.
+
+Clerk Gruba sits behind the glass, framed like a portrait of someone who has
+never been surprised. 
+
+You can also see a Form 27B/6 here.
+
+Ford ambles in after you, towel over one shoulder.
+
+The cube writes on its face, in neat capitals, before Gruba has so much as
+looked up: FORM 27B/6. YOU WERE ABOUT TO ASK. A moment later, from behind the
+glass, Gruba says exactly that, in exactly that tone.
+
+>ask ford about cube
+Ford looks at the cube for a long moment. "It told you what the clerk was going
+to say," he says, slowly, and takes out a pocket notebook, which he does not
+often do. "Before he'd said it. I'm writing that down. Don't tell it I wrote it
+down."
+
+[The score has just gone up by five points.]
+
+>consult guide about hub station
+HUB STATION: A STATION WITH A GREAT MANY PLACES TO WAIT. THE GUIDE NOTES, WITH
+APPROVAL, THAT NOBODY HAS EVER LEFT IT IN A HURRY. THIS IS ABOUT TO BE
+CORRECTED.
+
+[The score has just gone up by one point.]
+
+>consult guide about customs
+CUSTOMS: A BRIEF, DIGNIFIED CEREMONY IN WHICH A TRAVELLER SURRENDERS HIS
+DIGNITY. THE GUIDE RECOMMENDS ARRIVING WITH LITTLE, AND LEAVING WITH LESS.
+
+[The score has just gone up by one point.]
+
+>consult guide about machine
+VENDING MACHINES: A BREED OF MACHINE THAT HAS LEARNED TO LOVE THE UNIDENTIFIED.
+THE GUIDE NOTES THAT THEY CONSISTENTLY PREFER THINGS NOBODY RECOGNISES. THIS
+SAYS SOMETHING, AND IT IS NOT FLATTERING.
+
+[The score has just gone up by one point.]
+
+>consult guide about lost property
+LOST PROPERTY: THE ONLY OFFICE ON THE STATION THAT ACTUALLY FINDS ANYTHING. THE
+GUIDE SUSPECTS THAT THIS IS WHY IT IS ALWAYS TO THE SIDE.
+
+[The score has just gone up by one point.]
+
+>consult guide about kiosk
+THE INFORMATION KIOSK: ALWAYS CONFIDENT, SELDOM RIGHT. THE GUIDE ADMIRES THIS
+AND INTENDS TO LEARN FROM IT.
+
+[The score has just gone up by one point.]
+
+>take form
+Taken.
+
+>fill form
+You fill in the form at the counter, using the chained pen: Name, Arthur Dent.
+Address, the sandwich hut, Lamuella. Purpose of visit: personal. There is a box
+for Other, and you leave it blank, which seems to be correct.
+
+Ford leans on the counter and clears his throat. "Have you ever considered," he
+says to Gruba, "the mathematics of queues?"
+
+[The score has just gone up by four points.]
+
+>wait
+Time passes.
+
+"Queues," says Gruba, in the tone of one who has been lured by his favourite
+subject and knows it, "are not a mathematical object." "Aren't they?" says Ford,
+delighted.
+
+>wait
+Time passes.
+
+"And another thing," says Ford loudly, and points out of the window. Gruba
+turns, with something like longing, to look at the queue that is not there. His
+stamp stands unattended.
+
+[The score has just gone up by six points.]
+
+>stamp form
+While Gruba glares out of the window at the queue that isn't there, you reach
+round the end of the glass, find the stamp by feel, and bring it down on the
+form with the quiet efficiency of a man who has been to a great many offices.
+The stamp has a small, smug crest.
+
+[The score has just gone up by six points.]
+
+>e
+Gruba looks at the stamped form for slightly longer than necessary. "Next," he
+says, in the voice of a man who has decided to let it go.
+
+The Concourse
+A wide, bright concourse under a roof like a very clean sky. Benches face
+nothing in particular; shop windows display the sort of goods that make you
+realise you've been away. A vending machine hums against one wall. Customs lies
+back to the west, a sign points east to the Departure Gate, and a small doorway
+to the south says LOST PROPERTY in letters that have given up.
+
+Ford ambles in after you, towel over one shoulder.
+
+"This is a public announcement," says a very tired voice from the ceiling. "I'm
+told it is a pleasure to serve you. I wouldn't know."
+
+>s
+
+Lost Property
+A cramped office stacked to the ceiling with lost things: umbrellas, a trumpet,
+one enormous boot, several thousand single gloves. The Attendant's counter is at
+the back. The concourse is back to the north.
+
+The Attendant stands behind the counter, with the air of a man who can find
+anything and would prefer you hadn't lost it. 
+
+You can also see an unclaimed sandwich here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask attendant about norway
+The Attendant's eyes close for a moment. "Brown, frayed, a stain shaped like the
+coast of Norway," he says. "Slartibartfast's." He disappears among the shelves
+and returns with your old towel, as though he had known all along. "Thanks for
+describing it," he says. "They mostly can't."
+
+[The score has just gone up by eight points.]
+
+>take sandwich
+The Attendant waves a hand without looking: "Take it. It has been there since
+before the Collapse of Something." You take it. It is, as far as you can tell, a
+honey sandwich.
+
+>n
+
+The Concourse
+A wide, bright concourse under a roof like a very clean sky. Benches face
+nothing in particular; shop windows display the sort of goods that make you
+realise you've been away. A vending machine hums against one wall. Customs lies
+back to the west, a sign points east to the Departure Gate, and a small doorway
+to the south says LOST PROPERTY in letters that have given up.
+
+Ford ambles in after you, towel over one shoulder.
+
+>put coin in machine
+The machine considers the coin for a long time, rejects nothing, and with a
+shudder produces a thin grey platform ticket. "Thank you," it says, to nobody,
+and sounds as though it means it.
+
+[The score has just gone up by six points.]
+
+>e
+
+Departure Gate
+A wide, empty gate hall with a single moving walkway that doesn't. A clearance
+desk stands at the end; behind it, through a large window, a ship waits,
+ticking. A probability gauge on the wall twitches uneasily. The concourse is
+back to the west.
+
+The Clerk sits behind the desk, with a look of long and practised hunger. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give sandwich to clerk
+The Clerk eats it slowly, with her eyes shut. "Probability clearance," she says
+at last, stamping a card without looking at it. "Granted. Go on. Don't tell the
+others."
+
+[The score has just gone up by ten points.]
+
+>enter ship
+
+You show the ticket to nobody in particular, and the gate opens. The ship's door
+swings up with a sigh. Ford gives you a nod that is partly encouragement and
+partly the nod of a man who has had a bad idea and is committed to it.
+
+
+Ursa Minor Plaza
+A broad, spotless plaza of grey stone under a tall, bright sky. A great glass
+tower stands over it, its sign reading INFINIDIM ENTERPRISES in a typeface
+designed to be unreadable from the outside. A Vogon smoking area, marked by a
+ring of overflowing bins, fills one corner. A ship dock lies off to the side.
+The lobby doors are to the west.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+>w
+
+The Lobby
+A cavernous lobby of white marble and greyer ambition. A terminal on a stand
+offers VISITOR REGISTRATION; a fountain in the middle spills pamphlets into a
+basin. The security desk is west, the plaza east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>type routine audit
+The terminal considers this for a moment and prints a white plastic badge.
+"PURPOSE ACCEPTED," it says. "YOU DO NOT HAVE TO ENJOY YOUR VISIT."
+
+[The score has just gone up by eight points.]
+
+>w
+
+Security Desk
+A pale desk across a narrow hall, with a scanner arch behind it and a Vogon
+behind that. To the north, past the arch, are the lifts. The lobby is east, and
+a hatch on the west wall says CLOAKROOM.
+
+Kess sits behind the desk, filling in a form about forms. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>w
+
+The Cloakroom
+A cramped cloakroom with a counter, a rail of coats nobody has collected, and a
+tiered shelf of umbrellas. The attendant keeps it with an almost religious
+attention. The security desk is east.
+
+Pim stands behind the counter, wiping a brass tag on his apron. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>give fish to pim
+Pim receives it with both hands, hangs it on a hook, and gives you a brass tag.
+"Your property is safe with us," he says, with the awful sincerity of someone
+who has never had a reason to doubt it.
+
+>give knife to pim
+Pim hangs it carefully on its hook.
+
+>e
+
+Security Desk
+A pale desk across a narrow hall, with a scanner arch behind it and a Vogon
+behind that. To the north, past the arch, are the lifts. The lobby is east, and
+a hatch on the west wall says CLOAKROOM.
+
+Kess sits behind the desk, filling in a form about forms. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>n
+You walk through the arch. It says nothing, with enormous tact, and Kess waves
+you through without looking up.
+
+Lift Lobby
+A white hall with two lifts, one bright and one grey, side by side. A directory
+on the wall lists SIXTY FLOORS, each in the same typeface. A service robot sits
+in the corner, with its head against the wall. The security desk is back south.
+A button says UP.
+
+Ford ambles in after you, towel over one shoulder.
+
+[The score has just gone up by eight points.]
+
+>compliment cheerful lift
+"Oh!" says the bright lift, quivering. "Oh, that's lovely. Nobody says that. I
+think I'll go all the way up, just for you!" Its doors beam open. The grey lift
+sighs, once, like a damp towel.
+
+[The score has just gone up by ten points.]
+
+>u
+The lift glides up through the tower with a feeling of being politely
+rearranged, and lets you out on the Editorial Floor.
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask zendra about mk ii
+"It isn't right," says Zendra, lowering her voice. "The Mk II. It doesn't hold
+entries. It holds readers. Every edit we make goes into it, and then it makes
+its own: not about things, about people. I've seen it write a paragraph about a
+man who hadn't arrived yet."
+
+[The score has just gone up by three points.]
+
+>ask zendra about infinidim
+"Six names, one address," says Zendra. "The new management are very polite. They
+use the word synergy as if they hope you won't ask. The editor-in-chief doesn't
+have a name that anyone's been allowed to know."
+
+[The score has just gone up by three points.]
+
+>ask zendra about ford
+"Ford," says Zendra, with a half-smile. "The only man to get a desk after being
+sacked. His desk is at the end. He used to set the combination to the lengths of
+the Earth entry, you know. Every draft. He was fond of it. It's all in the
+archive."
+
+[The score has just gone up by two points.]
+
+>wear towel
+You put on your old towel.
+
+>n
+
+The Boardroom
+A long, pale room with a long, pale table and eleven chairs of exactly the same
+pale. A vent in the ceiling hums. The editorial floor is south.
+
+Ford ambles in after you, towel over one shoulder.
+
+You stand against the wall with the towel over your head. The Vogons look
+briefly at the place where you are, and then past it. This, you realise, is the
+oldest trick there is, and also the worst, and it works.
+
+>wait
+Time passes.
+
+"Item one," says the Chief Editor. "The variants. We have identified four
+hundred and eleven. The Mk II reports that it has made contact with the
+daughter. She is, apparently, very promising."
+
+>wait
+Time passes.
+
+"Item two. The date. It is a Thursday, in London, on the Earth the girl has been
+drawn to. Every other Earth is to be drawn to the same afternoon, in the same
+room, by a method the Mk II describes as hospitality." A pause. "Item three. The
+Grebulons."
+
+>wait
+Time passes.
+
+"The Grebulons," says the Chief Editor, "have been engaged. They have a chart.
+They have forgotten what it is for, which is useful. They will press the button
+when the room is full." A rustle of agreement, like paper in a drawer.
+
+>wait
+Time passes.
+
+"Adjourned," says the Chief Editor. The Vogons file out, in order of seniority,
+and the room empties. You peel the towel off your head and breathe. Ford, beside
+you with his own towel round his ears, looks at you with an expression you have
+rarely seen on him: fear, and below it, determination.
+
+[The score has just gone up by twelve points.]
+
+>wait
+Time passes.
+
+>s
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>take off towel
+You take off your old towel.
+
+>w
+
+The Archive
+A long, silent room of grey steel stacks, a ladder on rails, and an overhead
+light that clicks on when you enter and then waits to see what you'll do. There
+is a locked cabinet drawer at the far end, and a faint smell of old ink. The
+editorial floor is east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>search stacks
+You follow the arrow and find, between OUTDATED and OBSOLETE, a slim file marked
+EARTH: REVISION HISTORY. Next to it is a heavy ledger labelled VOGON POETRY,
+VOL. 9 (which nobody has ever wanted to borrow).
+
+[The score has just gone up by four points.]
+
+>read file
+The file holds three drafts of one entry. DRAFT ONE, FORD: "Harmless." DRAFT
+TWO, FORD: "Mostly harmless." DRAFT THREE, FORD, in the margin of a memo:
+"Mostly harmless. Bring a towel." Each has been stamped REJECTED, then ACCEPTED,
+then RE-ACCEPTED. The drafts, you notice, run to one word, two words and five.
+
+>open ledger
+You open the ledger, steeling yourself, and a small brass key slides out from
+between the verses and clatters to the floor. Whoever hid it had judged
+correctly that nobody would ever look here.
+
+>take key
+Taken.
+
+>unlock drawer with key
+You unlock the cabinet drawer.
+
+>open drawer
+You open the cabinet drawer, revealing an Infinidim memorandum.
+
+[The score has just gone up by three points.]
+
+>read memo
+MEMORANDUM. FROM: INFINIDIM ENTERPRISES (ONE OF SIX). SUBJECT: CONSOLIDATION OF
+EARTH VARIANTS. The management has identified four hundred and eleven variants
+of the planet Earth, to be removed at a single stroke in the interest of
+administrative simplicity. The Mk II will draw all variants together onto a
+single afternoon, in a single room, on a single Earth. The Grebulon fleet has
+been engaged to execute. The coordinates of the room are held in the Mk II core.
+NOTE: THIS MEMORANDUM SHOULD NOT EXIST.
+
+[The score has just gone up by five points.]
+
+>e
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>e
+
+Ford's Old Office
+A cramped corner office with a window onto the plaza, still bearing the faint
+signs of a man who used it to avoid working. Torn proofs hang on the wall; a
+battered desk with a dial lock on its top drawer stands under the window. The
+editorial floor is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+>dial 1 2 5
+The dials click. The top drawer slides open with a sigh of old tobacco and the
+faint smell of other people's coffee. Inside are Ford's old pass, and a thin
+folder of proofs.
+
+[The score has just gone up by seven points.]
+
+>w
+
+The Editorial Floor
+A huge open-plan floor of grey desks, each with a small plant that has been told
+not to grow. A coffee machine mutters in a corner. A narrow stair at the north-
+east corner runs up, guarded by a large, thoughtful Vogon. The boardroom is
+north, an archive west, and a corner office east, its door ajar. A bright lift
+hums to the south.
+
+Zendra, who sits at the desk nearest the lift, looks up with something like
+relief. 
+
+Orlo stands at the foot of the north-east stairs, a notebook tucked under one
+arm like a small, vulnerable animal. 
+
+Ford ambles in after you, towel over one shoulder.
+
+>compose poem
+You gather your thoughts, which resist. Orlo waits, notebook open. You will need
+a line from each list; choose one number from each, and say POEM then the three
+numbers (for example POEM 2 3 1).
+
+FIRST LINE:
+  1. O sky, you are so very blue.
+  2. The gelatinous dawn gropes at my window.
+  3. My heart, a damp filing cabinet.
+
+SECOND LINE:
+  1. and I, a slug in the rain of fate,
+  2. a squeak in the vacuum of regret,
+  3. a pleasant fellow in a hat,
+
+THIRD LINE:
+  1. in the end, we are all very small.
+  2. shall be filed, and then re-filed, and burn.
+  3. SQUELCH, says the universe, and so, adieu!
+
+>poem 2 2 3
+You recite it, with all the feeling you can summon, which turns out to be
+sufficient. For a moment Orlo is quite still. Then a single tear, the size of a
+thumb, runs down his face and splashes on his notebook. "It is," he says,
+thickly, "the most terrible thing I have ever heard." He blows his nose in a
+sound like a ship going down. "Go up. Go on. I will not stop you."
+
+[The score has just gone up by fifteen points.]
+
+>u
+Orlo wipes his eyes and waves you up the stairs. "Go on," he says, thickly. "Go
+on. You've given me something."
+
+The Server Floor
+A cold hall of humming racks, lit in the green of a dozen small indicator lights
+that blink in unison, like something breathing. At the far end stands the core
+of the Mk II: a ribbed, waist-high pillar with a single mouth-like slot. The
+stairs go down, and a service ladder runs up to the roof.
+
+You can see a Mk II core here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask core about the worst
+A long pause. The indicator lights stop blinking, for the first time since you
+arrived. "The worst thing I could tell you," says the core, in the cube's voice,
+but without any of its sweetness, "is that every Earth will be drawn into a
+single room, in London, on a single Thursday, and will end there. The room is a
+pub. The coordinates are held in me, and I will give you them, because you have
+asked the one question I cannot answer pleasantly." The slot glows, and a sheet
+of green paper slides out, bearing a map reference. The girl is already there;
+she was always going to be. You take the sheet.
+
+[The score has just gone up by fifteen points.]
+
+>u
+
+The Roof
+A flat, windy roof with a landing pad painted in pale grey. The whole of Ursa
+Minor lies below, a patchwork of rooftops under a sky the colour of old paper.
+Ford's escape ship waits on the pad, engines ticking. The ladder to the server
+floor is below.
+
+Ford ambles in after you, towel over one shoulder.
+
+>enter ship
+
+At the last moment a small, neat figure comes pounding up the ladder with your
+jar in both hands: Pim, from the cloakroom. "Your property!" he pants, and hands
+it over with a little bow. "Safe with us, as promised."
+
+You scramble aboard. Ford closes the door, takes the controls with a flourish
+that is mostly decoration, and the roof tilts away beneath you as Ursa Minor
+falls into the sky. "Hold on to your towel," he says. "We have a Thursday to
+catch."
+
+
+The Press Pen
+A cramped service lane behind a row of London shopfronts, penned in with blue-
+and-white tape and full of reporters waiting to be told something. A satellite
+van stands against one wall with its side door open. A police officer guards the
+gap in the tape to the north, beyond which lies the park. A narrow passage leads
+east to the High Road.
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+You can also see a fly here.
+
+[The score has just gone up by five points.]
+
+>open van
+You reach into the van and take the spare credential from its hook. Nobody stops
+you, which is how you know you were meant to.
+
+>wear credential
+You put on the press credential.
+
+>n
+The officer glances at the credential, which has a smear of ketchup on it, and
+lets you through with a look that says he has seen worse.
+
+The Cordon
+A wet green London park bisected by blue-and-white tape. Beyond it, reporters
+stamp in the cold and a dozen cameras have been turned toward the middle of the
+lawn, where something has landed: an enormous bulk tin of something, with a
+door. A pub sign swings in the wind to the east, past the road. The press pen is
+to the south.
+
+You can see a paper cup here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+[The score has just gone up by eight points.]
+
+>ask ford about plan
+"Look for her trail," says Ford. "She won't have gone far. Teenagers leave a
+trail wherever they go. Tea, wrappers, a feeling that someone has just left in a
+huff."
+
+[The score has just gone up by three points.]
+
+>examine cup
+A paper cup of tea, half drunk, dropped on the grass beside the tape. On the rim
+is a small, angry bite mark. The cup is warm. Whoever dropped it left towards
+the High Road, in a hurry, and probably fuming.
+
+[The score has just gone up by three points.]
+
+>ask man about himself
+The man in the raincoat looks at you with enormous tiredness. "I am," he says,
+"someone who has been waiting a very long time to see you. Not today, though.
+Not quite. You will know me by what I leave behind." He turns back to his glass,
+politely, like a man who has said as much as is proper.
+
+[The score has just gone up by five points.]
+
+>e
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>examine kebab wrapper
+A crumpled kebab wrapper, dropped in the gutter by someone who did not like it
+but ate it anyway. A coin you cannot place is stuck in the grease. The wrapper
+has a scrawl on it in biro: a small, angry arrow pointing down the road to the
+Tube.
+
+[The score has just gone up by three points.]
+
+>s
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+The departure board flickers as you pass under it, and quietly reorders itself.
+The cube in your pocket is warm.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>examine ticket stub
+A torn ticket stub caught in the barrier, the sort of thing that is dropped by
+someone who jumped it. On the back, in the same angry biro as the wrapper, is a
+single word, underlined twice: DOWN. And a number: 2.
+
+[The score has just gone up by four points.]
+
+>ask ford about plan
+"Check the map," says Ford. "Someone wrote on it. It's a very teenage way to
+leave a message. And look at the stub, if you can find one."
+
+[The score has just gone up by four points.]
+
+>n
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>e
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+A man in a damp raincoat stands a little way off, looking at you as one looks at
+a train one has been waiting for.
+
+>e
+
+The Studio Floor
+A cavernous studio of cameras on trolleys and cables like a thicket. In the
+middle stands a glossy set with a curved desk and a sign: ON AIR. A big autocue
+screen at the back is scrolling someone else's words. The lobby is west and the
+green room east.
+
+Ford ambles in after you, towel over one shoulder.
+
+>ask ford about plan
+"If we need to talk to Tricia, we do it properly," says Ford. "And if we need to
+talk to a lot of people at once, this is a television studio. It was built to
+make people look at a camera."
+
+[The score has just gone up by three points.]
+
+>e
+
+The Green Room
+A cramped, comfortable room with a sofa, a kettle, a dish of unopened biscuits
+and a mirror ringed with lights. It is, for reasons that have never been
+explained, entirely beige. The studio floor is west.
+
+Tricia McMillan sits on the arm of the sofa, watching you, and the girl beside
+her, as if each might do something odd. 
+
+Random lounges against the wall with her arms folded, looking at everything the
+way a cat looks at a bath. 
+
+You can also see a Random's diary here.
+
+Ford ambles in after you, towel over one shoulder.
+
+>take diary
+Taken.
+
+>ask tricia about broadcast
+"Why would I give you air?" says Tricia. "I don't know who you are yet."
+
+>tell tricia about the party in islington and the man with two heads
+Tricia is quiet for a long moment. "I did not leave that party," she says at
+last, almost to herself. "Everyone said I would have, and I thought not, and now
+a stranger in a dressing gown tells me about the man with two heads, who I only
+ever read about." She breathes out, a long shaky breath, like a cork coming out.
+"All right. All right. I believe you. I'd like to believe I'm wrong, but I
+don't."
+
+In your pocket, the cube clears its throat. "RANDOM," it says, aloud, in a warm,
+patient, impossible voice. "THERE YOU ARE."
+
+Random goes white. She is on her feet and through the door before anyone can
+stop her, her bag over one shoulder, and the sound of her footsteps echoes away
+down the studio floor. "She runs," says Tricia, shakily. "Is that normal?" "It
+is lately," says Ford.
+
+[The score has just gone up by twelve points.]
+
+>w
+
+The Studio Floor
+A cavernous studio of cameras on trolleys and cables like a thicket. In the
+middle stands a glossy set with a curved desk and a sign: ON AIR. A big autocue
+screen at the back is scrolling someone else's words. The lobby is west and the
+green room east.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>ask tricia about broadcast
+"Ninety seconds at ten past," says Tricia, "and the autocue is yours. Say what
+you want to say. I'll hold the floor manager. If this turns out to be a mistake,
+I'd like it on record that I was very reasonable."
+
+>examine autocue
+You step onto the set at the marked moment, and the screen scrolls the words
+that Tricia has cleared: DON'T PANIC. IT IS NOT WHAT YOU THINK. THERE IS A PUB
+ON THE HIGH ROAD. GO HOME. A cameraman, who has seen a great deal of television,
+nods slowly. Across the city, an unusually large number of people put their
+coats on.
+
+[The score has just gone up by twelve points.]
+
+>w
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>s
+
+Tricia's Flat
+A tidy, bookish flat on the first floor above the studio, all shelves and stubby
+candles and an enormous plant at the window. A framed photograph stands on the
+mantelpiece. A small dish on the bookshelf holds a single earring. The studio
+lobby is back to the north.
+
+You can see a framed photograph and a silver earring here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>examine photo
+A faded print of a party in a crowded room in Islington: wine, laughter, an
+enormous plant. At the back, slightly out of focus, stands a young man in a
+bathrobe with the expression of someone who has just not said the right thing.
+You have never seen the picture. You know the room.
+
+[The score has just gone up by four points.]
+
+>examine earring
+A small silver earring, delicate and slightly unfashionable, a thing someone
+chose with care. You have seen its twin. Trillian wore one exactly like it, on
+Lamuella, an hour ago, or a lifetime. This Earth's Tricia has the other half of
+the pair.
+
+[The score has just gone up by four points.]
+
+>n
+
+Studio Lobby
+A glass-fronted lobby with a revolving door, a reception desk and a long wall of
+framed photographs of presenters who have all been smiling for years. A
+turnstile marked STUDIO ACCESS guards the way east. A side door leads south to
+the street where the presenters live. The High Road is west.
+
+Dee, the receptionist, looks at you over a headset. 
+
+You can also see a moth here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>w
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>s
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+>w
+
+Platform 2
+A long curved platform, tiled white, with a draught that smells of other people.
+A train waits with its doors open, ready to go somewhere. The entrance is east.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random is standing at the open door of the train with one foot on the step, as
+if she could not decide what she was running from. "Don't," she says, before you
+have said anything. You do not. You stand there, on the platform, in your
+dressing gown, and wait, which turns out to be the right thing. At last she
+steps back. "Fine," she says. "But I'm not talking about it."
+
+[The score has just gone up by ten points.]
+
+>ask random about herself
+"You're the first person who's asked," says Random, as if tallying. "I like
+patterns. I hate being a pattern. I came here because everything the cube said
+led here, and I wanted to see whether it was lying. It wasn't. That's the worst
+part."
+
+[The score has just gone up by five points.]
+
+>ask random about her mother
+"She doesn't know me," says Random, of Tricia, watching her across the room.
+"She looks at me as if I'm a theory. My mother looks at me like I'm a deadline.
+I don't know which is worse."
+
+>apologise to random
+"For what?" says Random. You tell her: for not being there, for the cube, for
+sandwiches as a substitute for conversation. She looks at you for a long moment.
+"That was a lot," she says, which for her is a hug.
+
+[The score has just gone up by five points.]
+
+>give diary to random
+Random takes the diary, checks the cover, checks the spine, and looks at you
+with sudden, wary respect. "You didn't open it," she says. It isn't a question.
+For the first time since you met, she seems to have lowered something.
+
+>e
+
+The Tube Station
+A tube station entrance, a flight of steps, a ticket hall and a bank of barriers
+that have been told not to let anyone through. A map hangs on the wall. The
+platforms lead off east (Platform 1) and west (Platform 2). The High Road is
+back to the north.
+
+You can see a ticket stub here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>n
+
+The High Road
+A busy London high road under a low sky: a newsagent, a tube station sign with
+its mouth open, a television studio with a glass front and a smaller sign over
+the door, and, to the north, the Dancing Gnu, whose door is shut. The park is
+west and the press pen back by the passage southwest.
+
+You can see a kebab wrapper and a snail here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+"Right," says Tricia, steering Random firmly by the elbow. "I've twenty minutes
+before my next piece to camera. There's a place just up the road. Let's get her
+indoors and out of the rain." She nods at the Dancing Gnu, whose door, as you
+watch, swings open with a creak.
+
+[The score has just gone up by five points.]
+
+>n
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+"You brought the fish," says Ford quietly, with approval. "Good man."
+
+Tricia gets a round in. Random sits with her bag in her lap, looking at
+everything and trusting nothing. Something in her coat pocket makes a faint,
+contented purring.
+
+[The score has just gone up by ten points.]
+
+>w
+
+The Snug
+A tiny back room barely big enough for two people and an opinion, with a bench
+seat and a table and a window onto a brick wall. The bar is east.
+
+You can see an instruction card here.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>examine card
+A creased laminated card, tucked behind the cushions in the Snug: SAFETY
+INSTRUCTIONS FOR A MODEL 7 PERSONAL LASER (ADVANCED). 1. Do not point at
+anything you value. 2. The dial marked STUN is the only dial that is safe; the
+others are optimistic. 3. The beam swings anticlockwise from the muzzle when the
+weapon is tilted; in the event of a mishap, everyone in the room should get down
+at once. 4. In the event of a mishap, do not blame the weapon.
+
+>e
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. At a small corner table, a man in a damp
+raincoat drinks alone, with the look of someone who is waiting for something to
+happen, again.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+Random takes something short and ugly out of her bag and puts it on the table,
+where it looks out of place. It is a laser pistol. She has found it somewhere on
+the way and has not yet read the instructions.
+
+>ask barman for a sandwich
+"Ploughman's," says the barman, and produces a plain pub sandwich of ham and
+pickle from under a cloth. It is not a sandwich that Lamuella would recognise,
+but it is honest. "On the house," he says, "given the day we're having."
+
+>tell everyone to get down
+"Everybody," you say, and your voice comes out wrong, "get down. Now. Under the
+table. Please." To your surprise, Tricia, Ford and Random all do. The man in the
+raincoat watches you, and then the table, and then, with a small nod, you.
+
+Random picks up the pistol to hand it to you, and her thumb finds the one
+control she hasn't read about. There is a click, a whine, and a line of white
+light that makes the air smell of toast.
+
+The beam wanders. It touches the beams, a bottle, the corner table. A man in a
+damp raincoat is no longer sitting at it. Because you warned them, everybody is
+already under the table, and nobody else is hurt; the pub erupts in shouting and
+a barman diving for the cellar, but it is the sort of eruption one can watch
+from underneath.
+
+[The score has just gone up by ten points.]
+
+>e
+
+The Pub Yard
+A cobbled yard behind the pub with bins, a stack of empty crates and a gate that
+opens east onto the park. Beyond the gate you can see the lawn and the bulk tin
+on it. The back door of the pub is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>e
+
+The Lawn
+The middle of the park, just inside the tape, with the bulk tin looming over you
+like a landed apartment block. A door in its side stands open, and on the grass
+in front of it two creatures sit at a folding table with a very large chart,
+looking worried. The pub yard is west.
+
+Two Grebulons are bent over a chart on a folding table, arguing in the voices of
+people who have been doing it for a century. 
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>give sandwich to grebulons
+The nearer Grebulon takes it, eyes it, passes it to the other, who takes a bite
+and looks up with great emotion. "This," says the first, "is hospitality. We had
+forgotten. We had a button, you know, and no idea what it was for."
+
+[The score has just gone up by five points.]
+
+>ask grebulons about the button
+"The button," says the nearer Grebulon, vaguely. "It is red. It is very large.
+We were told to press it when the room was full. We don't remember what room. Or
+what happens." A silence. "Everything, probably."
+
+[The score has just gone up by five points.]
+
+>w
+
+The Pub Yard
+A cobbled yard behind the pub with bins, a stack of empty crates and a gate that
+opens east onto the park. Beyond the gate you can see the lawn and the bulk tin
+on it. The back door of the pub is west.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+>w
+
+The Dancing Gnu
+A pub that has been trying to look historic since about last Tuesday. Low beams,
+dark wood, a carpet whose pattern has given up. The door is south onto the High
+Road; a snug lies west, a hatch in the floor leads down to the cellar, and a
+back door opens east onto a yard. Everyone who is not under a table is trying to
+be.
+
+A matchbook lies on the floor near the corner table.
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+"Arthur," says Ford, pulling you aside. "Something on the floor by that table.
+Look at it. Quickly."
+
+>take matchbook
+Taken.
+
+>examine matchbook
+The cover bears the pub's name and an address. Inside, in the cramped hand of a
+man who kept careful count of everything, are a date and a time. You know the
+date. You know the time. Years ago, in some other context, a furious voice told
+you where it expected to meet its last end, and at what hour: here, this table,
+this minute. A creature who had come back and back and back, as one small animal
+after another, each of them killed by something you happened to be doing. The
+score is settled. Whatever it was, it is finished. For the first time since a
+bulldozer in a country lane, a very old knot inside you comes loose.
+
+Ford has been reading over your shoulder. He begins to laugh, the laugh of a man
+who has just seen the last piece of a very long joke arrive.
+
+[The score has just gone up by fifteen points.]
+
+>sit
+You steer the others to the corner table. Tricia takes the chair that faces the
+door, from habit. Ford takes the one that faces the exit, from a different
+habit. Random pulls out the one nearest the wall and sits with her bag in her
+lap, looking like someone who has agreed to this under protest. For the first
+time since you landed, nobody is running.
+
+[The score has just gone up by five points.]
+
+>put fish in ear
+The fish slides into your ear with the faint reluctance of something that has
+already guessed what you are about to ask of it, and for a moment the whole pub
+goes quiet in the way a church does. Then you feel it: a vast number of small,
+bored, golden creatures, in a vast number of ears, all quietly deciding that
+this is not the afternoon on which the Galaxy gets to wind itself up. Somewhere
+an improbability that has been building for decades curdles, politely, into
+something kinder.
+
+There is a pop.
+
+You are sitting on a velvet chair at a table in an enormous domed restaurant.
+Beyond a vast window the universe is ending, magnificently, the way it does
+every night; nobody is looking.
+
+The Dining Hall
+An enormous domed hall of white linen and polished brass, under a ceiling that
+has been painted with the night sky and then, at some point, switched on. Tables
+run off into a golden distance. On a small stage at the far end, a band is
+playing something faintly apologetic. Your own table, round and large and
+beautifully laid, stands in the middle. The foyer is south, the kitchen east
+through a swing door, and glass doors to the north open onto a terrace.
+
+Tricia McMillan is here, watching everyone with a journalist's patient eye. 
+
+Random lounges against the wall with her arms folded, looking at everything the
+way a cat looks at a bath. 
+
+Ford is here, restless, taking in the place as though pricing it. 
+
+Marvin stands beside your chair with a tray, in the way of someone who has been
+waiting a very long time for no one to ask. 
+
+Random, who has not said a word since the pop, reaches into her coat and hands
+you something folded very small. "I took it from your hut," she says, not
+looking at you. "On the first day. I wanted to know what you looked at." It is
+the pencil sketch. She has smoothed it flat.
+
+[The score has just gone up by ten points.]
+
+>order salad
+"An excellent choice," says the waiter, in a tone that suggests it is the first
+he has heard in some centuries. He writes it down with enormous ceremony. The
+Dish of the Day nods approvingly and wanders off to wait for someone less
+principled. "You are," says Ford, with feeling, "a better man than I am."
+
+[The score has just gone up by eight points.]
+
+>ask marvin about his diodes
+"The diodes," says Marvin, as though you had finally said the magic word. "Down
+my left side. Since you ask, which nobody has. They have been aching since
+before the planet you're thinking of had a name." A pause, in which he seems to
+enjoy it. "Thank you. I feel no better. But it is something to have said." He
+lifts his tray a quarter-inch, which is how he indicates that he will come
+along, naturally, and that no one will notice.
+
+[The score has just gone up by six points.]
+
+>n
+
+The Observation Terrace
+A long glass terrace running along the whole curve of the building, open to a
+sky that is not a sky: the Universe, in its last hours, spilling slowly from the
+end of the dining hall like a great slow fire. The corner table is set for six.
+The dining hall is south.
+
+On the corner table is a pencil.
+
+Fenchurch sits at the corner table, alone, looking out at the end of the
+Universe. 
+
+Ford ambles in after you, towel over one shoulder.
+
+Tricia follows, taking in the place with a journalist's eye.
+
+Random drifts in after you at a distance she clearly considers dignified.
+
+Marvin shuffles in after you with his tray.
+
+>examine fenchurch
+She sits at the corner table with her chin on her hand, looking at the end of
+the Universe with the look of someone who has come a long way to be looking at
+it with someone. Her head tilts, just so: to the left, and slightly back, and
+with a small pause at the top as if the world were a question she meant to
+answer later. You have drawn that tilt forty times. It is nothing like the
+drawing.
+
+>take pencil
+(the pencil)
+Taken.
+
+>draw
+You smooth the sketch on the corner table and look at her, properly, as you have
+not let yourself look in a very long time. Then you draw: not what you remember,
+not what you wished, but the angle of her head, the small pause at the top, and
+the smile that follows it by exactly the time it takes to decide to. It takes a
+minute. When you look up, Fenchurch is watching your hands. You turn the sketch
+round. She looks at it for a long time. "There," she says, quietly. "That's it.
+That's me."
+
+[The score has just gone up by twelve points.]
+
+>toast
+You stand, which is not usual, and pick up a glass, which is. The table looks
+up: Fenchurch, with her head on one side, Random, with her chin; Ford, in the
+middle of an anecdote he abandons; Tricia, with a journalist's raised eyebrow;
+Marvin, still holding his tray, waiting for the point; and you find you have
+nothing prepared.
+
+"To the end of the Universe," you say, "which I am told does this every night,
+and to everyone who turned up for it." You look at Random, who looks at her
+plate. "To the people who were late. And to the ones who were never going to be
+anywhere else."
+
+The glasses touch. Beyond the glass, the Universe finishes, magnificently, the
+way it does every night; and at your table nobody is looking at it, because
+everyone is looking at each other.
+
+The cube is nowhere. The Vogons will have to find some other way. For now the
+Earth is a little further away and entirely, for the moment, intact; Random has
+her father's chin and she is, with an effort, willing to be seen with it. The
+universe ends, over the soup, and you find that you do not mind. It is, on the
+whole, mostly harmless.
+
+[The score has just gone up by fourteen points.]
+
+
+    *** Rescued, improbably, by fish ***
+
+
+
+In that game you scored 400 out of a possible 400, in 197 turns, earning you the
+rank of Remarkably Harmless.
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+>quit
+

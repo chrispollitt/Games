@@ -23,7 +23,7 @@
 ];
 
 [ AboutSub;
-    print "^MOSTLY HARMLESS: THE LONG WAY ROUND^^An unofficial interactive fan adaptation of the fifth Hitchhiker's Guide novel, in six acts. The story follows the main events of the book; all prose and puzzles are original. The Hitchhiker's Guide to the Galaxy and its characters belong to the estate of Douglas Adams. This is a non-commercial tribute.^^This is an early version: only Act I (Lamuella) is written so far.^";
+    print "^MOSTLY HARMLESS: THE LONG WAY ROUND^^An unofficial interactive fan adaptation of the fifth Hitchhiker's Guide novel, in six acts. The story follows the main events of the book; all prose and puzzles are original. The Hitchhiker's Guide to the Galaxy and its characters belong to the estate of Douglas Adams. This is a non-commercial tribute.^^It has two endings, the book's and the happier one from the BBC radio adaptation, and it is as forgiving about your phrasing as we could make it. Out of the story: /HINT for a nudge, /DIFFICULTY to change how much help you get, /HELP for the rest.^";
     rtrue;
 ];
 

@@ -1,42 +1,75 @@
 # MOSTLY HARMLESS
 
-An unofficial, non-commercial interactive-fiction fan adaptation of the plot of the fifth Hitchhiker's Guide novel,
-written in Inform 6 with entirely original prose. The Hitchhiker's Guide to the Galaxy and its characters belong to the
-estate of Douglas Adams.
+An unofficial, non-commercial interactive-fiction fan adaptation of the plot of the fifth Hitchhiker's Guide novel, written in Inform 6 with entirely original prose.
+*The Hitchhiker's Guide to the Galaxy* and its characters belong to the estate of Douglas Adams. See [CREDITS.md](CREDITS.md).
 
-Two games share one flexible-input engine:
+There are two games, built on one flexible-input engine:
 
-| Folder | What |
+| Game | What it is | Length | Story file |
+|---|---|---|---|
+| **MOSTLY HARMLESS: THE LONG WAY ROUND** (`full/`) | The full game: six acts, about 44 rooms, 400 points. Lamuella, a spaceport, the Guide's offices, a parallel London, a pub with a laser pistol, and the Restaurant at the End of the Universe. Two endings (the book's, the BBC radio play's). | several hours | `full/full.z8` (Z-machine v8) |
+| **MOSTLY HARMLESS: LAST ORDERS ON LAMUELLA** (`mini/`) | A short game of the same story: the sandwich hut, the parcel, the pub. Two endings. | about an hour | `mini/mini.z5` (Z-machine v5) |
+
+## Playing
+
+Build the story files (see below) and open one in any Z-machine interpreter (Frotz, Gargoyle, Lectrote, and so on):
+
+```sh
+frotz full/full.z8
+```
+
+You can type plain English: filler words, punctuation, typos and compound commands (`TAKE PARCEL AND EXAMINE IT`) are all fine, and you can ask questions (`WHO WAS DOUGLAS ADAMS?`).
+Commands about the game itself start with a slash, as in a chat program:
+
+| Command | |
 |---|---|
-| `mini/` | **Last Orders on Lamuella**: a short game (about an hour) with two endings: the book's and the BBC radio one. Playable now. |
-| `full/` | The big version (design phase; see `docs/full/`). |
-| `engine/` | The shared parser layer: loose phrasing, typo forgiveness, question answering, `/slash` out-of-story commands. See `engine/README.md`. |
-| `tests/` | Walkthroughs and golden transcripts; `tests/check.sh mini` runs them in a few seconds. |
-| `docs/` | `PLAN.md` (project plan and milestones) and `docs/full/` (story, map, puzzles, cast for the full game). |
+| `/HINT`, `/HINT BACK` | a progressive hint for the puzzle you are probably stuck on |
+| `/DIFFICULTY EASY` / `AVERAGE` / `FAITHFUL` | how much help you get |
+| `/SAVE`, `/RESTORE`, `/UNDO`, `/QUIT` ... | the usual, with a slash |
+| `/HELP`, `/ABOUT` | the list of commands; information about the game |
 
-## Build and play
+Spoiler-heavy walkthroughs: [full game](docs/WALKTHROUGH-full.md), [mini game](docs/WALKTHROUGH-mini.md).
 
-Needs the Inform 6 compiler (6.4x) with the 6.12 standard library and a Z-machine interpreter.
+## Building
+
+Needs the Inform 6 compiler (6.4x) with the 6.12 standard library.
 
 ```sh
 ./build.sh mini            # release  -> mini/mini.z5
-./build.sh mini debug      # debug    -> mini/mini_debug.z5
-frotz mini/mini.z5         # or nfrotz, dfrotz, any Z-machine interpreter
+./build.sh full            # release  -> full/full.z8
+./build.sh full debug      # debug build with tester verbs (ACT n, COMPLY n, PUZZLES ...)
 ```
 
 `build.sh` expects the library in `/usr/local/share/inform6/lib`; edit it if yours lives elsewhere.
 
-## Test
+## Testing
+
+Needs `dfrotz` (dumb frotz) on `PATH`, or `DFROTZ=/path/to/dfrotz`. On Cygwin, build it from the Frotz source with `CFLAGS=-D_GNU_SOURCE make dumb`.
 
 ```sh
-tests/check.sh mini           # replay every walkthrough and diff against the golden transcripts
-tests/check.sh mini --update  # accept new output as golden
+tests/check.sh full          # replay every walkthrough, diff against golden transcripts
+tests/check.sh mini
+tests/release.sh             # release builds, sizes, release replay
+tests/soak.sh full 3 40 90   # random-input soak: game, act, runs, commands per run
+tests/package.sh             # build release story files and a distributable zip in dist/
 ```
 
-Needs `dfrotz` (dumb frotz) on `PATH`, or set `DFROTZ=/path/to/dfrotz`. On Cygwin, build it from the Frotz source with
-`CFLAGS=-D_GNU_SOURCE make dumb`.
+`tests/full/complete.cmd` plays the whole full game, first command to last, for exactly 400 points; `tests/mini/complete.cmd` does the same for the mini-game (100 points).
 
-## Playing notes
+## Layout
 
-Commands outside the story use a slash (`/SAVE`, `/HINT`, `/HELP`). Everything else is plain English; the game tolerates
-filler words, punctuation, and one-letter typos, and answers questions such as `WHO WAS DOUGLAS ADAMS?`.
+| Folder | |
+|---|---|
+| `engine/` | shared parser layer: loose phrasing, typo forgiveness, question answering, compound commands, `/slash` commands, progressive hints, difficulty, the Guide's "compliance" counter |
+| `mini/`, `full/` | the two games |
+| `tests/` | walkthroughs, golden transcripts, soak and release scripts |
+| `docs/` | plan, design documents (`docs/full/`), walkthroughs |
+
+## Status
+
+All six acts of the full game and the whole mini-game are written and pass the automated tests, including a continuous start-to-finish run for full marks. What the tests cannot tell is whether it is *fun*: a human
+playtest is the best next step. Future ideas (`/MACRO`, newcomer overviews, easter eggs) are described in `docs/PLAN.md`.
+
+## Licence
+
+No licence has been chosen yet; until one is added all rights are reserved by the repository owner.

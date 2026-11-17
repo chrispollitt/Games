@@ -19,4 +19,6 @@ check mini radio     "$root/mini/mini.z5"
 check mini book1     "$root/mini/mini.z5"
 check full act1      "$root/full/full.z8"
 check full parser2   "$root/full/full.z8"
+check full complete  "$root/full/full.z8"
+check mini complete  "$root/mini/mini.z5"
 exit $fail

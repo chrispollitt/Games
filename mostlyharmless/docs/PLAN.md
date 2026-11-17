@@ -130,7 +130,7 @@ Open choice: ship hints first and add the difficulty switch in a later milestone
 | M6 | Acts 4–5 | **done 2026-11-16**: London (10 rooms, 90 pts) and the pub/lawn (5 rooms, 60 pts) playable; both book endings and the radio choice; 10 full-game walkthroughs pass |
 | M7 | Act 6 + both endings in the full game, scoring to 400 | **done 2026-11-16**: Milliways (4 rooms, 40 pts); `tests/full/finale.cmd` plays the whole radio route from Act V to exactly 400 |
 | M8 | Full playtest, balance, typo/parser tuning, polish | **done 2026-11-16** (first pass): safety nets, Easy/Faithful assists, soak and release tests, parser fixes; see "As built (M8)" in docs/full/03-puzzles.md. A human playtest is still the best next step. |
-| M9 | Release builds (Z8) of both games, walkthroughs, README | |
+| M9 | Release builds (Z8) of both games, walkthroughs, README | **done 2026-11-16**: `tests/package.sh` builds `dist/` (story files, README, credits, walkthroughs, zip); player-facing walkthroughs in `docs/`; `tests/full/complete.cmd` and `tests/mini/complete.cmd` play each game start to finish for full marks on both debug and release builds |
 
 M2 is the big gate: we agree the whole story, puzzles and hints on paper before writing code.
 
